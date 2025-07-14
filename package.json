@@ -1,0 +1,32 @@
+{
+  "name": "somali-ai-dataset",
+  "version": "1.0.0",
+  "description": "The World's First Comprehensive Somali AI Dataset - Building the $1B African Language AI Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000",
+    "build": "echo 'Static site - no build needed'",
+    "preview": "npx http-server . -p 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/somali-ai-dataset"
+  },
+  "keywords": [
+    "somali",
+    "ai",
+    "dataset",
+    "african-languages",
+    "nlp",
+    "machine-learning",
+    "investment-opportunity"
+  ],
+  "author": "Imam Yussuf Abdi",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
