@@ -468,33 +468,65 @@
 
     <!-- JavaScript -->
     <script>
-        // Demo text analysis simulation
-        function analyzeText() {
+        // Real API connection - will fallback to demo if API unavailable
+        const API_URL = 'https://somali-ai-dataset-api.onrender.com'; // Update this once deployed
+        
+        async function analyzeText() {
             const text = document.getElementById('somaliText').value;
-            const length = text.length;
             
-            if (length > 0) {
-                // Simulate quality score based on text length
-                const quality = Math.min(95 + (length / 50), 99);
-                document.getElementById('qualityScore').textContent = quality.toFixed(1) + '%';
-                document.getElementById('qualityBar').style.width = quality + '%';
-                
-                // Random dialect detection
-                const dialects = ['Northern Somali', 'Southern Somali', 'Central Somali'];
-                const confidence = Math.floor(Math.random() * 10) + 90;
-                document.getElementById('dialect').textContent = dialects[Math.floor(Math.random() * dialects.length)];
-                document.getElementById('confidence').textContent = `Confidence: ${confidence}%`;
-                
-                document.getElementById('validation').textContent = '✓ Processing...';
-                setTimeout(() => {
-                    document.getElementById('validation').textContent = '✓ Validated';
-                }, 1000);
-            } else {
+            if (text.length === 0) {
+                // Reset to defaults
                 document.getElementById('qualityScore').textContent = '96.3%';
                 document.getElementById('qualityBar').style.width = '96.3%';
                 document.getElementById('dialect').textContent = 'Northern Somali';
                 document.getElementById('confidence').textContent = 'Confidence: 94.7%';
                 document.getElementById('validation').textContent = '✓ Validated';
+                return;
+            }
+            
+            // Show processing state
+            document.getElementById('validation').textContent = '🔄 Processing...';
+            
+            try {
+                // Try real API first
+                const response = await fetch(`${API_URL}/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    // Update with real API results
+                    const quality = result.quality_metrics.overall_score;
+                    document.getElementById('qualityScore').textContent = quality.toFixed(1) + '%';
+                    document.getElementById('qualityBar').style.width = quality + '%';
+                    
+                    document.getElementById('dialect').textContent = result.dialect_detection.dialect;
+                    document.getElementById('confidence').textContent = `Confidence: ${result.dialect_detection.confidence}%`;
+                    
+                    document.getElementById('validation').textContent = '✅ API Validated';
+                } else {
+                    throw new Error('API unavailable');
+                }
+                
+            } catch (error) {
+                // Fallback to demo simulation
+                console.log('Using demo mode:', error.message);
+                
+                const quality = Math.min(95 + (text.length / 50), 99);
+                document.getElementById('qualityScore').textContent = quality.toFixed(1) + '%';
+                document.getElementById('qualityBar').style.width = quality + '%';
+                
+                const dialects = ['Northern Somali', 'Southern Somali', 'Central Somali'];
+                const confidence = Math.floor(Math.random() * 10) + 90;
+                document.getElementById('dialect').textContent = dialects[Math.floor(Math.random() * dialects.length)];
+                document.getElementById('confidence').textContent = `Confidence: ${confidence}%`;
+                
+                document.getElementById('validation').textContent = '✓ Demo Validated';
             }
         }
 
