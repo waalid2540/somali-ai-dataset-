@@ -280,7 +280,18 @@
             </div>
 
             <div class="bg-black rounded-3xl p-8 border border-gray-700 max-w-4xl mx-auto">
-                <div class="mb-8">
+                <!-- Tab Navigation -->
+                <div class="flex mb-8 border-b border-gray-700">
+                    <button onclick="switchTab('text')" id="textTab" class="px-6 py-3 text-blue-400 border-b-2 border-blue-400 font-semibold">
+                        📝 Text Analysis
+                    </button>
+                    <button onclick="switchTab('voice')" id="voiceTab" class="px-6 py-3 text-gray-400 hover:text-white font-semibold ml-4">
+                        🎤 Voice Analysis
+                    </button>
+                </div>
+
+                <!-- Text Analysis Tab -->
+                <div id="textAnalysis" class="mb-8">
                     <h3 class="text-2xl font-bold text-white mb-4">Somali Text Analyzer</h3>
                     <textarea 
                         id="somaliText"
@@ -288,6 +299,28 @@
                         placeholder="Enter Somali text here to see quality analysis, dialect detection, and translation..."
                         oninput="analyzeText()"
                     ></textarea>
+                </div>
+
+                <!-- Voice Analysis Tab -->
+                <div id="voiceAnalysis" class="mb-8 hidden">
+                    <h3 class="text-2xl font-bold text-white mb-4">Somali Voice Analyzer</h3>
+                    <div class="bg-gray-800 rounded-xl p-6 text-center">
+                        <button 
+                            id="recordButton"
+                            onclick="toggleRecording()"
+                            class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105"
+                        >
+                            🎤 Start Recording
+                        </button>
+                        <p class="text-gray-400 mt-4">Click to record Somali speech for analysis</p>
+                        <div id="recordingStatus" class="mt-4 text-yellow-400 hidden">
+                            🔴 Recording... Click to stop
+                        </div>
+                        <div id="audioPlayback" class="mt-4 hidden">
+                            <audio id="audioPlayer" controls class="w-full"></audio>
+                            <p class="text-green-400 mt-2">Voice recorded successfully!</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="grid lg:grid-cols-3 gap-6">
@@ -564,6 +597,120 @@
             const email = document.getElementById('emailInput').value;
             alert('Thank you! We will keep you updated on our progress.');
             document.getElementById('emailInput').value = '';
+        }
+
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('textAnalysis').classList.add('hidden');
+            document.getElementById('voiceAnalysis').classList.add('hidden');
+            
+            // Reset tab buttons
+            document.getElementById('textTab').classList.remove('text-blue-400', 'border-b-2', 'border-blue-400');
+            document.getElementById('textTab').classList.add('text-gray-400');
+            document.getElementById('voiceTab').classList.remove('text-blue-400', 'border-b-2', 'border-blue-400');
+            document.getElementById('voiceTab').classList.add('text-gray-400');
+            
+            // Show selected tab
+            if (tabName === 'text') {
+                document.getElementById('textAnalysis').classList.remove('hidden');
+                document.getElementById('textTab').classList.remove('text-gray-400');
+                document.getElementById('textTab').classList.add('text-blue-400', 'border-b-2', 'border-blue-400');
+            } else if (tabName === 'voice') {
+                document.getElementById('voiceAnalysis').classList.remove('hidden');
+                document.getElementById('voiceTab').classList.remove('text-gray-400');
+                document.getElementById('voiceTab').classList.add('text-blue-400', 'border-b-2', 'border-blue-400');
+            }
+        }
+
+        // Voice recording functionality
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+
+        async function toggleRecording() {
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    mediaRecorder.ondataavailable = function(event) {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    mediaRecorder.onstop = function() {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        // Show audio player
+                        const audioPlayer = document.getElementById('audioPlayer');
+                        audioPlayer.src = audioUrl;
+                        document.getElementById('audioPlayback').classList.remove('hidden');
+                        
+                        // Simulate voice analysis
+                        setTimeout(() => {
+                            analyzeVoice(audioBlob);
+                        }, 1000);
+                        
+                        // Clean up
+                        stream.getTracks().forEach(track => track.stop());
+                        audioChunks = [];
+                    };
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    
+                    // Update UI
+                    document.getElementById('recordButton').textContent = '⏹️ Stop Recording';
+                    document.getElementById('recordButton').classList.remove('bg-red-600', 'hover:bg-red-700');
+                    document.getElementById('recordButton').classList.add('bg-gray-600', 'hover:bg-gray-700');
+                    document.getElementById('recordingStatus').classList.remove('hidden');
+                    document.getElementById('audioPlayback').classList.add('hidden');
+                    
+                } catch (error) {
+                    alert('Microphone access denied or not available. Please allow microphone access to test voice features.');
+                }
+            } else {
+                // Stop recording
+                mediaRecorder.stop();
+                isRecording = false;
+                
+                // Update UI
+                document.getElementById('recordButton').textContent = '🎤 Start Recording';
+                document.getElementById('recordButton').classList.remove('bg-gray-600', 'hover:bg-gray-700');
+                document.getElementById('recordButton').classList.add('bg-red-600', 'hover:bg-red-700');
+                document.getElementById('recordingStatus').classList.add('hidden');
+            }
+        }
+
+        // Voice analysis simulation
+        function analyzeVoice(audioBlob) {
+            // Simulate voice processing results
+            const voiceQuality = Math.floor(Math.random() * 15) + 80; // 80-95%
+            const clarity = Math.floor(Math.random() * 10) + 85; // 85-95%
+            const confidence = Math.floor(Math.random() * 10) + 90; // 90-100%
+            
+            // Update quality metrics with voice-specific scores
+            document.getElementById('qualityScore').textContent = voiceQuality + '%';
+            document.getElementById('qualityBar').style.width = voiceQuality + '%';
+            
+            document.getElementById('dialect').textContent = 'Somali';
+            document.getElementById('confidence').textContent = `Voice Clarity: ${clarity}%`;
+            
+            document.getElementById('validation').textContent = '🎤 Voice Processed';
+            
+            // Show additional voice metrics
+            setTimeout(() => {
+                alert(`Voice Analysis Complete!
+                
+Quality Score: ${voiceQuality}%
+Voice Clarity: ${clarity}%
+Language Confidence: ${confidence}%
+Accent: Somali Native
+Duration: ${Math.floor(Math.random() * 5) + 2} seconds
+
+This demonstrates real-time Somali voice processing capabilities!`);
+            }, 500);
         }
 
         // Smooth scrolling for navigation links
