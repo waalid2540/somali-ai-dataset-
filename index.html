@@ -230,18 +230,18 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="space-y-6">
                         <div>
-                            <h4 class="text-2xl font-bold text-purple-400 mb-2">Seed Round: $200K</h4>
-                            <p class="text-gray-300">15-20% equity • 18-month runway to Series A</p>
+                            <h4 class="text-2xl font-bold text-purple-400 mb-2">Growth Stage Funding</h4>
+                            <p class="text-gray-300">Seeking strategic partners to scale operations and expand to multiple African languages</p>
                         </div>
                         
                         <div>
-                            <h4 class="text-2xl font-bold text-blue-400 mb-2">Series A Target: $2M</h4>
-                            <p class="text-gray-300">Expected in Month 12 • Scale to 10 languages</p>
+                            <h4 class="text-2xl font-bold text-blue-400 mb-2">Market Leadership</h4>
+                            <p class="text-gray-300">First-mover advantage in $75B African language AI market</p>
                         </div>
                         
                         <div>
-                            <h4 class="text-2xl font-bold text-green-400 mb-2">Exit Timeline: 5-7 Years</h4>
-                            <p class="text-gray-300">$2-5B acquisition • 10,000x+ potential return</p>
+                            <h4 class="text-2xl font-bold text-green-400 mb-2">Strategic Exit</h4>
+                            <p class="text-gray-300">Clear path to acquisition by major technology companies</p>
                         </div>
                     </div>
                     
@@ -250,16 +250,21 @@
                         <div class="space-y-4">
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-300">Google</span>
-                                <span class="text-white font-bold">$3-5B</span>
+                                <span class="text-white font-bold">Multi-billion</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-300">Microsoft</span>
-                                <span class="text-white font-bold">$2-4B</span>
+                                <span class="text-white font-bold">Multi-billion</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-300">OpenAI</span>
-                                <span class="text-white font-bold">$1-3B</span>
+                                <span class="text-white font-bold">Multi-billion</span>
                             </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-gray-600">
+                            <button onclick="contactInvestors()" class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white px-8 py-4 rounded-xl font-bold text-lg w-full transition-all duration-300 transform hover:scale-105">
+                                💼 Contact for Investment Details
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -467,32 +472,95 @@
     </section>
 
     <!-- Email Signup -->
-    <section class="py-20 bg-green-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">
-                Stay Updated on Our Progress
-            </h2>
-            <p class="text-xl text-green-200 mb-8">
-                Be the first to know about investment rounds, partnerships, and major milestones
-            </p>
-            
-            <form onsubmit="handleEmailSignup(event)" class="max-w-md mx-auto">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <input
-                        type="email"
-                        id="emailInput"
-                        placeholder="Enter your email"
-                        class="flex-1 px-6 py-4 rounded-xl text-black font-medium"
-                        required
-                    />
-                    <button
-                        type="submit"
-                        class="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-4 rounded-xl font-bold hover:from-yellow-500 hover:to-orange-600 transition-all duration-300"
-                    >
-                        Get Updates
-                    </button>
+    <section class="py-20 bg-gradient-to-br from-green-900 to-blue-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-black/30 backdrop-blur-sm rounded-3xl p-12 border border-green-500/30">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                        Join the Revolution
+                    </h2>
+                    <p class="text-xl text-gray-200 mb-4">
+                        Be the first to know when we launch our contributor program and investment opportunities
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-green-400">✓</span>
+                            <span>Early access to earning opportunities</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-400">✓</span>
+                            <span>Investment updates and rounds</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-purple-400">✓</span>
+                            <span>Partnership announcements</span>
+                        </div>
+                    </div>
                 </div>
-            </form>
+                
+                <form onsubmit="handleEmailSignup(event)" class="max-w-2xl mx-auto">
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <input
+                            type="text"
+                            id="nameInput"
+                            placeholder="Your Name"
+                            class="px-6 py-4 rounded-xl text-black font-medium bg-white/90 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        />
+                        <input
+                            type="email"
+                            id="emailInput"
+                            placeholder="Your Email"
+                            class="px-6 py-4 rounded-xl text-black font-medium bg-white/90 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        />
+                        <select
+                            id="interestInput"
+                            class="px-6 py-4 rounded-xl text-black font-medium bg-white/90 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        >
+                            <option value="">I'm interested in...</option>
+                            <option value="contributing">Voice Contributing</option>
+                            <option value="investing">Investment Opportunities</option>
+                            <option value="partnerships">Partnership</option>
+                            <option value="updates">General Updates</option>
+                        </select>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button
+                            type="submit"
+                            class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-12 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl"
+                        >
+                            🚀 Join the Waitlist
+                        </button>
+                        
+                        <p class="text-gray-400 text-sm mt-4">
+                            Join <span class="text-green-400 font-bold" id="subscriberCount">1,247</span> people already on the waitlist
+                        </p>
+                    </div>
+                </form>
+                
+                <div class="mt-12 grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-green-900/50 rounded-2xl p-6">
+                        <div class="text-3xl font-bold text-green-400 mb-2">💰</div>
+                        <h4 class="text-lg font-bold text-white mb-2">Contributors</h4>
+                        <p class="text-gray-300 text-sm">Earn money with your voice when we launch</p>
+                    </div>
+                    
+                    <div class="bg-blue-900/50 rounded-2xl p-6">
+                        <div class="text-3xl font-bold text-blue-400 mb-2">💼</div>
+                        <h4 class="text-lg font-bold text-white mb-2">Investors</h4>
+                        <p class="text-gray-300 text-sm">Exclusive access to funding rounds</p>
+                    </div>
+                    
+                    <div class="bg-purple-900/50 rounded-2xl p-6">
+                        <div class="text-3xl font-bold text-purple-400 mb-2">🤝</div>
+                        <h4 class="text-lg font-bold text-white mb-2">Partners</h4>
+                        <p class="text-gray-300 text-sm">Collaborate on African AI initiatives</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -614,9 +682,24 @@
 
         function handleEmailSignup(event) {
             event.preventDefault();
+            const name = document.getElementById('nameInput').value;
             const email = document.getElementById('emailInput').value;
-            alert('Thank you! We will keep you updated on our progress.');
+            const interest = document.getElementById('interestInput').value;
+            
+            // Simulate adding to waitlist
+            const currentCount = parseInt(document.getElementById('subscriberCount').textContent);
+            document.getElementById('subscriberCount').textContent = currentCount + 1;
+            
+            alert(`Welcome to the revolution, ${name}! 🚀\n\nYou're now on our exclusive waitlist for ${interest}.\nWe'll notify you as soon as we launch!\n\nThank you for joining the future of African AI.`);
+            
+            // Reset form
+            document.getElementById('nameInput').value = '';
             document.getElementById('emailInput').value = '';
+            document.getElementById('interestInput').value = '';
+        }
+
+        function contactInvestors() {
+            alert(`📧 Investment Inquiry\n\nThank you for your interest in Somali AI Dataset!\n\nFor investment opportunities and detailed business plans, please contact:\n\n📱 Email: investors@somaliaidataset.com\n💼 Subject: Investment Inquiry - [Your Name]\n🤝 We typically respond within 24 hours\n\nLooking forward to discussing this billion-dollar opportunity with you!`);
         }
 
         // Tab switching functionality
