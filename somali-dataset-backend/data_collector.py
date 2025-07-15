@@ -162,7 +162,7 @@ SAMPLE_SOMALI_DATA = [
     }
 ]
 
-def add_sentence_to_api(sentence_data, api_url="http://localhost:8000"):
+def add_sentence_to_api(sentence_data, api_url="https://somali-ai-dataset-1.onrender.com"):
     """Add a sentence to the API"""
     try:
         response = requests.post(
