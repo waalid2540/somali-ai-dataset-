@@ -22,10 +22,10 @@ We're building the Amazon of African language data - starting with Somali, scali
 - **Microsoft**: $4-6B (fits Azure AI expansion)
 - **OpenAI**: $3-5B (critical for GPT improvement)
 
-### Investment Terms
-- **Seed Round**: $200K for 15-20% equity
+### Investment Opportunity
+- **Growth Stage**: Seeking strategic partners for expansion
 - **Use of Funds**: Team expansion, infrastructure, data collection
-- **Timeline**: 18-month runway to Series A
+- **Timeline**: Clear path to acquisition by major tech companies
 
 ## Technology Platform
 
