@@ -13,14 +13,14 @@
 We're building the Amazon of African language data - starting with Somali, scaling to continental coverage.
 
 ### Revenue Trajectory
-- **Year 2**: $12M (Somali market dominance)
-- **Year 4**: $85M (10+ African languages)  
-- **Year 7**: $500M (Unicorn status achieved)
+- **Year 2**: $25M (Somali text + voice dominance)
+- **Year 4**: $150M (10+ African languages text + voice)  
+- **Year 7**: $1B (Unicorn status achieved)
 
-### Strategic Exit: $2-5 Billion
-- **Google**: $3-5B acquisition potential
-- **Microsoft**: $2-4B (fits Azure AI expansion)
-- **OpenAI**: $1-3B (critical for GPT improvement)
+### Strategic Exit: $5-10 Billion
+- **Google**: $5-8B acquisition potential (text + voice)
+- **Microsoft**: $4-6B (fits Azure AI expansion)
+- **OpenAI**: $3-5B (critical for GPT improvement)
 
 ### Investment Terms
 - **Seed Round**: $200K for 15-20% equity
@@ -72,9 +72,10 @@ We're building the Amazon of African language data - starting with Somali, scali
 
 ## Market Opportunity
 
-### Total Addressable Market: $50 Billion
+### Total Addressable Market: $75 Billion
 - African AI Market: $15B by 2030
 - Global Language Data Market: $25B annually
+- Global Voice Data Market: $25B annually
 - Government Digitization: $10B across Africa
 
 ### Competitive Advantage
