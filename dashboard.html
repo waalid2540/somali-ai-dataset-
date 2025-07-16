@@ -226,9 +226,11 @@
             const email = localStorage.getItem('userEmail');
             const apiKey = localStorage.getItem('apiKey');
             const plan = localStorage.getItem('userPlan');
+            const requestsUsed = localStorage.getItem('requestsUsed') || 0;
+            const requestsLimit = localStorage.getItem('requestsLimit') || 100;
             
             if (!email || !apiKey) {
-                window.location.href = 'signup.html';
+                window.location.href = 'login.html';
                 return;
             }
             
@@ -236,25 +238,18 @@
             document.getElementById('userEmail').textContent = email;
             document.getElementById('currentPlan').textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
             
-            // Load usage stats (mock data for now)
-            loadUsageStats();
+            // Load real usage stats
+            loadUsageStats(parseInt(requestsUsed), parseInt(requestsLimit));
         }
         
-        function loadUsageStats() {
-            // Mock usage data - in real app, fetch from API
-            const mockData = {
-                used: Math.floor(Math.random() * 50),
-                limit: 100,
-                plan: 'free'
-            };
+        function loadUsageStats(used = 0, limit = 100) {
+            document.getElementById('requestsUsed').textContent = used;
+            document.getElementById('requestsLimit').textContent = limit;
+            document.getElementById('requestsRemaining').textContent = limit - used;
             
-            document.getElementById('requestsUsed').textContent = mockData.used;
-            document.getElementById('requestsLimit').textContent = mockData.limit;
-            document.getElementById('requestsRemaining').textContent = mockData.limit - mockData.used;
-            
-            const percentage = (mockData.used / mockData.limit) * 100;
+            const percentage = (used / limit) * 100;
             document.getElementById('usageBar').style.width = percentage + '%';
-            document.getElementById('usageText').textContent = `${mockData.used} / ${mockData.limit} requests used`;
+            document.getElementById('usageText').textContent = `${used} / ${limit} requests used`;
             document.getElementById('usagePercent').textContent = Math.round(percentage) + '%';
         }
         
@@ -322,8 +317,13 @@
                     output.textContent = JSON.stringify(data, null, 2);
                     results.classList.remove('hidden');
                     
-                    // Update usage stats
-                    loadUsageStats();
+                    // Update usage stats based on API response
+                    if (data.requests_remaining !== undefined) {
+                        const currentLimit = parseInt(localStorage.getItem('requestsLimit')) || 100;
+                        const newUsed = currentLimit - data.requests_remaining;
+                        localStorage.setItem('requestsUsed', newUsed);
+                        loadUsageStats(newUsed, currentLimit);
+                    }
                 } else {
                     throw new Error(data.detail || 'API test failed');
                 }
