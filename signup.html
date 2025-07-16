@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Somali AI Dataset API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <!-- Header -->
+    <nav class="bg-black border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">🌍</span>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Somali AI Dataset
+                    </span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">← Back to Home</a>
+                    <a href="dashboard.html" class="text-blue-400 hover:text-blue-300 transition-colors">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Section -->
+    <section class="py-20">
+        <div class="max-w-2xl mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-8">
+                Get Your <span class="text-blue-400">API Key</span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-12">
+                Start building with the world's first Somali AI dataset API
+            </p>
+            
+            <!-- Pricing Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-700 hover:border-blue-500 transition-colors cursor-pointer" onclick="selectPlan('free')">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-white mb-2">Free</h3>
+                        <div class="text-3xl font-bold text-blue-400 mb-4">$0</div>
+                        <div class="text-gray-400 mb-6">100 requests/month</div>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>✓ Text analysis API</li>
+                            <li>✓ Basic language detection</li>
+                            <li>✓ Community support</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-900/50 to-purple-900/50 rounded-2xl p-6 border-2 border-blue-500 cursor-pointer relative" onclick="selectPlan('basic')">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">POPULAR</span>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-white mb-2">Basic</h3>
+                        <div class="text-3xl font-bold text-blue-400 mb-4">$99</div>
+                        <div class="text-gray-400 mb-6">1,000 requests/month</div>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>✓ Text + Voice analysis</li>
+                            <li>✓ Advanced quality scoring</li>
+                            <li>✓ Priority support</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-700 hover:border-purple-500 transition-colors cursor-pointer" onclick="selectPlan('premium')">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-white mb-2">Premium</h3>
+                        <div class="text-3xl font-bold text-purple-400 mb-4">$299</div>
+                        <div class="text-gray-400 mb-6">10,000 requests/month</div>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>✓ All features</li>
+                            <li>✓ Custom training data</li>
+                            <li>✓ Dedicated support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Signup Form -->
+            <div class="bg-gray-800 rounded-2xl p-8 max-w-md mx-auto">
+                <form id="signupForm" onsubmit="signupUser(event)">
+                    <div class="mb-6">
+                        <label class="block text-gray-300 text-sm font-bold mb-2">
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            required
+                            class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            placeholder="your@email.com"
+                        />
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-300 text-sm font-bold mb-2">
+                            Selected Plan
+                        </label>
+                        <div class="bg-gray-700 px-4 py-3 rounded-lg">
+                            <span id="selectedPlan" class="text-blue-400 font-bold">Free Plan</span>
+                            <span id="selectedPrice" class="text-gray-300 ml-2">- $0/month</span>
+                        </div>
+                        <input type="hidden" id="planType" value="free">
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        id="signupButton"
+                        class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105"
+                    >
+                        Get API Key
+                    </button>
+                </form>
+                
+                <!-- Loading State -->
+                <div id="loadingState" class="hidden text-center py-8">
+                    <div class="loading inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+                    <p class="text-gray-300 mt-4">Creating your API key...</p>
+                </div>
+                
+                <!-- Success State -->
+                <div id="successState" class="hidden">
+                    <div class="text-center py-8">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h3 class="text-2xl font-bold text-green-400 mb-4">Welcome to Somali AI!</h3>
+                        <p class="text-gray-300 mb-6">Your API key has been generated</p>
+                        
+                        <div class="bg-gray-700 rounded-lg p-4 mb-6">
+                            <label class="block text-gray-300 text-sm font-bold mb-2">Your API Key:</label>
+                            <div class="flex items-center">
+                                <input 
+                                    type="text" 
+                                    id="apiKeyDisplay" 
+                                    readonly
+                                    class="flex-1 bg-gray-900 border border-gray-600 rounded-l-lg px-4 py-3 text-white font-mono text-sm"
+                                />
+                                <button 
+                                    onclick="copyApiKey()"
+                                    class="bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-r-lg transition-colors"
+                                >
+                                    📋
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <a 
+                                href="dashboard.html" 
+                                class="block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                            >
+                                Go to Dashboard
+                            </a>
+                            <a 
+                                href="https://somali-ai-dataset-1.onrender.com/docs" 
+                                target="_blank"
+                                class="block bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                            >
+                                View API Documentation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security Notice -->
+            <div class="mt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    🔒 Your API key is secure and can be regenerated anytime in your dashboard
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API_BASE = 'https://somali-ai-dataset-1.onrender.com';
+        let selectedPlanType = 'free';
+        
+        // Plan selection
+        function selectPlan(plan) {
+            selectedPlanType = plan;
+            document.getElementById('planType').value = plan;
+            
+            const plans = {
+                free: { name: 'Free Plan', price: '$0/month' },
+                basic: { name: 'Basic Plan', price: '$99/month' },
+                premium: { name: 'Premium Plan', price: '$299/month' }
+            };
+            
+            document.getElementById('selectedPlan').textContent = plans[plan].name;
+            document.getElementById('selectedPrice').textContent = `- ${plans[plan].price}`;
+            
+            // Update visual selection
+            document.querySelectorAll('.cursor-pointer').forEach(card => {
+                card.classList.remove('border-blue-500', 'border-purple-500');
+                card.classList.add('border-gray-700');
+            });
+            
+            event.target.closest('.cursor-pointer').classList.remove('border-gray-700');
+            if (plan === 'basic') {
+                event.target.closest('.cursor-pointer').classList.add('border-blue-500');
+            } else if (plan === 'premium') {
+                event.target.closest('.cursor-pointer').classList.add('border-purple-500');
+            } else {
+                event.target.closest('.cursor-pointer').classList.add('border-blue-500');
+            }
+        }
+        
+        // Signup function
+        async function signupUser(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const plan = document.getElementById('planType').value;
+            
+            // Show loading state
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loadingState').classList.remove('hidden');
+            
+            try {
+                const response = await fetch(`${API_BASE}/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        plan: plan
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store user data
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('apiKey', data.api_key);
+                    localStorage.setItem('userPlan', data.plan);
+                    
+                    // Show success state
+                    document.getElementById('loadingState').classList.add('hidden');
+                    document.getElementById('successState').classList.remove('hidden');
+                    document.getElementById('apiKeyDisplay').value = data.api_key;
+                    
+                } else {
+                    throw new Error(data.detail || 'Signup failed');
+                }
+                
+            } catch (error) {
+                // Show error
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('signupForm').style.display = 'block';
+                alert(`Error: ${error.message}`);
+            }
+        }
+        
+        // Copy API key
+        function copyApiKey() {
+            const apiKeyInput = document.getElementById('apiKeyDisplay');
+            apiKeyInput.select();
+            document.execCommand('copy');
+            
+            // Show feedback
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✅';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
