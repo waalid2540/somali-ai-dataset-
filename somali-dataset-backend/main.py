@@ -10,8 +10,8 @@ from datetime import datetime
 import hashlib
 import secrets
 import uuid
-from enterprise_nlp import nlp_engine
-from data_collection_system import data_collector
+# from enterprise_nlp import nlp_engine
+# from data_collection_system import data_collector
 
 app = FastAPI(title="Somali AI Dataset API", version="1.0.0")
 
