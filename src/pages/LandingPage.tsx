@@ -63,19 +63,19 @@ const LandingPage = () => {
             <strong className="text-white">25 million Somali speakers worldwide.</strong> 
             <span className="text-blue-400"> Zero authentic AI datasets.</span>
             <br />
-            <span className="text-emerald-400">Capturing our share of the </span>
-            <strong className="text-yellow-400">$75 BILLION AI dataset market.</strong>
+            <span className="text-emerald-400">First-mover in untapped </span>
+            <strong className="text-yellow-400">25 million speaker market.</strong>
           </p>
 
           {/* Market Opportunity Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">$75B</div>
-              <div className="text-gray-400">AI Dataset Market</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">25M</div>
+              <div className="text-gray-400">Global Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-400 mb-2">25M+</div>
-              <div className="text-gray-400">Untapped Speakers</div>
+              <div className="text-3xl font-bold text-emerald-400 mb-2">FIRST</div>
+              <div className="text-gray-400">In The World</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-400 mb-2">ZERO</div>
@@ -291,7 +291,7 @@ const LandingPage = () => {
             Our Vision for Somali AI
           </h2>
           <p className="text-xl text-gray-300 mb-16">
-            Claiming our share of the <strong className="text-yellow-400">$75 BILLION AI market</strong> while connecting 25 million Somali speakers to the AI revolution.
+            Building the bridge between <strong className="text-yellow-400">25 million untapped Somali speakers</strong> and the global AI revolution.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -302,15 +302,15 @@ const LandingPage = () => {
               <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  <strong className="text-yellow-400">$75 BILLION</strong> AI market
+                  <strong className="text-yellow-400">25 million Somali speakers</strong> worldwide
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  <strong className="text-white">25 million Somali speakers</strong> completely ignored
+                  <strong className="text-white">ZERO quality datasets</strong> available
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  <strong className="text-red-400">ZERO authentic datasets</strong> available
+                  <strong className="text-red-400">Cultural misrepresentation</strong> in AI
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
@@ -331,7 +331,7 @@ const LandingPage = () => {
               <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
-                  <strong className="text-yellow-400">FIRST-MOVER</strong> advantage in $75B AI market
+                  <strong className="text-yellow-400">FIRST-MOVER</strong> advantage with 25M speakers
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
@@ -417,7 +417,7 @@ const LandingPage = () => {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            <span className="text-yellow-400">$75 BILLION</span> Market Opportunity
+            <span className="text-yellow-400">25 MILLION</span> Speaker Opportunity
           </h2>
           <p className="text-xl text-gray-300 mb-12">
             Join us in capturing our share of the massive AI market with the world's first authentic Somali AI dataset. 
@@ -441,7 +441,7 @@ const LandingPage = () => {
           </div>
 
           <p className="text-gray-400">
-            💰 $75B AI market opportunity • 🚀 First-mover advantage • 🤝 Investment & partnerships welcome
+            💰 25M speaker opportunity • 🚀 First-mover advantage • 🤝 Investment & partnerships welcome
           </p>
         </div>
       </section>

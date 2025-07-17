@@ -85,8 +85,8 @@ const PitchDeck = () => {
       )
     },
     {
-      title: "MASSIVE MARKET OPPORTUNITY",
-      subtitle: "$75B AI Dataset Market",
+      title: "MASSIVE MARKET OPPORTUNITY", 
+      subtitle: "25 Million Untapped Somali Speakers",
       content: (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
