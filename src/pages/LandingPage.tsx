@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle, Globe, Users, Database, Shield, Zap, Star } from 'lucide-react';
+import { ArrowRight, Globe, Users, Database, Shield, Zap, Star, Mail, Phone, Calendar } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const LandingPage = () => {
   const [email, setEmail] = useState('');
-  const router = useRouter();
 
-  const handleGetStarted = () => {
-    router.push('/signup');
+  const handleNotifyMe = () => {
+    // For now, just an alert - can integrate with email service later
+    alert('Thank you for your interest! We\'ll notify you when we launch.');
   };
 
   return (
@@ -26,15 +25,15 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="flex items-center space-x-6">
-              <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
-              <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
-              <a href="#docs" className="text-gray-300 hover:text-white transition-colors">API Docs</a>
-              <Link href="/login" className="text-gray-300 hover:text-white transition-colors">Sign In</Link>
+              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
+              <a href="#vision" className="text-gray-300 hover:text-white transition-colors">Vision</a>
+              <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Dataset</a>
+              <Link href="/investor" className="text-gray-300 hover:text-white transition-colors">Investors</Link>
               <button 
-                onClick={handleGetStarted}
+                onClick={handleNotifyMe}
                 className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
               >
-                Get Started
+                Get Notified
               </button>
             </div>
           </div>
@@ -47,12 +46,12 @@ const LandingPage = () => {
           {/* Badge */}
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-900/50 to-emerald-900/50 border border-blue-500/30 mb-8">
             <Star className="w-4 h-4 text-yellow-400 mr-2" />
-            <span className="text-blue-200 font-medium">World's First Professional Somali AI Dataset API</span>
+            <span className="text-blue-200 font-medium">Building the Future of Somali AI - Coming Soon</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
-            Enterprise-Grade
+            The World's First
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent">
               Somali AI Dataset
@@ -61,46 +60,46 @@ const LandingPage = () => {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-            <strong className="text-white">25 million Somali speakers.</strong> 
-            <span className="text-blue-400"> Zero quality AI datasets.</span>
+            <strong className="text-white">25 million Somali speakers worldwide.</strong> 
+            <span className="text-blue-400"> Zero authentic AI datasets.</span>
             <br />
-            <span className="text-emerald-400">We're changing that with scholar-approved, culturally authentic content.</span>
+            <span className="text-emerald-400">We're building the cultural bridge between Somali heritage and artificial intelligence.</span>
           </p>
 
-          {/* Stats */}
+          {/* Vision Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16 max-w-5xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-400 mb-2">25M+</div>
-              <div className="text-gray-400">Somali Speakers</div>
+              <div className="text-gray-400">Global Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-400 mb-2">95%+</div>
-              <div className="text-gray-400">Quality Score</div>
+              <div className="text-3xl font-bold text-emerald-400 mb-2">150+</div>
+              <div className="text-gray-400">Cultural Sentences</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
               <div className="text-gray-400">Scholar Approved</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-400 mb-2">$9.99</div>
-              <div className="text-gray-400">Unlimited Access</div>
+              <div className="text-3xl font-bold text-emerald-400 mb-2">First</div>
+              <div className="text-gray-400">In The World</div>
             </div>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button 
-              onClick={handleGetStarted}
+              onClick={handleNotifyMe}
               className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
             >
-              Start Building Today
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <Mail className="mr-2 w-5 h-5" />
+              Get Early Access
             </button>
             <a 
-              href="#demo" 
+              href="#vision" 
               className="border border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:bg-white/5"
             >
-              View Live Demo
+              Our Vision
             </a>
           </div>
 
@@ -117,12 +116,90 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-black/20">
+      {/* About Section */}
+      <section id="about" className="py-20 px-4 bg-black/20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-6">
-              Why Choose Our Somali AI Dataset?
+              Cultural Authority Meets AI Innovation
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Building the world's first culturally authentic Somali AI dataset with unmatched community trust and technical excellence.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Founder Authority */}
+            <div className="bg-gradient-to-br from-blue-900/30 to-emerald-900/30 rounded-2xl p-8 border border-blue-500/20">
+              <div className="text-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Yussuf Abdi</h3>
+                <p className="text-emerald-400 font-semibold">Founder & Cultural Authority</p>
+              </div>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-center">
+                  <Shield className="w-5 h-5 text-emerald-400 mr-3" />
+                  <span>Imam and Somali community leader</span>
+                </li>
+                <li className="flex items-center">
+                  <Globe className="w-5 h-5 text-blue-400 mr-3" />
+                  <span>Deep cultural and linguistic expertise</span>
+                </li>
+                <li className="flex items-center">
+                  <Zap className="w-5 h-5 text-emerald-400 mr-3" />
+                  <span>Full-stack AI and web development</span>
+                </li>
+                <li className="flex items-center">
+                  <Database className="w-5 h-5 text-blue-400 mr-3" />
+                  <span>Scholar-approved content validation</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Technical Excellence */}
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-emerald-900/30 to-blue-900/30 rounded-xl p-6 border border-emerald-500/20">
+                <h4 className="text-xl font-bold text-white mb-3 flex items-center">
+                  <Database className="w-6 h-6 text-emerald-400 mr-3" />
+                  150+ Authentic Sentences
+                </h4>
+                <p className="text-gray-300">
+                  Carefully curated religious, cultural, and linguistic content with 95%+ quality scores and full community validation.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-blue-900/30 to-emerald-900/30 rounded-xl p-6 border border-blue-500/20">
+                <h4 className="text-xl font-bold text-white mb-3 flex items-center">
+                  <Shield className="w-6 h-6 text-blue-400 mr-3" />
+                  100% Scholar Approved
+                </h4>
+                <p className="text-gray-300">
+                  Every piece of content is validated by Islamic scholars and cultural experts for authenticity and appropriateness.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-emerald-900/30 to-blue-900/30 rounded-xl p-6 border border-emerald-500/20">
+                <h4 className="text-xl font-bold text-white mb-3 flex items-center">
+                  <Globe className="w-6 h-6 text-emerald-400 mr-3" />
+                  Global Impact Vision
+                </h4>
+                <p className="text-gray-300">
+                  Connecting 25 million Somali speakers worldwide to the AI revolution while preserving cultural heritage.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dataset Preview Section */}
+      <section id="dataset" className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-6">
+              Our Somali AI Dataset
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               The most comprehensive, culturally authentic, and technically advanced Somali language dataset available.
@@ -202,85 +279,74 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Vision Section */}
+      <section id="vision" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Simple, Transparent Pricing
+            Our Vision for Somali AI
           </h2>
           <p className="text-xl text-gray-300 mb-16">
-            Get unlimited access to our entire Somali AI dataset for less than the cost of a Netflix subscription.
+            Building the bridge between 25 million Somali speakers and the AI revolution.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Free Tier */}
-            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl p-8 border border-gray-700">
-              <h3 className="text-2xl font-bold text-white mb-4">Free Trial</h3>
-              <div className="text-4xl font-bold text-gray-400 mb-6">$0</div>
-              <p className="text-gray-300 mb-8">Perfect for testing and evaluation</p>
-              <ul className="space-y-4 mb-8">
+            {/* The Problem */}
+            <div className="bg-gradient-to-br from-red-900/30 to-gray-800/50 rounded-2xl p-8 border border-red-500/20">
+              <h3 className="text-2xl font-bold text-white mb-4">The Problem</h3>
+              <div className="text-4xl mb-6">🚨</div>
+              <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  100 API requests
+                  <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
+                  25 million Somali speakers worldwide
                 </li>
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  Full feature access
+                  <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
+                  Zero quality AI datasets available
                 </li>
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  Community support
+                  <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
+                  Cultural misrepresentation in AI
+                </li>
+                <li className="flex items-center text-gray-300">
+                  <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
+                  Excluded from AI revolution
                 </li>
               </ul>
-              <button className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
-                Start Free Trial
-              </button>
             </div>
 
-            {/* Pro Tier */}
+            {/* Our Solution */}
             <div className="bg-gradient-to-br from-blue-900/50 to-emerald-900/50 rounded-2xl p-8 border-2 border-emerald-500 relative">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-emerald-500 to-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold">
-                  🔥 MOST POPULAR
+                  🌟 OUR SOLUTION
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Unlimited Pro</h3>
-              <div className="text-4xl font-bold text-emerald-400 mb-2">$9.99</div>
-              <p className="text-gray-300 mb-8">per month • Unlimited everything</p>
-              <ul className="space-y-4 mb-8">
+              <h3 className="text-2xl font-bold text-white mb-4">Cultural AI</h3>
+              <div className="text-4xl mb-6">🕌</div>
+              <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  <strong>Unlimited API requests</strong>
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                  <strong>Scholar-approved</strong> authentic content
                 </li>
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  Advanced NLP analysis
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                  <strong>Cultural authority</strong> validation
                 </li>
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  Bulk processing support
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                  <strong>Community-driven</strong> development
                 </li>
                 <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  Priority support
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
-                  Commercial license
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                  <strong>Global accessibility</strong> for all
                 </li>
               </ul>
-              <button 
-                onClick={handleGetStarted}
-                className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-              >
-                Get Started Now
-              </button>
             </div>
           </div>
 
           <div className="mt-12 text-center">
             <p className="text-gray-400">
-              🔒 Cancel anytime • 💳 Secure payments by Stripe • 🏆 30-day money-back guarantee
+              🌍 Connecting heritage with innovation • 🤝 Building bridges, not barriers • 🚀 Launching soon
             </p>
           </div>
         </div>
@@ -346,29 +412,30 @@ const LandingPage = () => {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Build with Somali AI?
+            Join the Somali AI Revolution
           </h2>
           <p className="text-xl text-gray-300 mb-12">
-            Join thousands of developers and organizations using our API to power their Somali language applications.
+            Be part of building the future of culturally authentic AI for 25 million Somali speakers worldwide.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <button 
-              onClick={handleGetStarted}
+              onClick={handleNotifyMe}
               className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105"
             >
-              Start Your Free Trial
+              <Mail className="mr-2 w-5 h-5" />
+              Get Early Access
             </button>
-            <a 
-              href="/docs" 
+            <Link 
+              href="/investor" 
               className="border border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:bg-white/5"
             >
-              Read Documentation
-            </a>
+              Investor Information
+            </Link>
           </div>
 
           <p className="text-gray-400">
-            No credit card required • Start building in minutes • Cancel anytime
+            🚀 Launching soon • 🤝 Partnership opportunities • 💡 Investment welcome
           </p>
         </div>
       </section>
