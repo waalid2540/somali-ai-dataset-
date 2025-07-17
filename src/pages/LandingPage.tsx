@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Globe, Users, Database, Shield, Zap, Star, Mail, Phone, Calendar } from 'lucide-react';
+import { ArrowRight, Globe, Users, Database, Shield, Zap, Star, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 const LandingPage = () => {
