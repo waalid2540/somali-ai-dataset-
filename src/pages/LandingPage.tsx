@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, Globe, Users, Database, Shield, Zap, Star } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const LandingPage = () => {
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleGetStarted = () => {
-    window.location.href = '/signup';
+    router.push('/signup');
   };
 
   return (
@@ -26,7 +29,7 @@ const LandingPage = () => {
               <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
               <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
               <a href="#docs" className="text-gray-300 hover:text-white transition-colors">API Docs</a>
-              <a href="/login" className="text-gray-300 hover:text-white transition-colors">Sign In</a>
+              <Link href="/login" className="text-gray-300 hover:text-white transition-colors">Sign In</Link>
               <button 
                 onClick={handleGetStarted}
                 className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
