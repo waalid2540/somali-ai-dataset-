@@ -1,10 +1,7 @@
 services:
   - type: web
     name: somali-ai-dataset-frontend
-    env: static
-    buildCommand: echo "Professional Somali AI Dataset Platform Ready"
-    staticPublishPath: .
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
