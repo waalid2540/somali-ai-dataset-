@@ -48,63 +48,36 @@
             </p>
             
             <!-- Pricing Cards -->
-            <div class="grid md:grid-cols-4 gap-6 mb-12">
+            <div class="grid md:grid-cols-2 gap-6 mb-12">
                 <div class="bg-gray-800 rounded-2xl p-6 border-2 border-gray-700 hover:border-blue-500 transition-colors cursor-pointer" onclick="selectPlan('free')">
                     <div class="text-center">
-                        <h3 class="text-xl font-bold text-white mb-2">Free</h3>
+                        <h3 class="text-xl font-bold text-white mb-2">Free Trial</h3>
                         <div class="text-3xl font-bold text-blue-400 mb-4">$0</div>
-                        <div class="text-gray-400 mb-6">100 requests/month</div>
+                        <div class="text-gray-400 mb-6">100 requests to test</div>
                         <ul class="text-sm text-gray-300 space-y-2">
-                            <li>✓ Basic text analysis</li>
-                            <li>✓ Standard quality scoring</li>
-                            <li>✓ Community support</li>
+                            <li>✓ Full Somali text analysis</li>
+                            <li>✓ Cultural validation</li>
+                            <li>✓ Quality scoring</li>
+                            <li>✓ Test all features</li>
                         </ul>
                     </div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-blue-900/50 to-purple-900/50 rounded-2xl p-6 border-2 border-blue-500 cursor-pointer relative" onclick="selectPlan('basic')">
+                <div class="bg-gradient-to-br from-green-900/50 to-emerald-900/50 rounded-2xl p-6 border-2 border-green-500 cursor-pointer relative" onclick="selectPlan('unlimited')">
                     <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">POPULAR</span>
+                        <span class="bg-green-500 text-white px-4 py-1 rounded-full text-sm font-bold">🔥 MARKET DOMINATION</span>
                     </div>
                     <div class="text-center">
-                        <h3 class="text-xl font-bold text-white mb-2">Professional</h3>
-                        <div class="text-3xl font-bold text-blue-400 mb-4">$499</div>
-                        <div class="text-gray-400 mb-6">1,000 requests/month</div>
+                        <h3 class="text-xl font-bold text-white mb-2">Unlimited Pro</h3>
+                        <div class="text-3xl font-bold text-green-400 mb-4">$9.99</div>
+                        <div class="text-gray-400 mb-6">UNLIMITED requests/month</div>
                         <ul class="text-sm text-gray-300 space-y-2">
-                            <li>✓ Advanced grammar analysis</li>
+                            <li>✓ Unlimited API requests</li>
+                            <li>✓ Advanced NLP analysis</li>
                             <li>✓ Cultural context validation</li>
+                            <li>✓ Bulk processing</li>
                             <li>✓ Priority support</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="bg-gradient-to-br from-purple-900/50 to-pink-900/50 rounded-2xl p-6 border-2 border-purple-500 cursor-pointer relative" onclick="selectPlan('premium')">
-                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold">ENTERPRISE</span>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-xl font-bold text-white mb-2">Enterprise</h3>
-                        <div class="text-3xl font-bold text-purple-400 mb-4">$2,999</div>
-                        <div class="text-gray-400 mb-6">10,000 requests/month</div>
-                        <ul class="text-sm text-gray-300 space-y-2">
-                            <li>✓ Enterprise NLP engine</li>
-                            <li>✓ Bulk processing (1000x)</li>
-                            <li>✓ Custom integrations</li>
-                            <li>✓ White-label API</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="bg-gradient-to-br from-yellow-900/50 to-orange-900/50 rounded-2xl p-6 border-2 border-yellow-500 cursor-pointer" onclick="selectPlan('enterprise_plus')">
-                    <div class="text-center">
-                        <h3 class="text-xl font-bold text-white mb-2">Enterprise+</h3>
-                        <div class="text-3xl font-bold text-yellow-400 mb-4">$9,999</div>
-                        <div class="text-gray-400 mb-6">100,000 requests/month</div>
-                        <ul class="text-sm text-gray-300 space-y-2">
-                            <li>✓ Dedicated infrastructure</li>
-                            <li>✓ Custom model training</li>
-                            <li>✓ 24/7 support</li>
-                            <li>✓ SLA guarantees</li>
+                            <li>✓ Commercial license</li>
                         </ul>
                     </div>
                 </div>
@@ -229,10 +202,8 @@
             document.getElementById('planType').value = plan;
             
             const plans = {
-                free: { name: 'Free Plan', price: '$0/month' },
-                basic: { name: 'Professional Plan', price: '$499/month' },
-                premium: { name: 'Enterprise Plan', price: '$2,999/month' },
-                enterprise_plus: { name: 'Enterprise+ Plan', price: '$9,999/month' }
+                free: { name: 'Free Trial', price: '$0/month' },
+                unlimited: { name: 'Unlimited Pro', price: '$9.99/month' }
             };
             
             document.getElementById('selectedPlan').textContent = plans[plan].name;

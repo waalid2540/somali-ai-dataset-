@@ -259,10 +259,7 @@ async def signup_user(user: UserSignup):
     # Set limits based on plan
     limits = {
         "free": 100,
-        "basic": 1000,
-        "premium": 10000,
-        "enterprise": 100000,
-        "enterprise_plus": 1000000
+        "unlimited": 999999999  # Unlimited = 999 million requests
     }
     
     conn = sqlite3.connect('somali_dataset.db')
