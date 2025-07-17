@@ -65,8 +65,8 @@ const PitchDeck = () => {
             <div>
               <h3 className="text-xl font-bold text-emerald-400 mb-4">🎯 What We Built:</h3>
               <ul className="text-gray-300 space-y-3">
-                <li>• <strong className="text-blue-400">Professional API platform</strong> for Somali text analysis</li>
-                <li>• <strong className="text-emerald-400">Scholar-approved dataset</strong> with 95%+ quality scores</li>
+                <li>• <strong className="text-blue-400">Comprehensive AI dataset</strong> for ALL Somali AI applications</li>
+                <li>• <strong className="text-emerald-400">Scholar-approved content</strong> with 95%+ quality scores</li>
                 <li>• <strong className="text-yellow-400">Cultural authenticity</strong> validated by community Imam (me!)</li>
                 <li>• <strong className="text-purple-400">Enterprise-grade platform</strong> ready for Fortune 500</li>
               </ul>
@@ -86,17 +86,18 @@ const PitchDeck = () => {
     },
     {
       title: "MASSIVE MARKET OPPORTUNITY",
-      subtitle: "$2.5B African Language AI Market",
+      subtitle: "$75B AI Dataset Market",
       content: (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-bold text-emerald-400 mb-4">📊 Target Markets:</h3>
               <ul className="text-gray-300 space-y-2">
-                <li>• <strong className="text-blue-400">AI Companies:</strong> Google, OpenAI, Meta, Microsoft ($500M TAM)</li>
-                <li>• <strong className="text-emerald-400">Translation Services:</strong> Professional agencies ($300M TAM)</li>
-                <li>• <strong className="text-yellow-400">Educational Institutions:</strong> Universities, schools ($200M TAM)</li>
-                <li>• <strong className="text-purple-400">Government Agencies:</strong> Immigration, security ($150M TAM)</li>
+                <li>• <strong className="text-blue-400">AI Companies:</strong> Google, OpenAI, Meta, Microsoft</li>
+                <li>• <strong className="text-emerald-400">Government Departments:</strong> Immigration, security, social services</li>
+                <li>• <strong className="text-yellow-400">Healthcare Systems:</strong> Patient care, medical AI</li>
+                <li>• <strong className="text-purple-400">Financial Services:</strong> Banking, insurance, fraud detection</li>
+                <li>• <strong className="text-orange-400">Educational Tech:</strong> Universities, learning platforms</li>
               </ul>
               
               <h3 className="text-xl font-bold text-blue-400 mb-4 mt-6">🎯 Our Beachhead:</h3>
@@ -108,19 +109,19 @@ const PitchDeck = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-emerald-400 mb-4">💰 Revenue Potential:</h3>
+              <h3 className="text-xl font-bold text-emerald-400 mb-4">💰 Market Position:</h3>
               <div className="space-y-4">
                 <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
-                  <h4 className="font-semibold text-blue-400">Year 1:</h4>
-                  <p className="text-gray-300">100 customers × $9.99 = $12K/month = <strong className="text-white">$144K ARR</strong></p>
+                  <h4 className="font-semibold text-blue-400">First-Mover Advantage:</h4>
+                  <p className="text-gray-300"><strong className="text-white">100% market share</strong> in Somali AI dataset space</p>
                 </div>
                 <div className="bg-emerald-900/20 p-4 rounded-lg border border-emerald-500/30">
-                  <h4 className="font-semibold text-emerald-400">Year 2:</h4>
-                  <p className="text-gray-300">1,000 customers × $9.99 = $120K/month = <strong className="text-white">$1.4M ARR</strong></p>
+                  <h4 className="font-semibold text-emerald-400">Enterprise Revenue:</h4>
+                  <p className="text-gray-300"><strong className="text-white">Multi-million dollar</strong> licensing deals with Fortune 500</p>
                 </div>
                 <div className="bg-yellow-900/20 p-4 rounded-lg border border-yellow-500/30">
-                  <h4 className="font-semibold text-yellow-400">Year 3:</h4>
-                  <p className="text-gray-300">10,000 customers × $9.99 = $1.2M/month = <strong className="text-white">$14M ARR</strong></p>
+                  <h4 className="font-semibold text-yellow-400">Global Scale:</h4>
+                  <p className="text-gray-300"><strong className="text-white">25 million speakers</strong> worldwide market</p>
                 </div>
               </div>
             </div>
@@ -130,17 +131,17 @@ const PitchDeck = () => {
     },
     {
       title: "BUSINESS MODEL & TRACTION",
-      subtitle: "$9.99 Unlimited = Market Domination Pricing",
+      subtitle: "Enterprise AI Dataset Licensing Model",
       content: (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-bold text-emerald-400 mb-4">💰 Business Model:</h3>
+              <h3 className="text-xl font-bold text-emerald-400 mb-4">💰 Revenue Streams:</h3>
               <ul className="text-gray-300 space-y-2">
-                <li>• <strong className="text-blue-400">SaaS Subscription:</strong> $9.99/month unlimited API access</li>
-                <li>• <strong className="text-emerald-400">Enterprise Licensing:</strong> Custom pricing for Fortune 500</li>
-                <li>• <strong className="text-yellow-400">Data Licensing:</strong> Sell raw dataset to AI companies</li>
-                <li>• <strong className="text-purple-400">Consulting Services:</strong> Cultural validation for tech companies</li>
+                <li>• <strong className="text-blue-400">Enterprise Licensing:</strong> Fortune 500 AI training data deals</li>
+                <li>• <strong className="text-emerald-400">Government Contracts:</strong> Department-wide AI implementations</li>
+                <li>• <strong className="text-yellow-400">Data Licensing:</strong> Raw dataset to major AI companies</li>
+                <li>• <strong className="text-purple-400">Cultural Consulting:</strong> Authenticity validation services</li>
               </ul>
               
               <h3 className="text-xl font-bold text-blue-400 mb-4 mt-6">🚀 Validation:</h3>
