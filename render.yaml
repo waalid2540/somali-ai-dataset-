@@ -1,12 +1,10 @@
 services:
   - type: web
     name: somali-ai-dataset-frontend
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    healthCheckPath: /
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: NEXT_PUBLIC_API_URL
-        value: https://somali-dataset-backend.onrender.com
+    env: static
+    buildCommand: echo "Professional Somali AI Dataset Platform Ready"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
