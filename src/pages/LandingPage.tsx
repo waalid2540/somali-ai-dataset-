@@ -63,26 +63,27 @@ const LandingPage = () => {
             <strong className="text-white">25 million Somali speakers worldwide.</strong> 
             <span className="text-blue-400"> Zero authentic AI datasets.</span>
             <br />
-            <span className="text-emerald-400">We're building the cultural bridge between Somali heritage and artificial intelligence.</span>
+            <span className="text-emerald-400">Capturing our share of the </span>
+            <strong className="text-yellow-400">$75 BILLION AI language market.</strong>
           </p>
 
-          {/* Vision Stats */}
+          {/* Market Opportunity Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-2">25M+</div>
-              <div className="text-gray-400">Global Speakers</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">$75B</div>
+              <div className="text-gray-400">AI Language Market</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-400 mb-2">150+</div>
-              <div className="text-gray-400">Cultural Sentences</div>
+              <div className="text-3xl font-bold text-emerald-400 mb-2">25M+</div>
+              <div className="text-gray-400">Untapped Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
-              <div className="text-gray-400">Scholar Approved</div>
+              <div className="text-3xl font-bold text-blue-400 mb-2">ZERO</div>
+              <div className="text-gray-400">Competition</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-400 mb-2">First</div>
-              <div className="text-gray-400">In The World</div>
+              <div className="text-3xl font-bold text-purple-400 mb-2">100%</div>
+              <div className="text-gray-400">Market Share</div>
             </div>
           </div>
 
@@ -149,10 +150,14 @@ const LandingPage = () => {
                 </li>
                 <li className="flex items-center">
                   <Zap className="w-5 h-5 text-emerald-400 mr-3" />
-                  <span>Full-stack AI and web development</span>
+                  <span><strong>Machine Learning & AI specialist</strong></span>
                 </li>
                 <li className="flex items-center">
                   <Database className="w-5 h-5 text-blue-400 mr-3" />
+                  <span>Full-stack development & NLP engineering</span>
+                </li>
+                <li className="flex items-center">
+                  <Star className="w-5 h-5 text-yellow-400 mr-3" />
                   <span>Scholar-approved content validation</span>
                 </li>
               </ul>
@@ -286,7 +291,7 @@ const LandingPage = () => {
             Our Vision for Somali AI
           </h2>
           <p className="text-xl text-gray-300 mb-16">
-            Building the bridge between 25 million Somali speakers and the AI revolution.
+            Claiming our share of the <strong className="text-yellow-400">$75 BILLION AI language market</strong> while connecting 25 million Somali speakers to the AI revolution.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -297,19 +302,19 @@ const LandingPage = () => {
               <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  25 million Somali speakers worldwide
+                  <strong className="text-yellow-400">$75 BILLION</strong> AI language market
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  Zero quality AI datasets available
+                  <strong className="text-white">25 million Somali speakers</strong> completely ignored
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  Cultural misrepresentation in AI
+                  <strong className="text-red-400">ZERO authentic datasets</strong> available
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-3"></div>
-                  Excluded from AI revolution
+                  <strong className="text-orange-400">Massive untapped revenue</strong> opportunity
                 </li>
               </ul>
             </div>
@@ -326,19 +331,19 @@ const LandingPage = () => {
               <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
-                  <strong>Scholar-approved</strong> authentic content
+                  <strong className="text-yellow-400">FIRST-MOVER</strong> advantage in $75B market
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
-                  <strong>Cultural authority</strong> validation
+                  <strong className="text-emerald-400">100% market share</strong> opportunity
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
-                  <strong>Community-driven</strong> development
+                  <strong className="text-blue-400">Cultural authority</strong> = unbeatable moat
                 </li>
                 <li className="flex items-center text-gray-300">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
-                  <strong>Global accessibility</strong> for all
+                  <strong className="text-purple-400">Scholar-approved</strong> authentic content
                 </li>
               </ul>
             </div>
@@ -412,10 +417,11 @@ const LandingPage = () => {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Join the Somali AI Revolution
+            <span className="text-yellow-400">$75 BILLION</span> Market Opportunity
           </h2>
           <p className="text-xl text-gray-300 mb-12">
-            Be part of building the future of culturally authentic AI for 25 million Somali speakers worldwide.
+            Join us in capturing our share of the massive AI language market with the world's first authentic Somali dataset. 
+            <strong className="text-emerald-400"> First-mover advantage. Zero competition. 100% market share potential.</strong>
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -435,7 +441,7 @@ const LandingPage = () => {
           </div>
 
           <p className="text-gray-400">
-            🚀 Launching soon • 🤝 Partnership opportunities • 💡 Investment welcome
+            💰 $75B market opportunity • 🚀 First-mover advantage • 🤝 Investment & partnerships welcome
           </p>
         </div>
       </section>
