@@ -1,32 +1,35 @@
 {
-  "name": "somali-ai-dataset",
+  "name": "somali-ai-dataset-pro",
   "version": "1.0.0",
-  "description": "The World's First Comprehensive Somali AI Dataset - Building the $1B African Language AI Platform",
-  "main": "index.html",
+  "description": "Professional Somali AI Dataset Platform - $9.99/month unlimited",
+  "main": "index.js",
   "scripts": {
-    "start": "npx http-server . -p 3000",
-    "build": "echo 'Static site - no build needed'",
-    "preview": "npx http-server . -p 3000"
+    "dev": "next dev",
+    "build": "next build", 
+    "start": "next start",
+    "export": "next export"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/somali-ai-dataset"
+  "dependencies": {
+    "next": "^13.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "stripe": "^12.0.0",
+    "@stripe/stripe-js": "^1.54.0",
+    "tailwindcss": "^3.0.0",
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8.0.0",
+    "lucide-react": "^0.263.0",
+    "axios": "^1.0.0",
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/node": "^20.0.0"
   },
-  "keywords": [
-    "somali",
-    "ai",
-    "dataset",
-    "african-languages",
-    "nlp",
-    "machine-learning",
-    "investment-opportunity"
-  ],
-  "author": "Imam Yussuf Abdi",
-  "license": "MIT",
   "devDependencies": {
-    "http-server": "^14.1.1"
-  },
-  "engines": {
-    "node": ">=16"
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^13.0.0"
   }
 }
