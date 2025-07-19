@@ -5,7 +5,12 @@ import Link from 'next/link';
 const AIMeetingPro = () => {
   const [selectedPlan, setSelectedPlan] = useState('professional');
   const [isRecording, setIsRecording] = useState(false);
-  const [meetingData, setMeetingData] = useState({
+  const [meetingData, setMeetingData] = useState<{
+    transcript: string;
+    summary: string;
+    actionItems: string[];
+    participants: string[];
+  }>({
     transcript: '',
     summary: '',
     actionItems: [],
