@@ -9,12 +9,12 @@ const AIToolsPage = () => {
     {
       id: 'logo-generator',
       title: 'AI Logo Generator',
-      description: 'Create professional logos in seconds with bilingual text support',
+      description: 'Create professional logos in seconds with AI technology',
       icon: Image,
       price: 47,
       features: [
         'Unlimited logo generations',
-        'English & Somali text support',
+        'Multi-language text support',
         'High-resolution downloads',
         'Commercial license included',
         'Multiple file formats (PNG, SVG, PDF)',
@@ -25,14 +25,14 @@ const AIToolsPage = () => {
     {
       id: 'ad-copy-generator',
       title: 'Ad Copy Generator',
-      description: 'Generate compelling marketing copy in English and Somali',
+      description: 'Generate compelling marketing copy for any platform',
       icon: Megaphone,
       price: 37,
       features: [
         'Unlimited ad copy generation',
         'Facebook, Google, Instagram formats',
-        'Bilingual content creation',
-        'Cultural context optimization',
+        'Multi-language content creation',
+        'Industry-specific optimization',
         'A/B testing variations',
         'Export to all platforms'
       ],
@@ -41,12 +41,12 @@ const AIToolsPage = () => {
     {
       id: 'invoice-generator',
       title: 'Invoice Generator',
-      description: 'Professional invoices with multilingual support',
+      description: 'Professional invoices for global businesses',
       icon: Receipt,
       price: 27,
       features: [
         'Unlimited invoice creation',
-        'English & Somali language options',
+        'Multiple language options',
         'Professional templates',
         'Tax calculations',
         'PDF export',
@@ -57,13 +57,13 @@ const AIToolsPage = () => {
     {
       id: 'content-writer',
       title: 'Content Writer AI',
-      description: 'Blog posts, articles, and web content in both languages',
+      description: 'Blog posts, articles, and web content for any audience',
       icon: FileText,
       price: 57,
       features: [
         'Unlimited content generation',
         'SEO-optimized writing',
-        'Bilingual capabilities',
+        'Multi-language capabilities',
         'Multiple content types',
         'Plagiarism-free guarantee',
         'Research integration'
@@ -120,14 +120,14 @@ const AIToolsPage = () => {
             AI Tools for
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent">
-              {language === 'english' ? 'Global Business' : 'Ganacsi Caalami Ah'}
+              {language === 'english' ? 'Modern Business' : 'Ganacsi Casri Ah'}
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
             {language === 'english' 
-              ? <>Professional AI tools that work in <strong className="text-blue-400">English</strong> and <strong className="text-emerald-400">Somali</strong>. One-time payment, unlimited access forever.</>
-              : <>Qaladaha AI-ga xirfadda leh oo ka shaqeeya <strong className="text-blue-400">Ingiriis</strong> iyo <strong className="text-emerald-400">Soomaali</strong>. Hal mar lacag bixin, isticmaal aan xadidnayn weligaa.</>
+              ? <>Professional AI tools for entrepreneurs and businesses worldwide. <strong className="text-blue-400">One-time payment</strong>, <strong className="text-emerald-400">unlimited access forever</strong>.</>
+              : <>Qaladaha AI-ga xirfadda leh ganacsatada iyo shirkadaha adduunka oo dhan. <strong className="text-blue-400">Hal mar lacag bixin</strong>, <strong className="text-emerald-400">isticmaal aan xadidnayn weligaa</strong>.</>
             }
           </p>
 
@@ -150,10 +150,10 @@ const AIToolsPage = () => {
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-400 mb-2">
-                {language === 'english' ? 'BILINGUAL' : 'LUUQAD LABAAD'}
+                {language === 'english' ? 'GLOBAL' : 'CAALAMI'}
               </div>
               <div className="text-gray-400">
-                {language === 'english' ? 'EN + SO Support' : 'EN + SO Taageero'}
+                {language === 'english' ? 'Worldwide Support' : 'Taageero Aduunka'}
               </div>
             </div>
           </div>
@@ -169,8 +169,8 @@ const AIToolsPage = () => {
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               {language === 'english' 
-                ? 'Build your business with AI tools that understand both cultures and languages'
-                : 'Dhis ganacsigaaga iyadoo la isticmaalayo qalabka AI-ga oo fahanaya dhaqamada iyo luqadaha labada'
+                ? 'Build your business with cutting-edge AI tools designed for modern entrepreneurs'
+                : 'Dhis ganacsigaaga iyadoo la isticmaalayo qalabka AI-ga casriga ah ee loo sameeyay ganacsatada casriga ah'
               }
             </p>
           </div>
@@ -255,12 +255,12 @@ const AIToolsPage = () => {
                 <Globe className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-4">
-                {language === 'english' ? 'Bilingual AI' : 'AI Luuqad Labaad'}
+                {language === 'english' ? 'Global AI' : 'AI Caalami'}
               </h3>
               <p className="text-gray-300">
                 {language === 'english' 
-                  ? 'First AI tools that truly understand both English and Somali cultures'
-                  : 'Qaladaha AI-ga ugu horreeyay ee dhab ahaan fahanaya dhaqanka Ingiriiska iyo Soomaalida'
+                  ? 'Advanced AI tools designed for entrepreneurs and businesses worldwide'
+                  : 'Qaladaha AI-ga horumarsan ee loo sameeyay ganacsatada iyo shirkadaha adduunka oo dhan'
                 }
               </p>
             </div>
@@ -285,12 +285,12 @@ const AIToolsPage = () => {
                 <Star className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-4">
-                {language === 'english' ? 'Cultural Authenticity' : 'Dhaqan Asaasi'}
+                {language === 'english' ? 'Quality Guaranteed' : 'Tayada La Dhamaystir'}
               </h3>
               <p className="text-gray-300">
                 {language === 'english' 
-                  ? 'Built by Somali cultural authority with deep understanding of both markets'
-                  : 'Waxaa dhisay mas\'uul dhaqan Soomaali oo si qoto dheer u fahanaya labada suuq'
+                  ? 'Built with cutting-edge technology and tested by entrepreneurs worldwide'
+                  : 'Waxaa lagu dhisay teknoloji casri ah oo ay tijaabiyeen ganacsato adduunka oo dhan'
                 }
               </p>
             </div>

@@ -1,0 +1,379 @@
+import React, { useState, useEffect } from 'react';
+import { Mic, Square, Play, Download, Loader, CheckCircle, AlertCircle } from 'lucide-react';
+import MeetingAIService, { MeetingData, MeetingSummary } from '../services/meeting-ai';
+
+interface MeetingIntegrationProps {
+  onSummaryGenerated?: (summary: MeetingSummary) => void;
+}
+
+const MeetingIntegration: React.FC<MeetingIntegrationProps> = ({ onSummaryGenerated }) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [meetingSummary, setMeetingSummary] = useState<MeetingSummary | null>(null);
+  const [transcript, setTranscript] = useState('');
+  const [error, setError] = useState('');
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+
+  const meetingAI = new MeetingAIService();
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isRecording]);
+
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        } 
+      });
+      
+      const recorder = new MediaRecorder(stream, {
+        mimeType: 'audio/webm;codecs=opus'
+      });
+      
+      const chunks: BlobPart[] = [];
+      
+      recorder.ondataavailable = (event) => {
+        chunks.push(event.data);
+      };
+      
+      recorder.onstop = async () => {
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+        await processAudioToTranscript(audioBlob);
+      };
+      
+      recorder.start(1000); // Collect data every second
+      setMediaRecorder(recorder);
+      setIsRecording(true);
+      setRecordingTime(0);
+      setError('');
+      
+    } catch (err) {
+      setError('Unable to access microphone. Please check permissions.');
+      console.error('Recording error:', err);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      setIsRecording(false);
+      setIsProcessing(true);
+    }
+  };
+
+  const processAudioToTranscript = async (audioBlob: Blob) => {
+    try {
+      // In production, you would use a speech-to-text service like:
+      // - OpenAI Whisper API
+      // - Google Speech-to-Text
+      // - Azure Speech Services
+      
+      // For demo, we'll simulate transcription
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const demoTranscript = `
+        Sarah: Good morning everyone. Let's start our Q4 marketing strategy meeting. We have three main items to discuss today.
+        
+        Ahmed: Thanks Sarah. First, I'd like to talk about our expansion into the Somali market. We've identified this as a key opportunity.
+        
+        Maria: That's great. What's our timeline looking like?
+        
+        Ahmed: We're aiming to launch by December. Sarah, can you handle the budget proposal?
+        
+        Sarah: Absolutely. I'll have the Q4 budget ready by Friday. We're looking at a 75% increase for this initiative.
+        
+        Maria: Perfect. I'll connect with our regional partners this week. Ahmed, can you research the market demographics?
+        
+        Ahmed: Sure thing. I'll get that done by next Tuesday.
+        
+        Sarah: Great. Let's reconvene next Tuesday to review everything. Meeting adjourned.
+      `;
+      
+      setTranscript(demoTranscript);
+      await generateMeetingSummary(demoTranscript);
+      
+    } catch (err) {
+      setError('Failed to process audio. Please try again.');
+      setIsProcessing(false);
+    }
+  };
+
+  const generateMeetingSummary = async (transcriptText: string) => {
+    try {
+      const meetingData: MeetingData = {
+        transcript: transcriptText,
+        duration: recordingTime,
+        participants: ['Sarah Johnson', 'Ahmed Ali', 'Maria Garcia'],
+        title: 'Q4 Marketing Strategy Meeting'
+      };
+
+      const summary = await meetingAI.processMeeting(meetingData);
+      setMeetingSummary(summary);
+      setIsProcessing(false);
+      
+      if (onSummaryGenerated) {
+        onSummaryGenerated(summary);
+      }
+      
+    } catch (err) {
+      setError('Failed to generate meeting summary. Please try again.');
+      setIsProcessing(false);
+    }
+  };
+
+  const downloadSummary = () => {
+    if (!meetingSummary) return;
+    
+    const summaryText = `
+MEETING SUMMARY
+Generated by AI Meeting Pro
+
+OVERVIEW:
+${meetingSummary.summary}
+
+ACTION ITEMS:
+${meetingSummary.actionItems.map((item, index) => 
+  `${index + 1}. ${item.task} (${item.assignee}) - Due: ${item.deadline} [${item.priority.toUpperCase()}]`
+).join('\n')}
+
+KEY DECISIONS:
+${meetingSummary.keyDecisions.map((decision, index) => `${index + 1}. ${decision}`).join('\n')}
+
+INSIGHTS:
+${meetingSummary.insights.map((insight, index) => `• ${insight}`).join('\n')}
+
+SENTIMENT: ${meetingSummary.sentiment.toUpperCase()}
+
+RECOMMENDATIONS FOR NEXT MEETING:
+${meetingSummary.nextMeetingRecommendations.map((rec, index) => `${index + 1}. ${rec}`).join('\n')}
+
+---
+Generated with AI Meeting Pro - Powered by Somali AI Dataset
+    `;
+    
+    const blob = new Blob([summaryText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `meeting-summary-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const connectZoom = () => {
+    alert('Zoom integration coming soon! This will automatically detect and summarize your Zoom meetings.');
+  };
+
+  const connectGoogleMeet = () => {
+    alert('Google Meet integration coming soon! This will automatically detect and summarize your Google Meet meetings.');
+  };
+
+  const connectTeams = () => {
+    alert('Microsoft Teams integration coming soon! This will automatically detect and summarize your Teams meetings.');
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      {/* Recording Interface */}
+      <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl p-8 border border-gray-700 mb-8">
+        <h3 className="text-2xl font-bold text-white mb-6 text-center">
+          🎙️ Record & Summarize Your Meeting
+        </h3>
+        
+        {/* Recording Controls */}
+        <div className="flex flex-col items-center space-y-6">
+          {!isRecording && !isProcessing && !meetingSummary ? (
+            <button
+              onClick={startRecording}
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
+            >
+              <Mic className="w-6 h-6 mr-3" />
+              Start Recording Meeting
+            </button>
+          ) : isRecording ? (
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-4">
+                <div className="animate-pulse bg-red-500 w-4 h-4 rounded-full mr-3"></div>
+                <span className="text-red-400 font-bold text-xl">{formatTime(recordingTime)}</span>
+              </div>
+              <button
+                onClick={stopRecording}
+                className="bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center mx-auto"
+              >
+                <Square className="w-5 h-5 mr-2" />
+                Stop Recording
+              </button>
+            </div>
+          ) : isProcessing ? (
+            <div className="text-center">
+              <Loader className="w-8 h-8 animate-spin text-blue-400 mx-auto mb-4" />
+              <p className="text-blue-400 font-semibold">Processing with AI...</p>
+              <p className="text-gray-400 text-sm mt-2">Generating summary with Somali AI integration</p>
+            </div>
+          ) : null}
+          
+          {error && (
+            <div className="flex items-center text-red-400 bg-red-900/20 rounded-lg p-4 border border-red-500/30">
+              <AlertCircle className="w-5 h-5 mr-2" />
+              {error}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Platform Integrations */}
+      <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl p-8 border border-gray-700 mb-8">
+        <h3 className="text-2xl font-bold text-white mb-6 text-center">
+          🔗 Connect Your Meeting Platforms
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <button
+            onClick={connectZoom}
+            className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center"
+          >
+            <Play className="w-5 h-5 mr-2" />
+            Connect Zoom
+          </button>
+          
+          <button
+            onClick={connectGoogleMeet}
+            className="bg-green-600 hover:bg-green-700 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center"
+          >
+            <Play className="w-5 h-5 mr-2" />
+            Connect Google Meet
+          </button>
+          
+          <button
+            onClick={connectTeams}
+            className="bg-purple-600 hover:bg-purple-700 text-white py-4 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center"
+          >
+            <Play className="w-5 h-5 mr-2" />
+            Connect Teams
+          </button>
+        </div>
+        
+        <p className="text-gray-400 text-center mt-4 text-sm">
+          Automatic meeting detection and summarization coming soon
+        </p>
+      </div>
+
+      {/* Meeting Summary Results */}
+      {meetingSummary && (
+        <div className="bg-gradient-to-br from-emerald-900/30 to-blue-900/30 rounded-2xl p-8 border border-emerald-500/30">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-white flex items-center">
+              <CheckCircle className="w-6 h-6 text-emerald-400 mr-3" />
+              AI Meeting Summary Generated
+            </h3>
+            <button
+              onClick={downloadSummary}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors flex items-center"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download
+            </button>
+          </div>
+          
+          <div className="space-y-6">
+            {/* Summary */}
+            <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+              <h4 className="text-lg font-semibold text-emerald-400 mb-3">📝 Meeting Summary</h4>
+              <p className="text-gray-300">{meetingSummary.summary}</p>
+            </div>
+            
+            {/* Action Items */}
+            <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+              <h4 className="text-lg font-semibold text-blue-400 mb-3">✅ Action Items</h4>
+              <div className="space-y-2">
+                {meetingSummary.actionItems.map((item, index) => (
+                  <div key={index} className="flex items-start space-x-3 p-3 bg-blue-900/20 rounded-lg border border-blue-500/30">
+                    <div className="flex-1">
+                      <p className="text-white font-medium">{item.task}</p>
+                      <div className="flex items-center space-x-4 mt-1 text-sm">
+                        <span className="text-blue-400">👤 {item.assignee}</span>
+                        <span className="text-yellow-400">📅 {item.deadline}</span>
+                        <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                          item.priority === 'high' ? 'bg-red-500/20 text-red-400' :
+                          item.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                          'bg-green-500/20 text-green-400'
+                        }`}>
+                          {item.priority.toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Key Decisions */}
+            <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+              <h4 className="text-lg font-semibold text-purple-400 mb-3">🎯 Key Decisions</h4>
+              <ul className="space-y-2">
+                {meetingSummary.keyDecisions.map((decision, index) => (
+                  <li key={index} className="text-gray-300 flex items-start">
+                    <span className="text-purple-400 mr-2">•</span>
+                    {decision}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Insights & Sentiment */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+                <h4 className="text-lg font-semibold text-orange-400 mb-3">💡 Insights</h4>
+                <ul className="space-y-1">
+                  {meetingSummary.insights.map((insight, index) => (
+                    <li key={index} className="text-gray-300 text-sm">• {insight}</li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+                <h4 className="text-lg font-semibold text-pink-400 mb-3">😊 Meeting Sentiment</h4>
+                <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
+                  meetingSummary.sentiment === 'positive' ? 'bg-green-500/20 text-green-400' :
+                  meetingSummary.sentiment === 'negative' ? 'bg-red-500/20 text-red-400' :
+                  'bg-gray-500/20 text-gray-400'
+                }`}>
+                  {meetingSummary.sentiment.toUpperCase()}
+                </div>
+                
+                <h5 className="text-pink-400 font-medium mt-4 mb-2">Next Meeting Recommendations:</h5>
+                <ul className="space-y-1">
+                  {meetingSummary.nextMeetingRecommendations.slice(0, 3).map((rec, index) => (
+                    <li key={index} className="text-gray-300 text-sm">• {rec}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MeetingIntegration;

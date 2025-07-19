@@ -28,7 +28,7 @@ const LandingPage = () => {
               <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
               <a href="#vision" className="text-gray-300 hover:text-white transition-colors">Vision</a>
               <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Dataset</a>
-              <Link href="/ai-tools" className="text-gray-300 hover:text-white transition-colors">AI Tools</Link>
+              <Link href="/ai-meeting-pro" className="text-gray-300 hover:text-white transition-colors">🚀 AI Meeting Pro</Link>
               <Link href="/investor" className="text-gray-300 hover:text-white transition-colors">Investors</Link>
               <button 
                 onClick={handleNotifyMe}
