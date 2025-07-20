@@ -28,6 +28,7 @@ const LandingPage = () => {
               <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
               <a href="#vision" className="text-gray-300 hover:text-white transition-colors">Vision</a>
               <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Dataset</a>
+              <Link href="/ai-tools-bundle" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 20 AI Tools - $19.99</Link>
               <Link href="/ai-meeting-pro" className="text-gray-300 hover:text-white transition-colors">🚀 AI Meeting Pro</Link>
               <Link href="/investor" className="text-gray-300 hover:text-white transition-colors">Investors</Link>
               <button 
@@ -90,19 +91,20 @@ const LandingPage = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link 
+              href="/ai-tools-bundle"
+              className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
+            >
+              <Zap className="mr-2 w-5 h-5" />
+              🔥 Get 20 AI Tools - $19.99/month
+            </Link>
             <button 
               onClick={handleNotifyMe}
               className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
             >
               <Mail className="mr-2 w-5 h-5" />
-              Get Early Access
+              Get Dataset Access
             </button>
-            <a 
-              href="#vision" 
-              className="border border-white/20 hover:border-white/40 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:bg-white/5"
-            >
-              Our Vision
-            </a>
           </div>
 
           {/* Trust Indicators */}
