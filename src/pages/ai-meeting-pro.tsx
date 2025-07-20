@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Globe, Zap, Star, DollarSign, Brain, Users, TrendingUp, Shield, Target, Mic, FileText, CheckCircle, Play, Download, Clock, Languages } from 'lucide-react';
 import Link from 'next/link';
+import ProfessionalMeetingRecorder from '../components/ProfessionalMeetingRecorder';
 
 const AIMeetingPro = () => {
   const [selectedPlan, setSelectedPlan] = useState('professional');
@@ -157,42 +158,9 @@ const AIMeetingPro = () => {
             <strong className="text-blue-400"> Start making money from better meetings today.</strong>
           </p>
 
-          {/* Demo Meeting Recorder */}
-          <div className="max-w-2xl mx-auto mb-16">
-            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl p-8 border border-gray-700">
-              <h3 className="text-xl font-bold text-white mb-6">🎬 Live Demo - Try It Now</h3>
-              
-              {!isRecording && !meetingData.summary ? (
-                <button
-                  onClick={handleStartRecording}
-                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center mx-auto"
-                >
-                  <Play className="w-6 h-6 mr-3" />
-                  Start Demo Meeting Recording
-                </button>
-              ) : isRecording ? (
-                <div className="text-center">
-                  <div className="animate-pulse bg-red-500 w-4 h-4 rounded-full mx-auto mb-4"></div>
-                  <p className="text-red-400 font-semibold">🎙️ Recording & Processing with AI...</p>
-                  <p className="text-gray-400 text-sm mt-2">Our Somali AI is analyzing the meeting content</p>
-                </div>
-              ) : (
-                <div className="text-left space-y-4">
-                  <div className="bg-emerald-900/20 rounded-lg p-4 border border-emerald-500/30">
-                    <h4 className="text-emerald-400 font-semibold mb-2">📝 AI Summary Generated:</h4>
-                    <p className="text-gray-300 text-sm">{demoMeeting.summary}</p>
-                  </div>
-                  <div className="bg-blue-900/20 rounded-lg p-4 border border-blue-500/30">
-                    <h4 className="text-blue-400 font-semibold mb-2">✅ Action Items:</h4>
-                    <ul className="text-gray-300 text-sm space-y-1">
-                      {demoMeeting.actionItems.map((item, index) => (
-                        <li key={index}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </div>
+          {/* Professional Meeting Recorder */}
+          <div className="max-w-6xl mx-auto mb-16">
+            <ProfessionalMeetingRecorder userTier="professional" />
           </div>
 
           {/* Stats */}
