@@ -245,15 +245,11 @@ function AIBusinessCreationPage() {
               </p>
 
               <p className="text-xl text-gray-300 mb-12 max-w-4xl mx-auto">
-                From immigrant to AI entrepreneur generating $100K+/month. Now I'm helping business professionals like you build AI empires without the technical complexity or massive costs.
+                From immigrant to successful AI entrepreneur. Now I'm helping business professionals like you build AI empires without the technical complexity or massive costs.
               </p>
 
               {/* Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 max-w-5xl mx-auto">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <div className="text-4xl font-black text-emerald-400 mb-2">$100K+</div>
-                  <div className="text-gray-300">My Monthly Revenue</div>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                   <div className="text-4xl font-black text-blue-400 mb-2">50+</div>
                   <div className="text-gray-300">AI Businesses Built</div>
@@ -654,7 +650,7 @@ function AIBusinessCreationPage() {
                   <span className="text-xl font-bold">Somali AI Dataset</span>
                 </div>
                 <p className="text-gray-400 mb-4">
-                  From immigrant to AI entrepreneur. Now helping professionals build profitable AI businesses without the complexity or massive costs.
+                  From immigrant to successful AI entrepreneur. Now helping professionals build profitable AI businesses without the complexity or massive costs.
                 </p>
                 <div className="text-emerald-400 font-semibold">
                   Building AI businesses that matter.
