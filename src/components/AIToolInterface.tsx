@@ -120,9 +120,9 @@ function AIToolInterface({
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
             placeholder={input.placeholder}
-            className=\"w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical min-h-24\"
-            {...(input.maxLength && { maxLength: input.maxLength })}
-            {...(input.required && { required: true })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical min-h-24"
+            maxLength={input.maxLength || undefined}
+            required={input.required || false}
           />
         );
 
@@ -132,8 +132,8 @@ function AIToolInterface({
             id={input.id}
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
-            className=\"w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500\"
-            {...(input.required && { required: true })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            required={input.required || false}
           >
             <option value=\"\">{input.placeholder}</option>
             {input.options?.map(option => (
@@ -145,27 +145,27 @@ function AIToolInterface({
       case 'number':
         return (
           <input
-            type=\"number\"
+            type="number"
             id={input.id}
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
             placeholder={input.placeholder}
-            className=\"w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500\"
-            {...(input.required && { required: true })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            required={input.required || false}
           />
         );
 
       default: // text
         return (
           <input
-            type=\"text\"
+            type="text"
             id={input.id}
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
             placeholder={input.placeholder}
-            className=\"w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500\"
-            {...(input.maxLength && { maxLength: input.maxLength })}
-            {...(input.required && { required: true })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            maxLength={input.maxLength || undefined}
+            required={input.required || false}
           />
         );
     }
