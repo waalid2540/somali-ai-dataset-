@@ -11,7 +11,7 @@ import {
   Clock,
   Users,
   Volume2,
-  Waveform,
+  Activity,
   Brain,
   Zap
 } from 'lucide-react';
