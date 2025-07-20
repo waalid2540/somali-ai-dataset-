@@ -17,12 +17,14 @@ import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
 interface AIToolsDashboardProps {
   userSubscription?: 'free' | 'pro' | 'enterprise';
   userId?: string;
+  onToolSelect?: (tool: AIToolConfig) => void;
 }
 
 const AIToolsDashboard: React.FC<AIToolsDashboardProps> = ({ 
   userSubscription = 'free',
-  userId 
-}) => {
+  userId,
+  onToolSelect
+}): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -50,7 +52,11 @@ const AIToolsDashboard: React.FC<AIToolsDashboardProps> = ({
   ];
 
   const handleToolSelect = (tool: AIToolConfig) => {
-    setSelectedTool(tool);
+    if (onToolSelect) {
+      onToolSelect(tool);
+    } else {
+      setSelectedTool(tool);
+    }
   };
 
   const getCategoryColor = (category: string) => {
