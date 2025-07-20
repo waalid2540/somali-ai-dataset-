@@ -21,11 +21,11 @@ interface AIToolInterfaceProps {
   userSubscription?: 'free' | 'pro' | 'enterprise';
 }
 
-const AIToolInterface: React.FC<AIToolInterfaceProps> = ({ 
+function AIToolInterface({ 
   tool, 
   onBack, 
   userSubscription = 'free' 
-}) => {
+}: AIToolInterfaceProps) {
   const [inputs, setInputs] = useState<Record<string, any>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<AIToolResult | null>(null);
@@ -382,6 +382,6 @@ const AIToolInterface: React.FC<AIToolInterfaceProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default AIToolInterface;

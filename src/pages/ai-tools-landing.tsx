@@ -17,7 +17,7 @@ import {
   BarChart3
 } from 'lucide-react';
 
-const AIToolsLandingPage: React.FC = () => {
+function AIToolsLandingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
 
   const tools = [
@@ -465,6 +465,6 @@ const AIToolsLandingPage: React.FC = () => {
       </div>
     </>
   );
-};
+}
 
 export default AIToolsLandingPage;
