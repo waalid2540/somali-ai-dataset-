@@ -5,7 +5,7 @@ import AIToolsDashboard from '../components/AIToolsDashboard';
 import AIToolInterface from '../components/AIToolInterface';
 import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
 
-const AIToolsBundlePage: React.FC = (): JSX.Element => {
+const AIToolsBundlePage: React.FC = () => {
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
   const [userSubscription] = useState<'free' | 'pro' | 'enterprise'>('pro');
 

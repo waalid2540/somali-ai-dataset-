@@ -17,7 +17,7 @@ import {
   BarChart3
 } from 'lucide-react';
 
-const AIToolsLandingPage: React.FC = (): JSX.Element => {
+const AIToolsLandingPage: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
 
   const tools = [

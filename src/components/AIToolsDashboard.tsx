@@ -24,7 +24,7 @@ const AIToolsDashboard: React.FC<AIToolsDashboardProps> = ({
   userSubscription = 'free',
   userId,
   onToolSelect
-}): JSX.Element => {
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');

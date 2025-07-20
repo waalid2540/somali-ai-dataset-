@@ -25,7 +25,7 @@ const AIToolInterface: React.FC<AIToolInterfaceProps> = ({
   tool, 
   onBack, 
   userSubscription = 'free' 
-}): JSX.Element => {
+}) => {
   const [inputs, setInputs] = useState<Record<string, any>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<AIToolResult | null>(null);
