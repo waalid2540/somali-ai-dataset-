@@ -624,26 +624,17 @@ class IntegrationEngine {
         throw new Error('LinkedIn access token and person ID required');
       }
 
-      const postPayload = {
-        author: `urn:li:person:${credentials.linkedin_person_id}`,
-        lifecycleState: 'PUBLISHED',
-        specificContent: {
-          'com.linkedin.ugc.ShareContent': {
-            shareCommentary: {
-              text: postData.content
-            },
-            shareMediaCategory: 'NONE'
-          }
+      const shareContent: any = {
+        shareCommentary: {
+          text: postData.content
         },
-        visibility: {
-          'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC'
-        }
+        shareMediaCategory: 'NONE'
       };
 
       // Add media if image URL provided
       if (postData.imageUrl) {
-        postPayload.specificContent['com.linkedin.ugc.ShareContent'].shareMediaCategory = 'IMAGE';
-        postPayload.specificContent['com.linkedin.ugc.ShareContent'].media = [{
+        shareContent.shareMediaCategory = 'IMAGE';
+        shareContent.media = [{
           status: 'READY',
           description: {
             text: 'Shared via AI Tools'
@@ -654,6 +645,17 @@ class IntegrationEngine {
           }
         }];
       }
+
+      const postPayload = {
+        author: `urn:li:person:${credentials.linkedin_person_id}`,
+        lifecycleState: 'PUBLISHED',
+        specificContent: {
+          'com.linkedin.ugc.ShareContent': shareContent
+        },
+        visibility: {
+          'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC'
+        }
+      };
 
       const response = await fetch('https://api.linkedin.com/v2/ugcPosts', {
         method: 'POST',
