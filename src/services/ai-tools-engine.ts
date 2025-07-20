@@ -41,7 +41,11 @@ class AIToolsEngine {
   private baseURL = 'https://api.openai.com/v1';
   
   constructor() {
-    this.apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY || '';
+    this.apiKey = process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY || '';
+    
+    if (!this.apiKey) {
+      console.error('OpenAI API key not found. Please set OPENAI_API_KEY in environment variables.');
+    }
   }
 
   /**
