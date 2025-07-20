@@ -70,61 +70,61 @@ function AIToolsDashboard({
   };
 
   return (
-    <div className=\"min-h-screen bg-gradient-to-br from-slate-50 to-blue-50\">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header Section */}
-      <div className=\"bg-white border-b border-gray-200\">
-        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6\">
-          <div className=\"flex items-center justify-between\">
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
             <div>
-              <h1 className=\"text-3xl font-bold text-gray-900\">AI Tools Bundle</h1>
-              <p className=\"text-gray-600 mt-1\">20 powerful AI tools for $19.99/month</p>
+              <h1 className="text-3xl font-bold text-gray-900">AI Tools Bundle</h1>
+              <p className="text-gray-600 mt-1">20 powerful AI tools for $19.99/month</p>
             </div>
-            <div className=\"flex items-center space-x-4\">
-              <div className=\"bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-2 rounded-lg\">
-                <span className=\"font-semibold\">{userSubscription.toUpperCase()}</span>
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-2 rounded-lg">
+                <span className="font-semibold">{userSubscription.toUpperCase()}</span>
               </div>
-              <div className=\"text-right\">
-                <div className=\"text-sm text-gray-500\">Monthly Savings</div>
-                <div className=\"text-lg font-bold text-green-600\">$780+</div>
+              <div className="text-right">
+                <div className="text-sm text-gray-500">Monthly Savings</div>
+                <div className="text-lg font-bold text-green-600">$780+</div>
               </div>
             </div>
           </div>
 
           {/* Stats Bar */}
-          <div className=\"grid grid-cols-4 gap-4 mt-6\">
-            <div className=\"bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white\">
-              <div className=\"flex items-center\">
-                <Zap className=\"h-6 w-6 mr-2\" />
+          <div className="grid grid-cols-4 gap-4 mt-6">
+            <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white">
+              <div className="flex items-center">
+                <Zap className="h-6 w-6 mr-2" />
                 <div>
-                  <div className=\"text-2xl font-bold\">20</div>
-                  <div className=\"text-sm opacity-90\">AI Tools</div>
+                  <div className="text-2xl font-bold">20</div>
+                  <div className="text-sm opacity-90">AI Tools</div>
                 </div>
               </div>
             </div>
-            <div className=\"bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 text-white\">
-              <div className=\"flex items-center\">
-                <DollarSign className=\"h-6 w-6 mr-2\" />
+            <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 text-white">
+              <div className="flex items-center">
+                <DollarSign className="h-6 w-6 mr-2" />
                 <div>
-                  <div className=\"text-2xl font-bold\">$19.99</div>
-                  <div className=\"text-sm opacity-90\">Per Month</div>
+                  <div className="text-2xl font-bold">$19.99</div>
+                  <div className="text-sm opacity-90">Per Month</div>
                 </div>
               </div>
             </div>
-            <div className=\"bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 text-white\">
-              <div className=\"flex items-center\">
-                <TrendingUp className=\"h-6 w-6 mr-2\" />
+            <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 text-white">
+              <div className="flex items-center">
+                <TrendingUp className="h-6 w-6 mr-2" />
                 <div>
-                  <div className=\"text-2xl font-bold\">95%</div>
-                  <div className=\"text-sm opacity-90\">Accuracy</div>
+                  <div className="text-2xl font-bold">95%</div>
+                  <div className="text-sm opacity-90">Accuracy</div>
                 </div>
               </div>
             </div>
-            <div className=\"bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-4 text-white\">
-              <div className=\"flex items-center\">
-                <Clock className=\"h-6 w-6 mr-2\" />
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-4 text-white">
+              <div className="flex items-center">
+                <Clock className="h-6 w-6 mr-2" />
                 <div>
-                  <div className=\"text-2xl font-bold\">&lt;30s</div>
-                  <div className=\"text-sm opacity-90\">Avg Time</div>
+                  <div className="text-2xl font-bold">&lt;30s</div>
+                  <div className="text-sm opacity-90">Avg Time</div>
                 </div>
               </div>
             </div>
@@ -133,41 +133,41 @@ function AIToolsDashboard({
       </div>
 
       {/* Search and Filter Section */}
-      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6\">
-        <div className=\"flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0\">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
           {/* Search Bar */}
-          <div className=\"relative flex-1 max-w-lg\">
-            <Search className=\"absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5\" />
+          <div className="relative flex-1 max-w-lg">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
             <input
-              type=\"text\"
-              placeholder=\"Search AI tools...\"
+              type="text"
+              placeholder="Search AI tools..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className=\"w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500\"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
           {/* View Toggle */}
-          <div className=\"flex items-center space-x-4\">
-            <div className=\"flex bg-gray-100 rounded-lg p-1\">
+          <div className="flex items-center space-x-4">
+            <div className="flex bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('grid')}
                 className={`p-2 rounded ${viewMode === 'grid' ? 'bg-white shadow' : ''}`}
               >
-                <Grid className=\"h-4 w-4\" />
+                <Grid className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
                 className={`p-2 rounded ${viewMode === 'list' ? 'bg-white shadow' : ''}`}
               >
-                <List className=\"h-4 w-4\" />
+                <List className="h-4 w-4" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Category Filter */}
-        <div className=\"flex flex-wrap gap-2 mt-4\">
+        <div className="flex flex-wrap gap-2 mt-4">
           {categories.map(category => (
             <button
               key={category.id}
@@ -185,29 +185,29 @@ function AIToolsDashboard({
       </div>
 
       {/* Tools Grid/List */}
-      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12\">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         {viewMode === 'grid' ? (
-          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6\">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredTools.map(tool => (
               <div
                 key={tool.id}
                 onClick={() => handleToolSelect(tool)}
-                className=\"bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105\"
+                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105"
               >
-                <div className=\"flex items-start justify-between mb-4\">
-                  <div className=\"text-3xl\">{tool.icon}</div>
+                <div className="flex items-start justify-between mb-4">
+                  <div className="text-3xl">{tool.icon}</div>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(tool.category)}`}>
                     {tool.category}
                   </span>
                 </div>
-                <h3 className=\"text-lg font-semibold text-gray-900 mb-2\">{tool.name}</h3>
-                <p className=\"text-gray-600 text-sm mb-4 line-clamp-2\">{tool.description}</p>
-                <div className=\"flex items-center justify-between\">
-                  <div className=\"flex items-center space-x-2 text-sm text-gray-500\">
-                    <Star className=\"h-4 w-4 fill-current text-yellow-400\" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{tool.name}</h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{tool.description}</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <Star className="h-4 w-4 fill-current text-yellow-400" />
                     <span>4.9</span>
                   </div>
-                  <button className=\"bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors\">
+                  <button className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                     Use Tool
                   </button>
                 </div>
@@ -215,26 +215,26 @@ function AIToolsDashboard({
             ))}
           </div>
         ) : (
-          <div className=\"space-y-4\">
+          <div className="space-y-4">
             {filteredTools.map(tool => (
               <div
                 key={tool.id}
                 onClick={() => handleToolSelect(tool)}
-                className=\"bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer\"
+                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
               >
-                <div className=\"flex items-center justify-between\">
-                  <div className=\"flex items-center space-x-4\">
-                    <div className=\"text-2xl\">{tool.icon}</div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="text-2xl">{tool.icon}</div>
                     <div>
-                      <h3 className=\"text-lg font-semibold text-gray-900\">{tool.name}</h3>
-                      <p className=\"text-gray-600 text-sm\">{tool.description}</p>
+                      <h3 className="text-lg font-semibold text-gray-900">{tool.name}</h3>
+                      <p className="text-gray-600 text-sm">{tool.description}</p>
                     </div>
                   </div>
-                  <div className=\"flex items-center space-x-4\">
+                  <div className="flex items-center space-x-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(tool.category)}`}>
                       {tool.category}
                     </span>
-                    <button className=\"bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors\">
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                       Use Tool
                     </button>
                   </div>
@@ -245,35 +245,35 @@ function AIToolsDashboard({
         )}
 
         {filteredTools.length === 0 && (
-          <div className=\"text-center py-12\">
-            <div className=\"text-gray-400 text-6xl mb-4\">🔍</div>
-            <h3 className=\"text-lg font-medium text-gray-900 mb-2\">No tools found</h3>
-            <p className=\"text-gray-600\">Try adjusting your search or filter criteria</p>
+          <div className="text-center py-12">
+            <div className="text-gray-400 text-6xl mb-4">🔍</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No tools found</h3>
+            <p className="text-gray-600">Try adjusting your search or filter criteria</p>
           </div>
         )}
       </div>
 
       {/* Pricing Footer */}
-      <div className=\"bg-gradient-to-r from-blue-600 to-purple-600 text-white\">
-        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8\">
-          <div className=\"text-center\">
-            <h2 className=\"text-2xl font-bold mb-2\">Unlock All 20 AI Tools</h2>
-            <p className=\"text-blue-100 mb-4\">Get access to our complete AI tools bundle for just $19.99/month</p>
-            <div className=\"flex items-center justify-center space-x-8 mb-6\">
-              <div className=\"text-center\">
-                <div className=\"text-3xl font-bold\">$19.99</div>
-                <div className=\"text-sm text-blue-200\">per month</div>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-2">Unlock All 20 AI Tools</h2>
+            <p className="text-blue-100 mb-4">Get access to our complete AI tools bundle for just $19.99/month</p>
+            <div className="flex items-center justify-center space-x-8 mb-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold">$19.99</div>
+                <div className="text-sm text-blue-200">per month</div>
               </div>
-              <div className=\"text-center\">
-                <div className=\"text-3xl font-bold line-through text-blue-300\">$800+</div>
-                <div className=\"text-sm text-blue-200\">individual cost</div>
+              <div className="text-center">
+                <div className="text-3xl font-bold line-through text-blue-300">$800+</div>
+                <div className="text-sm text-blue-200">individual cost</div>
               </div>
-              <div className=\"text-center\">
-                <div className=\"text-3xl font-bold text-green-300\">97%</div>
-                <div className=\"text-sm text-blue-200\">savings</div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-green-300">97%</div>
+                <div className="text-sm text-blue-200">savings</div>
               </div>
             </div>
-            <button className=\"bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors\">
+            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
               Start Free Trial
             </button>
           </div>
