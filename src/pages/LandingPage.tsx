@@ -25,13 +25,10 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="flex items-center space-x-6">
-              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
-              <a href="#vision" className="text-gray-300 hover:text-white transition-colors">Vision</a>
-              <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Dataset</a>
               <Link href="/ai-market-tools" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 AI Market Tools</Link>
-              <Link href="/ai-tools-bundle" className="text-gray-300 hover:text-white transition-colors">Tools Suite</Link>
-              <Link href="/ai-meeting-pro" className="text-gray-300 hover:text-white transition-colors">Meeting AI</Link>
-              <Link href="/investor" className="text-gray-300 hover:text-white transition-colors">Investors</Link>
+              <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Somali Dataset</a>
+              <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
+              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
               <button 
                 onClick={handleNotifyMe}
                 className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
@@ -213,6 +210,16 @@ const LandingPage = () => {
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               The most comprehensive, culturally authentic, and technically advanced Somali language dataset available.
             </p>
+            
+            {/* Quick Links to Vision and Investors */}
+            <div className="flex justify-center space-x-6 mt-8">
+              <a href="#vision" className="bg-blue-600/20 text-blue-300 px-4 py-2 rounded-lg hover:bg-blue-600/30 transition-colors">
+                Our Vision
+              </a>
+              <Link href="/investor" className="bg-emerald-600/20 text-emerald-300 px-4 py-2 rounded-lg hover:bg-emerald-600/30 transition-colors">
+                Investors
+              </Link>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -283,6 +290,57 @@ const LandingPage = () => {
                   Dialectal variations
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-4 bg-black/20">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-white mb-6">
+            Simple, Professional Pricing
+          </h2>
+          <p className="text-xl text-gray-300 mb-12">
+            Get access to 20 enterprise AI tools for less than the cost of one individual tool.
+          </p>
+          
+          <div className="bg-gradient-to-br from-blue-900/50 to-emerald-900/50 rounded-2xl p-8 border-2 border-emerald-500 max-w-md mx-auto">
+            <div className="text-5xl font-bold text-white mb-2">$19.99</div>
+            <div className="text-lg text-emerald-400 mb-6">per month</div>
+            
+            <ul className="space-y-3 text-left mb-8">
+              <li className="flex items-center text-gray-300">
+                <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                20 Professional AI Tools
+              </li>
+              <li className="flex items-center text-gray-300">
+                <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                Content Creation Suite
+              </li>
+              <li className="flex items-center text-gray-300">
+                <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                Business Automation Tools
+              </li>
+              <li className="flex items-center text-gray-300">
+                <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                Meeting AI & Transcription
+              </li>
+              <li className="flex items-center text-gray-300">
+                <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                Multi-language Support
+              </li>
+            </ul>
+            
+            <Link 
+              href="/ai-market-tools"
+              className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-3 px-6 rounded-lg font-bold hover:from-emerald-700 hover:to-blue-700 transition-all inline-block"
+            >
+              Get Started Now
+            </Link>
+            
+            <div className="mt-4 text-sm text-gray-400">
+              Save $780+ monthly vs individual tools
             </div>
           </div>
         </div>
