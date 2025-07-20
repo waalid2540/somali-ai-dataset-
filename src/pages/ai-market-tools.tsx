@@ -39,7 +39,7 @@ function AIMarketToolsPage() {
     { name: 'Script Writer AI', icon: '🎬', category: 'Creative & Design', description: 'Video & marketing scripts' },
     { name: 'Newsletter AI', icon: '📰', category: 'Creative & Design', description: 'Engaging newsletters' },
     { name: 'Translation AI', icon: '🌍', category: 'Communication', description: 'Multi-language support' },
-    { name: 'Chatbot Builder AI', icon: '🤖', category: 'Communication', description: 'Customer service bots' },
+    { name: 'Live Chatbot Creator', icon: '💬', category: 'Communication', description: 'Live website chatbots (use your OpenAI key)' },
     { name: 'Meeting Summarizer AI', icon: '📝', category: 'Communication', description: 'Meeting transcription' },
     { name: 'Review Response AI', icon: '⭐', category: 'Communication', description: 'Review management' },
     { name: 'Customer Service AI', icon: '🎧', category: 'Communication', description: 'Support automation' }
@@ -199,39 +199,56 @@ function AIMarketToolsPage() {
                 <span className="text-yellow-400">20 POWERFUL</span> AI TOOLS
               </h2>
               <p className="text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
-                Each tool would cost $30-50/month individually. You get ALL 20 for just $19.99!
+                Live chatbots alone cost $500+/month. You get that PLUS 19 other professional tools for just $19.99!
               </p>
               
               {/* Value Calculator */}
               <div className="bg-gradient-to-r from-red-600/20 to-yellow-600/20 border border-yellow-500/30 rounded-2xl p-8 max-w-3xl mx-auto mb-12">
                 <div className="text-xl text-gray-300 mb-4">If you bought these tools separately:</div>
-                <div className="text-5xl font-black text-red-400 mb-2 line-through">$800/month</div>
+                <div className="text-5xl font-black text-red-400 mb-2 line-through">$1,200+/month</div>
+                <div className="text-sm text-gray-300 mb-2">(Live Chatbot: $500, Other tools: $700+)</div>
                 <div className="text-3xl text-gray-300 mb-4">Our price:</div>
                 <div className="text-6xl font-black text-emerald-400">$19.99/month</div>
-                <div className="text-yellow-400 text-xl font-bold mt-4">YOU SAVE 97.5%</div>
+                <div className="text-yellow-400 text-xl font-bold mt-4">YOU SAVE 98.3%</div>
               </div>
             </div>
 
             {/* Tools Grid with Value */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {tools.map((tool, index) => (
-                <div key={index} className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-2xl p-6 border border-blue-500/20 hover:border-yellow-500/50 transition-all group hover:scale-105">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="text-4xl">{tool.icon}</div>
-                    <div className="text-xs bg-red-500 text-white px-2 py-1 rounded-full">
-                      Worth $40/mo
+              {tools.map((tool, index) => {
+                const isLiveChatbot = tool.name === 'Live Chatbot Creator';
+                return (
+                  <div key={index} className={`rounded-2xl p-6 border transition-all group hover:scale-105 ${
+                    isLiveChatbot 
+                      ? 'bg-gradient-to-br from-yellow-600/30 to-orange-600/30 border-yellow-500/50 ring-2 ring-yellow-400/20' 
+                      : 'bg-gradient-to-br from-blue-900/30 to-purple-900/30 border-blue-500/20 hover:border-yellow-500/50'
+                  }`}>
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="text-4xl">{tool.icon}</div>
+                      <div className={`text-xs px-2 py-1 rounded-full ${
+                        isLiveChatbot 
+                          ? 'bg-yellow-500 text-black font-bold' 
+                          : 'bg-red-500 text-white'
+                      }`}>
+                        {isLiveChatbot ? 'Worth $500/mo' : 'Worth $40/mo'}
+                      </div>
+                    </div>
+                    {isLiveChatbot && (
+                      <div className="text-xs bg-yellow-400 text-black px-2 py-1 rounded-full mb-3 font-bold text-center">
+                        🔥 PREMIUM TOOL
+                      </div>
+                    )}
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">{tool.name}</h3>
+                    <p className="text-sm text-gray-300 mb-4">{tool.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">
+                        {tool.category}
+                      </span>
+                      <div className="text-emerald-400 font-bold text-sm">INCLUDED</div>
                     </div>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">{tool.name}</h3>
-                  <p className="text-sm text-gray-300 mb-4">{tool.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">
-                      {tool.category}
-                    </span>
-                    <div className="text-emerald-400 font-bold text-sm">INCLUDED</div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Massive CTA */}

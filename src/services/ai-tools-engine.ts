@@ -1343,73 +1343,126 @@ Ensure professional quality suitable for {context} use.`,
 
   private getChatbotBuilderAI(): AIToolConfig {
     return {
-      id: 'chatbot-builder-ai',
-      name: 'Chatbot Builder AI',
-      description: 'Create chatbot conversations and response flows',
+      id: 'live-chatbot-creator',
+      name: 'Live Chatbot Creator',
+      description: 'Create professional live chatbots for your website (customers provide their own OpenAI API key)',
       category: 'communication',
-      icon: '🤖',
+      icon: '💬',
       inputs: [
         {
-          id: 'purpose',
-          label: 'Chatbot Purpose',
-          type: 'select',
-          placeholder: 'Select purpose',
-          required: true,
-          options: ['Customer Support', 'Lead Generation', 'FAQ Bot', 'Sales Assistant', 'Appointment Booking']
-        },
-        {
-          id: 'business',
-          label: 'Business/Service',
+          id: 'businessName',
+          label: 'Business Name',
           type: 'text',
-          placeholder: 'e.g., AI Software Company, Restaurant',
+          placeholder: 'e.g., Mario\'s Pizza, TechStart Solutions',
           required: true,
-          maxLength: 200
+          maxLength: 100
         },
         {
-          id: 'scenarios',
-          label: 'Common User Questions/Scenarios',
+          id: 'businessType',
+          label: 'Business Type/Industry',
+          type: 'select',
+          placeholder: 'Select your industry',
+          required: true,
+          options: ['Restaurant/Food Service', 'E-commerce/Retail', 'Professional Services', 'Healthcare/Medical', 'Real Estate', 'Technology/Software', 'Education/Training', 'Fitness/Wellness', 'Legal Services', 'Financial Services', 'Other']
+        },
+        {
+          id: 'services',
+          label: 'Main Products/Services',
           type: 'textarea',
-          placeholder: 'e.g., Pricing questions, Support issues, Demo requests',
+          placeholder: 'List your main products, services, or offerings',
+          required: true,
+          maxLength: 500
+        },
+        {
+          id: 'businessInfo',
+          label: 'Key Business Information',
+          type: 'textarea',
+          placeholder: 'Hours, location, contact info, pricing, policies, etc.',
           required: true,
           maxLength: 800
         },
         {
-          id: 'tone',
-          label: 'Bot Personality',
-          type: 'select',
-          placeholder: 'Select tone',
+          id: 'commonQuestions',
+          label: 'Common Customer Questions',
+          type: 'textarea',
+          placeholder: 'What do customers usually ask? (pricing, hours, availability, etc.)',
           required: true,
-          options: ['Professional', 'Friendly/Casual', 'Helpful/Supportive', 'Witty/Fun', 'Formal/Corporate']
+          maxLength: 600
+        },
+        {
+          id: 'chatbotTone',
+          label: 'Chatbot Personality',
+          type: 'select',
+          placeholder: 'How should your chatbot sound?',
+          required: true,
+          options: ['Professional & Helpful', 'Friendly & Casual', 'Enthusiastic & Energetic', 'Calm & Supportive', 'Expert & Authoritative']
+        },
+        {
+          id: 'websiteUrl',
+          label: 'Website URL (Optional)',
+          type: 'text',
+          placeholder: 'https://yourwebsite.com',
+          required: false,
+          maxLength: 200
         }
       ],
-      prompt: `Create a comprehensive chatbot conversation flow for {purpose} at {business}.
+      prompt: `Create a complete LIVE CHATBOT system for {businessName}, a {businessType} business.
 
-User Scenarios: {scenarios}
-Bot Personality: {tone}
+Business Details:
+- Services/Products: {services}
+- Business Information: {businessInfo}
+- Common Questions: {commonQuestions}
+- Desired Tone: {chatbotTone}
+- Website: {websiteUrl}
 
-Generate chatbot responses including:
-- Welcome message and introduction
-- Menu of options/topics
-- Responses for each scenario in {scenarios}
-- Follow-up questions and clarifications
-- Escalation to human support
-- Closing/goodbye messages
-- Error handling responses
+Generate a comprehensive live chatbot package including:
 
-For each interaction:
-- Use {tone} personality
-- Provide helpful, accurate information
-- Guide users toward desired actions
-- Offer alternatives when needed
-- Maintain conversation flow
+1. **CHATBOT CONFIGURATION:**
+   - System prompt for the AI assistant
+   - Personality and tone guidelines
+   - Business knowledge base
+   - Response templates for common scenarios
 
-Create a complete conversation tree ready for implementation.`,
-      maxTokens: 1200,
-      temperature: 0.6,
+2. **EMBED CODE:**
+   - Complete HTML/JavaScript code to add to website
+   - Responsive chat widget design
+   - Mobile-friendly interface
+   - Customizable colors and branding
+
+3. **BUSINESS KNOWLEDGE BASE:**
+   - Structured information about services: {services}
+   - Key business details: {businessInfo}
+   - FAQ responses for: {commonQuestions}
+   - Escalation procedures for complex queries
+
+4. **CONVERSATION FLOWS:**
+   - Welcome message and introduction
+   - Service/product inquiries handling
+   - Appointment/contact capture flows
+   - Lead qualification questions
+   - Handoff to human support procedures
+
+5. **SETUP INSTRUCTIONS:**
+   - How to get OpenAI API key (step-by-step)
+   - How to add the chatbot to their website
+   - How to customize colors and styling
+   - How to monitor conversations and performance
+
+6. **ADMIN DASHBOARD CONCEPT:**
+   - Overview of conversation analytics
+   - Common questions tracking
+   - Customer contact collection
+   - Performance optimization tips
+
+Make the chatbot {chatbotTone} and specifically knowledgeable about {businessType} industry best practices. Include ready-to-use code that creates a professional live chat experience.
+
+IMPORTANT: The chatbot should be configured to use the customer's own OpenAI API key for cost control and transparency.`,
+      maxTokens: 2000,
+      temperature: 0.4,
       examples: [
-        'E-commerce support bot',
-        'Lead qualification chatbot',
-        'Restaurant booking assistant'
+        'Restaurant live chatbot with ordering',
+        'E-commerce support chatbot',
+        'Professional services lead capture bot'
       ]
     };
   }
