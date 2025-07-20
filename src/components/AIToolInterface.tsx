@@ -120,7 +120,7 @@ function AIToolInterface({
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
             placeholder={input.placeholder}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical min-h-24"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical min-h-24 text-gray-900 placeholder-gray-500 bg-white"
             {...(input.maxLength ? { maxLength: input.maxLength } : {})}
             {...(input.required ? { required: true } : {})}
           />
@@ -132,7 +132,7 @@ function AIToolInterface({
             id={input.id}
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
             {...(input.required ? { required: true } : {})}
           >
             <option value="">{input.placeholder}</option>
@@ -150,7 +150,7 @@ function AIToolInterface({
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
             placeholder={input.placeholder}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 bg-white"
             {...(input.required ? { required: true } : {})}
           />
         );
@@ -163,7 +163,7 @@ function AIToolInterface({
             value={value}
             onChange={(e) => handleInputChange(input.id, e.target.value)}
             placeholder={input.placeholder}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 bg-white"
             {...(input.maxLength ? { maxLength: input.maxLength } : {})}
             {...(input.required ? { required: true } : {})}
           />
