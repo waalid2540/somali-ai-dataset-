@@ -26,8 +26,8 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center space-x-6">
               <Link href="/ai-market-tools" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 AI Market Tools</Link>
+              <Link href="/ai-business-creation" className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold">💼 AI Business Creation</Link>
               <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Somali Dataset</a>
-              <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
               <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
               <button 
                 onClick={handleNotifyMe}

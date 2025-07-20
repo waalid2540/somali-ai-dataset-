@@ -431,6 +431,59 @@ function AIMarketToolsPage() {
           </div>
         </section>
 
+        {/* Business Creation Cross-Promotion */}
+        <section className="py-20 px-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl lg:text-5xl font-black mb-8">
+              Love These Tools? Get Your Own AI Business!
+            </h2>
+            <p className="text-2xl mb-12 max-w-4xl mx-auto">
+              Why just use AI tools when you can <strong>own an AI business?</strong> I'll build a complete AI platform like this one, customized for your market, for just $2,000-$5,000.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-3xl font-black text-yellow-400 mb-2">$2,000</div>
+                <div className="font-bold mb-2">vs $50,000+ agencies</div>
+                <div className="text-sm text-gray-200">Get the same quality for 95% less</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-3xl font-black text-yellow-400 mb-2">6 weeks</div>
+                <div className="font-bold mb-2">to launch</div>
+                <div className="text-sm text-gray-200">From idea to revenue-generating business</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-3xl font-black text-yellow-400 mb-2">$18K</div>
+                <div className="font-bold mb-2">average monthly revenue</div>
+                <div className="text-sm text-gray-200">By month 6 for our clients</div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <Link 
+                href="/ai-business-creation"
+                className="bg-yellow-500 text-black px-12 py-6 rounded-2xl font-black text-2xl hover:bg-yellow-400 transition-all transform hover:scale-105 shadow-2xl inline-flex items-center"
+              >
+                <Building2 className="mr-3 w-8 h-8" />
+                BUILD MY AI BUSINESS
+                <ArrowRight className="ml-3 w-8 h-8" />
+              </Link>
+              
+              <div className="text-gray-200 text-lg">
+                ⚡ Custom AI tools for your niche • 💰 Your business, your profits • 🎯 Proven business model
+              </div>
+            </div>
+
+            <div className="mt-12 p-6 bg-black/20 rounded-xl max-w-3xl mx-auto">
+              <div className="text-yellow-300 font-bold mb-2">💡 IMAGINE THIS:</div>
+              <div className="text-lg">
+                Instead of paying $19.99/month for tools, your customers pay YOU $19.99/month for YOUR AI business. 
+                <strong> From customer to competitor in 6 weeks.</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Professional Footer */}
         <footer className="py-12 px-4 bg-gray-900 text-white">
           <div className="max-w-6xl mx-auto">
