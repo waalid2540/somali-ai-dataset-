@@ -754,23 +754,25 @@ class IntegrationEngine {
         throw new Error('HubSpot API key required');
       }
 
-      const contactPayload = {
-        properties: {
-          email: leadData.email,
-          firstname: leadData.name.split(' ')[0] || leadData.name,
-          lastname: leadData.name.split(' ').slice(1).join(' ') || '',
-          phone: leadData.phone || '',
-          company: leadData.company || '',
-          hs_lead_status: 'NEW',
-          lifecyclestage: 'lead',
-          lead_source: leadData.source || 'AI Tools Platform'
-        }
+      const properties: Record<string, any> = {
+        email: leadData.email,
+        firstname: leadData.name.split(' ')[0] || leadData.name,
+        lastname: leadData.name.split(' ').slice(1).join(' ') || '',
+        phone: leadData.phone || '',
+        company: leadData.company || '',
+        hs_lead_status: 'NEW',
+        lifecyclestage: 'lead',
+        lead_source: leadData.source || 'AI Tools Platform'
       };
 
       // Add custom notes if provided
       if (leadData.notes) {
-        contactPayload.properties['notes_last_contacted'] = leadData.notes;
+        properties.notes_last_contacted = leadData.notes;
       }
+
+      const contactPayload = {
+        properties
+      };
 
       const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
         method: 'POST',
