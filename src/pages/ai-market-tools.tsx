@@ -104,7 +104,7 @@ function AIMarketToolsPage() {
               <div className="flex items-center space-x-6">
                 <Link href="/#about" className="text-gray-600 hover:text-gray-900 transition-colors">About</Link>
                 <Link href="/#dataset" className="text-gray-600 hover:text-gray-900 transition-colors">Dataset</Link>
-                <Link href="/ai-meeting-pro" className="text-gray-600 hover:text-gray-900 transition-colors">Meeting AI</Link>
+                <Link href="/#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
                 <Link href="/investor" className="text-gray-600 hover:text-gray-900 transition-colors">Investors</Link>
                 <Link href="/ai-tools-bundle" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                   Try Tools
