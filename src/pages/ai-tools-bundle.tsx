@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import AIToolsDashboard from '../components/AIToolsDashboard';
 import AIToolInterface from '../components/AIToolInterface';
+import IntegrationManager from '../components/IntegrationManager';
+import IntegrationDashboard from '../components/IntegrationDashboard';
 import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
 
 function AIToolsBundlePage() {
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
+  const [activeTab, setActiveTab] = useState<'tools' | 'integrations' | 'analytics'>('tools');
   const [userSubscription] = useState<'free' | 'pro' | 'enterprise'>('pro');
 
   const handleToolSelect = (tool: AIToolConfig) => {
@@ -36,11 +39,58 @@ function AIToolsBundlePage() {
             userSubscription={userSubscription}
           />
         ) : (
-          <AIToolsDashboard 
-            userSubscription={userSubscription}
-            userId="demo-user"
-            onToolSelect={handleToolSelect}
-          />
+          <>
+            {/* Tab Navigation */}
+            <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex space-x-8">
+                  <button
+                    onClick={() => setActiveTab('tools')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                      activeTab === 'tools'
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    🛠️ AI Tools Dashboard
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('integrations')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                      activeTab === 'integrations'
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    ⚡ Integrations Manager
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('analytics')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                      activeTab === 'analytics'
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    📊 Analytics Dashboard
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Tab Content */}
+            <div className="flex-1">
+              {activeTab === 'tools' && (
+                <AIToolsDashboard 
+                  userSubscription={userSubscription}
+                  userId="demo-user"
+                  onToolSelect={handleToolSelect}
+                />
+              )}
+              {activeTab === 'integrations' && <IntegrationManager />}
+              {activeTab === 'analytics' && <IntegrationDashboard />}
+            </div>
+          </>
         )}
       </div>
 
@@ -55,6 +105,9 @@ function AIToolsBundlePage() {
                 </div>
                 <div className="text-sm text-gray-600">
                   Monthly savings: <span className="font-semibold text-green-600">$780+</span>
+                </div>
+                <div className="text-sm text-gray-600">
+                  <span className="font-semibold text-blue-600">11 integrations</span> available
                 </div>
               </div>
               <div className="flex items-center space-x-3">
