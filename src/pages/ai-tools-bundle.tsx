@@ -20,6 +20,16 @@ function AIToolsBundlePage() {
     setSelectedTool(null);
   };
 
+  // Listen for integration switch event
+  React.useEffect(() => {
+    const handleSwitchToIntegrations = () => {
+      setActiveTab('integrations');
+    };
+
+    window.addEventListener('switchToIntegrations', handleSwitchToIntegrations);
+    return () => window.removeEventListener('switchToIntegrations', handleSwitchToIntegrations);
+  }, []);
+
   return (
     <>
       <Head>
@@ -41,38 +51,41 @@ function AIToolsBundlePage() {
         ) : (
           <>
             {/* Tab Navigation */}
-            <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+            <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex space-x-8">
                   <button
                     onClick={() => setActiveTab('tools')}
-                    className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                    className={`py-4 px-4 border-b-2 font-semibold text-base transition-colors ${
                       activeTab === 'tools'
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
-                    }`}
+                        ? 'border-blue-500 text-blue-600 bg-blue-50'
+                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    } rounded-t-lg`}
                   >
                     🛠️ AI Tools Dashboard
                   </button>
                   <button
                     onClick={() => setActiveTab('integrations')}
-                    className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                    className={`py-4 px-4 border-b-2 font-semibold text-base transition-colors relative ${
                       activeTab === 'integrations'
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
-                    }`}
+                        ? 'border-emerald-500 text-emerald-600 bg-emerald-50'
+                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    } rounded-t-lg`}
                   >
-                    ⚡ Integrations Manager
+                    ⚡ Business Integrations
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
+                      NEW
+                    </span>
                   </button>
                   <button
                     onClick={() => setActiveTab('analytics')}
-                    className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                    className={`py-4 px-4 border-b-2 font-semibold text-base transition-colors ${
                       activeTab === 'analytics'
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
-                    }`}
+                        ? 'border-purple-500 text-purple-600 bg-purple-50'
+                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    } rounded-t-lg`}
                   >
-                    📊 Analytics Dashboard
+                    📊 ROI Analytics
                   </button>
                 </div>
               </div>

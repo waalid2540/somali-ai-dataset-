@@ -129,6 +129,42 @@ function AIToolsDashboard({
               </div>
             </div>
           </div>
+
+          {/* Integration Showcase */}
+          <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-xl p-6 mt-6 text-white">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-bold mb-2">🚀 New: Business Automation Integrations</h3>
+                <p className="text-emerald-100 mb-4">Connect your AI tools to Gmail, Stripe, Facebook, LinkedIn, HubSpot, and more!</p>
+                <div className="flex items-center space-x-6 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 bg-yellow-300 rounded-full"></span>
+                    <span>11 Integrations Available</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 bg-yellow-300 rounded-full"></span>
+                    <span>Zero Setup Costs</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 bg-yellow-300 rounded-full"></span>
+                    <span>Customer API Keys</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                <button 
+                  onClick={() => {
+                    // This will be handled by parent component
+                    const event = new CustomEvent('switchToIntegrations');
+                    window.dispatchEvent(event);
+                  }}
+                  className="bg-white text-emerald-600 px-6 py-3 rounded-lg font-bold hover:bg-emerald-50 transition-colors"
+                >
+                  View Integrations →
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
