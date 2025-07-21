@@ -3,15 +3,12 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import AIToolsDashboard from '../components/AIToolsDashboard';
 import AIToolInterface from '../components/AIToolInterface';
-import IntegrationManager from '../components/IntegrationManager';
-import IntegrationDashboard from '../components/IntegrationDashboard';
-import SimpleIntegrationTest from '../components/SimpleIntegrationTest';
-import SimpleAnalyticsTest from '../components/SimpleAnalyticsTest';
+import AIAgentsDashboard from '../components/AIAgentsDashboard';
 import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
 
 function AIToolsBundlePage() {
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
-  const [activeTab, setActiveTab] = useState<'tools' | 'integrations' | 'analytics'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'agents' | 'analytics'>('agents');
   const [userSubscription] = useState<'free' | 'pro' | 'enterprise'>('pro');
 
   const handleToolSelect = (tool: AIToolConfig) => {
@@ -22,14 +19,14 @@ function AIToolsBundlePage() {
     setSelectedTool(null);
   };
 
-  // Listen for integration switch event
+  // Listen for agents switch event
   React.useEffect(() => {
-    const handleSwitchToIntegrations = () => {
-      setActiveTab('integrations');
+    const handleSwitchToAgents = () => {
+      setActiveTab('agents');
     };
 
-    window.addEventListener('switchToIntegrations', handleSwitchToIntegrations);
-    return () => window.removeEventListener('switchToIntegrations', handleSwitchToIntegrations);
+    window.addEventListener('switchToAgents', handleSwitchToAgents);
+    return () => window.removeEventListener('switchToAgents', handleSwitchToAgents);
   }, []);
 
   return (
@@ -57,6 +54,19 @@ function AIToolsBundlePage() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex space-x-8">
                   <button
+                    onClick={() => setActiveTab('agents')}
+                    className={`py-4 px-4 border-b-2 font-semibold text-base transition-colors relative ${
+                      activeTab === 'agents'
+                        ? 'border-emerald-500 text-emerald-600 bg-emerald-50'
+                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    } rounded-t-lg`}
+                  >
+                    🤖 AI Agents Squad
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
+                      NEW
+                    </span>
+                  </button>
+                  <button
                     onClick={() => setActiveTab('tools')}
                     className={`py-4 px-4 border-b-2 font-semibold text-base transition-colors ${
                       activeTab === 'tools'
@@ -64,20 +74,7 @@ function AIToolsBundlePage() {
                         : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     } rounded-t-lg`}
                   >
-                    🛠️ AI Tools Dashboard
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('integrations')}
-                    className={`py-4 px-4 border-b-2 font-semibold text-base transition-colors relative ${
-                      activeTab === 'integrations'
-                        ? 'border-emerald-500 text-emerald-600 bg-emerald-50'
-                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    } rounded-t-lg`}
-                  >
-                    ⚡ Business Integrations
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
-                      NEW
-                    </span>
+                    🛠️ Classic AI Tools
                   </button>
                   <button
                     onClick={() => setActiveTab('analytics')}

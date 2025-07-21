@@ -25,6 +25,7 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="flex items-center space-x-6">
+              <Link href="/enterprise-ai-tools" className="text-orange-400 hover:text-orange-300 transition-colors font-bold">🏢 Enterprise AI Tools - $19.99</Link>
               <Link href="/ai-market-tools" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 AI Market Tools</Link>
               <Link href="/ai-business-creation" className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold">💼 AI Business Creation</Link>
               <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Somali Dataset</a>
