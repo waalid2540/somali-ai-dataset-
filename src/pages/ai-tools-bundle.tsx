@@ -5,6 +5,8 @@ import AIToolsDashboard from '../components/AIToolsDashboard';
 import AIToolInterface from '../components/AIToolInterface';
 import IntegrationManager from '../components/IntegrationManager';
 import IntegrationDashboard from '../components/IntegrationDashboard';
+import SimpleIntegrationTest from '../components/SimpleIntegrationTest';
+import SimpleAnalyticsTest from '../components/SimpleAnalyticsTest';
 import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
 
 function AIToolsBundlePage() {
@@ -100,8 +102,8 @@ function AIToolsBundlePage() {
                   onToolSelect={handleToolSelect}
                 />
               )}
-              {activeTab === 'integrations' && <IntegrationManager />}
-              {activeTab === 'analytics' && <IntegrationDashboard />}
+              {activeTab === 'integrations' && <SimpleIntegrationTest />}
+              {activeTab === 'analytics' && <SimpleAnalyticsTest />}
             </div>
           </>
         )}
