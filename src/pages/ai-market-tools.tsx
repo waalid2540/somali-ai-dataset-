@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 
 function AIMarketToolsPage() {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [showDetails, setShowDetails] = useState(false);
 
   const tools = [
     { name: 'Blog Post Generator', icon: '📝', category: 'Content Creation', description: 'SEO-optimized blog posts' },
@@ -141,10 +141,10 @@ function AIMarketToolsPage() {
 
             {/* Compelling Value Proposition */}
             <p className="text-2xl lg:text-3xl text-gray-200 mb-4 font-semibold">
-              Get <span className="text-yellow-400">$800 worth</span> of AI tools for just <span className="text-emerald-400 text-4xl font-bold">$19.99</span>
+              Get <span className="text-yellow-400">$1,200+ worth</span> of AI tools for just <span className="text-emerald-400 text-4xl font-bold">$19.99 ONE-TIME</span>
             </p>
             <p className="text-xl text-gray-300 mb-12 max-w-4xl mx-auto">
-              Stop paying hundreds for individual AI tools. Get everything you need in one powerful suite.
+              <strong className="text-yellow-400">NO MONTHLY FEES!</strong> Stop paying hundreds for individual AI tools. Get lifetime access to everything you need.
             </p>
 
             {/* Powerful Stats */}
@@ -158,8 +158,8 @@ function AIMarketToolsPage() {
                 <div className="text-gray-300 font-semibold">Cost Savings</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
-                <div className="text-4xl lg:text-5xl font-black text-purple-400 mb-2">$780</div>
-                <div className="text-gray-300 font-semibold">Monthly Savings</div>
+                <div className="text-4xl lg:text-5xl font-black text-purple-400 mb-2">$1,200+</div>
+                <div className="text-gray-300 font-semibold">You Save Annually</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
                 <div className="text-4xl lg:text-5xl font-black text-blue-400 mb-2">24/7</div>
@@ -179,14 +179,14 @@ function AIMarketToolsPage() {
               </Link>
               
               <div className="text-gray-400">
-                ⚡ Instant access • 💳 Cancel anytime • 🔒 30-day money back guarantee
+                ⚡ Instant access • 🔒 30-day money back guarantee • 💰 One-time payment
               </div>
             </div>
 
             {/* Urgency/Scarcity */}
             <div className="mt-12 p-6 bg-red-500/20 border border-red-500/30 rounded-xl max-w-2xl mx-auto">
-              <div className="text-red-300 font-bold text-lg mb-2">⏰ LIMITED TIME OFFER</div>
-              <div className="text-white">Join 1000+ businesses already saving thousands monthly</div>
+              <div className="text-red-300 font-bold text-lg mb-2">🔥 LIMITED TIME: 75% OFF</div>
+              <div className="text-white">Join 10,000+ professionals who chose one-time payment over expensive subscriptions</div>
             </div>
           </div>
         </section>
