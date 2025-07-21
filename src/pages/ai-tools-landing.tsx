@@ -1,4 +1,4 @@
-// AI Tools Bundle Landing Page - Marketing page for 20 AI Tools Bundle
+// AI Tools Bundle Landing Page - ONE-TIME PAYMENT $19.99 - No Subscriptions!
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 function AIToolsLandingPage() {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [showPricingDetails, setShowPricingDetails] = useState(false);
 
   const tools = [
     { name: 'Blog Post Generator', icon: '📝', category: 'Content' },
@@ -115,8 +115,8 @@ function AIToolsLandingPage() {
                 <a href="#pricing" className="text-gray-600 hover:text-gray-900">Pricing</a>
                 <a href="#tools" className="text-gray-600 hover:text-gray-900">Tools</a>
                 <a href="#testimonials" className="text-gray-600 hover:text-gray-900">Reviews</a>
-                <Link href="/ai-tools-bundle" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  Try Free
+                <Link href="/ai-tools-bundle" className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                  Get Access $19.99
                 </Link>
               </div>
             </div>
@@ -133,24 +133,30 @@ function AIToolsLandingPage() {
                 Trusted by 50,000+ entrepreneurs worldwide
               </div>
 
+              <div className="mb-6">
+                <span className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-semibold">
+                  🔥 LIMITED TIME: 75% OFF - WAS $79.99
+                </span>
+              </div>
+
               <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
                 20 AI Tools for
                 <br />
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  $19.99/month
+                <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  $19.99 ONLY
                 </span>
               </h1>
 
               <p className="text-xl lg:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto">
-                Get the complete AI tools bundle that would cost you <strong className="text-red-500">$800+/month</strong> individually. 
-                Perfect for entrepreneurs, marketers, and content creators.
+                <strong className="text-green-600">ONE-TIME PAYMENT</strong> - No subscriptions, no monthly fees! 
+                Get lifetime access to all 20 professional AI tools that would cost <strong className="text-red-500">$1,200+ per year</strong> individually.
               </p>
 
               {/* Value Proposition */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-                  <div className="text-3xl font-bold text-green-600 mb-2">97%</div>
-                  <div className="text-gray-600">Cost Savings</div>
+                  <div className="text-3xl font-bold text-green-600 mb-2">$1,200+</div>
+                  <div className="text-gray-600">Annual Savings</div>
                 </div>
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
                   <div className="text-3xl font-bold text-blue-600 mb-2">20</div>
@@ -158,16 +164,16 @@ function AIToolsLandingPage() {
                 </div>
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
                   <div className="text-3xl font-bold text-purple-600 mb-2">∞</div>
-                  <div className="text-gray-600">Unlimited Usage</div>
+                  <div className="text-gray-600">Lifetime Access</div>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link 
                   href="/ai-tools-bundle"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 flex items-center justify-center"
+                  className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-blue-700 transition-all transform hover:scale-105 flex items-center justify-center"
                 >
-                  Start Free Trial
+                  Get Instant Access - $19.99
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
                 <button className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-colors">
@@ -175,8 +181,10 @@ function AIToolsLandingPage() {
                 </button>
               </div>
 
-              <div className="mt-6 text-sm text-gray-500">
-                7-day free trial • No credit card required • Cancel anytime
+              <div className="mt-6 text-sm text-gray-500 flex items-center justify-center gap-4">
+                <span>✅ Instant Access</span>
+                <span>✅ No Monthly Fees</span>
+                <span>✅ 30-Day Guarantee</span>
               </div>
             </div>
           </div>
@@ -186,13 +194,13 @@ function AIToolsLandingPage() {
         <section className="py-20 px-4 bg-gray-50">
           <div className="max-w-6xl mx-auto text-center">
             <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-8">
-              Are You Tired of Paying <span className="text-red-500">$800+/month</span> for AI Tools?
+              Stop Paying <span className="text-red-500">$1,200+ Per Year</span> for AI Tool Subscriptions!
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               <div className="bg-white rounded-xl p-8 shadow-sm">
                 <div className="text-red-500 text-4xl mb-4">💸</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Expensive Subscriptions</h3>
-                <p className="text-gray-600">Individual AI tools cost $30-80 each. You need multiple tools = $800+ monthly.</p>
+                <p className="text-gray-600">Individual AI tools cost $15-50/month each. 20 tools = $1,200+ annually. Crazy expensive!</p>
               </div>
               <div className="bg-white rounded-xl p-8 shadow-sm">
                 <div className="text-red-500 text-4xl mb-4">⏰</div>
@@ -396,45 +404,45 @@ function AIToolsLandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+        <section className="py-20 px-4 bg-gradient-to-r from-green-600 to-blue-600">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
-              Ready to Save $780+ Monthly?
+              Get All 20 AI Tools for Just $19.99!
             </h2>
-            <p className="text-xl text-blue-100 mb-8">
-              Join 50,000+ entrepreneurs using our AI tools bundle to grow their business.
+            <p className="text-xl text-green-100 mb-8">
+              Join 50,000+ entrepreneurs who chose our one-time payment over expensive subscriptions.
             </p>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
                 <div className="text-center">
-                  <Clock className="w-8 h-8 mx-auto mb-2" />
-                  <div className="font-semibold">7-Day Free Trial</div>
-                  <div className="text-sm text-blue-100">No credit card required</div>
+                  <DollarSign className="w-8 h-8 mx-auto mb-2" />
+                  <div className="font-semibold">One-Time Payment</div>
+                  <div className="text-sm text-green-100">No monthly subscriptions</div>
                 </div>
                 <div className="text-center">
                   <Shield className="w-8 h-8 mx-auto mb-2" />
                   <div className="font-semibold">30-Day Guarantee</div>
-                  <div className="text-sm text-blue-100">100% money back</div>
+                  <div className="text-sm text-green-100">100% money back</div>
                 </div>
                 <div className="text-center">
-                  <Smartphone className="w-8 h-8 mx-auto mb-2" />
-                  <div className="font-semibold">Cancel Anytime</div>
-                  <div className="text-sm text-blue-100">No long-term contracts</div>
+                  <Zap className="w-8 h-8 mx-auto mb-2" />
+                  <div className="font-semibold">Instant Access</div>
+                  <div className="text-sm text-green-100">Download immediately</div>
                 </div>
               </div>
             </div>
 
             <Link 
               href="/ai-tools-bundle"
-              className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 inline-flex items-center"
+              className="bg-yellow-400 text-black px-8 py-4 rounded-lg font-semibold text-xl hover:bg-yellow-300 transition-all transform hover:scale-105 inline-flex items-center"
             >
-              Start Your Free Trial Now
+              Get Instant Access - $19.99
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
             
-            <div className="mt-6 text-blue-100 text-sm">
-              Join 50,000+ happy customers • Rated 4.9/5 stars
+            <div className="mt-6 text-green-100 text-sm">
+              ⚡ Limited Time: 75% OFF • 50,000+ happy customers • Rated 4.9/5 stars
             </div>
           </div>
         </section>
