@@ -84,7 +84,7 @@ function AIMarketToolsPage() {
         
         {/* Open Graph */}
         <meta property="og:title" content="AI Market Tools - Professional Enterprise Suite | Somali AI Dataset" />
-        <meta property="og:description" content="Professional AI Market Tools by Somali AI Dataset. 20 enterprise-grade tools for $19.99/month." />
+        <meta property="og:description" content="Professional AI Market Tools by Somali AI Dataset. 20 enterprise-grade tools for $19.99 one-time." />
         <meta property="og:image" content="/images/ai-market-tools-og.jpg" />
         <meta property="og:url" content="https://somaliaidataset.com/ai-market-tools" />
       </Head>
@@ -205,11 +205,11 @@ function AIMarketToolsPage() {
               {/* Value Calculator */}
               <div className="bg-gradient-to-r from-red-600/20 to-yellow-600/20 border border-yellow-500/30 rounded-2xl p-8 max-w-3xl mx-auto mb-12">
                 <div className="text-xl text-gray-300 mb-4">If you bought these tools separately:</div>
-                <div className="text-5xl font-black text-red-400 mb-2 line-through">$1,200+/month</div>
-                <div className="text-sm text-gray-300 mb-2">(Live Chatbot: $500, Other tools: $700+)</div>
+                <div className="text-5xl font-black text-red-400 mb-2 line-through">$1,200+ annually</div>
+                <div className="text-sm text-gray-300 mb-2">(Individual subscriptions cost $15-50/month each)</div>
                 <div className="text-3xl text-gray-300 mb-4">Our price:</div>
-                <div className="text-6xl font-black text-emerald-400">$19.99/month</div>
-                <div className="text-yellow-400 text-xl font-bold mt-4">YOU SAVE 98.3%</div>
+                <div className="text-6xl font-black text-emerald-400">$19.99 ONE-TIME</div>
+                <div className="text-yellow-400 text-xl font-bold mt-4">YOU SAVE $1,180+ ANNUALLY</div>
               </div>
             </div>
 
@@ -256,7 +256,7 @@ function AIMarketToolsPage() {
               <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-3xl p-8 max-w-2xl mx-auto mb-8">
                 <div className="text-3xl font-black text-white mb-4">GET ALL 20 TOOLS</div>
                 <div className="text-6xl font-black text-yellow-400 mb-4">$19.99</div>
-                <div className="text-gray-300 mb-6">Instead of $800+/month separately</div>
+                <div className="text-gray-300 mb-6">Instead of $1,200+ annually in subscriptions</div>
                 
                 <Link 
                   href="/ai-tools-bundle"
@@ -269,7 +269,7 @@ function AIMarketToolsPage() {
               </div>
               
               <div className="text-gray-400 text-lg">
-                ⚡ Instant access to all tools • 🚀 No setup required • 💰 Cancel anytime
+                ⚡ Instant access to all tools • 🚀 No setup required • 💰 One-time payment
               </div>
             </div>
           </div>
@@ -282,7 +282,7 @@ function AIMarketToolsPage() {
               STOP OVERPAYING!
             </h2>
             <p className="text-2xl text-white mb-12 font-bold">
-              Why pay $800+ for individual tools when you can get EVERYTHING for $19.99?
+              Why pay $1,200+ annually for subscriptions when you can get EVERYTHING for $19.99 ONE-TIME?
             </p>
 
             {/* Comparison Cards */}
@@ -293,8 +293,8 @@ function AIMarketToolsPage() {
                   ❌ OTHER PROVIDERS
                 </div>
                 <div className="text-center pt-4">
-                  <div className="text-4xl font-black text-red-400 mb-4">$800+</div>
-                  <div className="text-white font-bold mb-6">per month</div>
+                  <div className="text-4xl font-black text-red-400 mb-4">$1,200+</div>
+                  <div className="text-white font-bold mb-6">annually in subscriptions</div>
                   <ul className="space-y-3 text-left text-gray-300">
                     <li>• Jasper AI: $49/month</li>
                     <li>• Copy.ai: $49/month</li>
@@ -303,7 +303,7 @@ function AIMarketToolsPage() {
                     <li>• Notion AI: $20/month</li>
                     <li>• + 15 more tools...</li>
                   </ul>
-                  <div className="mt-6 text-red-400 font-bold">TOTAL: $800+/month</div>
+                  <div className="mt-6 text-red-400 font-bold">TOTAL: $1,200+/year</div>
                 </div>
               </div>
 
@@ -314,7 +314,7 @@ function AIMarketToolsPage() {
                 </div>
                 <div className="text-center pt-4">
                   <div className="text-6xl font-black text-white mb-4">$19.99</div>
-                  <div className="text-yellow-300 font-bold mb-6">per month</div>
+                  <div className="text-yellow-300 font-bold mb-6">ONE-TIME PAYMENT</div>
                   <ul className="space-y-3 text-left text-white">
                     <li>• ✅ ALL 20 AI Tools Included</li>
                     <li>• ✅ Blog Post Generator</li>
@@ -323,7 +323,7 @@ function AIMarketToolsPage() {
                     <li>• ✅ Email Marketing AI</li>
                     <li>• ✅ + 15 more premium tools</li>
                   </ul>
-                  <div className="mt-6 text-yellow-300 font-black text-xl">SAVE $780+ MONTHLY!</div>
+                  <div className="mt-6 text-yellow-300 font-black text-xl">SAVE $1,180+ ANNUALLY!</div>
                 </div>
               </div>
             </div>
@@ -494,7 +494,7 @@ function AIMarketToolsPage() {
             <div className="mt-12 p-6 bg-black/20 rounded-xl max-w-3xl mx-auto">
               <div className="text-yellow-300 font-bold mb-2">💡 IMAGINE THIS:</div>
               <div className="text-lg">
-                Instead of paying $19.99/month for tools, your customers pay YOU $19.99/month for YOUR AI business. 
+                Instead of paying $19.99 one-time for tools, your customers pay YOU $19.99 monthly for YOUR AI business. 
                 <strong> From customer to competitor in 6 weeks.</strong>
               </div>
             </div>
