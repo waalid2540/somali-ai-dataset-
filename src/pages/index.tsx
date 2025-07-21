@@ -1,5 +1,5 @@
-import LandingPage from './LandingPage';
+import EnterpriseAIToolsPage from './enterprise-ai-tools';
 
 export default function Home() {
-  return <LandingPage />;
+  return <EnterpriseAIToolsPage />;
 }
