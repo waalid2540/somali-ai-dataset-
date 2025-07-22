@@ -307,11 +307,11 @@ function AIToolsDashboard({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-2">Unlock All 20 AI Tools</h2>
-            <p className="text-blue-100 mb-4">Get access to our complete AI tools bundle for just $19.99/month</p>
+            <p className="text-blue-100 mb-4">Get access to our complete AI tools bundle for just $19.99 one-time</p>
             <div className="flex items-center justify-center space-x-8 mb-6">
               <div className="text-center">
                 <div className="text-3xl font-bold">$19.99</div>
-                <div className="text-sm text-blue-200">per month</div>
+                <div className="text-sm text-blue-200">one-time</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold line-through text-blue-300">$800+</div>
