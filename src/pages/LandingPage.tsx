@@ -25,7 +25,7 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="flex items-center space-x-6">
-              <Link href="/ai-market-tools" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 AI Market Tools</Link>
+              <Link href="/ai-tools-bundle" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 20 AI Tools - $4.99/month</Link>
               <Link href="/ai-business-creation" className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold">💼 AI Business Creation</Link>
               <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Somali Dataset</a>
               <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
@@ -90,11 +90,11 @@ const LandingPage = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
-              href="/ai-market-tools"
+              href="/ai-tools-bundle"
               className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
             >
               <Zap className="mr-2 w-5 h-5" />
-              🔥 AI Market Tools - Enterprise
+              🔥 20 AI Tools - $4.99/month
             </Link>
             <button 
               onClick={handleNotifyMe}
@@ -302,12 +302,12 @@ const LandingPage = () => {
             Simple, Professional Pricing
           </h2>
           <p className="text-xl text-gray-300 mb-12">
-            Get access to 20 enterprise AI tools for less than the cost of one individual tool.
+            Get access to 20 enterprise AI tools for $4.99/month - less than the cost of ChatGPT Plus.
           </p>
           
           <div className="bg-gradient-to-br from-blue-900/50 to-emerald-900/50 rounded-2xl p-8 border-2 border-emerald-500 max-w-md mx-auto">
-            <div className="text-5xl font-bold text-white mb-2">$19.99</div>
-            <div className="text-lg text-emerald-400 mb-6">one time</div>
+            <div className="text-5xl font-bold text-white mb-2">$4.99</div>
+            <div className="text-lg text-emerald-400 mb-6">per month</div>
             
             <ul className="space-y-3 text-left mb-8">
               <li className="flex items-center text-gray-300">
@@ -333,14 +333,14 @@ const LandingPage = () => {
             </ul>
             
             <Link 
-              href="/ai-market-tools"
+              href="/ai-tools-bundle"
               className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-3 px-6 rounded-lg font-bold hover:from-emerald-700 hover:to-blue-700 transition-all inline-block"
             >
-              Get Started Now
+              Start Free Trial
             </Link>
             
             <div className="mt-4 text-sm text-gray-400">
-              Save $1,180+ annually vs individual tools
+              Save $115+ monthly vs individual tools • Cancel anytime
             </div>
           </div>
         </div>
