@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabase';
+import { User } from '@supabase/supabase-js';
 import AuthModal from '../components/AuthModal';
 import AIToolsDashboard from '../components/AIToolsDashboard';
 import AIToolInterface from '../components/AIToolInterface';
@@ -10,7 +11,7 @@ import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
 function AIToolsBundlePage() {
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
   const [userSubscription] = useState<'pro'>('pro');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
