@@ -18,12 +18,14 @@ interface AIToolsDashboardProps {
   userSubscription?: 'free' | 'pro' | 'enterprise';
   userId?: string;
   onToolSelect?: (tool: AIToolConfig) => void;
+  onBackToLanding?: () => void;
 }
 
 function AIToolsDashboard({ 
   userSubscription = 'free',
   userId,
-  onToolSelect
+  onToolSelect,
+  onBackToLanding
 }: AIToolsDashboardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -89,16 +91,26 @@ function AIToolsDashboard({
                   <div className="text-base sm:text-lg font-bold text-green-600">$115+</div>
                 </div>
               </div>
-              <button 
-                onClick={async () => {
-                  const { supabase } = await import('../lib/supabase');
-                  await supabase.auth.signOut();
-                  window.location.href = '/';
-                }}
-                className="w-full sm:w-auto bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-              >
-                Sign Out
-              </button>
+              <div className="flex gap-2">
+                {onBackToLanding && (
+                  <button 
+                    onClick={onBackToLanding}
+                    className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    Landing Page
+                  </button>
+                )}
+                <button 
+                  onClick={async () => {
+                    const { supabase } = await import('../lib/supabase');
+                    await supabase.auth.signOut();
+                    window.location.href = '/';
+                  }}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
             </div>
           </div>
 
