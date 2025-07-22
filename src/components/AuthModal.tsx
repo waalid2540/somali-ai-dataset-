@@ -18,6 +18,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
   const [fullName, setFullName] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [error, setError] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   if (!isOpen) return null;
 
@@ -52,7 +53,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           if (profileError) throw profileError;
         }
 
-        alert('Check your email to confirm your account!');
+        setShowConfirmation(true);
       } else {
         // Sign in existing user
         const { error } = await supabase.auth.signInWithPassword({
@@ -70,6 +71,85 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
       setLoading(false);
     }
   };
+
+  // Show confirmation screen after successful signup
+  if (showConfirmation) {
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl max-w-lg w-full p-8 relative">
+          <div className="text-center">
+            <div className="text-6xl mb-6">📧</div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Check Your Email!
+            </h2>
+            <p className="text-gray-600 mb-6 leading-relaxed">
+              We've sent a confirmation email to <span className="font-semibold text-blue-600">{email}</span>
+            </p>
+            
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6 text-left">
+              <h3 className="font-semibold text-blue-900 mb-3">📋 Next Steps:</h3>
+              <ol className="text-blue-800 space-y-2 text-sm">
+                <li><span className="font-semibold">1.</span> Check your inbox (and spam folder)</li>
+                <li><span className="font-semibold">2.</span> Look for an email from "AI Tools Bundle"</li>
+                <li><span className="font-semibold">3.</span> Click the "Confirm Account" button</li>
+                <li><span className="font-semibold">4.</span> Return here to access your 20 AI tools</li>
+              </ol>
+            </div>
+
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+              <p className="text-green-800 text-sm">
+                <span className="font-semibold">✅ Account Created Successfully!</span><br/>
+                Your $4.99/month subscription is ready to activate.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => {
+                  setShowConfirmation(false);
+                  setMode('signin');
+                }}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+              >
+                I've Confirmed - Sign In
+              </button>
+              <button
+                onClick={() => setShowConfirmation(false)}
+                className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all"
+              >
+                Go Back
+              </button>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <p className="text-xs text-gray-500 mb-2">
+                Didn't receive the email?
+              </p>
+              <button
+                onClick={async () => {
+                  try {
+                    await supabase.auth.resend({
+                      type: 'signup',
+                      email: email,
+                    });
+                    alert('Confirmation email resent! Check your inbox.');
+                  } catch (error) {
+                    alert('Error resending email. Please try again.');
+                  }
+                }}
+                className="text-blue-600 hover:text-blue-700 text-sm font-medium underline"
+              >
+                Resend Confirmation Email
+              </button>
+              <p className="text-xs text-gray-400 mt-2">
+                Or check your spam folder
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
