@@ -1,0 +1,2 @@
+This file marks that enterprise-ai-tools.tsx was deleted as requested by user.
+The enterprise landing page has been removed from the project.
