@@ -307,7 +307,7 @@ const LandingPage = () => {
           
           <div className="bg-gradient-to-br from-blue-900/50 to-emerald-900/50 rounded-2xl p-8 border-2 border-emerald-500 max-w-md mx-auto">
             <div className="text-5xl font-bold text-white mb-2">$19.99</div>
-            <div className="text-lg text-emerald-400 mb-6">per month</div>
+            <div className="text-lg text-emerald-400 mb-6">one time</div>
             
             <ul className="space-y-3 text-left mb-8">
               <li className="flex items-center text-gray-300">
@@ -340,7 +340,7 @@ const LandingPage = () => {
             </Link>
             
             <div className="mt-4 text-sm text-gray-400">
-              Save $780+ monthly vs individual tools
+              Save $1,180+ annually vs individual tools
             </div>
           </div>
         </div>
