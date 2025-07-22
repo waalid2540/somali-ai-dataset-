@@ -87,6 +87,12 @@ function AIToolsDashboard({
                 <div className="text-sm text-gray-500">Annual Savings</div>
                 <div className="text-lg font-bold text-green-600">$1,180+</div>
               </div>
+              <button 
+                onClick={() => window.location.href = '/'}
+                className="text-gray-600 hover:text-gray-800 text-sm font-medium"
+              >
+                Sign Out
+              </button>
             </div>
           </div>
 

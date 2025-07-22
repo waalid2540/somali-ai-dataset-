@@ -104,8 +104,6 @@ function AIToolsBundlePage() {
             <AIToolsDashboard 
               onToolSelect={handleToolSelect}
               userSubscription={userSubscription}
-              user={user}
-              onSignOut={handleSignOut}
             />
           )
         ) : (
