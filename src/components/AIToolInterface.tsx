@@ -551,67 +551,66 @@ function AIToolInterface({
             {result && (
               <div>
                 {renderProfessionalOutput(result.content, tool)}
+                
+                {/* Actions and Metadata */}
+                <div className="mt-6">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-gray-900">Actions</h3>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={handleCopyResult}
+                          className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                        >
+                          <Copy className="h-4 w-4" />
+                          <span>Copy</span>
+                        </button>
+                        <button className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                          <Download className="h-4 w-4" />
+                          <span>Download</span>
+                        </button>
+                        <button className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                          <Share className="h-4 w-4" />
+                          <span>Share</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Metadata */}
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div className="bg-blue-50 rounded-lg p-3">
+                        <div className="flex items-center justify-center mb-1">
+                          <Clock className="h-4 w-4 text-blue-600" />
+                        </div>
+                        <div className="text-lg font-semibold text-blue-600">
+                          {result.metadata.processingTime}ms
+                        </div>
+                        <div className="text-xs text-blue-700">Processing Time</div>
+                      </div>
+                      <div className="bg-green-50 rounded-lg p-3">
+                        <div className="flex items-center justify-center mb-1">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                        </div>
+                        <div className="text-lg font-semibold text-green-600">
+                          {result.metadata.wordsGenerated}
+                        </div>
+                        <div className="text-xs text-green-700">Words Generated</div>
+                      </div>
+                      <div className="bg-purple-50 rounded-lg p-3">
+                        <div className="flex items-center justify-center mb-1">
+                          <Star className="h-4 w-4 text-purple-600" />
+                        </div>
+                        <div className="text-lg font-semibold text-purple-600">
+                          {Math.round(result.metadata.confidence * 100)}%
+                        </div>
+                        <div className="text-xs text-purple-700">Confidence</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
-        </div>
-
-        {result && (
-          <div className="mt-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Actions</h3>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={handleCopyResult}
-                    className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    <Copy className="h-4 w-4" />
-                    <span>Copy</span>
-                  </button>
-                  <button className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                    <Download className="h-4 w-4" />
-                    <span>Download</span>
-                  </button>
-                  <button className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
-                    <Share className="h-4 w-4" />
-                    <span>Share</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Metadata */}
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="bg-blue-50 rounded-lg p-3">
-                  <div className="flex items-center justify-center mb-1">
-                    <Clock className="h-4 w-4 text-blue-600" />
-                  </div>
-                  <div className="text-lg font-semibold text-blue-600">
-                    {result.metadata.processingTime}ms
-                  </div>
-                  <div className="text-xs text-blue-700">Processing Time</div>
-                </div>
-                <div className="bg-green-50 rounded-lg p-3">
-                  <div className="flex items-center justify-center mb-1">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div className="text-lg font-semibold text-green-600">
-                    {result.metadata.wordsGenerated}
-                  </div>
-                  <div className="text-xs text-green-700">Words Generated</div>
-                </div>
-                <div className="bg-purple-50 rounded-lg p-3">
-                  <div className="flex items-center justify-center mb-1">
-                    <Star className="h-4 w-4 text-purple-600" />
-                  </div>
-                  <div className="text-lg font-semibold text-purple-600">
-                    {Math.round(result.metadata.confidence * 100)}%
-                  </div>
-                  <div className="text-xs text-purple-700">Confidence</div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Usage Tips */}
