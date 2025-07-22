@@ -181,6 +181,240 @@ function AIToolInterface({
     return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
+  const renderProfessionalOutput = (content: string, tool: AIToolConfig) => {
+    const toolId = tool.id || tool.name.toLowerCase().replace(/\s+/g, '-');
+    
+    switch (toolId) {
+      case 'blog-post-generator':
+        return renderBlogPost(content);
+      case 'email-marketing-ai':
+        return renderEmail(content);
+      case 'invoice-generator-ai':
+        return renderInvoice(content);
+      case 'ad-copy-creator':
+        return renderAdCopy(content);
+      case 'social-media-ai':
+        return renderSocialPost(content);
+      case 'proposal-writer-ai':
+        return renderProposal(content);
+      case 'resume-builder-ai':
+        return renderResume(content);
+      case 'contract-creator-ai':
+        return renderContract(content);
+      default:
+        return renderDefault(content);
+    }
+  };
+
+  const renderBlogPost = (content: string) => {
+    const lines = content.split('\n').filter(line => line.trim());
+    const title = lines[0] || 'Blog Post Title';
+    const body = lines.slice(1);
+
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-4 max-w-4xl mx-auto">
+        <div className="prose prose-lg max-w-none">
+          <h1 className="text-3xl font-bold text-gray-900 mb-6 border-b pb-4">{title}</h1>
+          <div className="flex items-center text-sm text-gray-600 mb-8">
+            <span>📅 {new Date().toLocaleDateString()}</span>
+            <span className="mx-2">•</span>
+            <span>✍️ AI Generated Content</span>
+            <span className="mx-2">•</span>
+            <span>📖 {Math.ceil(content.split(' ').length / 200)} min read</span>
+          </div>
+          {body.map((paragraph, index) => (
+            <p key={index} className="text-gray-700 leading-relaxed mb-4">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderEmail = (content: string) => {
+    const lines = content.split('\n').filter(line => line.trim());
+    const subject = lines.find(line => line.toLowerCase().includes('subject')) || 'Email Subject';
+    const body = lines.filter(line => !line.toLowerCase().includes('subject'));
+
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden mb-4">
+        <div className="bg-gray-50 px-6 py-4 border-b">
+          <div className="flex items-center space-x-4">
+            <div className="text-sm font-medium text-gray-700">From:</div>
+            <div className="text-sm text-gray-600">your-business@email.com</div>
+          </div>
+          <div className="flex items-center space-x-4 mt-2">
+            <div className="text-sm font-medium text-gray-700">Subject:</div>
+            <div className="text-sm text-gray-900 font-medium">{subject}</div>
+          </div>
+        </div>
+        <div className="p-6">
+          {body.map((paragraph, index) => (
+            <p key={index} className="text-gray-700 mb-4 leading-relaxed">
+              {paragraph}
+            </p>
+          ))}
+          <div className="mt-8 pt-4 border-t border-gray-200">
+            <div className="text-sm text-gray-500">
+              📧 Professional Email Template • ✨ AI Generated
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderInvoice = (content: string) => {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-4 max-w-2xl mx-auto">
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">INVOICE</h1>
+            <div className="text-sm text-gray-600 mt-2">#{Date.now().toString().slice(-6)}</div>
+          </div>
+          <div className="text-right">
+            <div className="text-sm text-gray-600">Date: {new Date().toLocaleDateString()}</div>
+            <div className="text-sm text-gray-600">Due: {new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()}</div>
+          </div>
+        </div>
+        <div className="prose max-w-none">
+          <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono bg-gray-50 p-4 rounded">
+            {content}
+          </pre>
+        </div>
+        <div className="mt-8 pt-4 border-t border-gray-200 text-center">
+          <div className="text-sm text-gray-500">📄 Professional Invoice • 💼 Business Ready</div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderAdCopy = (content: string) => {
+    const lines = content.split('\n').filter(line => line.trim());
+    const headline = lines[0] || 'Your Headline Here';
+    const description = lines.slice(1, -1).join(' ');
+    const cta = lines[lines.length - 1] || 'Call to Action';
+
+    return (
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200 p-6 mb-4">
+        <div className="bg-white rounded-lg p-6 shadow-sm">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">{headline}</h2>
+          <p className="text-gray-700 mb-6 leading-relaxed">{description}</p>
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            {cta}
+          </button>
+          <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+            <div className="text-sm text-gray-500">📢 Professional Ad Copy • 🎯 Conversion Optimized</div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderSocialPost = (content: string) => {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-4 max-w-lg mx-auto">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+            YB
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900">Your Business</div>
+            <div className="text-sm text-gray-500">Just now</div>
+          </div>
+        </div>
+        <p className="text-gray-800 mb-4 leading-relaxed">{content}</p>
+        <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+          <div className="flex items-center space-x-6 text-sm text-gray-500">
+            <span>👍 Like</span>
+            <span>💬 Comment</span>
+            <span>🔄 Share</span>
+          </div>
+          <div className="text-sm text-gray-500">📱 Social Media Ready</div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderProposal = (content: string) => {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-4">
+        <div className="border-b border-gray-200 pb-6 mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">Business Proposal</h1>
+          <div className="text-sm text-gray-600 mt-2">
+            Prepared on {new Date().toLocaleDateString()} • Professional Document
+          </div>
+        </div>
+        <div className="prose max-w-none">
+          {content.split('\n\n').map((section, index) => (
+            <div key={index} className="mb-6">
+              <p className="text-gray-700 leading-relaxed">{section}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 pt-6 border-t border-gray-200 text-center">
+          <div className="text-sm text-gray-500">💼 Professional Proposal • 📈 Business Ready</div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderResume = (content: string) => {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-4 max-w-2xl mx-auto">
+        <div className="text-center border-b border-gray-200 pb-6 mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">Professional Resume</h1>
+          <div className="text-sm text-gray-600 mt-2">ATS-Optimized Format</div>
+        </div>
+        <div className="prose max-w-none">
+          <pre className="whitespace-pre-wrap text-sm text-gray-800 leading-relaxed">
+            {content}
+          </pre>
+        </div>
+        <div className="mt-8 pt-6 border-t border-gray-200 text-center">
+          <div className="text-sm text-gray-500">📄 Professional Resume • 🎯 ATS Optimized</div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderContract = (content: string) => {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-4">
+        <div className="text-center border-b border-gray-200 pb-6 mb-6">
+          <h1 className="text-xl font-bold text-gray-900">LEGAL CONTRACT</h1>
+          <div className="text-sm text-gray-600 mt-2">Document #{Date.now().toString().slice(-8)}</div>
+        </div>
+        <div className="prose max-w-none">
+          <pre className="whitespace-pre-wrap text-sm text-gray-800 leading-relaxed font-serif">
+            {content}
+          </pre>
+        </div>
+        <div className="mt-8 pt-6 border-t border-gray-200">
+          <div className="text-xs text-gray-500 text-center">
+            ⚖️ Legal Document Template • 📋 Professional Format • ⚠️ Review with legal counsel
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderDefault = (content: string) => {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-4">
+        <div className="prose max-w-none">
+          <div className="text-gray-800 leading-relaxed whitespace-pre-wrap">
+            {content}
+          </div>
+        </div>
+        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+          <div className="text-sm text-gray-500">✨ AI Generated Content • 🚀 Professional Quality</div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -316,11 +550,35 @@ function AIToolInterface({
 
             {result && (
               <div>
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono">
-                    {result.content}
-                  </pre>
+                {renderProfessionalOutput(result.content, tool)}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {result && (
+          <div className="mt-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Actions</h3>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={handleCopyResult}
+                    className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    <Copy className="h-4 w-4" />
+                    <span>Copy</span>
+                  </button>
+                  <button className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    <Download className="h-4 w-4" />
+                    <span>Download</span>
+                  </button>
+                  <button className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                    <Share className="h-4 w-4" />
+                    <span>Share</span>
+                  </button>
                 </div>
+              </div>
 
                 {/* Metadata */}
                 <div className="grid grid-cols-3 gap-4 text-center">
