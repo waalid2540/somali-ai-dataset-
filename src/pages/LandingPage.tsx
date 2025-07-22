@@ -13,9 +13,9 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+      <nav className="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-16 md:h-20">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center">
                 <Globe className="w-6 h-6 text-white" />
@@ -24,24 +24,33 @@ const LandingPage = () => {
                 Somali AI Dataset
               </span>
             </div>
-            <div className="flex items-center space-x-6">
-              <Link href="/ai-tools-bundle" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">🔥 20 AI Tools - $4.99/month</Link>
-              <Link href="/ai-business-creation" className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold">💼 AI Business Creation</Link>
-              <a href="#dataset" className="text-gray-300 hover:text-white transition-colors">Somali Dataset</a>
-              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
+            <div className="hidden md:flex items-center space-x-6">
+              <Link href="/ai-tools-bundle" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold text-sm lg:text-base">🔥 20 AI Tools - $4.99/month</Link>
+              <Link href="/ai-business-creation" className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold text-sm lg:text-base">💼 AI Business Creation</Link>
+              <a href="#dataset" className="text-gray-300 hover:text-white transition-colors text-sm lg:text-base">Somali Dataset</a>
+              <a href="#about" className="text-gray-300 hover:text-white transition-colors text-sm lg:text-base">About</a>
               <button 
                 onClick={handleNotifyMe}
-                className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-4 lg:px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-sm lg:text-base"
               >
                 Get Notified
               </button>
+            </div>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <Link 
+                href="/ai-tools-bundle"
+                className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-4 py-2 rounded-lg font-semibold text-sm"
+              >
+                🔥 AI Tools
+              </Link>
             </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
           {/* Badge */}
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-900/50 to-emerald-900/50 border border-blue-500/30 mb-8">
@@ -50,58 +59,60 @@ const LandingPage = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 md:mb-8 leading-tight px-2">
             The World's First
-            <br />
+            <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent">
               Somali AI Dataset
             </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
             <strong className="text-white">25 million Somali speakers worldwide.</strong> 
             <span className="text-blue-400"> Zero authentic AI datasets.</span>
-            <br />
+            <br className="hidden sm:block" />
             <span className="text-emerald-400">First-mover in untapped </span>
             <strong className="text-yellow-400">25 million speaker market.</strong>
           </p>
 
           {/* Market Opportunity Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-16 max-w-5xl mx-auto px-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">25M</div>
-              <div className="text-gray-400">Global Speakers</div>
+              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-1 md:mb-2">25M</div>
+              <div className="text-gray-400 text-sm md:text-base">Global Speakers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-400 mb-2">FIRST</div>
-              <div className="text-gray-400">In The World</div>
+              <div className="text-2xl md:text-3xl font-bold text-emerald-400 mb-1 md:mb-2">FIRST</div>
+              <div className="text-gray-400 text-sm md:text-base">In The World</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-2">ZERO</div>
-              <div className="text-gray-400">Competition</div>
+              <div className="text-2xl md:text-3xl font-bold text-blue-400 mb-1 md:mb-2">ZERO</div>
+              <div className="text-gray-400 text-sm md:text-base">Competition</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-400 mb-2">100%</div>
-              <div className="text-gray-400">Market Share</div>
+              <div className="text-2xl md:text-3xl font-bold text-purple-400 mb-1 md:mb-2">100%</div>
+              <div className="text-gray-400 text-sm md:text-base">Market Share</div>
             </div>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
             <Link 
               href="/ai-tools-bundle"
-              className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
+              className="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
             >
-              <Zap className="mr-2 w-5 h-5" />
-              🔥 20 AI Tools - $4.99/month
+              <Zap className="mr-2 w-4 md:w-5 h-4 md:h-5" />
+              <span className="hidden sm:inline">🔥 20 AI Tools - $4.99/month</span>
+              <span className="sm:hidden">🔥 AI Tools - $4.99/mo</span>
             </Link>
             <button 
               onClick={handleNotifyMe}
-              className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
             >
-              <Mail className="mr-2 w-5 h-5" />
-              Get Dataset Access
+              <Mail className="mr-2 w-4 md:w-5 h-4 md:h-5" />
+              <span className="hidden sm:inline">Get Dataset Access</span>
+              <span className="sm:hidden">Get Access</span>
             </button>
           </div>
 

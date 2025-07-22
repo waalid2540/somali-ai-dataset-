@@ -109,20 +109,20 @@ function AIToolsBundlePage() {
             />
           )
         ) : (
-          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
-            <div className="text-center max-w-2xl">
+          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+            <div className="text-center max-w-2xl w-full">
               <div className="text-6xl mb-6">🚀</div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 px-2">
                 Stop Paying $120+/month for AI Tools
               </h1>
-              <p className="text-xl text-gray-700 mb-6">
+              <p className="text-lg sm:text-xl text-gray-700 mb-6 px-2">
                 Get 20 Professional AI Tools for just <span className="font-bold text-blue-600">$4.99/month</span>
               </p>
               
               {/* Pain Points */}
-              <div className="bg-white/80 backdrop-blur rounded-xl p-6 mb-8 text-left">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">❌ Tired of...</h3>
-                <ul className="space-y-2 text-gray-700">
+              <div className="bg-white/80 backdrop-blur rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 text-left mx-2 sm:mx-0">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4 text-center">❌ Tired of...</h3>
+                <ul className="space-y-2 text-gray-700 text-sm sm:text-base">
                   <li>• Paying $29/month for ChatGPT Plus</li>
                   <li>• Spending $49/month on Jasper AI</li>
                   <li>• $39/month for Copy.ai subscriptions</li>
@@ -132,9 +132,9 @@ function AIToolsBundlePage() {
               </div>
 
               {/* Value Proposition */}
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">✅ Get Everything in One Place:</h3>
-                <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 mx-2 sm:mx-0">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">✅ Get Everything in One Place:</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm text-gray-700">
                   <div>• Blog Generator</div>
                   <div>• Ad Copy Creator</div>
                   <div>• Email Marketing AI</div>
@@ -149,20 +149,20 @@ function AIToolsBundlePage() {
               </div>
 
               {/* Savings */}
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-                <p className="text-yellow-800 font-semibold">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8 mx-2 sm:mx-0">
+                <p className="text-yellow-800 font-semibold text-sm sm:text-base">
                   💰 Save $115+/month • 96% Cost Reduction
                 </p>
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2 sm:px-0">
                 <button
                   onClick={() => {
                     setAuthMode('signup');
                     setShowAuthModal(true);
                   }}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                  className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all text-sm sm:text-base"
                 >
                   Start Free Trial
                 </button>
@@ -171,13 +171,13 @@ function AIToolsBundlePage() {
                     setAuthMode('signin');
                     setShowAuthModal(true);
                   }}
-                  className="bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all"
+                  className="w-full sm:w-auto bg-white border-2 border-blue-600 text-blue-600 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all text-sm sm:text-base"
                 >
                   Sign In
                 </button>
               </div>
 
-              <p className="text-sm text-gray-500 mt-4">
+              <p className="text-xs sm:text-sm text-gray-500 mt-4 px-2">
                 No contracts • Cancel anytime • 30-day money back guarantee
               </p>
             </div>

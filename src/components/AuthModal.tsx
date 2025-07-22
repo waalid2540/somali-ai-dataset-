@@ -76,19 +76,19 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
   if (showConfirmation) {
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl max-w-lg w-full p-8 relative">
+        <div className="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
           <div className="text-center">
             <div className="text-6xl mb-6">📧</div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
               Check Your Email!
             </h2>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              We've sent a confirmation email to <span className="font-semibold text-blue-600">{email}</span>
+            <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
+              We've sent a confirmation email to <span className="font-semibold text-blue-600 break-all">{email}</span>
             </p>
             
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6 text-left">
-              <h3 className="font-semibold text-blue-900 mb-3">📋 Next Steps:</h3>
-              <ol className="text-blue-800 space-y-2 text-sm">
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-left">
+              <h3 className="font-semibold text-blue-900 mb-3 text-sm sm:text-base">📋 Next Steps:</h3>
+              <ol className="text-blue-800 space-y-2 text-xs sm:text-sm">
                 <li><span className="font-semibold">1.</span> Check your inbox (and spam folder)</li>
                 <li><span className="font-semibold">2.</span> Look for an email from "AI Tools Bundle"</li>
                 <li><span className="font-semibold">3.</span> Click the "Confirm Account" button</li>
@@ -96,8 +96,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
               </ol>
             </div>
 
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-              <p className="text-green-800 text-sm">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+              <p className="text-green-800 text-xs sm:text-sm">
                 <span className="font-semibold">✅ Account Created Successfully!</span><br/>
                 Your $4.99/month subscription is ready to activate.
               </p>
@@ -109,13 +109,13 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                   setShowConfirmation(false);
                   setMode('signin');
                 }}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all text-sm sm:text-base"
               >
                 I've Confirmed - Sign In
               </button>
               <button
                 onClick={() => setShowConfirmation(false)}
-                className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all"
+                className="w-full sm:w-auto bg-gray-100 text-gray-700 px-4 sm:px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all text-sm sm:text-base"
               >
                 Go Back
               </button>
@@ -153,7 +153,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-8 relative">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -161,11 +161,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           <X className="w-6 h-6" />
         </button>
 
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             {mode === 'signin' ? 'Sign In' : 'Start Your AI Journey'}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm sm:text-base px-2">
             {mode === 'signin' 
               ? 'Access your 20 AI tools for $4.99/month' 
               : 'Join thousands using our enterprise AI tools'
@@ -173,20 +173,20 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           </p>
         </div>
 
-        <form onSubmit={handleAuth} className="space-y-6">
+        <form onSubmit={handleAuth} className="space-y-4 sm:space-y-6">
           {mode === 'signup' && (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                   Full Name
                 </label>
                 <div className="relative">
-                  <User className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
+                  <User className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 absolute left-3 top-3" />
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
+                    className="w-full pl-9 sm:pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400 text-sm sm:text-base"
                     placeholder="Your full name"
                     required
                   />
