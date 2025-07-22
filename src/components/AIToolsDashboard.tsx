@@ -106,7 +106,7 @@ function AIToolsDashboard({
                 <DollarSign className="h-6 w-6 mr-2" />
                 <div>
                   <div className="text-2xl font-bold">$19.99</div>
-                  <div className="text-sm opacity-90">Per Month</div>
+                  <div className="text-sm opacity-90">One-Time</div>
                 </div>
               </div>
             </div>
