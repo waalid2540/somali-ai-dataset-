@@ -77,19 +77,23 @@ function AIToolsDashboard({
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">AI Tools Bundle</h1>
-              <p className="text-gray-600 mt-1">20 powerful AI tools for $19.99 one-time</p>
+              <p className="text-gray-600 mt-1">20 powerful AI tools for $4.99/month</p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-2 rounded-lg">
                 <span className="font-semibold">{userSubscription.toUpperCase()}</span>
               </div>
               <div className="text-right">
-                <div className="text-sm text-gray-500">Annual Savings</div>
-                <div className="text-lg font-bold text-green-600">$1,180+</div>
+                <div className="text-sm text-gray-500">Monthly Savings</div>
+                <div className="text-lg font-bold text-green-600">$115+</div>
               </div>
               <button 
-                onClick={() => window.location.href = '/'}
-                className="text-gray-600 hover:text-gray-800 text-sm font-medium"
+                onClick={async () => {
+                  const { supabase } = await import('../lib/supabase');
+                  await supabase.auth.signOut();
+                  window.location.href = '/';
+                }}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 Sign Out
               </button>
@@ -111,8 +115,8 @@ function AIToolsDashboard({
               <div className="flex items-center">
                 <DollarSign className="h-6 w-6 mr-2" />
                 <div>
-                  <div className="text-2xl font-bold">$19.99</div>
-                  <div className="text-sm opacity-90">One-Time</div>
+                  <div className="text-2xl font-bold">$4.99</div>
+                  <div className="text-sm opacity-90">Per Month</div>
                 </div>
               </div>
             </div>
@@ -313,15 +317,15 @@ function AIToolsDashboard({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-2">Unlock All 20 AI Tools</h2>
-            <p className="text-blue-100 mb-4">Get access to our complete AI tools bundle for just $19.99 one-time</p>
+            <p className="text-blue-100 mb-4">Get access to our complete AI tools bundle for just $4.99/month</p>
             <div className="flex items-center justify-center space-x-8 mb-6">
               <div className="text-center">
-                <div className="text-3xl font-bold">$19.99</div>
-                <div className="text-sm text-blue-200">one-time</div>
+                <div className="text-3xl font-bold">$4.99</div>
+                <div className="text-sm text-blue-200">per month</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold line-through text-blue-300">$800+</div>
-                <div className="text-sm text-blue-200">individual cost</div>
+                <div className="text-3xl font-bold line-through text-blue-300">$120+</div>
+                <div className="text-sm text-blue-200">monthly value</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-green-300">97%</div>
