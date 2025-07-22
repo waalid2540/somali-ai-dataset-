@@ -77,15 +77,15 @@ function AIToolsDashboard({
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">AI Tools Bundle</h1>
-              <p className="text-gray-600 mt-1">20 powerful AI tools for $19.99/month</p>
+              <p className="text-gray-600 mt-1">20 powerful AI tools for $19.99 one-time</p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-2 rounded-lg">
                 <span className="font-semibold">{userSubscription.toUpperCase()}</span>
               </div>
               <div className="text-right">
-                <div className="text-sm text-gray-500">Monthly Savings</div>
-                <div className="text-lg font-bold text-green-600">$780+</div>
+                <div className="text-sm text-gray-500">Annual Savings</div>
+                <div className="text-lg font-bold text-green-600">$1,180+</div>
               </div>
             </div>
           </div>
@@ -220,49 +220,6 @@ function AIToolsDashboard({
         </div>
       </div>
 
-      {/* INTEGRATIONS SECTION - ALWAYS VISIBLE */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-xl p-6 text-white mb-6">
-          <h2 className="text-2xl font-bold mb-2">🚀 Business Automation Integrations</h2>
-          <p className="text-emerald-100">Connect your AI tools to external services for complete automation</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
-          {[
-            { name: 'Gmail', icon: '📧', desc: 'Auto-send emails' },
-            { name: 'Facebook', icon: '📘', desc: 'Auto-post content' },
-            { name: 'LinkedIn', icon: '💼', desc: 'Share to LinkedIn' },
-            { name: 'Stripe', icon: '💳', desc: 'Process payments' },
-            { name: 'HubSpot', icon: '🎯', desc: 'Manage leads' },
-            { name: 'Slack', icon: '💬', desc: 'Send notifications' },
-            { name: 'Twitter', icon: '🐦', desc: 'Auto-tweet' },
-            { name: 'Google Calendar', icon: '📅', desc: 'Schedule events' },
-            { name: 'Zapier', icon: '⚡', desc: 'Connect 5000+ apps' },
-            { name: 'Outlook', icon: '📮', desc: 'Email automation' },
-            { name: 'DocuSign', icon: '✍️', desc: 'E-signatures' }
-          ].map((integration, idx) => (
-            <div key={idx} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <div className="flex items-center space-x-3 mb-3">
-                <span className="text-2xl">{integration.icon}</span>
-                <div>
-                  <h3 className="font-semibold text-gray-900">{integration.name}</h3>
-                  <p className="text-sm text-gray-600">{integration.desc}</p>
-                </div>
-              </div>
-              <button className="w-full bg-emerald-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-emerald-700">
-                Setup {integration.name}
-              </button>
-            </div>
-          ))}
-        </div>
-        
-        <div className="text-center">
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-            <h3 className="font-bold text-emerald-900 mb-2">💰 Save $2,840+ Monthly</h3>
-            <p className="text-emerald-700">These integrations replace $2,840/month worth of individual tools</p>
-          </div>
-        </div>
-      </div>
 
       {/* Tools Grid/List */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
