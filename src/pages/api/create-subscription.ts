@@ -63,9 +63,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.error('Error updating user:', updateError);
     }
 
+    const invoice = subscription.latest_invoice as Stripe.Invoice;
+    const paymentIntent = invoice?.payment_intent as Stripe.PaymentIntent;
+    
     res.status(200).json({
       subscriptionId: subscription.id,
-      clientSecret: (subscription.latest_invoice as Stripe.Invoice)?.payment_intent?.client_secret,
+      clientSecret: paymentIntent?.client_secret,
     });
   } catch (error) {
     console.error('Error creating subscription:', error);
