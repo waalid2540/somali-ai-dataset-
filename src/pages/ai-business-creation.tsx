@@ -192,7 +192,7 @@ function AIBusinessCreationPage() {
         <meta property="og:title" content="AI Business Creation Service - Professional AI Development | Somali AI Dataset" />
         <meta property="og:description" content="Transform your expertise into a profitable AI business. Custom development for $2,000-$5,000 vs $50K+ agencies." />
         <meta property="og:image" content="/images/ai-business-creation-og.jpg" />
-        <meta property="og:url" content="https://somaliaidataset.com/ai-business-creation" />
+        <meta property="og:url" content="https://somaidataset.com/ai-business-creation" />
       </Head>
 
       <div className="min-h-screen bg-white">
@@ -617,7 +617,7 @@ function AIBusinessCreationPage() {
 
             <div className="space-y-6">
               <a 
-                href="mailto:hello@somaliaidataset.com?subject=AI Business Creation Consultation&body=Hi, I'm interested in building an AI business. Please schedule a consultation call."
+                href="mailto:hello@somaidataset.com?subject=AI Business Creation Consultation&body=Hi, I'm interested in building an AI business. Please schedule a consultation call."
                 className="bg-white text-emerald-600 px-12 py-6 rounded-2xl font-black text-2xl hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl inline-flex items-center"
               >
                 <Mail className="mr-3 w-8 h-8" />
@@ -668,7 +668,7 @@ function AIBusinessCreationPage() {
               <div>
                 <h4 className="font-semibold mb-4">Contact</h4>
                 <div className="space-y-2 text-gray-400">
-                  <a href="mailto:hello@somaliaidataset.com" className="block hover:text-white transition-colors">Email Support</a>
+                  <a href="mailto:hello@somaidataset.com" className="block hover:text-white transition-colors">Email Support</a>
                   <a href="#consultation" className="block hover:text-white transition-colors">Book Consultation</a>
                   <Link href="/#about" className="block hover:text-white transition-colors">About</Link>
                 </div>

@@ -163,7 +163,7 @@ function HomePage() {
         <meta property="og:title" content="Somali AI - 20 Professional AI Tools for $4.99/month" />
         <meta property="og:description" content="Get 20 professional AI tools for $4.99/month. Save $115+ monthly vs individual subscriptions." />
         <meta property="og:image" content="/images/og-image.jpg" />
-        <meta property="og:url" content="https://somaliaidataset.com" />
+        <meta property="og:url" content="https://somaidataset.com" />
         <meta property="og:site_name" content="Somali AI Dataset" />
         
         {/* Twitter Cards */}

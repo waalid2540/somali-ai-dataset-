@@ -86,7 +86,7 @@ function AIMarketToolsPage() {
         <meta property="og:title" content="AI Market Tools - Professional Enterprise Suite | Somali AI Dataset" />
         <meta property="og:description" content="Professional AI Market Tools by Somali AI Dataset. 20 enterprise-grade tools for $19.99 one-time." />
         <meta property="og:image" content="/images/ai-market-tools-og.jpg" />
-        <meta property="og:url" content="https://somaliaidataset.com/ai-market-tools" />
+        <meta property="og:url" content="https://somaidataset.com/ai-market-tools" />
       </Head>
 
       <div className="min-h-screen bg-white">

@@ -1,7 +1,8 @@
-// Enterprise SaaS Authentication Modal
+// Enterprise SaaS Authentication Modal with Stripe Integration
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { X, Mail, Lock, User, Building } from 'lucide-react';
+import { X, Mail, Lock, User, Building, CreditCard } from 'lucide-react';
+import getStripe from '../lib/stripe';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -21,6 +22,34 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleStripeCheckout = async (userId: string) => {
+    try {
+      // Create Stripe checkout session
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          userId,
+        }),
+      });
+
+      const { sessionId, url } = await response.json();
+
+      if (url) {
+        // Redirect to Stripe checkout
+        window.location.href = url;
+      } else {
+        throw new Error('Failed to create checkout session');
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      setError('Failed to start payment process. Please try again.');
+    }
+  };
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,9 +80,10 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             ]);
 
           if (profileError) throw profileError;
-        }
 
-        setShowConfirmation(true);
+          // After successful signup, redirect to Stripe checkout
+          await handleStripeCheckout(authData.user.id);
+        }
       } else {
         // Sign in existing user
         const { error } = await supabase.auth.signInWithPassword({
@@ -173,6 +203,25 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           </p>
         </div>
 
+        {mode === 'signup' && (
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-gray-900">AI Tools Bundle</h3>
+                <p className="text-sm text-gray-600">20 professional AI tools</p>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">$4.99</div>
+                <div className="text-sm text-gray-500">per month</div>
+              </div>
+            </div>
+            <div className="flex items-center mt-3 text-sm text-gray-600">
+              <CreditCard className="w-4 h-4 mr-2" />
+              <span>Secure payment with Stripe • Cancel anytime</span>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleAuth} className="space-y-4 sm:space-y-6">
           {mode === 'signup' && (
             <>
@@ -261,7 +310,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
               ? 'Processing...' 
               : mode === 'signin' 
                 ? 'Sign In' 
-                : 'Create Account'
+                : 'Continue to Payment'
             }
           </button>
         </form>
