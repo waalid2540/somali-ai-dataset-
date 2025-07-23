@@ -25,7 +25,7 @@ const LandingPage = () => {
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-6">
-              <Link href="/ai-tools-bundle" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold text-sm lg:text-base">🔥 20 AI Tools - $4.99/month</Link>
+              <a href="/" className="text-yellow-400 hover:text-yellow-300 transition-colors font-semibold text-sm lg:text-base">🔥 AI Tools Bundle</a>
               <Link href="/ai-business-creation" className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold text-sm lg:text-base">💼 AI Business Creation</Link>
               <a href="#dataset" className="text-gray-300 hover:text-white transition-colors text-sm lg:text-base">Somali Dataset</a>
               <a href="#about" className="text-gray-300 hover:text-white transition-colors text-sm lg:text-base">About</a>
@@ -98,14 +98,14 @@ const LandingPage = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-            <Link 
-              href="/ai-tools-bundle"
+            <a 
+              href="/"
               className="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
             >
               <Zap className="mr-2 w-4 md:w-5 h-4 md:h-5" />
               <span className="hidden sm:inline">🔥 20 AI Tools - $4.99/month</span>
               <span className="sm:hidden">🔥 AI Tools - $4.99/mo</span>
-            </Link>
+            </a>
             <button 
               onClick={handleNotifyMe}
               className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
@@ -343,12 +343,12 @@ const LandingPage = () => {
               </li>
             </ul>
             
-            <Link 
-              href="/ai-tools-bundle"
+            <a 
+              href="/"
               className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-3 px-6 rounded-lg font-bold hover:from-emerald-700 hover:to-blue-700 transition-all inline-block"
             >
               Start Free Trial
-            </Link>
+            </a>
             
             <div className="mt-4 text-sm text-gray-400">
               Save $115+ monthly vs individual tools • Cancel anytime

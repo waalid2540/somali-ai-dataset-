@@ -90,14 +90,14 @@ function AIToolsLandingPage() {
         {/* Open Graph */}
         <meta property="og:title" content="AI Tools Bundle - 20 Professional AI Tools for $19.99/month" />
         <meta property="og:description" content="Save 97% with our complete AI tools bundle. 20 professional tools for the price of one." />
-        <meta property="og:image" content="/images/ai-tools-bundle-og.jpg" />
+        <meta property="og:image" content="/images//-og.jpg" />
         <meta property="og:url" content="https://yoursite.com/ai-tools-landing" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="AI Tools Bundle - 20 AI Tools for $19.99/month" />
         <meta name="twitter:description" content="Professional AI tools bundle with 97% savings. Used by 50,000+ entrepreneurs." />
-        <meta name="twitter:image" content="/images/ai-tools-bundle-twitter.jpg" />
+        <meta name="twitter:image" content="/images//-twitter.jpg" />
       </Head>
 
       <div className="min-h-screen bg-white">
@@ -115,7 +115,7 @@ function AIToolsLandingPage() {
                 <a href="#pricing" className="text-gray-600 hover:text-gray-900">Pricing</a>
                 <a href="#tools" className="text-gray-600 hover:text-gray-900">Tools</a>
                 <a href="#testimonials" className="text-gray-600 hover:text-gray-900">Reviews</a>
-                <Link href="/ai-tools-bundle" className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                <Link href="//" className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
                   Get Access $19.99
                 </Link>
               </div>
@@ -170,7 +170,7 @@ function AIToolsLandingPage() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link 
-                  href="/ai-tools-bundle"
+                  href="//"
                   className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-blue-700 transition-all transform hover:scale-105 flex items-center justify-center"
                 >
                   Get Instant Access - $19.99
@@ -273,7 +273,7 @@ function AIToolsLandingPage() {
                   <div className="text-lg text-gray-600 mb-4">per month</div>
                   <div className="text-sm text-green-600 font-medium mb-6">vs $800+ individually</div>
                   <Link 
-                    href="/ai-tools-bundle"
+                    href="//"
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all inline-block"
                   >
                     Start Free Trial
@@ -310,7 +310,7 @@ function AIToolsLandingPage() {
 
             <div className="text-center mt-12">
               <Link 
-                href="/ai-tools-bundle"
+                href="//"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 inline-flex items-center"
               >
                 Try All Tools Free
@@ -434,7 +434,7 @@ function AIToolsLandingPage() {
             </div>
 
             <Link 
-              href="/ai-tools-bundle"
+              href="//"
               className="bg-yellow-400 text-black px-8 py-4 rounded-lg font-semibold text-xl hover:bg-yellow-300 transition-all transform hover:scale-105 inline-flex items-center"
             >
               Get Instant Access - $19.99

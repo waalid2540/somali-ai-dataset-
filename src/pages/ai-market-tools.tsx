@@ -106,7 +106,7 @@ function AIMarketToolsPage() {
                 <Link href="/#dataset" className="text-gray-600 hover:text-gray-900 transition-colors">Dataset</Link>
                 <Link href="/#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
                 <Link href="/investor" className="text-gray-600 hover:text-gray-900 transition-colors">Investors</Link>
-                <Link href="/ai-tools-bundle" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <Link href="//" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                   Try Tools
                 </Link>
               </div>
@@ -170,7 +170,7 @@ function AIMarketToolsPage() {
             {/* Massive CTA */}
             <div className="space-y-6">
               <Link 
-                href="/ai-tools-bundle"
+                href="//"
                 className="inline-flex items-center bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-black px-12 py-6 rounded-2xl font-black text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-yellow-500/25"
               >
                 <Zap className="mr-3 w-8 h-8" />
@@ -259,7 +259,7 @@ function AIMarketToolsPage() {
                 <div className="text-gray-300 mb-6">Instead of $1,200+ annually in subscriptions</div>
                 
                 <Link 
-                  href="/ai-tools-bundle"
+                  href="//"
                   className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-black px-12 py-6 rounded-2xl font-black text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-yellow-500/25 inline-flex items-center"
                 >
                   <Zap className="mr-3 w-8 h-8" />
@@ -334,7 +334,7 @@ function AIMarketToolsPage() {
               <div className="text-2xl text-yellow-300 mb-6 font-bold">Get ALL 20 Tools for 97.5% OFF</div>
               
               <Link 
-                href="/ai-tools-bundle"
+                href="//"
                 className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-16 py-8 rounded-2xl font-black text-3xl transition-all transform hover:scale-110 shadow-2xl shadow-yellow-500/50 inline-flex items-center animate-pulse"
               >
                 <Zap className="mr-4 w-10 h-10" />
@@ -427,7 +427,7 @@ function AIMarketToolsPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
-                href="/ai-tools-bundle"
+                href="//"
                 className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 inline-flex items-center justify-center"
               >
                 Start Enterprise Trial
@@ -520,7 +520,7 @@ function AIMarketToolsPage() {
                 <h4 className="font-semibold mb-4">Enterprise</h4>
                 <div className="space-y-2 text-gray-400">
                   <Link href="/ai-market-tools" className="block hover:text-white transition-colors">AI Market Tools</Link>
-                  <Link href="/ai-tools-bundle" className="block hover:text-white transition-colors">Tools Suite</Link>
+                  <Link href="//" className="block hover:text-white transition-colors">Tools Suite</Link>
                   <Link href="/ai-meeting-pro" className="block hover:text-white transition-colors">Meeting AI</Link>
                   <Link href="/investor" className="block hover:text-white transition-colors">Investors</Link>
                 </div>
