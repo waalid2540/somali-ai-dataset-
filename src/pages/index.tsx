@@ -64,7 +64,7 @@ function HomePage() {
       role: "CEO",
       company: "TechStart Somalia",
       image: "/testimonials/ahmed.jpg",
-      content: "Somali AI Dataset's market tools saved us $800+ monthly. The Enterprise AI suite transformed our operations completely.",
+      content: "Somali AI Dataset's market tools saved us $115+ monthly. The Enterprise AI suite transformed our operations completely.",
       rating: 5
     },
     {
@@ -80,7 +80,7 @@ function HomePage() {
       role: "Startup Founder",
       company: "Innovation Hub",
       image: "/testimonials/omar.jpg",
-      content: "20 enterprise tools for $19.99? This is incredible value. Our productivity increased 300% in the first month.",
+      content: "20 enterprise tools for $4.99/month? This is incredible value. Our productivity increased 300% in the first month.",
       rating: 5
     }
   ];
@@ -147,7 +147,7 @@ function HomePage() {
         
         {/* Open Graph */}
         <meta property="og:title" content="AI Market Tools - Professional Enterprise Suite | Somali AI Dataset" />
-        <meta property="og:description" content="Professional AI Market Tools by Somali AI Dataset. 20 enterprise-grade tools for $19.99 one-time." />
+        <meta property="og:description" content="Professional AI Market Tools by Somali AI Dataset. 20 enterprise-grade tools for $4.99/month." />
         <meta property="og:image" content="/images/ai-market-tools-og.jpg" />
         <meta property="og:url" content="https://somaliaidataset.com/ai-market-tools" />
       </Head>
@@ -228,10 +228,10 @@ function HomePage() {
 
                 {/* Compelling Value Proposition */}
                 <p className="text-2xl lg:text-3xl text-gray-200 mb-4 font-semibold">
-                  Get <span className="text-yellow-400">$1,200+ worth</span> of AI tools for just <span className="text-emerald-400 text-4xl font-bold">$19.99 ONE-TIME</span>
+                  Get <span className="text-yellow-400">$120+ worth</span> of AI tools for just <span className="text-emerald-400 text-4xl font-bold">$4.99/MONTH</span>
                 </p>
                 <p className="text-xl text-gray-300 mb-12 max-w-4xl mx-auto">
-                  <strong className="text-yellow-400">NO MONTHLY FEES!</strong> Stop paying hundreds for individual AI tools. Get lifetime access to everything you need.
+                  <strong className="text-yellow-400">MONTHLY SUBSCRIPTION!</strong> Stop paying hundreds for individual AI tools. Get access to everything you need.
                 </p>
 
                 {/* Powerful Stats */}
@@ -245,8 +245,8 @@ function HomePage() {
                     <div className="text-gray-300 font-semibold">Cost Savings</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
-                    <div className="text-4xl lg:text-5xl font-black text-purple-400 mb-2">$1,200+</div>
-                    <div className="text-gray-300 font-semibold">You Save Annually</div>
+                    <div className="text-4xl lg:text-5xl font-black text-purple-400 mb-2">$115+</div>
+                    <div className="text-gray-300 font-semibold">You Save Monthly</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
                     <div className="text-4xl lg:text-5xl font-black text-blue-400 mb-2">24/7</div>
@@ -269,14 +269,14 @@ function HomePage() {
                   </button>
                   
                   <div className="text-gray-400">
-                    ⚡ Instant access • 🔒 30-day money back guarantee • 💰 One-time payment
+                    ⚡ Instant access • 🔒 30-day money back guarantee • 💰 Monthly subscription
                   </div>
                 </div>
 
                 {/* Urgency/Scarcity */}
                 <div className="mt-12 p-6 bg-red-500/20 border border-red-500/30 rounded-xl max-w-2xl mx-auto">
                   <div className="text-red-300 font-bold text-lg mb-2">🔥 LIMITED TIME: 75% OFF</div>
-                  <div className="text-white">Join 10,000+ professionals who chose one-time payment over expensive subscriptions</div>
+                  <div className="text-white">Join 10,000+ professionals who chose subscription over expensive individual tools</div>
                 </div>
               </div>
             </section>
@@ -289,17 +289,17 @@ function HomePage() {
                     <span className="text-yellow-400">20 POWERFUL</span> AI TOOLS
                   </h2>
                   <p className="text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
-                    Live chatbots alone cost $500+/month. You get that PLUS 19 other professional tools for just $19.99!
+                    Live chatbots alone cost $50+/month. You get that PLUS 19 other professional tools for just $4.99/month!
                   </p>
                   
                   {/* Value Calculator */}
                   <div className="bg-gradient-to-r from-red-600/20 to-yellow-600/20 border border-yellow-500/30 rounded-2xl p-8 max-w-3xl mx-auto mb-12">
                     <div className="text-xl text-gray-300 mb-4">If you bought these tools separately:</div>
-                    <div className="text-5xl font-black text-red-400 mb-2 line-through">$1,200+ annually</div>
+                    <div className="text-5xl font-black text-red-400 mb-2 line-through">$120+ monthly</div>
                     <div className="text-sm text-gray-300 mb-2">(Individual subscriptions cost $15-50/month each)</div>
                     <div className="text-3xl text-gray-300 mb-4">Our price:</div>
-                    <div className="text-6xl font-black text-emerald-400">$19.99 ONE-TIME</div>
-                    <div className="text-yellow-400 text-xl font-bold mt-4">YOU SAVE $1,180+ ANNUALLY</div>
+                    <div className="text-6xl font-black text-emerald-400">$4.99/MONTH</div>
+                    <div className="text-yellow-400 text-xl font-bold mt-4">YOU SAVE $115+ MONTHLY</div>
                   </div>
                 </div>
 
@@ -345,8 +345,8 @@ function HomePage() {
                 <div className="text-center mt-16">
                   <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-3xl p-8 max-w-2xl mx-auto mb-8">
                     <div className="text-3xl font-black text-white mb-4">GET ALL 20 TOOLS</div>
-                    <div className="text-6xl font-black text-yellow-400 mb-4">$19.99</div>
-                    <div className="text-gray-300 mb-6">Instead of $1,200+ annually in subscriptions</div>
+                    <div className="text-6xl font-black text-yellow-400 mb-4">$4.99/month</div>
+                    <div className="text-gray-300 mb-6">Instead of $120+ monthly in subscriptions</div>
                     
                     <button
                       onClick={() => {
@@ -362,7 +362,7 @@ function HomePage() {
                   </div>
                   
                   <div className="text-gray-400 text-lg">
-                    ⚡ Instant access to all tools • 🚀 No setup required • 💰 One-time payment
+                    ⚡ Instant access to all tools • 🚀 No setup required • 💰 Monthly subscription
                   </div>
                 </div>
               </div>
@@ -375,7 +375,7 @@ function HomePage() {
                   STOP OVERPAYING!
                 </h2>
                 <p className="text-2xl text-white mb-12 font-bold">
-                  Why pay $1,200+ annually for subscriptions when you can get EVERYTHING for $19.99 ONE-TIME?
+                  Why pay $120+ monthly for subscriptions when you can get EVERYTHING for $4.99/MONTH?
                 </p>
 
                 {/* Comparison Cards */}
@@ -386,8 +386,8 @@ function HomePage() {
                       ❌ OTHER PROVIDERS
                     </div>
                     <div className="text-center pt-4">
-                      <div className="text-4xl font-black text-red-400 mb-4">$1,200+</div>
-                      <div className="text-white font-bold mb-6">annually in subscriptions</div>
+                      <div className="text-4xl font-black text-red-400 mb-4">$120+</div>
+                      <div className="text-white font-bold mb-6">monthly in subscriptions</div>
                       <ul className="space-y-3 text-left text-gray-300">
                         <li>• Jasper AI: $49/month</li>
                         <li>• Copy.ai: $49/month</li>
@@ -396,7 +396,7 @@ function HomePage() {
                         <li>• Notion AI: $20/month</li>
                         <li>• + 15 more tools...</li>
                       </ul>
-                      <div className="mt-6 text-red-400 font-bold">TOTAL: $1,200+/year</div>
+                      <div className="mt-6 text-red-400 font-bold">TOTAL: $120+/month</div>
                     </div>
                   </div>
 
@@ -406,8 +406,8 @@ function HomePage() {
                       🔥 OUR OFFER
                     </div>
                     <div className="text-center pt-4">
-                      <div className="text-6xl font-black text-white mb-4">$19.99</div>
-                      <div className="text-yellow-300 font-bold mb-6">ONE-TIME PAYMENT</div>
+                      <div className="text-6xl font-black text-white mb-4">$4.99</div>
+                      <div className="text-yellow-300 font-bold mb-6">MONTHLY SUBSCRIPTION</div>
                       <ul className="space-y-3 text-left text-white">
                         <li>• ✅ ALL 20 AI Tools Included</li>
                         <li>• ✅ Blog Post Generator</li>
@@ -416,7 +416,7 @@ function HomePage() {
                         <li>• ✅ Email Marketing AI</li>
                         <li>• ✅ + 15 more premium tools</li>
                       </ul>
-                      <div className="mt-6 text-yellow-300 font-black text-xl">SAVE $1,180+ ANNUALLY!</div>
+                      <div className="mt-6 text-yellow-300 font-black text-xl">SAVE $115+ MONTHLY!</div>
                     </div>
                   </div>
                 </div>
@@ -439,7 +439,7 @@ function HomePage() {
                   </button>
                   
                   <div className="mt-6 text-white text-lg">
-                    ⚡ Instant access • 🚀 No contracts • 💰 30-day money back guarantee
+                    ⚡ Instant access • 🚀 Cancel anytime • 💰 30-day money back guarantee
                   </div>
                 </div>
 
@@ -593,7 +593,7 @@ function HomePage() {
                 <div className="mt-12 p-6 bg-black/20 rounded-xl max-w-3xl mx-auto">
                   <div className="text-yellow-300 font-bold mb-2">💡 IMAGINE THIS:</div>
                   <div className="text-lg">
-                    Instead of paying $19.99 one-time for tools, your customers pay YOU $19.99 monthly for YOUR AI business. 
+                    Instead of paying $4.99 monthly for tools, your customers pay YOU $19.99 monthly for YOUR AI business. 
                     <strong> From customer to competitor in 6 weeks.</strong>
                   </div>
                 </div>
