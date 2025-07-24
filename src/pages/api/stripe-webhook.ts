@@ -130,11 +130,11 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
 async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   const userId = subscription.metadata?.userId;
-  console.log('Subscription changed for user:', userId);
+  const email = subscription.metadata?.email;
+  console.log('Subscription changed for user:', userId, 'email:', email);
   
-  if (!userId) return;
-
-  const { error } = await supabase
+  // Try to update by stripe_customer_id first
+  let updateResult = await supabase
     .from('profiles')
     .update({
       stripe_subscription_id: subscription.id,
@@ -145,8 +145,42 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
     })
     .eq('stripe_customer_id', subscription.customer as string);
 
-  if (error) {
-    console.error('Error updating subscription:', error);
+  // If that fails, try by userId
+  if (updateResult.error && userId) {
+    console.log('Trying update by userId:', userId);
+    updateResult = await supabase
+      .from('profiles')
+      .update({
+        stripe_customer_id: subscription.customer as string,
+        stripe_subscription_id: subscription.id,
+        subscription_status: subscription.status,
+        current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', userId);
+  }
+
+  // If that fails, try by email
+  if (updateResult.error && email) {
+    console.log('Trying update by email:', email);
+    updateResult = await supabase
+      .from('profiles')
+      .update({
+        stripe_customer_id: subscription.customer as string,
+        stripe_subscription_id: subscription.id,
+        subscription_status: subscription.status,
+        current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .eq('email', email);
+  }
+
+  if (updateResult.error) {
+    console.error('Error updating subscription:', updateResult.error);
+  } else {
+    console.log('Successfully updated subscription');
   }
 }
 

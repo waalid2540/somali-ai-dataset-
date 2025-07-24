@@ -32,10 +32,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       customer_email: email,
       metadata: {
         userId,
+        email,
       },
       subscription_data: {
         metadata: {
           userId,
+          email,
         },
       },
       allow_promotion_codes: true,
