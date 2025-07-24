@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CheckCircle, Zap, ArrowRight } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export default function SuccessPage() {
   const router = useRouter();
@@ -11,10 +12,26 @@ export default function SuccessPage() {
 
   useEffect(() => {
     if (session_id) {
-      // Simulate loading for better UX
-      setTimeout(() => {
-        setLoading(false);
-      }, 1500);
+      // Update user subscription status immediately
+      const updateSubscription = async () => {
+        try {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            await supabase
+              .from('profiles')
+              .update({ subscription_status: 'active' })
+              .eq('id', user.id);
+          }
+        } catch (error) {
+          console.error('Error updating subscription:', error);
+        }
+        
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
+      };
+      
+      updateSubscription();
     }
   }, [session_id]);
 
