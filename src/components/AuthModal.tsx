@@ -66,7 +66,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
         if (authError) throw authError;
 
-        // Create profile
+        // Create profile immediately (don't wait for email confirmation)
         if (authData.user) {
           const { error: profileError } = await supabase
             .from('profiles')
@@ -74,12 +74,20 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
               {
                 id: authData.user.id,
                 email,
-                full_name: fullName,
-                company_name: companyName,
+                full_name: fullName || '',
+                company_name: companyName || '',
+                subscription_status: null,
+                stripe_customer_id: null,
+                stripe_subscription_id: null,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
               }
             ]);
 
-          if (profileError) throw profileError;
+          if (profileError) {
+            console.error('Profile creation error:', profileError);
+            // Continue to payment even if profile creation fails
+          }
 
           // After successful signup, redirect to Stripe checkout
           await handleStripeCheckout(authData.user.id);
