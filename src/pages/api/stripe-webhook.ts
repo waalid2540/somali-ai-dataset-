@@ -77,7 +77,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   if (!userId) return;
 
   const { error } = await supabase
-    .from('users')
+    .from('profiles')
     .update({
       stripe_customer_id: session.customer as string,
       subscription_status: 'active',
@@ -95,7 +95,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   if (!userId) return;
 
   const { error } = await supabase
-    .from('users')
+    .from('profiles')
     .update({
       stripe_subscription_id: subscription.id,
       subscription_status: subscription.status,
@@ -112,7 +112,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   const { error } = await supabase
-    .from('users')
+    .from('profiles')
     .update({
       subscription_status: 'canceled',
       updated_at: new Date().toISOString(),
@@ -126,7 +126,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
   const { error } = await supabase
-    .from('users')
+    .from('profiles')
     .update({
       subscription_status: 'active',
       updated_at: new Date().toISOString(),
@@ -140,7 +140,7 @@ async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
 
 async function handlePaymentFailed(invoice: Stripe.Invoice) {
   const { error } = await supabase
-    .from('users')
+    .from('profiles')
     .update({
       subscription_status: 'past_due',
       updated_at: new Date().toISOString(),

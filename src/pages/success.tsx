@@ -106,7 +106,7 @@ export default function SuccessPage() {
 
           {/* CTA Button */}
           <Link 
-            href="/dashboard"
+            href="/"
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg inline-flex items-center"
           >
             <Zap className="mr-3 w-6 h-6" />
