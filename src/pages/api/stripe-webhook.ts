@@ -87,24 +87,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId;
-  console.log('Checkout completed for user:', userId);
+  const email = session.customer_details?.email || session.metadata?.email;
+  console.log('Checkout completed for user:', userId, 'email:', email);
   
-  if (!userId) {
-    console.error('No userId in checkout session metadata');
+  if (!userId && !email) {
+    console.error('No userId or email in checkout session');
     return;
   }
 
-  const { error } = await supabase
-    .from('profiles')
-    .update({
-      stripe_customer_id: session.customer as string,
-      subscription_status: 'active',
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', userId);
+  // Try to update by userId first, then by email
+  let updateResult;
+  if (userId) {
+    updateResult = await supabase
+      .from('profiles')
+      .update({
+        stripe_customer_id: session.customer as string,
+        subscription_status: 'active',
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', userId);
+  }
+  
+  // If userId update failed or no userId, try email
+  if (!userId || updateResult?.error) {
+    console.log('Trying update by email:', email);
+    updateResult = await supabase
+      .from('profiles')
+      .update({
+        stripe_customer_id: session.customer as string,
+        subscription_status: 'active',
+        updated_at: new Date().toISOString(),
+      })
+      .eq('email', email);
+  }
 
-  if (error) {
-    console.error('Error updating user after checkout:', error);
+  if (updateResult?.error) {
+    console.error('Error updating user after checkout:', updateResult.error);
   } else {
     console.log('Successfully updated user subscription status to active');
   }

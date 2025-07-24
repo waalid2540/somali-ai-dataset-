@@ -114,15 +114,12 @@ function HomePage() {
       return;
     }
     
-    // Temporarily bypass subscription check - REMOVE THIS AFTER WEBHOOK IS FIXED
-    // TODO: Re-enable subscription check once webhook is working
-    /* 
+    // Check if user has active subscription
     if (!subscription.hasActiveSubscription) {
       alert('Please complete your subscription to access AI tools. You will be redirected to payment.');
       window.location.href = '/api/create-checkout-session';
       return;
     }
-    */
     
     setSelectedTool(tool);
   };
@@ -765,6 +762,28 @@ function HomePage() {
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                 <p className="text-gray-600">Checking subscription...</p>
+              </div>
+            </div>
+          ) : !subscription.hasActiveSubscription ? (
+            <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
+              <div className="text-center max-w-md">
+                <div className="text-6xl mb-6">💳</div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">Subscription Required</h1>
+                <p className="text-gray-600 mb-8">Please complete your $4.99/month subscription to access all 20 AI tools.</p>
+                <button
+                  onClick={async () => {
+                    const response = await fetch('/api/create-checkout-session', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email: user.email, userId: user.id })
+                    });
+                    const { url } = await response.json();
+                    if (url) window.location.href = url;
+                  }}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                >
+                  Complete Subscription - $4.99/month
+                </button>
               </div>
             </div>
           ) : selectedTool ? (
