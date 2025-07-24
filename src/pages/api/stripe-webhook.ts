@@ -10,10 +10,21 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export const config = {
   api: {
-    bodyParser: {
-      sizeLimit: '1mb',
-    },
+    bodyParser: false,
   },
+};
+
+const buffer = (req: NextApiRequest) => {
+  return new Promise<Buffer>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    req.on('data', (chunk) => {
+      chunks.push(chunk);
+    });
+    req.on('end', () => {
+      resolve(Buffer.concat(chunks));
+    });
+    req.on('error', reject);
+  });
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -21,19 +32,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const body = req.body;
-  const signature = req.headers['stripe-signature'] as string;
-
-  let event: Stripe.Event;
-
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (err) {
-    console.error('Webhook signature verification failed:', err);
-    return res.status(400).json({ message: 'Webhook signature verification failed' });
-  }
+    const buf = await buffer(req);
+    const signature = req.headers['stripe-signature'] as string;
 
-  try {
+    let event: Stripe.Event;
+
+    try {
+      event = stripe.webhooks.constructEvent(buf, signature, webhookSecret);
+    } catch (err) {
+      console.error('Webhook signature verification failed:', err);
+      return res.status(400).json({ message: 'Webhook signature verification failed' });
+    }
+
+    console.log('Webhook received:', event.type);
+
     switch (event.type) {
       case 'checkout.session.completed':
         const checkoutSession = event.data.object as Stripe.Checkout.Session;
@@ -74,7 +87,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId;
-  if (!userId) return;
+  console.log('Checkout completed for user:', userId);
+  
+  if (!userId) {
+    console.error('No userId in checkout session metadata');
+    return;
+  }
 
   const { error } = await supabase
     .from('profiles')
@@ -87,11 +105,15 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   if (error) {
     console.error('Error updating user after checkout:', error);
+  } else {
+    console.log('Successfully updated user subscription status to active');
   }
 }
 
 async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   const userId = subscription.metadata?.userId;
+  console.log('Subscription changed for user:', userId);
+  
   if (!userId) return;
 
   const { error } = await supabase
