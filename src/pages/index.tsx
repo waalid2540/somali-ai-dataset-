@@ -24,11 +24,12 @@ import AuthModal from '../components/AuthModal';
 import AIToolsDashboard from '../components/AIToolsDashboard';
 import AIToolInterface from '../components/AIToolInterface';
 import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
+import { useSubscription } from '../hooks/useSubscription';
 
 function HomePage() {
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
-  const [userSubscription] = useState<'pro'>('pro');
   const [user, setUser] = useState<User | null>(null);
+  const subscription = useSubscription(user);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup');
@@ -112,6 +113,14 @@ function HomePage() {
       setShowAuthModal(true);
       return;
     }
+    
+    // Check if user has active subscription
+    if (!subscription.hasActiveSubscription) {
+      alert('Please complete your subscription to access AI tools. You will be redirected to payment.');
+      window.location.href = '/api/create-checkout-session';
+      return;
+    }
+    
     setSelectedTool(tool);
   };
 
@@ -747,16 +756,46 @@ function HomePage() {
             </footer>
           </div>
         ) : user ? (
-          selectedTool ? (
+          // Check if user has active subscription
+          subscription.loading ? (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Checking subscription...</p>
+              </div>
+            </div>
+          ) : !subscription.hasActiveSubscription ? (
+            <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
+              <div className="text-center max-w-md">
+                <div className="text-6xl mb-6">💳</div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">Subscription Required</h1>
+                <p className="text-gray-600 mb-8">Please complete your $4.99/month subscription to access all 20 AI tools.</p>
+                <button
+                  onClick={async () => {
+                    const response = await fetch('/api/create-checkout-session', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email: user.email, userId: user.id })
+                    });
+                    const { url } = await response.json();
+                    if (url) window.location.href = url;
+                  }}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                >
+                  Complete Subscription - $4.99/month
+                </button>
+              </div>
+            </div>
+          ) : selectedTool ? (
             <AIToolInterface 
               tool={selectedTool}
               onBack={handleBackToDashboard}
-              userSubscription={userSubscription}
+              userSubscription="pro"
             />
           ) : (
             <AIToolsDashboard 
               onToolSelect={handleToolSelect}
-              userSubscription={userSubscription}
+              userSubscription="pro"
               onBackToLanding={() => setShowLandingPage(true)}
             />
           )
