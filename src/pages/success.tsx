@@ -32,7 +32,7 @@ export default function SuccessPage() {
   return (
     <>
       <Head>
-        <title>Welcome to Somali AI Tools - Subscription Active!</title>
+        <title>Welcome to AI Tools Bundle - Subscription Active!</title>
         <meta name="description" content="Your subscription is now active. Access your 20 AI tools now." />
       </Head>
 
@@ -48,7 +48,7 @@ export default function SuccessPage() {
 
           {/* Welcome Message */}
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Welcome to Somali AI Tools!
+            Welcome to AI Tools Bundle!
           </h1>
           <p className="text-xl text-gray-600 mb-8">
             Your subscription is now active. You have access to all 20 professional AI tools.

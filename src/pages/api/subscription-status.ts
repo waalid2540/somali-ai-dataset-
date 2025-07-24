@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const { data: user, error } = await supabase
-      .from('users')
+      .from('profiles')
       .select('subscription_status, current_period_end, stripe_customer_id')
       .eq('id', userId)
       .single();

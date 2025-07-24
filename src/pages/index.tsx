@@ -147,7 +147,7 @@ function HomePage() {
   return (
     <>
       <Head>
-        <title>Somali AI - 20 Professional AI Tools for $4.99/month</title>
+        <title>AI Tools Bundle - 20 Professional AI Tools for $4.99/month</title>
         <meta 
           name="description" 
           content="Get 20 professional AI tools for $4.99/month. Content creation, business automation, chatbots, and more. Save $115+ monthly vs individual subscriptions." 
@@ -206,7 +206,7 @@ function HomePage() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">
-                        Somali AI
+                        AI Tools Bundle
                       </span>
                       <span className="text-xs font-semibold text-gray-500 -mt-1">
                         Professional AI Tools
