@@ -161,11 +161,9 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
   if (updateResult.error) {
     console.log('Update by stripe_customer_id failed:', updateResult.error);
-  } else if (updateResult.data && updateResult.data.length > 0) {
-    console.log('Successfully updated subscription by stripe_customer_id, rows affected:', updateResult.data.length);
-    return;
   } else {
-    console.log('Update by stripe_customer_id succeeded but no rows affected');
+    console.log('Successfully updated subscription by stripe_customer_id');
+    return;
   }
 
   // Strategy 2: Try by userId if available
@@ -185,11 +183,9 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
     if (updateResult.error) {
       console.log('Update by userId failed:', updateResult.error);
-    } else if (updateResult.data && updateResult.data.length > 0) {
-      console.log('Successfully updated subscription by userId, rows affected:', updateResult.data.length);
-      return;
     } else {
-      console.log('Update by userId succeeded but no rows affected');
+      console.log('Successfully updated subscription by userId');
+      return;
     }
   }
 
@@ -210,11 +206,9 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
     if (updateResult.error) {
       console.log('Update by email failed:', updateResult.error);
-    } else if (updateResult.data && updateResult.data.length > 0) {
-      console.log('Successfully updated subscription by email, rows affected:', updateResult.data.length);
-      return;
     } else {
-      console.log('Update by email succeeded but no rows affected');
+      console.log('Successfully updated subscription by email');
+      return;
     }
   }
 
@@ -238,11 +232,9 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
       if (updateResult.error) {
         console.log('Update by Stripe customer email failed:', updateResult.error);
-      } else if (updateResult.data && updateResult.data.length > 0) {
-        console.log('Successfully updated subscription by Stripe customer email, rows affected:', updateResult.data.length);
-        return;
       } else {
-        console.log('Update by Stripe customer email succeeded but no rows affected');
+        console.log('Successfully updated subscription by Stripe customer email');
+        return;
       }
     }
   } catch (stripeError) {
