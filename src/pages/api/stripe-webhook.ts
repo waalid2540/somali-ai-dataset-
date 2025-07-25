@@ -45,43 +45,75 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Webhook signature verification failed' });
     }
 
-    console.log('Webhook received:', event.type);
+    console.log('=== WEBHOOK RECEIVED ===');
+    console.log('Event type:', event.type);
+    console.log('Event ID:', event.id);
 
-    switch (event.type) {
-      case 'checkout.session.completed':
-        const checkoutSession = event.data.object as Stripe.Checkout.Session;
-        await handleCheckoutCompleted(checkoutSession);
-        break;
+    try {
+      switch (event.type) {
+        case 'checkout.session.completed':
+          console.log('Processing checkout.session.completed');
+          const checkoutSession = event.data.object as Stripe.Checkout.Session;
+          await handleCheckoutCompleted(checkoutSession);
+          break;
 
-      case 'customer.subscription.created':
-      case 'customer.subscription.updated':
-        const subscription = event.data.object as Stripe.Subscription;
-        await handleSubscriptionChange(subscription);
-        break;
+        case 'customer.subscription.created':
+          console.log('Processing customer.subscription.created');
+          const createdSubscription = event.data.object as Stripe.Subscription;
+          await handleSubscriptionChange(createdSubscription);
+          break;
 
-      case 'customer.subscription.deleted':
-        const deletedSubscription = event.data.object as Stripe.Subscription;
-        await handleSubscriptionDeleted(deletedSubscription);
-        break;
+        case 'customer.subscription.updated':
+          console.log('Processing customer.subscription.updated');
+          const updatedSubscription = event.data.object as Stripe.Subscription;
+          await handleSubscriptionChange(updatedSubscription);
+          break;
 
-      case 'invoice.payment_succeeded':
-        const invoice = event.data.object as Stripe.Invoice;
-        await handlePaymentSucceeded(invoice);
-        break;
+        case 'customer.subscription.deleted':
+          console.log('Processing customer.subscription.deleted');
+          const deletedSubscription = event.data.object as Stripe.Subscription;
+          await handleSubscriptionDeleted(deletedSubscription);
+          break;
 
-      case 'invoice.payment_failed':
-        const failedInvoice = event.data.object as Stripe.Invoice;
-        await handlePaymentFailed(failedInvoice);
-        break;
+        case 'invoice.payment_succeeded':
+          console.log('Processing invoice.payment_succeeded');
+          const invoice = event.data.object as Stripe.Invoice;
+          await handlePaymentSucceeded(invoice);
+          break;
 
-      default:
-        console.log(`Unhandled event type: ${event.type}`);
+        case 'invoice.payment_failed':
+          console.log('Processing invoice.payment_failed');
+          const failedInvoice = event.data.object as Stripe.Invoice;
+          await handlePaymentFailed(failedInvoice);
+          break;
+
+        default:
+          console.log(`Unhandled event type: ${event.type}`);
+      }
+
+      console.log('Webhook processed successfully for event:', event.type);
+      res.status(200).json({ received: true, event_type: event.type });
+    } catch (handlerError) {
+      console.error('=== ERROR IN EVENT HANDLER ===');
+      console.error('Event type:', event.type);
+      console.error('Handler error:', handlerError);
+      console.error('Stack trace:', handlerError instanceof Error ? handlerError.stack : 'No stack trace');
+      
+      // Return success to Stripe to avoid retries, but log the error
+      res.status(200).json({ 
+        received: true, 
+        error: handlerError instanceof Error ? handlerError.message : 'Unknown error',
+        event_type: event.type 
+      });
     }
-
-    res.status(200).json({ received: true });
   } catch (error) {
-    console.error('Error processing webhook:', error);
-    res.status(500).json({ message: 'Error processing webhook' });
+    console.error('=== CRITICAL WEBHOOK ERROR ===');
+    console.error('Critical error:', error);
+    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+    res.status(500).json({ 
+      message: 'Error processing webhook',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
 
