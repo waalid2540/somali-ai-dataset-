@@ -235,7 +235,7 @@ function HomePage() {
                       Dataset
                     </Link>
                     <Link 
-                      href="/#pricing" 
+                      href="/subscription" 
                       className="px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                     >
                       Pricing
@@ -248,43 +248,72 @@ function HomePage() {
                     </Link>
                   </div>
 
-                  {/* CTA Button */}
+                  {/* Enterprise Navigation */}
                   <div className="flex items-center space-x-4">
                     {user ? (
                       <div className="flex items-center space-x-3">
-                        <div className="hidden sm:flex items-center space-x-2 bg-green-50 px-3 py-2 rounded-full">
-                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                          <span className="text-sm font-medium text-green-700">Active</span>
+                        {/* User Profile Dropdown */}
+                        <div className="hidden sm:flex items-center space-x-2 bg-gradient-to-r from-emerald-50 to-blue-50 px-4 py-2 rounded-full border border-emerald-200">
+                          <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {user.email?.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-gray-800">Welcome back</span>
+                            <span className="text-xs text-gray-600">{user.email}</span>
+                          </div>
+                          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                         </div>
+
+                        {/* Dashboard Button */}
                         <button
                           onClick={() => setShowLandingPage(false)}
                           className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2"
                         >
                           <Zap className="w-5 h-5" />
-                          <span>My Tools</span>
+                          <span>Dashboard</span>
+                        </button>
+
+                        {/* Logout Button */}
+                        <button
+                          onClick={async () => {
+                            await supabase.auth.signOut();
+                            setUser(null);
+                            setShowLandingPage(true);
+                          }}
+                          className="text-gray-600 hover:text-red-600 px-4 py-2 rounded-xl font-medium transition-all duration-200 border border-gray-200 hover:border-red-200"
+                        >
+                          Sign Out
                         </button>
                       </div>
                     ) : (
                       <div className="flex items-center space-x-3">
+                        {/* Professional Login Button */}
                         <button
                           onClick={() => {
                             setAuthMode('signin');
                             setShowAuthModal(true);
                           }}
-                          className="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-xl font-medium transition-all duration-200 hidden sm:block"
+                          className="bg-white text-gray-700 hover:text-blue-600 px-6 py-3 rounded-2xl font-semibold border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 hidden sm:flex items-center space-x-2"
                         >
-                          Login
+                          <Users className="w-4 h-4" />
+                          <span>Sign In</span>
                         </button>
+
+                        {/* Premium CTA Button */}
                         <button
                           onClick={() => {
                             setAuthMode('signup');
                             setShowAuthModal(true);
                           }}
-                          className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-yellow-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 animate-pulse"
+                          className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 hover:from-blue-700 hover:via-purple-700 hover:to-emerald-700 text-white px-8 py-3 rounded-2xl font-bold shadow-xl shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 relative overflow-hidden"
                         >
-                          <Zap className="w-5 h-5" />
-                          <span className="hidden sm:inline">Get 20 AI Tools</span>
-                          <span className="sm:hidden">Try Now</span>
+                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse"></div>
+                          <Zap className="w-5 h-5 relative z-10" />
+                          <span className="hidden sm:inline relative z-10">Start Free Trial</span>
+                          <span className="sm:hidden relative z-10">Try Free</span>
+                          <div className="relative z-10 text-xs bg-yellow-400 text-black px-2 py-1 rounded-full ml-2">
+                            $4.99/mo
+                          </div>
                         </button>
                       </div>
                     )}
@@ -385,23 +414,48 @@ function HomePage() {
                   </div>
                 </div>
 
-                {/* Massive CTA */}
-                <div className="space-y-4 sm:space-y-6 px-4">
-                  <button
-                    onClick={() => {
-                      setAuthMode('signup');
-                      setShowAuthModal(true);
-                    }}
-                    className="inline-flex items-center bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-black px-6 sm:px-8 lg:px-12 py-4 sm:py-5 lg:py-6 rounded-xl sm:rounded-2xl font-black text-lg sm:text-xl lg:text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-yellow-500/25"
-                  >
-                    <Zap className="mr-2 sm:mr-3 w-6 sm:w-7 lg:w-8 h-6 sm:h-7 lg:h-8" />
-                    <span className="hidden sm:inline">GET ALL 20 TOOLS NOW</span>
-                    <span className="sm:hidden">GET 20 AI TOOLS</span>
-                    <ArrowRight className="ml-2 sm:ml-3 w-6 sm:w-7 lg:w-8 h-6 sm:h-7 lg:h-8" />
-                  </button>
+                {/* Professional CTA Section */}
+                <div className="space-y-6 px-4">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button
+                      onClick={() => {
+                        setAuthMode('signup');
+                        setShowAuthModal(true);
+                      }}
+                      className="inline-flex items-center bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 hover:from-blue-700 hover:via-purple-700 hover:to-emerald-700 text-white px-8 lg:px-12 py-4 lg:py-6 rounded-2xl font-black text-lg lg:text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/25 relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 animate-pulse"></div>
+                      <Zap className="mr-3 w-6 lg:w-8 h-6 lg:h-8 relative z-10" />
+                      <span className="relative z-10">START FREE TRIAL</span>
+                      <ArrowRight className="ml-3 w-6 lg:w-8 h-6 lg:h-8 relative z-10" />
+                    </button>
+                    
+                    <Link
+                      href="/subscription"
+                      className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all transform hover:scale-105"
+                    >
+                      <Users className="mr-3 w-6 h-6" />
+                      <span>View All Plans</span>
+                    </Link>
+                  </div>
                   
                   <div className="text-gray-400 text-sm sm:text-base">
-                    ⚡ Instant access • 🔒 30-day guarantee • 💰 Monthly subscription
+                    ⚡ 14-day free trial • 🔒 No credit card required • 💰 Cancel anytime
+                  </div>
+                  
+                  <div className="flex items-center justify-center space-x-8 text-gray-300">
+                    <div className="flex items-center space-x-2">
+                      <Shield className="w-5 h-5" />
+                      <span className="text-sm">Enterprise Security</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Users className="w-5 h-5" />
+                      <span className="text-sm">10,000+ Users</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Star className="w-5 h-5 text-yellow-400" />
+                      <span className="text-sm">4.9/5 Rating</span>
+                    </div>
                   </div>
                 </div>
 
