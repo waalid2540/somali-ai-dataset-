@@ -199,10 +199,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   updateResult = await supabase
     .from('users')
     .update({
-      stripe_subscription_id: subscription.id,
       subscription_status: subscription.status,
-      current_period_start: currentPeriodStart,
-      current_period_end: currentPeriodEnd,
       updated_at: new Date().toISOString(),
     })
     .eq('stripe_customer_id', subscription.customer as string);
@@ -223,10 +220,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
       .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
-        stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
-        current_period_start: currentPeriodStart,
-        current_period_end: currentPeriodEnd,
         updated_at: new Date().toISOString(),
       })
       .eq('id', userId);
@@ -246,10 +240,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
       .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
-        stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
-        current_period_start: currentPeriodStart,
-        current_period_end: currentPeriodEnd,
         updated_at: new Date().toISOString(),
       })
       .eq('email', email);
@@ -272,10 +263,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
         .from('users')
         .update({
           stripe_customer_id: subscription.customer as string,
-          stripe_subscription_id: subscription.id,
           subscription_status: subscription.status,
-          current_period_start: currentPeriodStart,
-          current_period_end: currentPeriodEnd,
           updated_at: new Date().toISOString(),
         })
         .eq('email', customer.email);
