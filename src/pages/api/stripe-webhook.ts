@@ -199,6 +199,8 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   updateResult = await supabase
     .from('users')
     .update({
+      stripe_customer_id: subscription.customer as string,
+      stripe_subscription_id: subscription.id,
       subscription_status: subscription.status,
       updated_at: new Date().toISOString(),
     })
@@ -220,6 +222,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
       .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
+        stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
         updated_at: new Date().toISOString(),
       })
@@ -240,6 +243,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
       .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
+        stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
         updated_at: new Date().toISOString(),
       })
@@ -263,6 +267,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
         .from('users')
         .update({
           stripe_customer_id: subscription.customer as string,
+          stripe_subscription_id: subscription.id,
           subscription_status: subscription.status,
           updated_at: new Date().toISOString(),
         })

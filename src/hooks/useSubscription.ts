@@ -27,8 +27,17 @@ export const useSubscription = (user: User | null): SubscriptionStatus => {
       }
 
       try {
+        console.log('=== CHECKING SUBSCRIPTION FOR USER ===');
+        console.log('User ID:', user.id);
+        console.log('User email:', user.email);
+        
         const response = await fetch(`/api/subscription-status?userId=${user.id}`);
         const data = await response.json();
+        
+        console.log('=== SUBSCRIPTION API RESPONSE ===');
+        console.log('API Response:', data);
+        console.log('hasActiveSubscription:', data.hasActiveSubscription);
+        console.log('subscriptionStatus:', data.subscriptionStatus);
 
         setSubscriptionData({
           hasActiveSubscription: data.hasActiveSubscription,
