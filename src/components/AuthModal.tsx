@@ -73,20 +73,21 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             .insert([
               {
                 id: authData.user.id,
-                email,
+                email: email,
                 full_name: fullName || '',
                 company_name: companyName || '',
-                subscription_status: null,
-                stripe_customer_id: null,
-                stripe_subscription_id: null,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                subscription_status: 'pending'
               }
             ]);
 
           if (profileError) {
             console.error('Profile creation error:', profileError);
-            // Continue to payment even if profile creation fails
+            // Show error to user instead of failing silently
+            setError(`Failed to create account: ${profileError.message}`);
+            setLoading(false);
+            return;
+          } else {
+            console.log('User profile created successfully');
           }
 
           // After successful signup, redirect to Stripe checkout
