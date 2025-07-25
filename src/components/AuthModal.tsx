@@ -58,10 +58,16 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
     try {
       if (mode === 'signup') {
-        // Sign up new user
+        // Sign up new user with immediate user table creation
         const { data: authData, error: authError } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            data: {
+              full_name: fullName,
+              company_name: companyName,
+            }
+          }
         });
 
         if (authError) throw authError;
