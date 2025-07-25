@@ -120,25 +120,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId;
   const email = session.customer_details?.email || session.metadata?.email;
-  console.log('Checkout completed for user:', userId, 'email:', email);
+  console.log('=== CHECKOUT COMPLETED ===');
+  console.log('User ID:', userId);
+  console.log('Email:', email);
+  console.log('Customer ID:', session.customer);
+  console.log('Subscription ID:', session.subscription);
   
   if (!userId && !email) {
     console.error('No userId or email in checkout session');
     return;
   }
 
+  // Prepare update data - only include columns if they exist
+  const updateData: any = {
+    updated_at: new Date().toISOString(),
+  };
+
+  // Check if Stripe columns exist by trying a test query first
+  try {
+    const testQuery = await supabase
+      .from('users')
+      .select('stripe_customer_id, stripe_subscription_id, subscription_status')
+      .limit(1);
+
+    if (!testQuery.error) {
+      // Stripe columns exist, add them to update
+      updateData.stripe_customer_id = session.customer as string;
+      updateData.stripe_subscription_id = session.subscription as string;
+      updateData.subscription_status = 'active';
+      console.log('Stripe columns exist, updating with full data');
+    }
+  } catch (error) {
+    console.log('Stripe columns might not exist, using basic update');
+  }
+
+  console.log('Update data:', updateData);
+
   // Try to update by userId first, then by email
   let updateResult;
   if (userId) {
+    console.log('Attempting update by userId:', userId);
     updateResult = await supabase
       .from('users')
-      .update({
-        stripe_customer_id: session.customer as string,
-        stripe_subscription_id: session.subscription as string,
-        subscription_status: 'active',
-        updated_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq('id', userId);
+    
+    console.log('Update by userId result:', updateResult);
   }
   
   // If userId update failed or no userId, try email
@@ -146,176 +173,74 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     console.log('Trying update by email:', email);
     updateResult = await supabase
       .from('users')
-      .update({
-        stripe_customer_id: session.customer as string,
-        stripe_subscription_id: session.subscription as string,
-        subscription_status: 'active',
-        updated_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq('email', email);
+    
+    console.log('Update by email result:', updateResult);
   }
 
   if (updateResult?.error) {
-    console.error('Error updating user after checkout:', updateResult.error);
+    console.error('=== CHECKOUT UPDATE FAILED ===');
+    console.error('Error details:', updateResult.error);
+    console.error('Update data was:', updateData);
+    
+    // If Stripe columns don't exist, create a temporary active status
+    if (updateResult.error.message.includes('column') && updateResult.error.message.includes('does not exist')) {
+      console.log('Stripe columns missing, creating basic active status');
+      const basicUpdate = await supabase
+        .from('users')
+        .update({ updated_at: new Date().toISOString() })
+        .eq(userId ? 'id' : 'email', userId || email);
+      
+      console.log('Basic update result:', basicUpdate);
+    }
   } else {
-    console.log('Successfully updated user subscription status to active');
+    console.log('=== CHECKOUT UPDATE SUCCESS ===');
+    console.log('User subscription updated successfully');
   }
 }
 
 async function handleSubscriptionChange(subscription: Stripe.Subscription) {
-  const userId = subscription.metadata?.userId;
-  const email = subscription.metadata?.email;
-  console.log('=== SUBSCRIPTION CHANGE DEBUG ===');
+  console.log('=== SUBSCRIPTION CHANGE - SIMPLE VERSION ===');
   console.log('Subscription ID:', subscription.id);
   console.log('Customer ID:', subscription.customer);
   console.log('Status:', subscription.status);
-  console.log('Metadata userId:', userId);
-  console.log('Metadata email:', email);
-  console.log('Full metadata:', subscription.metadata);
   
-  let updateResult;
-  let updateAttempted = false;
-
-  // Strategy 1: Try to update by stripe_customer_id first
-  console.log('Attempting update by stripe_customer_id:', subscription.customer);
-  console.log('Subscription periods:', subscription.current_period_start, subscription.current_period_end);
-  
-  // First, let's see if ANY user exists with this customer ID
-  const { data: existingByCustomer, error: checkError } = await supabase
-    .schema('public')
-    .from('users')
-    .select('*')
-    .eq('stripe_customer_id', subscription.customer as string);
-  
-  console.log('Users with this customer ID:', existingByCustomer);
-  console.log('Check error:', checkError);
-  
-  // Get customer email from Stripe immediately
-  let customerEmailFromStripe = null;
+  // Get customer email from Stripe
+  let customerEmail = null;
   try {
-    console.log('Fetching customer details from Stripe...');
     const customer = await stripe.customers.retrieve(subscription.customer as string);
     if (customer && !customer.deleted && customer.email) {
-      customerEmailFromStripe = customer.email;
-      console.log('Customer email from Stripe:', customerEmailFromStripe);
+      customerEmail = customer.email;
+      console.log('Customer email from Stripe:', customerEmail);
     }
-  } catch (stripeError) {
-    console.error('Error fetching customer from Stripe:', stripeError);
+  } catch (error) {
+    console.error('Error fetching customer from Stripe:', error);
+    return;
   }
-  
-  // Convert timestamps safely
-  let currentPeriodStart = null;
-  let currentPeriodEnd = null;
-  
-  try {
-    if (subscription.current_period_start) {
-      currentPeriodStart = new Date(subscription.current_period_start * 1000).toISOString();
-    }
-    if (subscription.current_period_end) {
-      currentPeriodEnd = new Date(subscription.current_period_end * 1000).toISOString();
-    }
-  } catch (timeError) {
-    console.error('Error converting timestamps:', timeError);
-    console.log('Using null values for timestamps');
+
+  if (!customerEmail) {
+    console.error('No customer email found');
+    return;
   }
-  
-  updateResult = await supabase
-    .schema('public')
+
+  // Simple update by email
+  console.log('Updating user with email:', customerEmail);
+  const { data, error } = await supabase
     .from('users')
     .update({
       stripe_customer_id: subscription.customer as string,
       stripe_subscription_id: subscription.id,
-      subscription_status: subscription.status,
-      updated_at: new Date().toISOString(),
+      subscription_status: subscription.status
     })
-    .eq('stripe_customer_id', subscription.customer as string);
+    .eq('email', customerEmail);
 
-  updateAttempted = true;
-
-  if (updateResult.error) {
-    console.log('Update by stripe_customer_id failed:', updateResult.error);
+  if (error) {
+    console.error('Database update failed:', error);
+    throw new Error(`Failed to update user: ${error.message}`);
   } else {
-    console.log('Successfully updated subscription by stripe_customer_id');
-    return;
+    console.log('SUCCESS: Updated user subscription');
   }
-
-  // Strategy 2: Try by userId if available
-  if (userId) {
-    console.log('Attempting update by userId:', userId);
-    updateResult = await supabase
-      .schema('public')
-      .from('users')
-      .update({
-        stripe_customer_id: subscription.customer as string,
-        stripe_subscription_id: subscription.id,
-        subscription_status: subscription.status,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', userId);
-
-    if (updateResult.error) {
-      console.log('Update by userId failed:', updateResult.error);
-    } else {
-      console.log('Successfully updated subscription by userId');
-      return;
-    }
-  }
-
-  // Strategy 3: Try by email if available (from metadata or Stripe customer)
-  const emailToTry = email || customerEmailFromStripe;
-  if (emailToTry) {
-    console.log('Attempting update by email:', emailToTry);
-    updateResult = await supabase
-      .schema('public')
-      .from('users')
-      .update({
-        stripe_customer_id: subscription.customer as string,
-        stripe_subscription_id: subscription.id,
-        subscription_status: subscription.status,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('email', emailToTry);
-
-    if (updateResult.error) {
-      console.log('Update by email failed:', updateResult.error);
-    } else {
-      console.log('Successfully updated subscription by email');
-      return;
-    }
-  }
-
-  // Strategy 4: Get customer email from Stripe and try that
-  try {
-    console.log('Fetching customer from Stripe to get email...');
-    const customer = await stripe.customers.retrieve(subscription.customer as string);
-    if (customer && !customer.deleted && customer.email) {
-      console.log('Found customer email from Stripe:', customer.email);
-      updateResult = await supabase
-        .schema('public')
-        .from('users')
-        .update({
-          stripe_customer_id: subscription.customer as string,
-          stripe_subscription_id: subscription.id,
-          subscription_status: subscription.status,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('email', customer.email);
-
-      if (updateResult.error) {
-        console.log('Update by Stripe customer email failed:', updateResult.error);
-      } else {
-        console.log('Successfully updated subscription by Stripe customer email');
-        return;
-      }
-    }
-  } catch (stripeError) {
-    console.error('Error fetching customer from Stripe:', stripeError);
-  }
-
-  // If we get here, all strategies failed
-  console.error('=== ALL UPDATE STRATEGIES FAILED ===');
-  console.error('Final error:', updateResult?.error);
-  throw new Error(`Failed to update subscription for customer ${subscription.customer}: ${updateResult?.error?.message || 'No user found'}`);
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {

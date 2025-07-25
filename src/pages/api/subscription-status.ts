@@ -14,11 +14,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'userId is required' });
     }
 
-    const { data: user, error } = await supabase
-      .from('users')
-      .select('subscription_status, current_period_end, stripe_customer_id, stripe_subscription_id, email, updated_at')
-      .eq('id', userId)
-      .maybeSingle(); // Use maybeSingle instead of single to handle missing users
+    // First try with all columns, if fails try with basic columns
+    let user, error;
+    
+    try {
+      const result = await supabase
+        .from('users')
+        .select('subscription_status, current_period_end, stripe_customer_id, stripe_subscription_id, email, updated_at')
+        .eq('id', userId)
+        .maybeSingle();
+      
+      user = result.data;
+      error = result.error;
+    } catch (dbError) {
+      console.log('Full column query failed, trying basic columns:', dbError);
+      
+      // Try with just basic columns in case Stripe columns don't exist
+      const basicResult = await supabase
+        .from('users')
+        .select('email, updated_at, created_at')
+        .eq('id', userId)
+        .maybeSingle();
+      
+      if (basicResult.error) {
+        console.error('Basic query also failed:', basicResult.error);
+        return res.status(500).json({ 
+          message: 'Database query failed',
+          details: basicResult.error.message 
+        });
+      }
+      
+      user = {
+        ...basicResult.data,
+        subscription_status: null,
+        current_period_end: null,
+        stripe_customer_id: null,
+        stripe_subscription_id: null
+      };
+      error = null;
+    }
 
     console.log('=== SUBSCRIPTION STATUS CHECK ===');
     console.log('Database query result:', user, error);
@@ -30,7 +64,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (error) {
       console.error('Error fetching user subscription:', error);
-      return res.status(500).json({ message: 'Error fetching subscription status' });
+      return res.status(500).json({ 
+        message: 'Error fetching subscription status',
+        details: error.message 
+      });
     }
 
     // If no user found, return inactive subscription
