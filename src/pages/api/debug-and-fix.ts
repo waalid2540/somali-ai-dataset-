@@ -20,21 +20,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     console.log('=== DEBUGGING USER:', userEmail, '===');
 
-    // Step 1: Check user in Supabase
-    const { data: user, error: userError } = await supabase
+    // Step 1: Check user in Supabase - handle multiple users
+    const { data: users, error: userError } = await supabase
       .from('users')
       .select('*')
-      .eq('email', userEmail)
-      .single();
+      .eq('email', userEmail);
 
-    console.log('User in Supabase:', user);
+    console.log('Users found in Supabase:', users?.length || 0);
+    console.log('Users data:', users);
     console.log('User error:', userError);
 
     if (userError) {
-      return res.status(404).json({ 
-        message: 'User not found in database',
+      return res.status(500).json({ 
+        message: 'Database error',
         error: userError.message 
       });
+    }
+
+    if (!users || users.length === 0) {
+      return res.status(404).json({ 
+        message: 'No users found with this email',
+        email: userEmail
+      });
+    }
+
+    // Use the most recent user if multiple exist
+    const user = users.sort((a, b) => 
+      new Date(b.created_at || b.updated_at || 0).getTime() - 
+      new Date(a.created_at || a.updated_at || 0).getTime()
+    )[0];
+
+    console.log('Selected user:', user);
+
+    if (users.length > 1) {
+      console.log(`WARNING: Found ${users.length} users with email ${userEmail}, using most recent`);
     }
 
     // Step 2: Search for customer in Stripe

@@ -231,7 +231,8 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
     .update({
       stripe_customer_id: subscription.customer as string,
       stripe_subscription_id: subscription.id,
-      subscription_status: subscription.status
+      subscription_status: subscription.status === 'active' ? 'active' : subscription.status,
+      updated_at: new Date().toISOString()
     })
     .eq('email', customerEmail);
 
