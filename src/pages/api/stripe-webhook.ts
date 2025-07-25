@@ -178,13 +178,31 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
   // Strategy 1: Try to update by stripe_customer_id first
   console.log('Attempting update by stripe_customer_id:', subscription.customer);
+  console.log('Subscription periods:', subscription.current_period_start, subscription.current_period_end);
+  
+  // Convert timestamps safely
+  let currentPeriodStart = null;
+  let currentPeriodEnd = null;
+  
+  try {
+    if (subscription.current_period_start) {
+      currentPeriodStart = new Date(subscription.current_period_start * 1000).toISOString();
+    }
+    if (subscription.current_period_end) {
+      currentPeriodEnd = new Date(subscription.current_period_end * 1000).toISOString();
+    }
+  } catch (timeError) {
+    console.error('Error converting timestamps:', timeError);
+    console.log('Using null values for timestamps');
+  }
+  
   updateResult = await supabase
     .from('users')
     .update({
       stripe_subscription_id: subscription.id,
       subscription_status: subscription.status,
-      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+      current_period_start: currentPeriodStart,
+      current_period_end: currentPeriodEnd,
       updated_at: new Date().toISOString(),
     })
     .eq('stripe_customer_id', subscription.customer as string);
@@ -207,8 +225,8 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
         stripe_customer_id: subscription.customer as string,
         stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
-        current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        current_period_start: currentPeriodStart,
+        current_period_end: currentPeriodEnd,
         updated_at: new Date().toISOString(),
       })
       .eq('id', userId);
@@ -230,8 +248,8 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
         stripe_customer_id: subscription.customer as string,
         stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
-        current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        current_period_start: currentPeriodStart,
+        current_period_end: currentPeriodEnd,
         updated_at: new Date().toISOString(),
       })
       .eq('email', email);
@@ -256,8 +274,8 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
           stripe_customer_id: subscription.customer as string,
           stripe_subscription_id: subscription.id,
           subscription_status: subscription.status,
-          current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-          current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+          current_period_start: currentPeriodStart,
+          current_period_end: currentPeriodEnd,
           updated_at: new Date().toISOString(),
         })
         .eq('email', customer.email);
