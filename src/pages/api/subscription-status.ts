@@ -79,12 +79,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    const hasActiveSubscription = user.subscription_status === 'active' && 
-      user.current_period_end && 
-      new Date(user.current_period_end) > new Date();
+    // Check if subscription is active
+    // If current_period_end exists, check if it's in the future
+    // If current_period_end is null, just check subscription_status
+    const hasActiveSubscription = user.subscription_status === 'active' && (
+      !user.current_period_end || 
+      new Date(user.current_period_end) > new Date()
+    );
+
+    console.log('Final hasActiveSubscription:', hasActiveSubscription);
+    console.log('Subscription status:', user.subscription_status);
+    console.log('Current period end:', user.current_period_end);
 
     res.status(200).json({
-      hasActiveSubscription: hasActiveSubscription || user.subscription_status === 'active',
+      hasActiveSubscription: hasActiveSubscription,
       subscriptionStatus: user.subscription_status || 'none',
       currentPeriodEnd: user.current_period_end,
     });
