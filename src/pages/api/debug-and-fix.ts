@@ -67,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const activeSubscription = subscriptions.data.find(s => s.status === 'active');
     
     // Step 4: Fix the user record
-    const updateData = {
+    const updateData: any = {
       stripe_customer_id: customer.id,
       subscription_status: activeSubscription ? 'active' : 'inactive',
       updated_at: new Date().toISOString()
