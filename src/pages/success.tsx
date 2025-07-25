@@ -150,14 +150,17 @@ export default function SuccessPage() {
           </div>
 
           {/* CTA Button */}
-          <Link 
-            href="/"
+          <button 
+            onClick={() => {
+              // Clear URL parameters and redirect to dashboard
+              window.location.href = "/?access=tools";
+            }}
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg inline-flex items-center"
           >
             <Zap className="mr-3 w-6 h-6" />
             Access Your AI Tools
             <ArrowRight className="ml-3 w-6 h-6" />
-          </Link>
+          </button>
 
           {/* Footer Note */}
           <div className="mt-8 text-sm text-gray-500">

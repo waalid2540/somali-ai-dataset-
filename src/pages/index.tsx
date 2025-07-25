@@ -91,6 +91,12 @@ function HomePage() {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user || null);
       setLoading(false);
+      
+      // Check URL parameters for direct access
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('access') === 'tools' && session?.user) {
+        setShowLandingPage(false);
+      }
     };
 
     getSession();
@@ -780,7 +786,16 @@ function HomePage() {
               <div className="text-center max-w-md">
                 <div className="text-6xl mb-6">💳</div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-4">Subscription Required</h1>
-                <p className="text-gray-600 mb-8">Please complete your $4.99/month subscription to access all 20 AI tools.</p>
+                <p className="text-gray-600 mb-6">Please complete your $4.99/month subscription to access all 20 AI tools.</p>
+                <div className="mb-8">
+                  <p className="text-sm text-gray-500 mb-2">Current status: {subscription.subscriptionStatus}</p>
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="text-blue-600 hover:text-blue-800 text-sm underline"
+                  >
+                    Refresh Status
+                  </button>
+                </div>
                 <button
                   onClick={async () => {
                     const response = await fetch('/api/create-checkout-session', {
