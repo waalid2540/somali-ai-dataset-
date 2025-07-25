@@ -102,6 +102,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       .from('users')
       .update({
         stripe_customer_id: session.customer as string,
+        stripe_subscription_id: session.subscription as string,
         subscription_status: 'active',
         updated_at: new Date().toISOString(),
       })
@@ -115,6 +116,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       .from('users')
       .update({
         stripe_customer_id: session.customer as string,
+        stripe_subscription_id: session.subscription as string,
         subscription_status: 'active',
         updated_at: new Date().toISOString(),
       })
