@@ -180,6 +180,28 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   console.log('Attempting update by stripe_customer_id:', subscription.customer);
   console.log('Subscription periods:', subscription.current_period_start, subscription.current_period_end);
   
+  // First, let's see if ANY user exists with this customer ID
+  const { data: existingByCustomer, error: checkError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('stripe_customer_id', subscription.customer as string);
+  
+  console.log('Users with this customer ID:', existingByCustomer);
+  console.log('Check error:', checkError);
+  
+  // Get customer email from Stripe immediately
+  let customerEmailFromStripe = null;
+  try {
+    console.log('Fetching customer details from Stripe...');
+    const customer = await stripe.customers.retrieve(subscription.customer as string);
+    if (customer && !customer.deleted && customer.email) {
+      customerEmailFromStripe = customer.email;
+      console.log('Customer email from Stripe:', customerEmailFromStripe);
+    }
+  } catch (stripeError) {
+    console.error('Error fetching customer from Stripe:', stripeError);
+  }
+  
   // Convert timestamps safely
   let currentPeriodStart = null;
   let currentPeriodEnd = null;
@@ -236,9 +258,10 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
     }
   }
 
-  // Strategy 3: Try by email if available
-  if (email) {
-    console.log('Attempting update by email:', email);
+  // Strategy 3: Try by email if available (from metadata or Stripe customer)
+  const emailToTry = email || customerEmailFromStripe;
+  if (emailToTry) {
+    console.log('Attempting update by email:', emailToTry);
     updateResult = await supabase
       .from('users')
       .update({
@@ -247,7 +270,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
         subscription_status: subscription.status,
         updated_at: new Date().toISOString(),
       })
-      .eq('email', email);
+      .eq('email', emailToTry);
 
     if (updateResult.error) {
       console.log('Update by email failed:', updateResult.error);
