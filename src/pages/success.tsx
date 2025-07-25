@@ -16,11 +16,39 @@ export default function SuccessPage() {
       const updateSubscription = async () => {
         try {
           const { data: { user } } = await supabase.auth.getUser();
+          console.log('Current user:', user);
+          
           if (user) {
-            await supabase
+            // First check if user exists in users table
+            const { data: existingUser, error: fetchError } = await supabase
               .from('users')
-              .update({ subscription_status: 'active' })
-              .eq('id', user.id);
+              .select('*')
+              .eq('id', user.id)
+              .single();
+            
+            console.log('Existing user in database:', existingUser);
+            console.log('Fetch error:', fetchError);
+            
+            if (existingUser) {
+              // Update existing user
+              const { data, error } = await supabase
+                .from('users')
+                .update({ subscription_status: 'active' })
+                .eq('id', user.id);
+              console.log('Update result:', data, error);
+            } else {
+              // Create user record if doesn't exist
+              const { data, error } = await supabase
+                .from('users')
+                .insert([{
+                  id: user.id,
+                  email: user.email,
+                  subscription_status: 'active',
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString()
+                }]);
+              console.log('Insert result:', data, error);
+            }
           }
         } catch (error) {
           console.error('Error updating subscription:', error);
