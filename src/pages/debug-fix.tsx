@@ -54,13 +54,14 @@ export default function DebugFix() {
         <div style={{ 
           background: '#f5f5f5', 
           padding: '20px', 
-          borderRadius: '8px' 
+          borderRadius: '8px',
+          color: '#333'
         }}>
-          <h1>🔧 Debug & Fix Stripe Integration</h1>
-          <p>This will check why users can't access tools after payment and fix the issue.</p>
+          <h1 style={{ color: '#222' }}>🔧 Debug & Fix Stripe Integration</h1>
+          <p style={{ color: '#555' }}>This will check why users can't access tools after payment and fix the issue.</p>
           
           <div>
-            <label htmlFor="email">User Email:</label><br />
+            <label htmlFor="email" style={{ color: '#333', fontWeight: 'bold' }}>User Email:</label><br />
             <input 
               type="email" 
               id="email" 
@@ -70,7 +71,10 @@ export default function DebugFix() {
                 padding: '10px', 
                 margin: '10px 0', 
                 fontSize: '16px', 
-                width: '300px' 
+                width: '300px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                color: '#333'
               }}
               required 
             />
@@ -94,8 +98,8 @@ export default function DebugFix() {
           </div>
 
           {loading && (
-            <div style={{ padding: '15px' }}>
-              <p>🔄 Checking Stripe and Supabase...</p>
+            <div style={{ padding: '15px', background: '#fff3cd', borderRadius: '4px', marginTop: '20px' }}>
+              <p style={{ color: '#856404', margin: 0 }}>🔄 Checking Stripe and Supabase...</p>
             </div>
           )}
 
