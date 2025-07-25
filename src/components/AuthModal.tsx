@@ -69,7 +69,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
         // Create profile immediately (don't wait for email confirmation)
         if (authData.user) {
           const { error: profileError } = await supabase
-            .from('profiles')
+            .from('users')
             .insert([
               {
                 id: authData.user.id,

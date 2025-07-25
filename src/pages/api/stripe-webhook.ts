@@ -99,7 +99,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   let updateResult;
   if (userId) {
     updateResult = await supabase
-      .from('profiles')
+      .from('users')
       .update({
         stripe_customer_id: session.customer as string,
         subscription_status: 'active',
@@ -112,7 +112,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   if (!userId || updateResult?.error) {
     console.log('Trying update by email:', email);
     updateResult = await supabase
-      .from('profiles')
+      .from('users')
       .update({
         stripe_customer_id: session.customer as string,
         subscription_status: 'active',
@@ -135,7 +135,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   
   // Try to update by stripe_customer_id first
   let updateResult = await supabase
-    .from('profiles')
+    .from('users')
     .update({
       stripe_subscription_id: subscription.id,
       subscription_status: subscription.status,
@@ -149,7 +149,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   if (updateResult.error && userId) {
     console.log('Trying update by userId:', userId);
     updateResult = await supabase
-      .from('profiles')
+      .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
         stripe_subscription_id: subscription.id,
@@ -165,7 +165,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   if (updateResult.error && email) {
     console.log('Trying update by email:', email);
     updateResult = await supabase
-      .from('profiles')
+      .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
         stripe_subscription_id: subscription.id,
@@ -186,7 +186,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   const { error } = await supabase
-    .from('profiles')
+    .from('users')
     .update({
       subscription_status: 'canceled',
       updated_at: new Date().toISOString(),
@@ -200,7 +200,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
   const { error } = await supabase
-    .from('profiles')
+    .from('users')
     .update({
       subscription_status: 'active',
       updated_at: new Date().toISOString(),
@@ -214,7 +214,7 @@ async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
 
 async function handlePaymentFailed(invoice: Stripe.Invoice) {
   const { error } = await supabase
-    .from('profiles')
+    .from('users')
     .update({
       subscription_status: 'past_due',
       updated_at: new Date().toISOString(),

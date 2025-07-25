@@ -18,7 +18,7 @@ export default function SuccessPage() {
           const { data: { user } } = await supabase.auth.getUser();
           if (user) {
             await supabase
-              .from('profiles')
+              .from('users')
               .update({ subscription_status: 'active' })
               .eq('id', user.id);
           }
