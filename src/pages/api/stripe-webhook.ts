@@ -182,6 +182,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   
   // First, let's see if ANY user exists with this customer ID
   const { data: existingByCustomer, error: checkError } = await supabase
+    .schema('public')
     .from('users')
     .select('*')
     .eq('stripe_customer_id', subscription.customer as string);
@@ -219,6 +220,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   }
   
   updateResult = await supabase
+    .schema('public')
     .from('users')
     .update({
       stripe_customer_id: subscription.customer as string,
@@ -241,6 +243,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   if (userId) {
     console.log('Attempting update by userId:', userId);
     updateResult = await supabase
+      .schema('public')
       .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
@@ -263,6 +266,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   if (emailToTry) {
     console.log('Attempting update by email:', emailToTry);
     updateResult = await supabase
+      .schema('public')
       .from('users')
       .update({
         stripe_customer_id: subscription.customer as string,
@@ -287,6 +291,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
     if (customer && !customer.deleted && customer.email) {
       console.log('Found customer email from Stripe:', customer.email);
       updateResult = await supabase
+        .schema('public')
         .from('users')
         .update({
           stripe_customer_id: subscription.customer as string,

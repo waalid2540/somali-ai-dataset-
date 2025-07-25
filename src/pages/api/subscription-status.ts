@@ -16,11 +16,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { data: user, error } = await supabase
       .from('users')
-      .select('subscription_status, current_period_end, stripe_customer_id')
+      .select('subscription_status, current_period_end, stripe_customer_id, stripe_subscription_id, email, updated_at')
       .eq('id', userId)
       .maybeSingle(); // Use maybeSingle instead of single to handle missing users
 
+    console.log('=== SUBSCRIPTION STATUS CHECK ===');
     console.log('Database query result:', user, error);
+    console.log('User subscription_status:', user?.subscription_status);
+    console.log('User stripe_customer_id:', user?.stripe_customer_id);
+    console.log('User stripe_subscription_id:', user?.stripe_subscription_id);
+    console.log('User email:', user?.email);
+    console.log('User updated_at:', user?.updated_at);
 
     if (error) {
       console.error('Error fetching user subscription:', error);
