@@ -8,6 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { userId } = req.query;
+    console.log('Checking subscription for userId:', userId);
 
     if (!userId) {
       return res.status(400).json({ message: 'userId is required' });
@@ -18,6 +19,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .select('subscription_status, current_period_end, stripe_customer_id')
       .eq('id', userId)
       .maybeSingle(); // Use maybeSingle instead of single to handle missing users
+
+    console.log('Database query result:', user, error);
 
     if (error) {
       console.error('Error fetching user subscription:', error);

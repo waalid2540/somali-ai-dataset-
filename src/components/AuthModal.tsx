@@ -68,7 +68,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
         // Create profile immediately (don't wait for email confirmation)
         if (authData.user) {
-          const { error: profileError } = await supabase
+          console.log('Creating user profile for:', authData.user.id, email);
+          
+          const { data: insertData, error: profileError } = await supabase
             .from('users')
             .insert([
               {
@@ -78,7 +80,10 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                 company_name: companyName || '',
                 subscription_status: 'pending'
               }
-            ]);
+            ])
+            .select(); // Add select to see what was inserted
+
+          console.log('Insert result:', insertData, profileError);
 
           if (profileError) {
             console.error('Profile creation error:', profileError);
@@ -87,7 +92,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             setLoading(false);
             return;
           } else {
-            console.log('User profile created successfully');
+            console.log('User profile created successfully:', insertData);
           }
 
           // After successful signup, redirect to Stripe checkout
