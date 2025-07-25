@@ -259,17 +259,28 @@ function HomePage() {
                         </button>
                       </div>
                     ) : (
-                      <button
-                        onClick={() => {
-                          setAuthMode('signup');
-                          setShowAuthModal(true);
-                        }}
-                        className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-yellow-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 animate-pulse"
-                      >
-                        <Zap className="w-5 h-5" />
-                        <span className="hidden sm:inline">Get 20 AI Tools</span>
-                        <span className="sm:hidden">Try Now</span>
-                      </button>
+                      <div className="flex items-center space-x-3">
+                        <button
+                          onClick={() => {
+                            setAuthMode('signin');
+                            setShowAuthModal(true);
+                          }}
+                          className="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-xl font-medium transition-all duration-200 hidden sm:block"
+                        >
+                          Login
+                        </button>
+                        <button
+                          onClick={() => {
+                            setAuthMode('signup');
+                            setShowAuthModal(true);
+                          }}
+                          className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-yellow-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 animate-pulse"
+                        >
+                          <Zap className="w-5 h-5" />
+                          <span className="hidden sm:inline">Get 20 AI Tools</span>
+                          <span className="sm:hidden">Try Now</span>
+                        </button>
+                      </div>
                     )}
 
                     {/* Mobile Menu Button */}
