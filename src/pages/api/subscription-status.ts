@@ -17,21 +17,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .from('users')
       .select('subscription_status, current_period_end, stripe_customer_id')
       .eq('id', userId)
-      .single();
+      .maybeSingle(); // Use maybeSingle instead of single to handle missing users
 
     if (error) {
       console.error('Error fetching user subscription:', error);
       return res.status(500).json({ message: 'Error fetching subscription status' });
     }
 
-    const hasActiveSubscription = user?.subscription_status === 'active' && 
-      user?.current_period_end && 
+    // If no user found, return inactive subscription
+    if (!user) {
+      return res.status(200).json({
+        hasActiveSubscription: false,
+        subscriptionStatus: 'none',
+        currentPeriodEnd: null,
+      });
+    }
+
+    const hasActiveSubscription = user.subscription_status === 'active' && 
+      user.current_period_end && 
       new Date(user.current_period_end) > new Date();
 
     res.status(200).json({
-      hasActiveSubscription,
-      subscriptionStatus: user?.subscription_status || 'none',
-      currentPeriodEnd: user?.current_period_end,
+      hasActiveSubscription: hasActiveSubscription || user.subscription_status === 'active',
+      subscriptionStatus: user.subscription_status || 'none',
+      currentPeriodEnd: user.current_period_end,
     });
   } catch (error) {
     console.error('Error checking subscription status:', error);
