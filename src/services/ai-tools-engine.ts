@@ -101,9 +101,9 @@ class AIToolsEngine {
    * Generate content using DeepSeek with 10-second timeout (95% cheaper than GPT-4!)
    */
   private async generateContent(prompt: string, config: AIToolConfig): Promise<string> {
-    // Add strict 10-second timeout
+    // Add strict 8-second timeout (buffer for processing)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
 
     try {
       const response = await fetch(`${this.baseURL}/chat/completions`, {
@@ -144,8 +144,8 @@ Write ONLY in this clean, professional format.`
               content: prompt
             }
           ],
-          max_tokens: Math.min(config.maxTokens, 600), // Balanced for speed and completeness
-          temperature: Math.min(config.temperature, 0.1), // Very low for maximum speed
+          max_tokens: Math.min(config.maxTokens, 400), // Optimized for speed
+          temperature: Math.min(config.temperature, 0.05), // Extremely low for maximum speed
           top_p: 0.9,
           stream: false,
         }),
@@ -164,7 +164,7 @@ Write ONLY in this clean, professional format.`
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        throw new Error('Request timed out after 10 seconds. Please try a shorter prompt or try again.');
+        throw new Error('Request timed out after 8 seconds. Please try a shorter prompt or try again.');
       }
       throw error;
     }

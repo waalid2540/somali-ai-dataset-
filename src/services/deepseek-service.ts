@@ -18,14 +18,14 @@ export class DeepSeekService {
     model?: string;
   } = {}) {
     const {
-      maxTokens = 600,        // Balanced for speed and completeness
-      temperature = 0.1,      // Very low for maximum speed
+      maxTokens = 400,        // Optimized for speed
+      temperature = 0.05,     // Extremely low for maximum speed
       model = 'deepseek-chat'
     } = options;
 
-    // Add strict 10-second timeout
+    // Add strict 8-second timeout (buffer for processing)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
 
     try {
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
@@ -90,8 +90,8 @@ Write ONLY in this clean, professional format.`
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        console.log('⏱️ DeepSeek request timed out after 10 seconds');
-        throw new Error('Request timed out after 10 seconds. Please try a shorter prompt or try again.');
+        console.log('⏱️ DeepSeek request timed out after 8 seconds');
+        throw new Error('Request timed out after 8 seconds. Please try a shorter prompt or try again.');
       }
       console.error('DeepSeek API error:', error);
       throw error;
@@ -127,7 +127,7 @@ Write the full blog post in this clean, professional format with NO formatting s
 
 Topic: ${topic}`;
 
-    return this.generateCompletion(prompt, { maxTokens: 800 });
+    return this.generateCompletion(prompt, { maxTokens: 500 });
   }
 
   async generateSocialMediaPost(platform: string, topic: string, tone: string = 'professional') {
@@ -163,7 +163,7 @@ Email Type: ${type}
 Audience: ${audience}
 Goal: ${goal}`;
 
-    return this.generateCompletion(prompt, { maxTokens: 800 });
+    return this.generateCompletion(prompt, { maxTokens: 500 });
   }
 
   async generateProductDescription(product: string, features: string[], targetAudience: string) {
@@ -211,7 +211,7 @@ Please provide:
 2. Key changes made
 3. Brief explanation of improvements`;
 
-    return this.generateCompletion(prompt, { maxTokens: 800 });
+    return this.generateCompletion(prompt, { maxTokens: 500 });
   }
 
   async translateText(text: string, fromLanguage: string, toLanguage: string) {
