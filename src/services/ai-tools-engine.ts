@@ -119,8 +119,10 @@ class AIToolsEngine {
             content: prompt
           }
         ],
-        max_tokens: config.maxTokens,
-        temperature: config.temperature,
+        max_tokens: Math.min(config.maxTokens, 500), // Cap at 500 tokens for speed
+        temperature: Math.min(config.temperature, 0.3), // Lower temperature for speed
+        top_p: 0.9,
+        stream: false,
       }),
     });
 

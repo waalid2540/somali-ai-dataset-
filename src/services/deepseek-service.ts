@@ -18,12 +18,16 @@ export class DeepSeekService {
     model?: string;
   } = {}) {
     const {
-      maxTokens = 1000,
-      temperature = 0.7,
+      maxTokens = 500,        // Reduced from 1000 for faster response
+      temperature = 0.3,      // Lower temperature for faster generation
       model = 'deepseek-chat'
     } = options;
 
     try {
+      // Add timeout for faster failures
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
         method: 'POST',
         headers: {
@@ -40,8 +44,13 @@ export class DeepSeekService {
           ],
           max_tokens: maxTokens,
           temperature,
+          stream: false,           // Ensure non-streaming for consistency
+          top_p: 0.9,             // Add top_p for better performance
         }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const error = await response.text();
