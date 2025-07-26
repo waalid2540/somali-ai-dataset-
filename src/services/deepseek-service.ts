@@ -20,7 +20,7 @@ export class DeepSeekService {
     const {
       maxTokens = 1000,
       temperature = 0.7,
-      model = 'deepseek-v3'
+      model = 'deepseek-chat'
     } = options;
 
     try {

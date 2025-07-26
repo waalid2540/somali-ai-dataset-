@@ -108,7 +108,7 @@ class AIToolsEngine {
         'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-v3',
+        model: 'deepseek-chat',
         messages: [
           {
             role: 'system',
