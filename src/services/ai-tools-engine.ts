@@ -161,7 +161,7 @@ Write ONLY in this clean, professional format.`
 
       const result = await response.json();
       return result.choices[0].message.content;
-    } catch (error) {
+    } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
         throw new Error('Request timed out after 10 seconds. Please try a shorter prompt or try again.');

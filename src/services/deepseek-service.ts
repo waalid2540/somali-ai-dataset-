@@ -87,7 +87,7 @@ Write ONLY in this clean, professional format.`
         usage: data.usage,
         cost: this.calculateCost(data.usage),
       };
-    } catch (error) {
+    } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
         console.log('⏱️ DeepSeek request timed out after 10 seconds');
