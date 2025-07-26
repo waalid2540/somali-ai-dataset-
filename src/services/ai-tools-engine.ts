@@ -38,13 +38,13 @@ interface AIToolResult {
 
 class AIToolsEngine {
   private apiKey: string;
-  private baseURL = 'https://api.openai.com/v1';
+  private baseURL = 'https://api.deepseek.com/v1';
   
   constructor() {
-    this.apiKey = process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY || '';
+    this.apiKey = process.env.DEEPSEEK_API_KEY || '';
     
     if (!this.apiKey) {
-      console.error('OpenAI API key not found. Please set OPENAI_API_KEY in environment variables.');
+      console.error('DeepSeek API key not found. Please set DEEPSEEK_API_KEY in environment variables.');
     }
   }
 
@@ -98,7 +98,7 @@ class AIToolsEngine {
   }
 
   /**
-   * Generate content using GPT-4
+   * Generate content using DeepSeek V3 (95% cheaper than GPT-4!)
    */
   private async generateContent(prompt: string, config: AIToolConfig): Promise<string> {
     const response = await fetch(`${this.baseURL}/chat/completions`, {
@@ -108,7 +108,7 @@ class AIToolsEngine {
         'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4-turbo-preview',
+        model: 'deepseek-v3',
         messages: [
           {
             role: 'system',
