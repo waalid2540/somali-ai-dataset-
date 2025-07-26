@@ -98,41 +98,76 @@ class AIToolsEngine {
   }
 
   /**
-   * Generate content using DeepSeek V3 (95% cheaper than GPT-4!)
+   * Generate content using DeepSeek with 10-second timeout (95% cheaper than GPT-4!)
    */
   private async generateContent(prompt: string, config: AIToolConfig): Promise<string> {
-    const response = await fetch(`${this.baseURL}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.apiKey}`,
-      },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [
-          {
-            role: 'system',
-            content: `You are a professional ${config.name} specialist. Create high-quality, professional content that delivers real business value. Always maintain excellent quality and creativity.`
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        max_tokens: Math.min(config.maxTokens, 500), // Cap at 500 tokens for speed
-        temperature: Math.min(config.temperature, 0.3), // Lower temperature for speed
-        top_p: 0.9,
-        stream: false,
-      }),
-    });
+    // Add strict 10-second timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`AI generation failed: ${error.error?.message || 'Unknown error'}`);
+    try {
+      const response = await fetch(`${this.baseURL}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'deepseek-chat',
+          messages: [
+            {
+              role: 'system',
+              content: `You are a professional ${config.name} specialist. Create sophisticated business content in PLAIN TEXT ONLY.
+
+ABSOLUTE REQUIREMENTS:
+- NEVER use ANY markdown symbols: no **, ##, ###, ####, ---, ***, +++
+- NEVER use emojis of any kind - zero emojis allowed
+- NEVER use special formatting characters
+- Write in clean, professional paragraphs with line breaks between sections
+- Use ONLY plain text with proper sentence structure
+- NO visual formatting - just well-written content
+- Write like a Harvard Business Review article - sophisticated and professional
+- Focus on substance, expertise, and valuable insights
+- Complete all responses fully without cutting off mid-sentence
+
+Example of CORRECT format:
+Title Here
+
+This is the introduction paragraph with valuable information.
+
+This is the next section with more insights. Numbers can be written as: First, second, third or using simple 1. 2. 3. format only when absolutely necessary.
+
+Write ONLY in this clean, professional format.`
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: Math.min(config.maxTokens, 600), // Balanced for speed and completeness
+          temperature: Math.min(config.temperature, 0.1), // Very low for maximum speed
+          top_p: 0.9,
+          stream: false,
+        }),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(`AI generation failed: ${error.error?.message || 'Unknown error'}`);
+      }
+
+      const result = await response.json();
+      return result.choices[0].message.content;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timed out after 10 seconds. Please try a shorter prompt or try again.');
+      }
+      throw error;
     }
-
-    const result = await response.json();
-    return result.choices[0].message.content;
   }
 
   /**

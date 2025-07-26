@@ -293,7 +293,7 @@ function HomePage() {
                             setAuthMode('signin');
                             setShowAuthModal(true);
                           }}
-                          className="bg-white text-gray-700 hover:text-blue-600 px-6 py-3 rounded-2xl font-semibold border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 hidden sm:flex items-center space-x-2"
+                          className="bg-white text-blue-600 hover:text-blue-700 px-6 py-3 rounded-2xl font-bold border-2 border-blue-600 hover:border-blue-700 hover:shadow-lg transition-all duration-300 flex items-center space-x-2"
                         >
                           <Users className="w-4 h-4" />
                           <span>Sign In</span>

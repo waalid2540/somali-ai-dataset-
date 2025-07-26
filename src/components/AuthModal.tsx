@@ -20,6 +20,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
   const [companyName, setCompanyName] = useState('');
   const [error, setError] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
 
   if (!isOpen) return null;
 
@@ -101,8 +103,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             console.log('User profile created successfully:', insertData);
           }
 
-          // After successful signup, redirect to Stripe checkout
-          await handleStripeCheckout(authData.user.id);
+          // Show confirmation message for email verification
+          setShowConfirmation(true);
         }
       } else {
         // Sign in existing user
@@ -121,6 +123,115 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
       setLoading(false);
     }
   };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email);
+      if (error) throw error;
+      setResetEmailSent(true);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Show forgot password screen
+  if (showForgotPassword) {
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div className="text-center mb-6">
+            <div className="text-6xl mb-4">🔑</div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              {resetEmailSent ? 'Check Your Email' : 'Reset Password'}
+            </h2>
+            <p className="text-gray-600">
+              {resetEmailSent 
+                ? `We've sent a password reset link to ${email}`
+                : 'Enter your email to receive a password reset link'
+              }
+            </p>
+          </div>
+
+          {resetEmailSent ? (
+            <div className="space-y-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <p className="text-green-800 text-sm">
+                  ✅ Password reset email sent! Check your inbox and spam folder.
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowForgotPassword(false);
+                  setResetEmailSent(false);
+                  setMode('signin');
+                }}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+              >
+                Back to Sign In
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleForgotPassword} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="you@company.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-red-600 text-sm">{error}</p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 transition-all"
+              >
+                {loading ? 'Sending...' : 'Send Reset Link'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setShowForgotPassword(false);
+                  setMode('signin');
+                }}
+                className="w-full text-gray-600 hover:text-gray-800 font-medium"
+              >
+                ← Back to Sign In
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   // Show confirmation screen after successful signup
   if (showConfirmation) {
@@ -149,7 +260,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
               <p className="text-green-800 text-xs sm:text-sm">
                 <span className="font-semibold">✅ Account Created Successfully!</span><br/>
-                Your $4.99/month subscription is ready to activate.
+                After confirming your email, you'll be redirected to complete your $4.99/month subscription.
               </p>
             </div>
 
@@ -335,7 +446,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           </button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center space-y-3">
           <p className="text-gray-600">
             {mode === 'signin' ? "Don't have an account? " : "Already have an account? "}
             <button
@@ -345,6 +456,17 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
               {mode === 'signin' ? 'Sign up' : 'Sign in'}
             </button>
           </p>
+          
+          {mode === 'signin' && (
+            <p className="text-gray-600">
+              <button
+                onClick={() => setShowForgotPassword(true)}
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                Forgot your password?
+              </button>
+            </p>
+          )}
         </div>
 
         {mode === 'signup' && (

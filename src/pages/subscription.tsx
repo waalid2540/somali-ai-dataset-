@@ -45,65 +45,29 @@ export default function SubscriptionPage() {
 
   const plans = [
     {
-      name: 'Starter',
-      description: 'Perfect for individuals and small teams',
+      name: 'AI Tools Pro',
+      description: 'Complete AI toolkit for businesses and entrepreneurs',
       monthlyPrice: 4.99,
       annualPrice: 49.99,
-      popular: false,
-      features: [
-        'Access to all 20 AI tools',
-        'Unlimited usage',
-        'Basic support',
-        'Mobile app access',
-        'Export capabilities',
-        'Basic analytics'
-      ],
-      limitations: ['Limited to 3 team members', 'Basic templates only'],
-      cta: 'Start Free Trial',
-      gradient: 'from-blue-500 to-purple-600'
-    },
-    {
-      name: 'Professional',
-      description: 'Ideal for growing businesses and teams',
-      monthlyPrice: 14.99,
-      annualPrice: 149.99,
       popular: true,
       features: [
-        'Everything in Starter',
-        'Priority support (24/7)',
-        'Advanced analytics',
-        'Custom templates',
-        'Team collaboration',
-        'API access',
-        'White-label options',
-        'Advanced integrations',
-        'Custom workflows'
+        'Access to all 20 powerful AI tools',
+        'Unlimited usage - no limits',
+        'Professional content generation',
+        'Blog posts, social media, emails',
+        'Business documents & proposals',
+        'Marketing copy & advertisements',
+        'Translation & communication tools',
+        'Customer service responses',
+        'Meeting summaries & reports',
+        'Premium support included',
+        'Mobile & desktop access',
+        'Export in all formats',
+        'Commercial usage rights'
       ],
       limitations: [],
-      cta: 'Go Professional',
-      gradient: 'from-emerald-500 to-blue-600'
-    },
-    {
-      name: 'Enterprise',
-      description: 'For large organizations with advanced needs',
-      monthlyPrice: 49.99,
-      annualPrice: 499.99,
-      popular: false,
-      features: [
-        'Everything in Professional',
-        'Dedicated account manager',
-        'Custom integrations',
-        'Advanced security (SSO)',
-        'Compliance reporting',
-        'Custom AI model training',
-        'Unlimited team members',
-        'Priority feature requests',
-        'SLA guarantee (99.9%)',
-        'On-premise deployment'
-      ],
-      limitations: [],
-      cta: 'Contact Sales',
-      gradient: 'from-purple-600 to-pink-600'
+      cta: 'Start Your AI Business',
+      gradient: 'from-blue-600 to-purple-600'
     }
   ];
 
@@ -203,12 +167,12 @@ export default function SubscriptionPage() {
             </div>
             
             <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-6">
-              Choose Your
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent"> AI Power</span>
+              20 Powerful AI Tools
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent"> for Just $4.99</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              From startups to Fortune 500 companies, find the perfect plan to transform your business with our enterprise-grade AI tools suite.
+              Transform your business with our complete AI toolkit. Blog posts, social media, emails, marketing copy, translations and more - all for less than a coffee!
             </p>
 
             {/* Billing Toggle */}
@@ -238,22 +202,19 @@ export default function SubscriptionPage() {
 
         {/* Pricing Cards */}
         <section className="pb-20 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex justify-center">
+              <div className="w-full max-w-md">
               {plans.map((plan, index) => (
                 <div 
                   key={plan.name}
-                  className={`relative bg-white rounded-3xl shadow-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
-                    plan.popular 
-                      ? 'border-blue-500 ring-4 ring-blue-500/20' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                  className="relative bg-white rounded-3xl shadow-xl border-2 border-blue-500 ring-4 ring-blue-500/20 transition-all duration-300 hover:shadow-2xl hover:scale-105"
                 >
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold flex items-center space-x-1">
                         <Crown className="w-4 h-4" />
-                        <span>Most Popular</span>
+                        <span>Limited Time Offer</span>
                       </div>
                     </div>
                   )}
@@ -275,7 +236,7 @@ export default function SubscriptionPage() {
                         </div>
                         {billingCycle === 'annual' && (
                           <p className="text-sm text-emerald-600 font-semibold mt-2">
-                            Save ${(plan.monthlyPrice * 12 - plan.annualPrice).toFixed(0)} per year
+                            Save $10 per year (2 months free!)
                           </p>
                         )}
                       </div>
@@ -311,6 +272,7 @@ export default function SubscriptionPage() {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
           </div>
         </section>

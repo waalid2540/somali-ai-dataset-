@@ -18,15 +18,15 @@ export class DeepSeekService {
     model?: string;
   } = {}) {
     const {
-      maxTokens = 500,        // Reduced from 1000 for faster response
-      temperature = 0.3,      // Lower temperature for faster generation
+      maxTokens = 600,        // Balanced for speed and completeness
+      temperature = 0.1,      // Very low for maximum speed
       model = 'deepseek-chat'
     } = options;
 
     try {
-      // Add timeout for faster failures
+      // Add strict 10-second timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
       const response = await fetch(`${this.baseUrl}/chat/completions`, {
         method: 'POST',
@@ -37,6 +37,30 @@ export class DeepSeekService {
         body: JSON.stringify({
           model,
           messages: [
+            {
+              role: 'system',
+              content: `You are a professional business content specialist. Create sophisticated business content in PLAIN TEXT ONLY.
+
+ABSOLUTE REQUIREMENTS:
+- NEVER use ANY markdown symbols: no **, ##, ###, ####, ---, ***, +++
+- NEVER use emojis of any kind - zero emojis allowed
+- NEVER use special formatting characters
+- Write in clean, professional paragraphs with line breaks between sections
+- Use ONLY plain text with proper sentence structure
+- NO visual formatting - just well-written content
+- Write like a Harvard Business Review article - sophisticated and professional
+- Focus on substance, expertise, and valuable insights
+- Complete all responses fully without cutting off mid-sentence
+
+Example of CORRECT format:
+Title Here
+
+This is the introduction paragraph with valuable information.
+
+This is the next section with more insights. Numbers can be written as: First, second, third or using simple 1. 2. 3. format only when absolutely necessary.
+
+Write ONLY in this clean, professional format.`
+            },
             {
               role: 'user',
               content: prompt
@@ -64,25 +88,46 @@ export class DeepSeekService {
         cost: this.calculateCost(data.usage),
       };
     } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        console.log('⏱️ DeepSeek request timed out after 10 seconds');
+        throw new Error('Request timed out after 10 seconds. Please try a shorter prompt or try again.');
+      }
       console.error('DeepSeek API error:', error);
       throw error;
     }
   }
 
   async generateBlogPost(topic: string, keywords: string[] = []) {
-    const prompt = `Write a comprehensive blog post about "${topic}".
-    
-Requirements:
-- Include SEO keywords: ${keywords.join(', ')}
-- 800-1200 words
-- Include H2 and H3 headings
-- Add a compelling introduction and conclusion
-- Make it engaging and informative
-- Include actionable tips
+    const prompt = `Write a comprehensive, professional blog post about "${topic}".
+
+CRITICAL FORMATTING REQUIREMENTS:
+- ABSOLUTELY NO markdown formatting - no **, ##, ###, or any special symbols
+- ZERO emojis allowed anywhere in the content
+- Write in PLAIN TEXT ONLY with clean paragraph breaks
+- Professional, business-appropriate tone throughout
+- Include SEO keywords naturally: ${keywords.join(', ')}
+- 800-1200 words with substantial value
+- Use clear section breaks with simple titles in plain text
+- Compelling introduction and strong conclusion
+- Provide actionable, expert-level insights
+- Write like a Harvard Business Review article
+- Complete the entire blog post without cutting off
+
+Format like this example:
+Understanding Digital Business Success
+
+The digital marketplace has fundamentally transformed how businesses operate and generate revenue. This comprehensive analysis examines the key factors that drive sustainable growth in online business environments.
+
+Essential Components of Digital Business Strategy
+
+Modern digital businesses rely on several core principles to achieve long-term success...
+
+Write the full blog post in this clean, professional format with NO formatting symbols.
 
 Topic: ${topic}`;
 
-    return this.generateCompletion(prompt, { maxTokens: 1500 });
+    return this.generateCompletion(prompt, { maxTokens: 800 });
   }
 
   async generateSocialMediaPost(platform: string, topic: string, tone: string = 'professional') {
@@ -90,11 +135,13 @@ Topic: ${topic}`;
     
 Requirements:
 - Tone: ${tone}
-- Include relevant hashtags
-- ${platform === 'Twitter' ? 'Under 280 characters' : ''}
-- ${platform === 'LinkedIn' ? 'Professional and insightful' : ''}
-- ${platform === 'Instagram' ? 'Visual and engaging with emojis' : ''}
-- Call-to-action included
+- Professional business language appropriate for ${platform}
+- Include relevant hashtags (avoid excessive use)
+- ${platform === 'Twitter' ? 'Under 280 characters, concise and impactful' : ''}
+- ${platform === 'LinkedIn' ? 'Professional and insightful, business-focused' : ''}
+- ${platform === 'Instagram' ? 'Engaging content with minimal, tasteful emojis' : ''}
+- Clear, professional call-to-action
+- Focus on value and expertise over flashy formatting
 
 Topic: ${topic}`;
 
