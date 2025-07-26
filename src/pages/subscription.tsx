@@ -18,12 +18,15 @@ import {
 import { supabase } from '../lib/supabase';
 import { User } from '@supabase/supabase-js';
 import { useSubscription } from '../hooks/useSubscription';
+import AuthModal from '../components/AuthModal';
 
 export default function SubscriptionPage() {
   const [user, setUser] = useState<User | null>(null);
   const subscription = useSubscription(user);
   const [loading, setLoading] = useState(true);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
 
   useEffect(() => {
     const getSession = async () => {
@@ -73,8 +76,9 @@ export default function SubscriptionPage() {
 
   const handleSubscribe = async (planName: string, price: number) => {
     if (!user) {
-      // Redirect to login
-      window.location.href = '/login';
+      // Show login modal
+      setAuthMode('signup');
+      setShowAuthModal(true);
       return;
     }
 
@@ -146,12 +150,26 @@ export default function SubscriptionPage() {
                     </Link>
                   </div>
                 ) : (
-                  <Link 
-                    href="/"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    Sign In
-                  </Link>
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={() => {
+                        setAuthMode('signin');
+                        setShowAuthModal(true);
+                      }}
+                      className="bg-white text-blue-600 border-2 border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors font-semibold"
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      onClick={() => {
+                        setAuthMode('signup');
+                        setShowAuthModal(true);
+                      }}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                    >
+                      Get Started
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -373,6 +391,18 @@ export default function SubscriptionPage() {
           </div>
         </footer>
       </div>
+
+      {/* Authentication Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => {
+          setShowAuthModal(false);
+          // Refresh the page to update user state
+          window.location.reload();
+        }}
+        initialMode={authMode}
+      />
     </>
   );
 }
