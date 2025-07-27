@@ -199,10 +199,10 @@ function HomePage() {
         
         {showLandingPage ? (
           <div className="min-h-screen bg-white">
-            {/* Simple Mobile-First Navigation */}
-            <nav className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
-              <div className="max-w-7xl mx-auto px-4">
-                <div className="flex justify-between items-center h-16">
+            {/* MOBILE NAVIGATION - WORKING VERSION */}
+            <nav className="fixed top-0 w-full z-50 bg-blue-600 text-white shadow-lg">
+              <div className="px-4">
+                <div className="flex justify-between items-center h-14">
                   {/* Logo Section */}
                   <div className="flex items-center space-x-4">
                     <div className="relative">
@@ -212,11 +212,11 @@ function HomePage() {
                       <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">
+                      <span className="text-lg font-bold text-white">
                         AI Tools Bundle
                       </span>
-                      <span className="text-xs font-semibold text-gray-500 -mt-1">
-                        MOBILE TEST - $4.99
+                      <span className="text-xs text-blue-200">
+                        $4.99/month
                       </span>
                     </div>
                   </div>
@@ -319,39 +319,35 @@ function HomePage() {
                       </div>
                     )}
 
-                    {/* Simple Mobile Menu Button */}
+                    {/* MOBILE MENU BUTTON - ALWAYS VISIBLE */}
                     <button 
                       onClick={() => setShowMobileMenu(!showMobileMenu)}
-                      className="md:hidden p-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                      className="lg:hidden p-3 rounded-lg bg-white text-blue-600 font-bold text-sm"
                     >
-                      <div className="w-5 h-5 flex flex-col justify-center space-y-1">
-                        <div className="w-5 h-0.5 bg-white"></div>
-                        <div className="w-5 h-0.5 bg-white"></div>
-                        <div className="w-5 h-0.5 bg-white"></div>
-                      </div>
+                      MENU
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Simple Mobile Menu */}
+              {/* MOBILE MENU - BRIGHT AND VISIBLE */}
               {showMobileMenu && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-lg z-40">
+                <div className="lg:hidden absolute top-full left-0 w-full bg-yellow-400 border-t-4 border-red-500 shadow-xl z-40">
                   <div className="p-4 space-y-2">
                     {/* Navigation Links */}
                     <button
                       onClick={() => setShowMobileMenu(false)}
-                      className="w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 font-medium text-gray-900"
+                      className="w-full text-left py-4 px-4 bg-blue-600 text-white font-bold text-lg rounded-lg"
                     >
-                      🏠 Home
+                      🏠 HOME
                     </button>
                     
                     <Link 
                       href="/subscription" 
                       onClick={() => setShowMobileMenu(false)}
-                      className="block w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 font-medium text-gray-900"
+                      className="block w-full text-left py-4 px-4 bg-green-600 text-white font-bold text-lg rounded-lg"
                     >
-                      💰 Pricing - $4.99/mo
+                      💰 PRICING - $4.99/mo
                     </Link>
                     
                     <button
@@ -359,9 +355,9 @@ function HomePage() {
                         setShowDetails(!showDetails);
                         setShowMobileMenu(false);
                       }}
-                      className="w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 font-medium text-gray-900"
+                      className="w-full text-left py-4 px-4 bg-purple-600 text-white font-bold text-lg rounded-lg"
                     >
-                      ⚡ AI Tools (20)
+                      ⚡ AI TOOLS (20)
                     </button>
 
                     {/* Auth Buttons */}
@@ -374,9 +370,9 @@ function HomePage() {
                               setShowAuthModal(true);
                               setShowMobileMenu(false);
                             }}
-                            className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg border-2 border-blue-600 font-bold"
+                            className="w-full bg-white text-black py-4 px-4 rounded-lg border-4 border-black font-bold text-lg"
                           >
-                            Sign In
+                            SIGN IN
                           </button>
                           <button
                             onClick={() => {
@@ -384,9 +380,9 @@ function HomePage() {
                               setShowAuthModal(true);
                               setShowMobileMenu(false);
                             }}
-                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-bold"
+                            className="w-full bg-red-600 text-white py-4 px-4 rounded-lg font-bold text-lg"
                           >
-                            Start Free Trial
+                            START FREE TRIAL
                           </button>
                         </>
                       ) : (
@@ -428,7 +424,7 @@ function HomePage() {
             )}
 
             {/* Powerful Hero Section */}
-            <section className="relative min-h-screen flex items-center justify-center px-4 pt-16 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
+            <section className="relative min-h-screen flex items-center justify-center px-4 pt-14 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
               {/* Animated Background Elements */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
