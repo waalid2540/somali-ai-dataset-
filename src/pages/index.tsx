@@ -339,7 +339,7 @@ function HomePage() {
                 <div className="px-6 py-8">
                   {/* Main Navigation Links */}
                   <div className="space-y-2 mb-8">
-                    <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Navigation</h3>
+                    <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">MENU</h3>
                     
                     <button
                       onClick={() => setShowMobileMenu(false)}
