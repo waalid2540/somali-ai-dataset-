@@ -199,213 +199,139 @@ function HomePage() {
         
         {showLandingPage ? (
           <div className="min-h-screen bg-white">
-            {/* MOBILE NAVIGATION BAR */}
-            <div style={{
-              position: 'fixed',
-              top: '0',
-              left: '0',
-              right: '0',
-              width: '100%',
-              backgroundColor: '#1e40af',
-              color: 'white',
-              padding: '15px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              zIndex: '9999',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-            }}>
-              <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
-                AI Tools - $4.99/mo
-              </div>
-              <button
-                onClick={() => setShowMobileMenu(!showMobileMenu)}
-                style={{
-                  backgroundColor: 'white',
-                  color: '#1e40af',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '5px',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer'
-                }}
-              >
-                {showMobileMenu ? 'CLOSE' : 'MENU'}
-              </button>
-            </div>
+            {/* PROFESSIONAL MOBILE NAVIGATION */}
+            <nav className="lg:hidden fixed top-0 left-0 right-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+              <div className="px-4">
+                <div className="flex justify-between items-center h-16">
+                  {/* Mobile Logo */}
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                      <Globe className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-gray-900">AI Tools</div>
+                      <div className="text-xs text-gray-500 -mt-1">$4.99/mo</div>
+                    </div>
+                  </div>
 
-            {/* MOBILE MENU */}
-            {showMobileMenu && (
-              <div style={{
-                position: 'fixed',
-                top: '70px',
-                left: '0',
-                right: '0',
-                width: '100%',
-                backgroundColor: 'white',
-                border: '1px solid #ccc',
-                padding: '20px',
-                zIndex: '9998',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-              }}>
-                <div style={{ marginBottom: '15px' }}>
-                  <Link 
-                    href="/subscription"
-                    onClick={() => setShowMobileMenu(false)}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      backgroundColor: '#2563eb',
-                      color: 'white',
-                      padding: '15px',
-                      textAlign: 'center',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      fontWeight: 'bold',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    💰 PRICING - $4.99/month
-                  </Link>
+                  {/* Mobile Actions */}
+                  <div className="flex items-center space-x-3">
+                    {user ? (
+                      <button
+                        onClick={() => setShowLandingPage(false)}
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-1"
+                      >
+                        <Zap className="w-4 h-4" />
+                        <span>Dashboard</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setAuthMode('signup');
+                          setShowAuthModal(true);
+                        }}
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-1"
+                      >
+                        <Zap className="w-4 h-4" />
+                        <span>Try Free</span>
+                      </button>
+                    )}
 
-                  <Link 
-                    href="/dataset"
-                    onClick={() => setShowMobileMenu(false)}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      backgroundColor: '#0d9488',
-                      color: 'white',
-                      padding: '15px',
-                      textAlign: 'center',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      fontWeight: 'bold',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    📊 DATASET
-                  </Link>
-
-                  <Link 
-                    href="/ai-business-creation"
-                    onClick={() => setShowMobileMenu(false)}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      backgroundColor: '#7c2d12',
-                      color: 'white',
-                      padding: '15px',
-                      textAlign: 'center',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      fontWeight: 'bold',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    🏢 AI BUSINESS CREATION
-                  </Link>
+                    {/* Mobile Menu Button */}
+                    <button 
+                      onClick={() => setShowMobileMenu(!showMobileMenu)}
+                      className="p-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50"
+                    >
+                      <div className="w-5 h-5 flex flex-col justify-center space-y-1">
+                        <div className={`w-5 h-0.5 bg-gray-700 transition-all ${showMobileMenu ? 'rotate-45 translate-y-2' : ''}`}></div>
+                        <div className={`w-5 h-0.5 bg-gray-700 transition-all ${showMobileMenu ? 'opacity-0' : ''}`}></div>
+                        <div className={`w-5 h-0.5 bg-gray-700 transition-all ${showMobileMenu ? '-rotate-45 -translate-y-2' : ''}`}></div>
+                      </div>
+                    </button>
+                  </div>
                 </div>
-
-                {!user ? (
-                  <div>
-                    <button
-                      onClick={() => {
-                        setAuthMode('signin');
-                        setShowAuthModal(true);
-                        setShowMobileMenu(false);
-                      }}
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        backgroundColor: '#4b5563',
-                        color: 'white',
-                        border: 'none',
-                        padding: '15px',
-                        borderRadius: '8px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        marginBottom: '10px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      🔐 SIGN IN
-                    </button>
-                    <button
-                      onClick={() => {
-                        setAuthMode('signup');
-                        setShowAuthModal(true);
-                        setShowMobileMenu(false);
-                      }}
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        backgroundColor: '#059669',
-                        color: 'white',
-                        border: 'none',
-                        padding: '15px',
-                        borderRadius: '8px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      🚀 START FREE TRIAL
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <button
-                      onClick={() => {
-                        setShowLandingPage(false);
-                        setShowMobileMenu(false);
-                      }}
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        backgroundColor: '#7c3aed',
-                        color: 'white',
-                        border: 'none',
-                        padding: '15px',
-                        borderRadius: '8px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        marginBottom: '10px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      ⚡ ACCESS DASHBOARD
-                    </button>
-                    <button
-                      onClick={async () => {
-                        await supabase.auth.signOut();
-                        setUser(null);
-                        setShowLandingPage(true);
-                        setShowMobileMenu(false);
-                      }}
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        backgroundColor: '#dc2626',
-                        color: 'white',
-                        border: 'none',
-                        padding: '15px',
-                        borderRadius: '8px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      🚪 SIGN OUT
-                    </button>
-                  </div>
-                )}
               </div>
-            )}
+
+              {/* Mobile Menu Dropdown */}
+              {showMobileMenu && (
+                <div className="absolute top-full left-0 right-0 w-full bg-white border-t border-gray-200 shadow-lg z-40">
+                  <div className="p-4 space-y-3">
+                    <Link 
+                      href="/subscription"
+                      onClick={() => setShowMobileMenu(false)}
+                      className="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-blue-700"
+                    >
+                      💰 Pricing - $4.99/month
+                    </Link>
+                    
+                    <Link 
+                      href="/dataset"
+                      onClick={() => setShowMobileMenu(false)}
+                      className="block w-full bg-teal-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-teal-700"
+                    >
+                      📊 Dataset
+                    </Link>
+                    
+                    <Link 
+                      href="/ai-business-creation"
+                      onClick={() => setShowMobileMenu(false)}
+                      className="block w-full bg-orange-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-orange-700"
+                    >
+                      🏢 AI Business Creation
+                    </Link>
+
+                    {!user ? (
+                      <>
+                        <button
+                          onClick={() => {
+                            setAuthMode('signin');
+                            setShowAuthModal(true);
+                            setShowMobileMenu(false);
+                          }}
+                          className="block w-full bg-gray-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-gray-700"
+                        >
+                          🔐 Sign In
+                        </button>
+                        <button
+                          onClick={() => {
+                            setAuthMode('signup');
+                            setShowAuthModal(true);
+                            setShowMobileMenu(false);
+                          }}
+                          className="block w-full bg-green-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-green-700"
+                        >
+                          🚀 Start Free Trial
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => {
+                            setShowLandingPage(false);
+                            setShowMobileMenu(false);
+                          }}
+                          className="block w-full bg-purple-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-purple-700"
+                        >
+                          ⚡ Access Dashboard
+                        </button>
+                        <button
+                          onClick={async () => {
+                            await supabase.auth.signOut();
+                            setUser(null);
+                            setShowLandingPage(true);
+                            setShowMobileMenu(false);
+                          }}
+                          className="block w-full bg-red-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:bg-red-700"
+                        >
+                          🚪 Sign Out
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </nav>
+
 
             {/* DESKTOP ONLY NAVIGATION */}
             <nav className="hidden lg:block fixed top-0 left-0 right-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
@@ -456,8 +382,8 @@ function HomePage() {
               </div>
             </nav>
 
-            {/* Powerful Hero Section - Adjusted for Fixed Mobile Nav */}
-            <section className="relative min-h-screen flex items-center justify-center px-4" style={{ paddingTop: '80px', backgroundColor: '#0f172a', background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #000000 100%)' }}>
+            {/* Powerful Hero Section - Adjusted for Fixed Navigation */}
+            <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 lg:pt-24 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
               {/* Animated Background Elements */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
