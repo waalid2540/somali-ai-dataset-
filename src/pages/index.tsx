@@ -38,26 +38,27 @@ function HomePage() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const tools = [
-    { name: 'Blog Post Generator', icon: '📝', category: 'Content Creation', description: 'SEO-optimized blog posts' },
-    { name: 'Social Media AI', icon: '📱', category: 'Content Creation', description: 'Platform-specific content' },
-    { name: 'Ad Copy Creator', icon: '📢', category: 'Content Creation', description: 'High-converting advertisements' },
-    { name: 'Email Marketing AI', icon: '📧', category: 'Content Creation', description: 'Email campaigns & sequences' },
-    { name: 'Product Description AI', icon: '🛍️', category: 'Content Creation', description: 'Converting product copy' },
-    { name: 'Invoice Generator AI', icon: '📄', category: 'Business Operations', description: 'Professional invoicing' },
-    { name: 'Contract Creator AI', icon: '📋', category: 'Business Operations', description: 'Legal agreements' },
-    { name: 'Proposal Writer AI', icon: '💼', category: 'Business Operations', description: 'Winning proposals' },
-    { name: 'Resume Builder AI', icon: '📄', category: 'Business Operations', description: 'ATS-optimized resumes' },
-    { name: 'Job Description AI', icon: '👔', category: 'Business Operations', description: 'Talent acquisition' },
-    { name: 'Business Name Generator', icon: '🏢', category: 'Creative & Design', description: 'Brand naming solutions' },
-    { name: 'Slogan Creator AI', icon: '💭', category: 'Creative & Design', description: 'Memorable taglines' },
-    { name: 'Presentation AI', icon: '📊', category: 'Creative & Design', description: 'Professional presentations' },
-    { name: 'Script Writer AI', icon: '🎬', category: 'Creative & Design', description: 'Video & marketing scripts' },
-    { name: 'Newsletter AI', icon: '📰', category: 'Creative & Design', description: 'Engaging newsletters' },
-    { name: 'Translation AI', icon: '🌍', category: 'Communication', description: 'Multi-language support' },
-    { name: 'Live Chatbot Creator', icon: '💬', category: 'Communication', description: 'Live website chatbots (use your OpenAI key)' },
-    { name: 'Meeting Summarizer AI', icon: '📝', category: 'Communication', description: 'Meeting transcription' },
-    { name: 'Review Response AI', icon: '⭐', category: 'Communication', description: 'Review management' },
-    { name: 'Customer Service AI', icon: '🎧', category: 'Communication', description: 'Support automation' }
+    { name: 'AI Chat Assistant', icon: '🤖', category: 'AI Chat', description: 'ChatGPT-style AI chat assistant', premium: true, freeLimit: 3 },
+    { name: 'Blog Post Generator', icon: '📝', category: 'Content Creation', description: 'SEO-optimized blog posts', freeLimit: 2 },
+    { name: 'Social Media AI', icon: '📱', category: 'Content Creation', description: 'Platform-specific content', freeLimit: 3 },
+    { name: 'Ad Copy Creator', icon: '📢', category: 'Content Creation', description: 'High-converting advertisements', freeLimit: 2 },
+    { name: 'Email Marketing AI', icon: '📧', category: 'Content Creation', description: 'Email campaigns & sequences', freeLimit: 2 },
+    { name: 'Product Description AI', icon: '🛍️', category: 'Content Creation', description: 'Converting product copy', freeLimit: 3 },
+    { name: 'Invoice Generator AI', icon: '📄', category: 'Business Operations', description: 'Professional invoicing', freeLimit: 1 },
+    { name: 'Contract Creator AI', icon: '📋', category: 'Business Operations', description: 'Legal agreements', freeLimit: 1 },
+    { name: 'Proposal Writer AI', icon: '💼', category: 'Business Operations', description: 'Winning proposals', freeLimit: 1 },
+    { name: 'Resume Builder AI', icon: '📄', category: 'Business Operations', description: 'ATS-optimized resumes', freeLimit: 2 },
+    { name: 'Job Description AI', icon: '👔', category: 'Business Operations', description: 'Talent acquisition', freeLimit: 2 },
+    { name: 'Business Name Generator', icon: '🏢', category: 'Creative & Design', description: 'Brand naming solutions', freeLimit: 5 },
+    { name: 'Slogan Creator AI', icon: '💭', category: 'Creative & Design', description: 'Memorable taglines', freeLimit: 3 },
+    { name: 'Presentation AI', icon: '📊', category: 'Creative & Design', description: 'Professional presentations', freeLimit: 1 },
+    { name: 'Script Writer AI', icon: '🎬', category: 'Creative & Design', description: 'Video & marketing scripts', freeLimit: 2 },
+    { name: 'Newsletter AI', icon: '📰', category: 'Creative & Design', description: 'Engaging newsletters', freeLimit: 1 },
+    { name: 'Translation AI', icon: '🌍', category: 'Communication', description: 'Multi-language support', freeLimit: 5 },
+    { name: 'Live Chatbot Creator', icon: '💬', category: 'Communication', description: 'Live website chatbots', freeLimit: 1 },
+    { name: 'Meeting Summarizer AI', icon: '📝', category: 'Communication', description: 'Meeting transcription', freeLimit: 2 },
+    { name: 'Review Response AI', icon: '⭐', category: 'Communication', description: 'Review management', freeLimit: 3 },
+    { name: 'Customer Service AI', icon: '🎧', category: 'Communication', description: 'Support automation', freeLimit: 2 }
   ];
 
   const testimonials = [
@@ -393,45 +394,45 @@ function HomePage() {
 
               <div className="relative z-10 max-w-6xl mx-auto text-center">
                 {/* Attention-Grabbing Badge */}
-                <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-full text-yellow-300 font-bold text-sm mb-8 animate-bounce">
+                <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-full text-red-300 font-bold text-sm mb-8 animate-bounce">
                   <Zap className="w-4 h-4 mr-2" />
-                  🔥 SAVE $780+ MONTHLY • 97% COST REDUCTION
+                  🔥 ChatGPT COSTS $20 • WE'RE $4.99 + MORE TOOLS
                 </div>
 
                 {/* Power Headline */}
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-black text-white mb-6 md:mb-8 leading-tight">
-                  <span className="text-yellow-400 block sm:inline">20 AI TOOLS</span>
+                  <span className="text-yellow-400 block sm:inline">ChatGPT + 20 TOOLS</span>
                   <br className="hidden sm:block" />
                   <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-purple-400 bg-clip-text text-transparent block sm:inline">
-                    ONE PRICE
+                    $4.99/MONTH
                   </span>
                 </h1>
 
                 {/* Compelling Value Proposition */}
                 <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-4 font-semibold px-4">
-                  Get <span className="text-yellow-400">$120+ worth</span> of AI tools for just <span className="text-emerald-400 text-2xl sm:text-3xl lg:text-4xl font-bold">$4.99/MONTH</span>
+                  Why pay <span className="text-red-400 line-through">$20 for ChatGPT</span> when you get <span className="text-emerald-400 text-2xl sm:text-3xl lg:text-4xl font-bold">ChatGPT + 20 AI tools for $4.99?</span>
                 </p>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 md:mb-12 max-w-4xl mx-auto px-4">
-                  <strong className="text-yellow-400">MONTHLY SUBSCRIPTION!</strong> Stop paying hundreds for individual AI tools. Get access to everything you need.
+                  <strong className="text-yellow-400">TRY FREE FIRST!</strong> Test all tools with limited uses, then upgrade for unlimited access.
                 </p>
 
                 {/* Powerful Stats */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-12 md:mb-16 max-w-4xl mx-auto px-4">
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/20 transition-all">
-                    <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-yellow-400 mb-1 sm:mb-2">20</div>
-                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">Premium AI Tools</div>
+                    <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-yellow-400 mb-1 sm:mb-2">21</div>
+                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">AI Tools + Chat</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/20 transition-all">
-                    <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-emerald-400 mb-1 sm:mb-2">97%</div>
-                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">Cost Savings</div>
+                    <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-emerald-400 mb-1 sm:mb-2">75%</div>
+                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">Cheaper Than ChatGPT</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/20 transition-all">
-                    <div className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black text-purple-400 mb-1 sm:mb-2">$115+</div>
-                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">You Save Monthly</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black text-purple-400 mb-1 sm:mb-2">FREE</div>
+                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">Trial Available</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/20 transition-all">
-                    <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-blue-400 mb-1 sm:mb-2">24/7</div>
-                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">Support</div>
+                    <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-blue-400 mb-1 sm:mb-2">∞</div>
+                    <div className="text-xs sm:text-sm lg:text-base text-gray-300 font-semibold">Unlimited Pro</div>
                   </div>
                 </div>
 
@@ -461,7 +462,7 @@ function HomePage() {
                   </div>
                   
                   <div className="text-gray-400 text-sm sm:text-base">
-                    ⚡ 14-day free trial • 🔒 No credit card required • 💰 Cancel anytime
+                    ⚡ Try free first • 🔒 No credit card to try • 💰 Upgrade for unlimited
                   </div>
                   
                   <div className="flex items-center justify-center space-x-8 text-gray-300">
@@ -493,55 +494,75 @@ function HomePage() {
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12 md:mb-16 px-4">
                   <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-4 md:mb-6">
-                    <span className="text-yellow-400">20 POWERFUL</span> AI TOOLS
+                    <span className="text-yellow-400">ChatGPT + 20</span> AI TOOLS
                   </h2>
                   <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-6 md:mb-8 max-w-4xl mx-auto">
-                    Live chatbots alone cost $50+/month. You get that PLUS 19 other professional tools for just $4.99/month!
+                    ChatGPT Plus costs $20/month. Our AI Chat + 20 professional tools cost just $4.99/month!
                   </p>
                   
                   {/* Value Calculator */}
-                  <div className="bg-gradient-to-r from-red-600/20 to-yellow-600/20 border border-yellow-500/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-3xl mx-auto mb-8 md:mb-12">
-                    <div className="text-lg sm:text-xl text-gray-300 mb-3 sm:mb-4">If you bought these tools separately:</div>
-                    <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-red-400 mb-2 line-through">$120+ monthly</div>
-                    <div className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-2">(Individual subscriptions cost $15-50/month each)</div>
-                    <div className="text-2xl sm:text-3xl text-gray-300 mb-3 sm:mb-4">Our price:</div>
-                    <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-emerald-400">$4.99/MONTH</div>
-                    <div className="text-yellow-400 text-lg sm:text-xl font-bold mt-3 sm:mt-4">YOU SAVE $115+ MONTHLY</div>
+                  <div className="bg-gradient-to-r from-red-600/20 to-orange-600/20 border border-red-500/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-3xl mx-auto mb-8 md:mb-12">
+                    <div className="text-lg sm:text-xl text-gray-300 mb-3 sm:mb-4">ChatGPT Plus comparison:</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="text-center">
+                        <div className="text-red-400 font-bold mb-2">❌ ChatGPT Plus</div>
+                        <div className="text-3xl sm:text-4xl font-black text-red-400 mb-2">$20/month</div>
+                        <div className="text-sm text-gray-400">Just AI chat</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-emerald-400 font-bold mb-2">✅ Som AI Data</div>
+                        <div className="text-3xl sm:text-4xl font-black text-emerald-400 mb-2">$4.99/month</div>
+                        <div className="text-sm text-yellow-400">AI Chat + 20 Tools</div>
+                      </div>
+                    </div>
+                    <div className="text-yellow-400 text-lg sm:text-xl font-bold mt-4 pt-4 border-t border-gray-600">
+                      🔥 75% CHEAPER + 20 BONUS TOOLS
+                    </div>
                   </div>
                 </div>
 
-                {/* Tools Grid with Value */}
+                {/* Tools Grid with Freemium Model */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                   {tools.map((tool, index) => {
-                    const isLiveChatbot = tool.name === 'Live Chatbot Creator';
+                    const isAIChat = tool.name === 'AI Chat Assistant';
+                    const isPremium = tool.premium;
                     return (
                       <div key={index} className={`rounded-xl sm:rounded-2xl p-4 sm:p-6 border transition-all group hover:scale-105 ${
-                        isLiveChatbot 
-                          ? 'bg-gradient-to-br from-yellow-600/30 to-orange-600/30 border-yellow-500/50 ring-2 ring-yellow-400/20' 
+                        isAIChat 
+                          ? 'bg-gradient-to-br from-green-600/30 to-blue-600/30 border-green-500/50 ring-2 ring-green-400/20' 
                           : 'bg-gradient-to-br from-blue-900/30 to-purple-900/30 border-blue-500/20 hover:border-yellow-500/50'
                       }`}>
                         <div className="flex justify-between items-start mb-3 sm:mb-4">
                           <div className="text-3xl sm:text-4xl">{tool.icon}</div>
                           <div className={`text-xs px-2 py-1 rounded-full ${
-                            isLiveChatbot 
-                              ? 'bg-yellow-500 text-black font-bold' 
-                              : 'bg-red-500 text-white'
+                            isAIChat 
+                              ? 'bg-green-500 text-white font-bold' 
+                              : 'bg-blue-500 text-white'
                           }`}>
-                            {isLiveChatbot ? 'Worth $500/mo' : 'Worth $40/mo'}
+                            {isAIChat ? 'Like ChatGPT' : `${tool.freeLimit} Free Uses`}
                           </div>
                         </div>
-                        {isLiveChatbot && (
-                          <div className="text-xs bg-yellow-400 text-black px-2 py-1 rounded-full mb-2 sm:mb-3 font-bold text-center">
-                            🔥 PREMIUM TOOL
+                        {isAIChat && (
+                          <div className="text-xs bg-green-400 text-black px-2 py-1 rounded-full mb-2 sm:mb-3 font-bold text-center">
+                            🤖 ChatGPT ALTERNATIVE
                           </div>
                         )}
                         <h3 className="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">{tool.name}</h3>
                         <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4">{tool.description}</p>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">
-                            {tool.category}
-                          </span>
-                          <div className="text-emerald-400 font-bold text-xs sm:text-sm">INCLUDED</div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">
+                              {tool.category}
+                            </span>
+                            <div className="text-emerald-400 font-bold text-xs sm:text-sm">
+                              {isAIChat ? 'TRY FREE' : `${tool.freeLimit} FREE`}
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-xs text-yellow-400 font-medium">
+                              💎 Upgrade for unlimited
+                            </div>
+                          </div>
                         </div>
                       </div>
                     );
@@ -550,26 +571,32 @@ function HomePage() {
 
                 {/* Massive CTA */}
                 <div className="text-center mt-16">
-                  <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-3xl p-8 max-w-2xl mx-auto mb-8">
-                    <div className="text-3xl font-black text-white mb-4">GET ALL 20 TOOLS</div>
-                    <div className="text-6xl font-black text-yellow-400 mb-4">$4.99/month</div>
-                    <div className="text-gray-300 mb-6">Instead of $120+ monthly in subscriptions</div>
+                  <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-3xl p-8 max-w-2xl mx-auto mb-8">
+                    <div className="text-3xl font-black text-white mb-4">CHATGPT + 20 AI TOOLS</div>
+                    <div className="text-6xl font-black text-emerald-400 mb-4">$4.99/month</div>
+                    <div className="text-gray-300 mb-6">Instead of $20 for ChatGPT Plus alone</div>
                     
-                    <button
-                      onClick={() => {
-                        setAuthMode('signup');
-                        setShowAuthModal(true);
-                      }}
-                      className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-black px-12 py-6 rounded-2xl font-black text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-yellow-500/25 inline-flex items-center"
-                    >
-                      <Zap className="mr-3 w-8 h-8" />
-                      START SAVING NOW
-                      <ArrowRight className="ml-3 w-8 h-8" />
-                    </button>
+                    <div className="space-y-4">
+                      <button
+                        onClick={() => {
+                          setAuthMode('signup');
+                          setShowAuthModal(true);
+                        }}
+                        className="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white px-12 py-6 rounded-2xl font-black text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-green-500/25 inline-flex items-center"
+                      >
+                        <Zap className="mr-3 w-8 h-8" />
+                        TRY FREE FIRST
+                        <ArrowRight className="ml-3 w-8 h-8" />
+                      </button>
+                      
+                      <div className="text-yellow-400 font-bold">
+                        🎯 Test all tools → Then upgrade for unlimited
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="text-gray-400 text-lg">
-                    ⚡ Instant access to all tools • 🚀 No setup required • 💰 Monthly subscription
+                    ⚡ No credit card needed to try • 🚀 Instant access • 💰 Upgrade when ready
                   </div>
                 </div>
               </div>
