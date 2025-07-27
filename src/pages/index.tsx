@@ -216,7 +216,7 @@ function HomePage() {
                         AI Tools Bundle
                       </span>
                       <span className="text-xs font-semibold text-gray-500 -mt-1">
-                        Professional AI Tools
+                        MOBILE TEST - $4.99
                       </span>
                     </div>
                   </div>
