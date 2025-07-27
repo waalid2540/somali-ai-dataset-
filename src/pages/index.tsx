@@ -199,11 +199,88 @@ function HomePage() {
         
         {showLandingPage ? (
           <div className="min-h-screen bg-white">
-            {/* Enhanced Mobile Navigation - Always Visible */}
-            <nav className="fixed top-0 left-0 right-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
-              <div className="px-4 sm:px-6">
+            {/* SIMPLE MOBILE NAVIGATION - GUARANTEED TO WORK */}
+            <div className="w-full bg-blue-600 text-white p-4 flex justify-between items-center">
+              {/* Logo */}
+              <div className="flex items-center">
+                <div className="text-white font-bold text-lg">AI Tools $4.99</div>
+              </div>
+              
+              {/* Mobile Menu Button */}
+              <button 
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="bg-white text-blue-600 px-4 py-2 rounded font-bold"
+              >
+                MENU
+              </button>
+            </div>
+
+            {/* SIMPLE MOBILE MENU */}
+            {showMobileMenu && (
+              <div className="w-full bg-white border-b p-4 space-y-3">
+                <Link 
+                  href="/subscription" 
+                  onClick={() => setShowMobileMenu(false)}
+                  className="block w-full bg-blue-600 text-white py-3 px-4 rounded text-center font-bold"
+                >
+                  PRICING - $4.99/month
+                </Link>
+                
+                {!user ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setAuthMode('signin');
+                        setShowAuthModal(true);
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full bg-gray-600 text-white py-3 px-4 rounded text-center font-bold"
+                    >
+                      SIGN IN
+                    </button>
+                    <button
+                      onClick={() => {
+                        setAuthMode('signup');
+                        setShowAuthModal(true);
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full bg-green-600 text-white py-3 px-4 rounded text-center font-bold"
+                    >
+                      START FREE TRIAL
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => {
+                        setShowLandingPage(false);
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full bg-purple-600 text-white py-3 px-4 rounded text-center font-bold"
+                    >
+                      ACCESS DASHBOARD
+                    </button>
+                    <button
+                      onClick={async () => {
+                        await supabase.auth.signOut();
+                        setUser(null);
+                        setShowLandingPage(true);
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full bg-red-600 text-white py-3 px-4 rounded text-center font-bold"
+                    >
+                      SIGN OUT
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* DESKTOP NAVIGATION - ONLY SHOWS ON DESKTOP */}
+            <nav className="hidden md:block fixed top-0 left-0 right-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+              <div className="px-6">
                 <div className="flex justify-between items-center h-16 w-full">
-                  {/* Simple Logo */}
+                  {/* Desktop Logo */}
                   <div className="flex items-center">
                     <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
                       <Globe className="w-5 h-5 text-white" />
@@ -214,8 +291,8 @@ function HomePage() {
                     </div>
                   </div>
 
-                  {/* Desktop Navigation - Hidden on Mobile */}
-                  <div className="hidden md:flex items-center space-x-1">
+                  {/* Desktop Navigation Links */}
+                  <div className="flex items-center space-x-1">
                     <Link 
                       href="/#about" 
                       className="px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
@@ -242,195 +319,63 @@ function HomePage() {
                     </Link>
                   </div>
 
-                  {/* Mobile-First Navigation */}
-                  <div className="flex items-center space-x-2 md:space-x-4">
+                  {/* Desktop Auth */}
+                  <div className="flex items-center space-x-4">
                     {user ? (
-                      <div className="flex items-center space-x-3">
-                        {/* User Profile Dropdown */}
-                        <div className="hidden sm:flex items-center space-x-2 bg-gradient-to-r from-emerald-50 to-blue-50 px-4 py-2 rounded-full border border-emerald-200">
-                          <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                            {user.email?.charAt(0).toUpperCase()}
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-sm font-semibold text-gray-800">Welcome back</span>
-                            <span className="text-xs text-gray-600">{user.email}</span>
-                          </div>
-                          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                        </div>
-
-                        {/* Dashboard Button - Mobile Responsive */}
+                      <>
                         <button
                           onClick={() => setShowLandingPage(false)}
-                          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold shadow-lg shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base"
+                          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2"
                         >
-                          <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
-                          <span className="hidden sm:inline">Dashboard</span>
-                          <span className="sm:hidden">App</span>
+                          <Zap className="w-5 h-5" />
+                          <span>Dashboard</span>
                         </button>
-
-                        {/* Logout Button - Hidden on Mobile */}
                         <button
                           onClick={async () => {
                             await supabase.auth.signOut();
                             setUser(null);
                             setShowLandingPage(true);
                           }}
-                          className="hidden sm:block text-gray-600 hover:text-red-600 px-4 py-2 rounded-xl font-medium transition-all duration-200 border border-gray-200 hover:border-red-200"
+                          className="text-gray-600 hover:text-red-600 px-4 py-2 rounded-xl font-medium transition-all duration-200 border border-gray-200 hover:border-red-200"
                         >
                           Sign Out
                         </button>
-                      </div>
+                      </>
                     ) : (
-                      <div className="flex items-center space-x-3">
-                        {/* Professional Login Button - Mobile Responsive */}
+                      <>
                         <button
                           onClick={() => {
                             setAuthMode('signin');
                             setShowAuthModal(true);
                           }}
-                          className="hidden sm:flex bg-white text-blue-600 hover:text-blue-700 px-6 py-3 rounded-2xl font-bold border-2 border-blue-600 hover:border-blue-700 hover:shadow-lg transition-all duration-300 items-center space-x-2"
+                          className="bg-white text-blue-600 hover:text-blue-700 px-6 py-3 rounded-2xl font-bold border-2 border-blue-600 hover:border-blue-700 hover:shadow-lg transition-all duration-300 flex items-center space-x-2"
                         >
                           <Users className="w-4 h-4" />
                           <span>Sign In</span>
                         </button>
-
-                        {/* Premium CTA Button - Mobile First */}
                         <button
                           onClick={() => {
                             setAuthMode('signup');
                             setShowAuthModal(true);
                           }}
-                          className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 hover:from-blue-700 hover:via-purple-700 hover:to-emerald-700 text-white px-3 sm:px-8 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-bold shadow-xl shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 relative overflow-hidden text-sm sm:text-base"
+                          className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 hover:from-blue-700 hover:via-purple-700 hover:to-emerald-700 text-white px-8 py-3 rounded-2xl font-bold shadow-xl shadow-blue-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 relative overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse"></div>
-                          <Zap className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
-                          <span className="hidden sm:inline relative z-10">Start Free Trial</span>
-                          <span className="sm:hidden relative z-10">Try Free</span>
-                          <div className="relative z-10 text-xs bg-yellow-400 text-black px-2 py-1 rounded-full ml-1 sm:ml-2">
-                            $4.99
+                          <Zap className="w-5 h-5 relative z-10" />
+                          <span className="relative z-10">Start Free Trial</span>
+                          <div className="relative z-10 text-xs bg-yellow-400 text-black px-2 py-1 rounded-full ml-2">
+                            $4.99/mo
                           </div>
                         </button>
-                      </div>
+                      </>
                     )}
-
-                    {/* Mobile Menu Button - Always Visible on Mobile */}
-                    <button 
-                      onClick={() => setShowMobileMenu(!showMobileMenu)}
-                      className="md:hidden p-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors"
-                      aria-label="Open mobile menu"
-                    >
-                      <div className="w-6 h-6 flex flex-col justify-center space-y-1">
-                        <div className={`w-6 h-0.5 bg-gray-700 transition-all ${showMobileMenu ? 'rotate-45 translate-y-2' : ''}`}></div>
-                        <div className={`w-6 h-0.5 bg-gray-700 transition-all ${showMobileMenu ? 'opacity-0' : ''}`}></div>
-                        <div className={`w-6 h-0.5 bg-gray-700 transition-all ${showMobileMenu ? '-rotate-45 -translate-y-2' : ''}`}></div>
-                      </div>
-                    </button>
                   </div>
                 </div>
               </div>
-
-              {/* Enhanced Mobile Menu - Full Screen on Mobile */}
-              {showMobileMenu && (
-                <div className="md:hidden absolute top-full left-0 right-0 w-full bg-white border-t border-gray-200 shadow-lg z-40 max-h-screen overflow-y-auto">
-                  <div className="p-4 space-y-3">
-                    {/* Navigation Links */}
-                    <Link 
-                      href="/#about" 
-                      onClick={() => setShowMobileMenu(false)}
-                      className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg font-medium"
-                    >
-                      About
-                    </Link>
-                    
-                    <Link 
-                      href="/dataset" 
-                      onClick={() => setShowMobileMenu(false)}
-                      className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg font-medium"
-                    >
-                      Dataset
-                    </Link>
-                    
-                    <Link 
-                      href="/subscription" 
-                      onClick={() => setShowMobileMenu(false)}
-                      className="block w-full text-left py-3 px-4 text-blue-600 hover:bg-blue-50 rounded-lg font-medium"
-                    >
-                      Pricing - $4.99/mo
-                    </Link>
-                    
-                    <Link 
-                      href="/investor" 
-                      onClick={() => setShowMobileMenu(false)}
-                      className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg font-medium"
-                    >
-                      Investors
-                    </Link>
-
-                    {/* Auth Buttons */}
-                    <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
-                      {!user ? (
-                        <>
-                          <button
-                            onClick={() => {
-                              setAuthMode('signin');
-                              setShowAuthModal(true);
-                              setShowMobileMenu(false);
-                            }}
-                            className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg border border-blue-600 font-medium hover:bg-blue-50"
-                          >
-                            Sign In
-                          </button>
-                          <button
-                            onClick={() => {
-                              setAuthMode('signup');
-                              setShowAuthModal(true);
-                              setShowMobileMenu(false);
-                            }}
-                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700"
-                          >
-                            Start Free Trial
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() => {
-                              setShowLandingPage(false);
-                              setShowMobileMenu(false);
-                            }}
-                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700"
-                          >
-                            Access Dashboard
-                          </button>
-                          <button
-                            onClick={async () => {
-                              await supabase.auth.signOut();
-                              setUser(null);
-                              setShowLandingPage(true);
-                              setShowMobileMenu(false);
-                            }}
-                            className="w-full text-red-600 py-3 px-4 rounded-lg border border-red-200 font-medium hover:bg-red-50"
-                          >
-                            Sign Out
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
             </nav>
 
-            {/* Mobile Menu Overlay */}
-            {showMobileMenu && (
-              <div 
-                className="fixed inset-0 bg-black/50 z-30 md:hidden"
-                onClick={() => setShowMobileMenu(false)}
-              />
-            )}
-
-            {/* Powerful Hero Section - Mobile Adjusted */}
-            <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 sm:pt-24 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
+            {/* Powerful Hero Section - No Top Padding for Mobile */}
+            <section className="relative min-h-screen flex items-center justify-center px-4 md:pt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
               {/* Animated Background Elements */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
