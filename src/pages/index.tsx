@@ -199,25 +199,18 @@ function HomePage() {
         
         {showLandingPage ? (
           <div className="min-h-screen bg-white">
-            {/* MOBILE NAVIGATION - WORKING VERSION */}
-            <nav className="fixed top-0 w-full z-50 bg-blue-600 text-white shadow-lg">
+            {/* Clean Mobile Navigation */}
+            <nav className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
               <div className="px-4">
-                <div className="flex justify-between items-center h-14">
-                  {/* Logo Section */}
-                  <div className="flex items-center space-x-4">
-                    <div className="relative">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25 transform hover:scale-105 transition-all duration-300">
-                        <Globe className="w-7 h-7 text-white" />
-                      </div>
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
+                <div className="flex justify-between items-center h-16">
+                  {/* Simple Logo */}
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                      <Globe className="w-5 h-5 text-white" />
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-lg font-bold text-white">
-                        AI Tools Bundle
-                      </span>
-                      <span className="text-xs text-blue-200">
-                        $4.99/month
-                      </span>
+                    <div>
+                      <div className="text-lg font-bold text-gray-900">AI Tools</div>
+                      <div className="text-xs text-gray-500 -mt-1">$4.99/mo</div>
                     </div>
                   </div>
 
@@ -319,49 +312,60 @@ function HomePage() {
                       </div>
                     )}
 
-                    {/* MOBILE MENU BUTTON - ALWAYS VISIBLE */}
+                    {/* Mobile Menu Button */}
                     <button 
                       onClick={() => setShowMobileMenu(!showMobileMenu)}
-                      className="lg:hidden p-3 rounded-lg bg-white text-blue-600 font-bold text-sm"
+                      className="lg:hidden p-2 rounded-lg border border-gray-300 bg-white"
                     >
-                      MENU
+                      <div className="w-5 h-5 flex flex-col justify-center space-y-1">
+                        <div className="w-5 h-0.5 bg-gray-700"></div>
+                        <div className="w-5 h-0.5 bg-gray-700"></div>
+                        <div className="w-5 h-0.5 bg-gray-700"></div>
+                      </div>
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* MOBILE MENU - BRIGHT AND VISIBLE */}
+              {/* Clean Professional Mobile Menu */}
               {showMobileMenu && (
-                <div className="lg:hidden absolute top-full left-0 w-full bg-yellow-400 border-t-4 border-red-500 shadow-xl z-40">
-                  <div className="p-4 space-y-2">
+                <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-lg z-40">
+                  <div className="p-4 space-y-3">
                     {/* Navigation Links */}
-                    <button
+                    <Link 
+                      href="/#about" 
                       onClick={() => setShowMobileMenu(false)}
-                      className="w-full text-left py-4 px-4 bg-blue-600 text-white font-bold text-lg rounded-lg"
+                      className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg font-medium"
                     >
-                      🏠 HOME
-                    </button>
+                      About
+                    </Link>
+                    
+                    <Link 
+                      href="/dataset" 
+                      onClick={() => setShowMobileMenu(false)}
+                      className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg font-medium"
+                    >
+                      Dataset
+                    </Link>
                     
                     <Link 
                       href="/subscription" 
                       onClick={() => setShowMobileMenu(false)}
-                      className="block w-full text-left py-4 px-4 bg-green-600 text-white font-bold text-lg rounded-lg"
+                      className="block w-full text-left py-3 px-4 text-blue-600 hover:bg-blue-50 rounded-lg font-medium"
                     >
-                      💰 PRICING - $4.99/mo
+                      Pricing - $4.99/mo
                     </Link>
                     
-                    <button
-                      onClick={() => {
-                        setShowDetails(!showDetails);
-                        setShowMobileMenu(false);
-                      }}
-                      className="w-full text-left py-4 px-4 bg-purple-600 text-white font-bold text-lg rounded-lg"
+                    <Link 
+                      href="/investor" 
+                      onClick={() => setShowMobileMenu(false)}
+                      className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-lg font-medium"
                     >
-                      ⚡ AI TOOLS (20)
-                    </button>
+                      Investors
+                    </Link>
 
                     {/* Auth Buttons */}
-                    <div className="border-t border-gray-200 pt-4 mt-4 space-y-2">
+                    <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
                       {!user ? (
                         <>
                           <button
@@ -370,9 +374,9 @@ function HomePage() {
                               setShowAuthModal(true);
                               setShowMobileMenu(false);
                             }}
-                            className="w-full bg-white text-black py-4 px-4 rounded-lg border-4 border-black font-bold text-lg"
+                            className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg border border-blue-600 font-medium hover:bg-blue-50"
                           >
-                            SIGN IN
+                            Sign In
                           </button>
                           <button
                             onClick={() => {
@@ -380,9 +384,9 @@ function HomePage() {
                               setShowAuthModal(true);
                               setShowMobileMenu(false);
                             }}
-                            className="w-full bg-red-600 text-white py-4 px-4 rounded-lg font-bold text-lg"
+                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700"
                           >
-                            START FREE TRIAL
+                            Start Free Trial
                           </button>
                         </>
                       ) : (
@@ -392,7 +396,7 @@ function HomePage() {
                               setShowLandingPage(false);
                               setShowMobileMenu(false);
                             }}
-                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-bold"
+                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700"
                           >
                             Access Dashboard
                           </button>
@@ -403,7 +407,7 @@ function HomePage() {
                               setShowLandingPage(true);
                               setShowMobileMenu(false);
                             }}
-                            className="w-full text-red-600 py-3 px-4 rounded-lg border border-red-200 font-medium"
+                            className="w-full text-red-600 py-3 px-4 rounded-lg border border-red-200 font-medium hover:bg-red-50"
                           >
                             Sign Out
                           </button>
