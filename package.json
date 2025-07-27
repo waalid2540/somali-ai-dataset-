@@ -1,7 +1,7 @@
 {
-  "name": "somali-ai-dataset-pro",
+  "name": "som-ai-data-pro",
   "version": "1.0.0",
-  "description": "Professional Somali AI Dataset Platform - $9.99/month unlimited",
+  "description": "Professional Som AI Data Platform - $4.99/month unlimited",
   "private": true,
   "scripts": {
     "dev": "next dev",

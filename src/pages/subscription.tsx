@@ -120,7 +120,7 @@ export default function SubscriptionPage() {
   return (
     <>
       <Head>
-        <title>Enterprise Subscription Plans - Somali AI Dataset</title>
+        <title>Enterprise Subscription Plans - Som AI Data</title>
         <meta name="description" content="Choose the perfect plan for your business. From startups to enterprise - we have AI tools for every scale." />
       </Head>
 
@@ -134,7 +134,7 @@ export default function SubscriptionPage() {
                   <Globe className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Somali AI Dataset
+                  Som AI Data
                 </span>
               </Link>
               
@@ -372,7 +372,7 @@ export default function SubscriptionPage() {
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
                 <Globe className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold">Somali AI Dataset</span>
+              <span className="text-xl font-bold">Som AI Data</span>
             </Link>
             
             <p className="text-gray-400 mb-8">
@@ -386,7 +386,7 @@ export default function SubscriptionPage() {
             </div>
             
             <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-              © 2024 Somali AI Dataset. All rights reserved.
+              © 2024 Som AI Data. All rights reserved.
             </div>
           </div>
         </footer>

@@ -66,7 +66,7 @@ function HomePage() {
       role: "CEO",
       company: "TechStart Somalia",
       image: "/testimonials/ahmed.jpg",
-      content: "Somali AI Dataset's market tools saved us $115+ monthly. The Enterprise AI suite transformed our operations completely.",
+      content: "Som AI Data's market tools saved us $115+ monthly. The Enterprise AI suite transformed our operations completely.",
       rating: 5
     },
     {
@@ -180,7 +180,7 @@ function HomePage() {
         <meta property="og:description" content="Get 20 professional AI tools for $4.99/month. Save $115+ monthly vs individual subscriptions." />
         <meta property="og:image" content="/images/og-image.jpg" />
         <meta property="og:url" content="https://somaidataset.com" />
-        <meta property="og:site_name" content="Somali AI Dataset" />
+        <meta property="og:site_name" content="Som AI Data" />
         
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -705,7 +705,7 @@ function HomePage() {
                   Ready for Enterprise AI Tools?
                 </h2>
                 <p className="text-xl text-blue-100 mb-8">
-                  Join 500+ organizations using Somali AI Dataset's professional market tools suite.
+                  Join 500+ organizations using Som AI Data's professional market tools suite.
                 </p>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8">
@@ -816,7 +816,7 @@ function HomePage() {
                       <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg flex items-center justify-center">
                         <Globe className="w-5 h-5 text-white" />
                       </div>
-                      <span className="text-xl font-bold">Somali AI Dataset</span>
+                      <span className="text-xl font-bold">Som AI Data</span>
                     </div>
                     <p className="text-gray-400 mb-4">
                       Professional AI Market Tools for enterprise organizations. Building the future of AI-powered business automation.
@@ -842,7 +842,7 @@ function HomePage() {
                   </div>
                 </div>
                 <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-                  © 2024 Somali AI Dataset. Professional AI Market Tools. All rights reserved.
+                  © 2024 Som AI Data. Professional AI Market Tools. All rights reserved.
                 </div>
               </div>
             </footer>
