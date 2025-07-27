@@ -243,25 +243,45 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
               Check Your Email!
             </h2>
-            <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
-              We've sent a confirmation email to <span className="font-semibold text-blue-600 break-all">{email}</span>
+            <p className="text-gray-600 mb-6 leading-relaxed text-base">
+              We've sent a <strong>confirmation email</strong> to:<br/>
+              <span className="font-semibold text-blue-600 break-all text-lg">{email}</span>
             </p>
             
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-left">
-              <h3 className="font-semibold text-blue-900 mb-3 text-sm sm:text-base">📋 Next Steps:</h3>
-              <ol className="text-blue-800 space-y-2 text-xs sm:text-sm">
-                <li><span className="font-semibold">1.</span> Check your inbox (and spam folder)</li>
-                <li><span className="font-semibold">2.</span> Look for an email from "AI Tools Bundle"</li>
-                <li><span className="font-semibold">3.</span> Click the "Confirm Account" button</li>
-                <li><span className="font-semibold">4.</span> Return here to access your 20 AI tools</li>
-              </ol>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-6 text-left">
+              <h3 className="font-bold text-blue-900 mb-4 text-lg flex items-center">
+                📋 Complete Your Registration
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                  <p className="text-blue-800 text-sm"><strong>Check your email inbox</strong> (and spam folder if needed)</p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                  <p className="text-blue-800 text-sm">Look for an email from <strong>"Som AI Data"</strong></p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                  <p className="text-blue-800 text-sm">Click the <strong>"Confirm Your Account"</strong> button in the email</p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-xs font-bold">4</div>
+                  <p className="text-blue-800 text-sm">Return here to complete your <strong>$4.99/month subscription</strong></p>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
-              <p className="text-green-800 text-xs sm:text-sm">
-                <span className="font-semibold">✅ Account Created Successfully!</span><br/>
-                After confirming your email, you'll be redirected to complete your $4.99/month subscription.
-              </p>
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center">
+                  ✓
+                </div>
+                <div>
+                  <p className="text-green-800 font-bold">Account Created Successfully!</p>
+                  <p className="text-green-700 text-sm">You're one step away from accessing all 20 AI tools</p>
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
@@ -283,28 +303,32 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             </div>
 
             <div className="mt-6 pt-4 border-t border-gray-200">
-              <p className="text-xs text-gray-500 mb-2">
-                Didn't receive the email?
-              </p>
-              <button
-                onClick={async () => {
-                  try {
-                    await supabase.auth.resend({
-                      type: 'signup',
-                      email: email,
-                    });
-                    alert('Confirmation email resent! Check your inbox.');
-                  } catch (error) {
-                    alert('Error resending email. Please try again.');
-                  }
-                }}
-                className="text-blue-600 hover:text-blue-700 text-sm font-medium underline"
-              >
-                Resend Confirmation Email
-              </button>
-              <p className="text-xs text-gray-400 mt-2">
-                Or check your spam folder
-              </p>
+              <div className="text-center">
+                <p className="text-sm text-gray-600 mb-3">
+                  <strong>Didn't receive the email?</strong>
+                </p>
+                <div className="space-y-2">
+                  <button
+                    onClick={async () => {
+                      try {
+                        await supabase.auth.resend({
+                          type: 'signup',
+                          email: email,
+                        });
+                        alert('✅ Confirmation email resent successfully! Please check your inbox and spam folder.');
+                      } catch (error) {
+                        alert('❌ Error resending email. Please try again or contact support.');
+                      }
+                    }}
+                    className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    📧 Resend Confirmation Email
+                  </button>
+                  <p className="text-xs text-gray-500">
+                    Check your spam/junk folder • Email usually arrives within 2 minutes
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
