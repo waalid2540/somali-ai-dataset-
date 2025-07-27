@@ -35,6 +35,7 @@ function HomePage() {
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup');
   const [showLandingPage, setShowLandingPage] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const tools = [
     { name: 'Blog Post Generator', icon: '📝', category: 'Content Creation', description: 'SEO-optimized blog posts' },
@@ -319,47 +320,113 @@ function HomePage() {
                     )}
 
                     {/* Mobile Menu Button */}
-                    <button className="lg:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors">
+                    <button 
+                      onClick={() => setShowMobileMenu(!showMobileMenu)}
+                      className="lg:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors relative z-50"
+                    >
                       <div className="w-6 h-6 flex flex-col justify-center space-y-1">
-                        <div className="w-6 h-0.5 bg-gray-600 rounded-full"></div>
-                        <div className="w-6 h-0.5 bg-gray-600 rounded-full"></div>
-                        <div className="w-6 h-0.5 bg-gray-600 rounded-full"></div>
+                        <div className={`w-6 h-0.5 bg-gray-600 rounded-full transition-transform ${showMobileMenu ? 'rotate-45 translate-y-1.5' : ''}`}></div>
+                        <div className={`w-6 h-0.5 bg-gray-600 rounded-full transition-opacity ${showMobileMenu ? 'opacity-0' : ''}`}></div>
+                        <div className={`w-6 h-0.5 bg-gray-600 rounded-full transition-transform ${showMobileMenu ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
                       </div>
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Mobile Navigation Overlay - Hidden by default */}
-              <div className="lg:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-lg hidden">
+              {/* Mobile Navigation Overlay */}
+              <div className={`lg:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-lg transition-all duration-300 z-40 ${showMobileMenu ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
                 <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
                   <Link 
                     href="/#about" 
+                    onClick={() => setShowMobileMenu(false)}
                     className="block px-4 py-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                   >
                     About
                   </Link>
                   <Link 
                     href="/dataset" 
+                    onClick={() => setShowMobileMenu(false)}
                     className="block px-4 py-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                   >
                     Dataset
                   </Link>
                   <Link 
                     href="/#pricing" 
+                    onClick={() => setShowMobileMenu(false)}
                     className="block px-4 py-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                   >
                     Pricing
                   </Link>
                   <Link 
                     href="/investor" 
+                    onClick={() => setShowMobileMenu(false)}
                     className="block px-4 py-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium"
                   >
                     Investors
                   </Link>
+                  
+                  {/* Mobile Auth Buttons */}
+                  {!user && (
+                    <div className="border-t border-gray-200 pt-4 space-y-3">
+                      <button
+                        onClick={() => {
+                          setAuthMode('signin');
+                          setShowAuthModal(true);
+                          setShowMobileMenu(false);
+                        }}
+                        className="w-full bg-white text-blue-600 px-6 py-3 rounded-xl font-bold border-2 border-blue-600 hover:bg-blue-50 transition-all duration-300"
+                      >
+                        Sign In
+                      </button>
+                      <button
+                        onClick={() => {
+                          setAuthMode('signup');
+                          setShowAuthModal(true);
+                          setShowMobileMenu(false);
+                        }}
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+                      >
+                        Start Free Trial - $4.99/mo
+                      </button>
+                    </div>
+                  )}
+                  
+                  {user && (
+                    <div className="border-t border-gray-200 pt-4 space-y-3">
+                      <button
+                        onClick={() => {
+                          setShowLandingPage(false);
+                          setShowMobileMenu(false);
+                        }}
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+                      >
+                        Access Dashboard
+                      </button>
+                      <button
+                        onClick={async () => {
+                          await supabase.auth.signOut();
+                          setUser(null);
+                          setShowLandingPage(true);
+                          setShowMobileMenu(false);
+                        }}
+                        className="w-full text-gray-600 hover:text-red-600 px-6 py-3 rounded-xl font-medium border border-gray-200 hover:border-red-200 transition-all duration-200"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </nav>
+
+            {/* Mobile Menu Overlay */}
+            {showMobileMenu && (
+              <div 
+                className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+                onClick={() => setShowMobileMenu(false)}
+              />
+            )}
 
             {/* Powerful Hero Section */}
             <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
@@ -378,10 +445,10 @@ function HomePage() {
                 </div>
 
                 {/* Power Headline */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white mb-6 md:mb-8 leading-tight">
-                  <span className="text-yellow-400">20 AI TOOLS</span>
-                  <br />
-                  <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-purple-400 bg-clip-text text-transparent">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-black text-white mb-6 md:mb-8 leading-tight">
+                  <span className="text-yellow-400 block sm:inline">20 AI TOOLS</span>
+                  <br className="hidden sm:block" />
+                  <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-purple-400 bg-clip-text text-transparent block sm:inline">
                     ONE PRICE
                   </span>
                 </h1>
@@ -416,26 +483,26 @@ function HomePage() {
 
                 {/* Professional CTA Section */}
                 <div className="space-y-6 px-4">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <div className="flex flex-col gap-4 justify-center items-center max-w-md mx-auto sm:max-w-none sm:flex-row">
                     <button
                       onClick={() => {
                         setAuthMode('signup');
                         setShowAuthModal(true);
                       }}
-                      className="inline-flex items-center bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 hover:from-blue-700 hover:via-purple-700 hover:to-emerald-700 text-white px-8 lg:px-12 py-4 lg:py-6 rounded-2xl font-black text-lg lg:text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/25 relative overflow-hidden"
+                      className="w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 hover:from-blue-700 hover:via-purple-700 hover:to-emerald-700 text-white px-6 sm:px-8 lg:px-12 py-4 lg:py-6 rounded-2xl font-black text-base sm:text-lg lg:text-2xl transition-all transform hover:scale-105 shadow-2xl shadow-blue-500/25 relative overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 animate-pulse"></div>
-                      <Zap className="mr-3 w-6 lg:w-8 h-6 lg:h-8 relative z-10" />
+                      <Zap className="mr-2 sm:mr-3 w-5 sm:w-6 lg:w-8 h-5 sm:h-6 lg:h-8 relative z-10" />
                       <span className="relative z-10">START FREE TRIAL</span>
-                      <ArrowRight className="ml-3 w-6 lg:w-8 h-6 lg:h-8 relative z-10" />
+                      <ArrowRight className="ml-2 sm:ml-3 w-5 sm:w-6 lg:w-8 h-5 sm:h-6 lg:h-8 relative z-10" />
                     </button>
                     
                     <Link
                       href="/subscription"
-                      className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all transform hover:scale-105"
+                      className="w-full sm:w-auto inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white px-6 sm:px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-white/20 transition-all transform hover:scale-105"
                     >
-                      <Users className="mr-3 w-6 h-6" />
-                      <span>View All Plans</span>
+                      <Users className="mr-2 sm:mr-3 w-5 sm:w-6 h-5 sm:h-6" />
+                      <span>View Plans</span>
                     </Link>
                   </div>
                   
