@@ -269,6 +269,46 @@ function HomePage() {
                   >
                     💰 PRICING - $4.99/month
                   </Link>
+
+                  <Link 
+                    href="/dataset"
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      backgroundColor: '#0d9488',
+                      color: 'white',
+                      padding: '15px',
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      marginBottom: '10px'
+                    }}
+                  >
+                    📊 DATASET
+                  </Link>
+
+                  <Link 
+                    href="/ai-business-creation"
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      backgroundColor: '#7c2d12',
+                      color: 'white',
+                      padding: '15px',
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      marginBottom: '10px'
+                    }}
+                  >
+                    🏢 AI BUSINESS CREATION
+                  </Link>
                 </div>
 
                 {!user ? (
