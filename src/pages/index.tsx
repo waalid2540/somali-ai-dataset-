@@ -199,10 +199,10 @@ function HomePage() {
         
         {showLandingPage ? (
           <div className="min-h-screen bg-white">
-            {/* Modern Professional Navigation */}
-            <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-lg shadow-gray-900/5">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
+            {/* Simple Mobile-First Navigation */}
+            <nav className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="flex justify-between items-center h-16">
                   {/* Logo Section */}
                   <div className="flex items-center space-x-4">
                     <div className="relative">
@@ -319,47 +319,39 @@ function HomePage() {
                       </div>
                     )}
 
-                    {/* Mobile Menu Button */}
+                    {/* Simple Mobile Menu Button */}
                     <button 
                       onClick={() => setShowMobileMenu(!showMobileMenu)}
-                      className="lg:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors relative z-50"
+                      className="md:hidden p-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                     >
-                      <div className="w-6 h-6 flex flex-col justify-center space-y-1">
-                        <div className={`w-6 h-0.5 bg-gray-600 rounded-full transition-transform ${showMobileMenu ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-                        <div className={`w-6 h-0.5 bg-gray-600 rounded-full transition-opacity ${showMobileMenu ? 'opacity-0' : ''}`}></div>
-                        <div className={`w-6 h-0.5 bg-gray-600 rounded-full transition-transform ${showMobileMenu ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+                      <div className="w-5 h-5 flex flex-col justify-center space-y-1">
+                        <div className="w-5 h-0.5 bg-white"></div>
+                        <div className="w-5 h-0.5 bg-white"></div>
+                        <div className="w-5 h-0.5 bg-white"></div>
                       </div>
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Professional Mobile Navigation */}
-              <div className={`lg:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 transition-all duration-300 z-40 ${showMobileMenu ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                <div className="px-6 py-8">
-                  {/* Main Navigation Links */}
-                  <div className="space-y-2 mb-8">
-                    <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">MENU</h3>
-                    
+              {/* Simple Mobile Menu */}
+              {showMobileMenu && (
+                <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-lg z-40">
+                  <div className="p-4 space-y-2">
+                    {/* Navigation Links */}
                     <button
                       onClick={() => setShowMobileMenu(false)}
-                      className="w-full flex items-center px-4 py-4 text-left text-gray-900 hover:bg-blue-50 rounded-xl transition-colors font-medium"
+                      className="w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 font-medium text-gray-900"
                     >
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                      </div>
-                      Home
+                      🏠 Home
                     </button>
                     
                     <Link 
                       href="/subscription" 
                       onClick={() => setShowMobileMenu(false)}
-                      className="w-full flex items-center px-4 py-4 text-left text-gray-900 hover:bg-blue-50 rounded-xl transition-colors font-medium"
+                      className="block w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 font-medium text-gray-900"
                     >
-                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                        <DollarSign className="w-4 h-4 text-green-600" />
-                      </div>
-                      Pricing - $4.99/mo
+                      💰 Pricing - $4.99/mo
                     </Link>
                     
                     <button
@@ -367,71 +359,64 @@ function HomePage() {
                         setShowDetails(!showDetails);
                         setShowMobileMenu(false);
                       }}
-                      className="w-full flex items-center px-4 py-4 text-left text-gray-900 hover:bg-blue-50 rounded-xl transition-colors font-medium"
+                      className="w-full text-left py-3 px-4 rounded-lg hover:bg-gray-100 font-medium text-gray-900"
                     >
-                      <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                        <Zap className="w-4 h-4 text-purple-600" />
-                      </div>
-                      AI Tools (20)
+                      ⚡ AI Tools (20)
                     </button>
-                  </div>
 
-                  {/* Authentication Section */}
-                  {!user ? (
-                    <div className="border-t border-gray-100 pt-6">
-                      <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Get Started</h3>
-                      <div className="space-y-3">
-                        <button
-                          onClick={() => {
-                            setAuthMode('signin');
-                            setShowAuthModal(true);
-                            setShowMobileMenu(false);
-                          }}
-                          className="w-full bg-white text-blue-600 px-6 py-4 rounded-xl font-bold border-2 border-blue-600 hover:bg-blue-50 transition-all"
-                        >
-                          Sign In
-                        </button>
-                        <button
-                          onClick={() => {
-                            setAuthMode('signup');
-                            setShowAuthModal(true);
-                            setShowMobileMenu(false);
-                          }}
-                          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
-                        >
-                          Start Free Trial
-                        </button>
-                      </div>
+                    {/* Auth Buttons */}
+                    <div className="border-t border-gray-200 pt-4 mt-4 space-y-2">
+                      {!user ? (
+                        <>
+                          <button
+                            onClick={() => {
+                              setAuthMode('signin');
+                              setShowAuthModal(true);
+                              setShowMobileMenu(false);
+                            }}
+                            className="w-full bg-white text-blue-600 py-3 px-4 rounded-lg border-2 border-blue-600 font-bold"
+                          >
+                            Sign In
+                          </button>
+                          <button
+                            onClick={() => {
+                              setAuthMode('signup');
+                              setShowAuthModal(true);
+                              setShowMobileMenu(false);
+                            }}
+                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-bold"
+                          >
+                            Start Free Trial
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => {
+                              setShowLandingPage(false);
+                              setShowMobileMenu(false);
+                            }}
+                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-bold"
+                          >
+                            Access Dashboard
+                          </button>
+                          <button
+                            onClick={async () => {
+                              await supabase.auth.signOut();
+                              setUser(null);
+                              setShowLandingPage(true);
+                              setShowMobileMenu(false);
+                            }}
+                            className="w-full text-red-600 py-3 px-4 rounded-lg border border-red-200 font-medium"
+                          >
+                            Sign Out
+                          </button>
+                        </>
+                      )}
                     </div>
-                  ) : (
-                    <div className="border-t border-gray-100 pt-6">
-                      <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Your Account</h3>
-                      <div className="space-y-3">
-                        <button
-                          onClick={() => {
-                            setShowLandingPage(false);
-                            setShowMobileMenu(false);
-                          }}
-                          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all"
-                        >
-                          Access Dashboard
-                        </button>
-                        <button
-                          onClick={async () => {
-                            await supabase.auth.signOut();
-                            setUser(null);
-                            setShowLandingPage(true);
-                            setShowMobileMenu(false);
-                          }}
-                          className="w-full text-gray-600 hover:text-red-600 px-6 py-3 rounded-xl font-medium border border-gray-200 hover:border-red-200 transition-all"
-                        >
-                          Sign Out
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </div>
-              </div>
+              )}
             </nav>
 
             {/* Mobile Menu Overlay */}
@@ -443,7 +428,7 @@ function HomePage() {
             )}
 
             {/* Powerful Hero Section */}
-            <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
+            <section className="relative min-h-screen flex items-center justify-center px-4 pt-16 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">
               {/* Animated Background Elements */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
