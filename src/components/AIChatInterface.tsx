@@ -1,11 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Loader, Sparkles } from 'lucide-react';
+import { Send, Bot, User, Loader, Sparkles, History, Plus, Trash2, MessageCircle } from 'lucide-react';
 
 interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+}
+
+interface ChatHistory {
+  id: string;
+  title: string;
+  messages: Message[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface AIChatInterfaceProps {
@@ -25,6 +33,9 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
   const [currentMessage, setCurrentMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [streamingMessage, setStreamingMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState<ChatHistory[]>([]);
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -32,9 +43,121 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Load chat history from localStorage on component mount
+  useEffect(() => {
+    const saved = localStorage.getItem('ai-chat-history');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setChatHistory(parsed.map((chat: any) => ({
+          ...chat,
+          createdAt: new Date(chat.createdAt),
+          updatedAt: new Date(chat.updatedAt),
+          messages: chat.messages.map((msg: any) => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp)
+          }))
+        })));
+      } catch (error) {
+        console.error('Failed to load chat history:', error);
+      }
+    }
+  }, []);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, streamingMessage]);
+
+  // Save chat history to localStorage
+  const saveChatHistory = (history: ChatHistory[]) => {
+    try {
+      localStorage.setItem('ai-chat-history', JSON.stringify(history));
+      setChatHistory(history);
+    } catch (error) {
+      console.error('Failed to save chat history:', error);
+    }
+  };
+
+  // Generate a title from the first user message
+  const generateChatTitle = (messages: Message[]): string => {
+    const firstUserMessage = messages.find(m => m.role === 'user');
+    if (firstUserMessage) {
+      return firstUserMessage.content.length > 50 
+        ? firstUserMessage.content.substring(0, 50) + '...'
+        : firstUserMessage.content;
+    }
+    return 'New Chat';
+  };
+
+  // Save current chat to history
+  const saveCurrentChat = () => {
+    if (messages.length <= 1) return; // Don't save if only initial message
+    
+    const chatTitle = generateChatTitle(messages);
+    const now = new Date();
+    
+    if (currentChatId) {
+      // Update existing chat
+      const updatedHistory = chatHistory.map(chat => 
+        chat.id === currentChatId 
+          ? { ...chat, messages, title: chatTitle, updatedAt: now }
+          : chat
+      );
+      saveChatHistory(updatedHistory);
+    } else {
+      // Create new chat
+      const newChat: ChatHistory = {
+        id: Date.now().toString(),
+        title: chatTitle,
+        messages,
+        createdAt: now,
+        updatedAt: now
+      };
+      setCurrentChatId(newChat.id);
+      saveChatHistory([newChat, ...chatHistory]);
+    }
+  };
+
+  // Start a new chat
+  const startNewChat = () => {
+    if (messages.length > 1) {
+      saveCurrentChat();
+    }
+    setMessages([{
+      id: '1',
+      role: 'assistant',
+      content: "Hello! I'm your AI assistant. I can help you with a wide variety of tasks including writing, analysis, math, coding, creative projects, and answering questions. How can I assist you today?",
+      timestamp: new Date()
+    }]);
+    setCurrentChatId(null);
+    setCurrentMessage('');
+    setStreamingMessage('');
+  };
+
+  // Load a previous chat
+  const loadChat = (chatId: string) => {
+    const chat = chatHistory.find(c => c.id === chatId);
+    if (chat) {
+      if (messages.length > 1) {
+        saveCurrentChat();
+      }
+      setMessages(chat.messages);
+      setCurrentChatId(chatId);
+      setCurrentMessage('');
+      setStreamingMessage('');
+      setShowHistory(false);
+    }
+  };
+
+  // Delete a chat
+  const deleteChat = (chatId: string) => {
+    const updatedHistory = chatHistory.filter(chat => chat.id !== chatId);
+    saveChatHistory(updatedHistory);
+    
+    if (currentChatId === chatId) {
+      startNewChat();
+    }
+  };
 
   const handleSendMessage = async () => {
     if (!currentMessage.trim() || isLoading) return;
@@ -115,6 +238,13 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
 
       setMessages(prev => [...prev, assistantMessage]);
       setStreamingMessage('');
+      
+      // Auto-save chat after response
+      setTimeout(() => {
+        if (messages.length > 1) { // Save after there are actual conversations
+          saveCurrentChat();
+        }
+      }, 1000);
     } catch (error) {
       console.error('Chat error:', error);
       const errorMessage: Message = {
@@ -142,29 +272,108 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
   };
 
   return (
-    <div className="min-h-screen h-full bg-gray-900 text-white flex flex-col fixed inset-0 z-50">
-      {/* Header - Modern Dark Style */}
-      <div className="border-b border-gray-700 px-4 py-3 bg-gray-800">
-        <div className="flex items-center justify-between max-w-3xl mx-auto">
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={onBack}
-              className="text-gray-400 hover:text-white text-sm font-medium transition-colors"
-            >
-              ← Back
-            </button>
-            <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-medium text-white">AI Assistant</span>
+    <div className="min-h-screen h-full bg-gray-900 text-white flex fixed inset-0 z-50">
+      {/* Chat History Sidebar */}
+      {showHistory && (
+        <div className="w-80 bg-gray-800 border-r border-gray-700 flex flex-col">
+          <div className="p-4 border-b border-gray-700">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-white">Chat History</h2>
+              <button
+                onClick={() => setShowHistory(false)}
+                className="text-gray-400 hover:text-white p-1"
+              >
+                ✕
+              </button>
             </div>
+            <button
+              onClick={startNewChat}
+              className="w-full flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              <span>New Chat</span>
+            </button>
           </div>
-          <div className="text-xs text-gray-400">
-            {userSubscription === 'pro' ? 'Unlimited' : '3 free messages'}
+          <div className="flex-1 overflow-y-auto p-4 space-y-2">
+            {chatHistory.map((chat) => (
+              <div
+                key={chat.id}
+                className={`group flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
+                  currentChatId === chat.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-gray-200'
+                }`}
+                onClick={() => loadChat(chat.id)}
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <MessageCircle className="w-4 h-4" />
+                    <span className="text-sm font-medium truncate">{chat.title}</span>
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    {chat.updatedAt.toLocaleDateString()}
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteChat(chat.id);
+                  }}
+                  className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-400 p-1 transition-all"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+            {chatHistory.length === 0 && (
+              <div className="text-center text-gray-500 py-8">
+                <History className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                <p>No chat history yet</p>
+                <p className="text-sm">Start a conversation to see it here</p>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Header - Modern Dark Style */}
+        <div className="border-b border-gray-700 px-4 py-3 bg-gray-800">
+          <div className="flex items-center justify-between max-w-3xl mx-auto">
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={onBack}
+                className="text-gray-400 hover:text-white text-sm font-medium transition-colors"
+              >
+                ← Back
+              </button>
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className="text-gray-400 hover:text-white p-1 transition-colors"
+                title="Chat History"
+              >
+                <History className="w-5 h-5" />
+              </button>
+              <button
+                onClick={startNewChat}
+                className="text-gray-400 hover:text-white p-1 transition-colors"
+                title="New Chat"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
+              <div className="flex items-center space-x-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <Bot className="w-4 h-4 text-white" />
+                </div>
+                <span className="font-medium text-white">AI Assistant</span>
+              </div>
+            </div>
+            <div className="text-xs text-gray-400">
+              {userSubscription === 'pro' ? 'Unlimited' : '3 free messages'}
+            </div>
+          </div>
+        </div>
 
       {/* Chat Messages - Modern Dark Style */}
       <div className="flex-1 overflow-y-auto">
@@ -286,6 +495,7 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
