@@ -1,4 +1,4 @@
-// AI Tool Interface - Universal component for all 20 AI tools
+// AI Tool Interface - Universal component for all AI tools + Chat
 import React, { useState } from 'react';
 import { 
   ArrowLeft, 
@@ -14,6 +14,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { AIToolConfig, InputField, AIToolResult } from '../services/ai-tools-engine';
+import AIChatInterface from './AIChatInterface';
 
 interface AIToolInterfaceProps {
   tool: AIToolConfig;
@@ -26,6 +27,16 @@ function AIToolInterface({
   onBack, 
   userSubscription = 'free' 
 }: AIToolInterfaceProps) {
+  // If this is the AI Chat Assistant, show the chat interface
+  if (tool.id === 'ai-chat-assistant') {
+    return (
+      <AIChatInterface 
+        userSubscription={userSubscription}
+        onBack={onBack}
+      />
+    );
+  }
+
   const [inputs, setInputs] = useState<Record<string, any>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<AIToolResult | null>(null);
