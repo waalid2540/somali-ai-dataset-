@@ -18,7 +18,7 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
     {
       id: '1',
       role: 'assistant',
-      content: "Hello! I'm your AI Chat Assistant. I can help you with writing, coding, analysis, creative tasks, and much more. What would you like to chat about today?",
+      content: "Hello! I'm ChatGPT, an AI assistant created by OpenAI. I can help you with a wide variety of tasks including writing, analysis, math, coding, creative projects, and answering questions. How can I assist you today?",
       timestamp: new Date()
     }
   ]);
@@ -106,87 +106,80 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
+    <div className="h-screen bg-white flex flex-col">
+      {/* Header - ChatGPT Style */}
+      <div className="border-b border-gray-200 px-4 py-3 bg-white">
+        <div className="flex items-center justify-between max-w-3xl mx-auto">
           <div className="flex items-center space-x-3">
             <button
               onClick={onBack}
-              className="text-gray-600 hover:text-gray-800 font-medium"
+              className="text-gray-500 hover:text-gray-700 text-sm font-medium"
             >
-              ← Back to Tools
+              ← Back
             </button>
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <Bot className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">AI Chat Assistant</h1>
-              <p className="text-sm text-gray-600">ChatGPT-style AI conversation</p>
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-green-600 rounded-sm flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-medium text-gray-900">ChatGPT</span>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <Sparkles className="w-5 h-5 text-purple-500" />
-            <span className="text-sm font-medium text-purple-600">
-              {userSubscription === 'pro' ? 'Unlimited' : '3 Free Messages'}
-            </span>
+          <div className="text-xs text-gray-500">
+            {userSubscription === 'pro' ? 'Unlimited' : '3 free messages'}
           </div>
         </div>
       </div>
 
-      {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        <div className="max-w-4xl mx-auto space-y-6">
+      {/* Chat Messages - ChatGPT Style */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex items-start space-x-3 ${
-                message.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''
-              }`}
-            >
-              {/* Avatar */}
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                message.role === 'user' 
-                  ? 'bg-blue-600' 
-                  : 'bg-gradient-to-r from-purple-500 to-pink-500'
-              }`}>
-                {message.role === 'user' ? (
-                  <User className="w-5 h-5 text-white" />
-                ) : (
-                  <Bot className="w-5 h-5 text-white" />
-                )}
-              </div>
-
-              {/* Message Bubble */}
-              <div className={`max-w-3xl ${
-                message.role === 'user' ? 'ml-12' : 'mr-12'
-              }`}>
-                <div className={`rounded-2xl px-4 py-3 ${
-                  message.role === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white border border-gray-200 text-gray-900'
-                }`}>
-                  <div className="whitespace-pre-wrap">{message.content}</div>
+            <div key={message.id} className="group mb-6">
+              <div className="flex items-start space-x-4">
+                {/* Avatar */}
+                <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                  {message.role === 'user' ? (
+                    <div className="w-8 h-8 bg-purple-600 rounded-sm flex items-center justify-center">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                  ) : (
+                    <div className="w-8 h-8 bg-green-600 rounded-sm flex items-center justify-center">
+                      <Bot className="w-5 h-5 text-white" />
+                    </div>
+                  )}
                 </div>
-                <div className={`text-xs text-gray-500 mt-1 ${
-                  message.role === 'user' ? 'text-right' : 'text-left'
-                }`}>
-                  {formatTime(message.timestamp)}
+
+                {/* Message Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-900 mb-1">
+                    {message.role === 'user' ? 'You' : 'ChatGPT'}
+                  </div>
+                  <div className="text-gray-800 prose prose-sm max-w-none">
+                    <div className="whitespace-pre-wrap leading-relaxed">
+                      {message.content}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
 
-          {/* Loading indicator */}
+          {/* Loading indicator - ChatGPT Style */}
           {isLoading && (
-            <div className="flex items-start space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-              <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3">
-                <div className="flex items-center space-x-2">
-                  <Loader className="w-4 h-4 animate-spin text-gray-500" />
-                  <span className="text-gray-500">AI is thinking...</span>
+            <div className="group mb-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-green-600 rounded-sm flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-900 mb-1">ChatGPT</div>
+                  <div className="flex items-center space-x-2 text-gray-500">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -196,35 +189,43 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
         </div>
       </div>
 
-      {/* Message Input */}
-      <div className="bg-white border-t border-gray-200 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-end space-x-4">
-            <div className="flex-1">
-              <textarea
-                ref={textareaRef}
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)"
-                className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none max-h-32"
-                rows={1}
-                disabled={isLoading}
-              />
-            </div>
+      {/* Message Input - ChatGPT Style */}
+      <div className="border-t border-gray-200 bg-white">
+        <div className="max-w-3xl mx-auto p-4">
+          <div className="relative">
+            <textarea
+              ref={textareaRef}
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Message ChatGPT"
+              className="w-full resize-none border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
+              style={{
+                minHeight: '44px',
+                maxHeight: '200px',
+                overflow: 'hidden'
+              }}
+              rows={1}
+              disabled={isLoading}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '44px';
+                target.style.height = Math.min(target.scrollHeight, 200) + 'px';
+              }}
+            />
             <button
               onClick={handleSendMessage}
               disabled={!currentMessage.trim() || isLoading}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white p-3 rounded-2xl transition-colors flex items-center justify-center"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-md transition-colors disabled:opacity-30"
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4 text-gray-400" />
             </button>
           </div>
           
           {userSubscription !== 'pro' && (
-            <div className="mt-3 text-center">
-              <p className="text-sm text-gray-500">
-                💎 <span className="font-medium">Upgrade to Pro</span> for unlimited conversations
+            <div className="mt-2 text-center">
+              <p className="text-xs text-gray-500">
+                Free plan • <span className="text-green-600 hover:underline cursor-pointer">Upgrade for unlimited</span>
               </p>
             </div>
           )}
