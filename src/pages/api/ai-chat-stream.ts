@@ -39,20 +39,22 @@ Respond naturally and helpfully. Be conversational, friendly, and provide detail
         model: 'deepseek-chat'
       });
 
-      // Stream it word by word for real-time effect
+      // Stream it character by character for true real-time effect like ChatGPT
       const response = result.content;
-      const words = response.split(/(\s+)/); // Split on whitespace but keep the spaces
+      
+      // Send words in small groups for more natural streaming
+      const words = response.split(' ');
       
       for (let i = 0; i < words.length; i++) {
         const word = words[i];
+        const isLast = i === words.length - 1;
         
-        // Send each word/space immediately
-        res.write(`data: ${JSON.stringify({ content: word })}\n\n`);
+        // Send word with space (except for last word)
+        const chunk = isLast ? word : word + ' ';
+        res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
         
-        // Small delay for natural typing effect (faster than before)
-        if (word.trim()) { // Only delay on actual words, not spaces
-          await new Promise(resolve => setTimeout(resolve, 50));
-        }
+        // Very fast delay for real-time typing effect like ChatGPT
+        await new Promise(resolve => setTimeout(resolve, 30));
       }
 
       res.write('data: [DONE]\n\n');
