@@ -203,6 +203,9 @@ Write ONLY in this clean, professional format.`
    */
   getAllTools(): AIToolConfig[] {
     return [
+      // AI Chat Assistant (ChatGPT Alternative)
+      this.getAIChatAssistant(),
+      
       // Content Creation Tools
       this.getBlogPostGenerator(),
       this.getSocialMediaAI(),
@@ -248,7 +251,51 @@ Write ONLY in this clean, professional format.`
     return this.getAllTools().filter(tool => tool.category === category);
   }
 
-  // Tool Configurations (First 5 MVP Tools)
+  // Tool Configurations - AI Chat Assistant + 20 AI Tools
+  
+  private getAIChatAssistant(): AIToolConfig {
+    return {
+      id: 'ai-chat-assistant',
+      name: 'AI Chat Assistant',
+      description: 'ChatGPT-style AI chat assistant for any question or task',
+      category: 'communication',
+      icon: '🤖',
+      inputs: [
+        {
+          id: 'message',
+          label: 'Your Message',
+          type: 'textarea',
+          placeholder: 'Ask me anything... I can help with writing, coding, analysis, creative tasks, and more!',
+          required: true,
+          maxLength: 2000
+        },
+        {
+          id: 'context',
+          label: 'Context (Optional)',
+          type: 'textarea',
+          placeholder: 'Provide any background context that would help me give a better response',
+          required: false,
+          maxLength: 1000
+        }
+      ],
+      prompt: `You are an AI assistant similar to ChatGPT. You are helpful, harmless, and honest. 
+
+User's message: {message}
+
+Context: {context}
+
+Provide a helpful, accurate, and well-structured response. Be conversational but professional. If the user asks about specific tasks like writing, coding, analysis, or creative work, provide detailed and actionable assistance.`,
+      maxTokens: 800,
+      temperature: 0.7,
+      examples: [
+        "Help me write a professional email",
+        "Explain quantum computing in simple terms", 
+        "Create a marketing strategy for my business",
+        "Debug this JavaScript code",
+        "Write a creative story about space exploration"
+      ]
+    };
+  }
   
   private getBlogPostGenerator(): AIToolConfig {
     return {
