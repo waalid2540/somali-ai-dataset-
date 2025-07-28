@@ -18,12 +18,13 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
     {
       id: '1',
       role: 'assistant',
-      content: "Hello! I'm ChatGPT, an AI assistant created by OpenAI. I can help you with a wide variety of tasks including writing, analysis, math, coding, creative projects, and answering questions. How can I assist you today?",
+      content: "Hello! I'm your AI assistant. I can help you with a wide variety of tasks including writing, analysis, math, coding, creative projects, and answering questions. How can I assist you today?",
       timestamp: new Date()
     }
   ]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [streamingMessage, setStreamingMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -33,7 +34,7 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, streamingMessage]);
 
   const handleSendMessage = async () => {
     if (!currentMessage.trim() || isLoading) return;
@@ -46,8 +47,10 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const messageText = currentMessage.trim();
     setCurrentMessage('');
     setIsLoading(true);
+    setStreamingMessage('');
 
     try {
       // Build conversation context for AI
@@ -56,11 +59,11 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
         .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
         .join('\n\n');
 
-      const response = await fetch('/api/ai-chat', {
+      const response = await fetch('/api/ai-chat-stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          message: currentMessage.trim(),
+          message: messageText,
           conversationHistory,
           userSubscription 
         })
@@ -70,16 +73,48 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
         throw new Error('Failed to get AI response');
       }
 
-      const data = await response.json();
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let fullResponse = '';
 
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6);
+              if (data === '[DONE]') {
+                break;
+              }
+              try {
+                const parsed = JSON.parse(data);
+                if (parsed.content) {
+                  fullResponse += parsed.content;
+                  setStreamingMessage(fullResponse);
+                }
+              } catch (e) {
+                // Skip invalid JSON
+              }
+            }
+          }
+        }
+      }
+
+      // Add final message
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.content,
+        content: fullResponse,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+      setStreamingMessage('');
     } catch (error) {
       console.error('Chat error:', error);
       const errorMessage: Message = {
@@ -89,6 +124,7 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
+      setStreamingMessage('');
     } finally {
       setIsLoading(false);
     }
@@ -106,31 +142,31 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
   };
 
   return (
-    <div className="h-screen bg-white flex flex-col">
-      {/* Header - ChatGPT Style */}
-      <div className="border-b border-gray-200 px-4 py-3 bg-white">
+    <div className="min-h-screen h-full bg-gray-900 text-white flex flex-col fixed inset-0 z-50">
+      {/* Header - Modern Dark Style */}
+      <div className="border-b border-gray-700 px-4 py-3 bg-gray-800">
         <div className="flex items-center justify-between max-w-3xl mx-auto">
           <div className="flex items-center space-x-3">
             <button
               onClick={onBack}
-              className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+              className="text-gray-400 hover:text-white text-sm font-medium transition-colors"
             >
               ← Back
             </button>
             <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-green-600 rounded-sm flex items-center justify-center">
+              <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <Bot className="w-4 h-4 text-white" />
               </div>
-              <span className="font-medium text-gray-900">ChatGPT</span>
+              <span className="font-medium text-white">AI Assistant</span>
             </div>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-400">
             {userSubscription === 'pro' ? 'Unlimited' : '3 free messages'}
           </div>
         </div>
       </div>
 
-      {/* Chat Messages - ChatGPT Style */}
+      {/* Chat Messages - Modern Dark Style */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-3xl mx-auto px-4 py-6">
           {messages.map((message) => (
@@ -139,11 +175,11 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
                 {/* Avatar */}
                 <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center">
                   {message.role === 'user' ? (
-                    <div className="w-8 h-8 bg-purple-600 rounded-sm flex items-center justify-center">
+                    <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
                       <User className="w-5 h-5 text-white" />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 bg-green-600 rounded-sm flex items-center justify-center">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                       <Bot className="w-5 h-5 text-white" />
                     </div>
                   )}
@@ -151,10 +187,10 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
 
                 {/* Message Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 mb-1">
-                    {message.role === 'user' ? 'You' : 'ChatGPT'}
+                  <div className="text-sm font-medium text-gray-300 mb-1">
+                    {message.role === 'user' ? 'You' : 'AI Assistant'}
                   </div>
-                  <div className="text-gray-800 prose prose-sm max-w-none">
+                  <div className="text-gray-100 prose prose-sm max-w-none">
                     <div className="whitespace-pre-wrap leading-relaxed">
                       {message.content}
                     </div>
@@ -164,20 +200,40 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
             </div>
           ))}
 
-          {/* Loading indicator - ChatGPT Style */}
-          {isLoading && (
+          {/* Streaming message - Shows real-time response */}
+          {streamingMessage && (
             <div className="group mb-6">
               <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-green-600 rounded-sm flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 mb-1">ChatGPT</div>
-                  <div className="flex items-center space-x-2 text-gray-500">
+                  <div className="text-sm font-medium text-gray-300 mb-1">AI Assistant</div>
+                  <div className="text-gray-100 prose prose-sm max-w-none">
+                    <div className="whitespace-pre-wrap leading-relaxed">
+                      {streamingMessage}
+                      <span className="inline-block w-0.5 h-5 bg-blue-400 ml-1 animate-pulse"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Loading indicator - Modern Dark Style */}
+          {isLoading && !streamingMessage && (
+            <div className="group mb-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-300 mb-1">AI Assistant</div>
+                  <div className="flex items-center space-x-2 text-gray-400">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -189,8 +245,8 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
         </div>
       </div>
 
-      {/* Message Input - ChatGPT Style */}
-      <div className="border-t border-gray-200 bg-white">
+      {/* Message Input - Modern Dark Style */}
+      <div className="border-t border-gray-700 bg-gray-800">
         <div className="max-w-3xl mx-auto p-4">
           <div className="relative">
             <textarea
@@ -198,8 +254,8 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
               value={currentMessage}
               onChange={(e) => setCurrentMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Message ChatGPT"
-              className="w-full resize-none border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
+              placeholder="Message AI Assistant..."
+              className="w-full resize-none border border-gray-600 rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 text-white placeholder-gray-400"
               style={{
                 minHeight: '44px',
                 maxHeight: '200px',
@@ -216,16 +272,16 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
             <button
               onClick={handleSendMessage}
               disabled={!currentMessage.trim() || isLoading}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-md transition-colors disabled:opacity-30"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 rounded-md transition-colors disabled:opacity-30 hover:bg-gray-600"
             >
-              <Send className="w-4 h-4 text-gray-400" />
+              <Send className="w-4 h-4 text-gray-300 hover:text-white" />
             </button>
           </div>
           
           {userSubscription !== 'pro' && (
             <div className="mt-2 text-center">
-              <p className="text-xs text-gray-500">
-                Free plan • <span className="text-green-600 hover:underline cursor-pointer">Upgrade for unlimited</span>
+              <p className="text-xs text-gray-400">
+                Free plan • <span className="text-blue-400 hover:text-blue-300 hover:underline cursor-pointer">Upgrade for unlimited</span>
               </p>
             </div>
           )}
