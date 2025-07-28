@@ -67,7 +67,7 @@ export class DeepSeekService {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
         console.log('⏱️ DeepSeek request timed out after 8 seconds');
-        throw new Error('Request timed out after 8 seconds. Please try a shorter prompt or try again.');
+        throw new Error('Request timed out after 5 seconds. Please try a shorter prompt or try again.');
       }
       console.error('DeepSeek API error:', error);
       throw error;
