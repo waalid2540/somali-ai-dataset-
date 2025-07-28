@@ -173,7 +173,7 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
     const messageText = currentMessage.trim();
     setCurrentMessage('');
     setIsLoading(true);
-    setStreamingMessage('');
+    setStreamingMessage(''); // Clear any previous streaming
 
     try {
       // Build conversation context for AI
@@ -200,12 +200,15 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
       const decoder = new TextDecoder();
       let fullResponse = '';
 
+      // Show that streaming has started
+      setIsLoading(false); // Stop loading dots, start streaming
+
       if (reader) {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          const chunk = decoder.decode(value);
+          const chunk = decoder.decode(value, { stream: true });
           const lines = chunk.split('\n');
 
           for (const line of lines) {
@@ -218,6 +221,7 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
                 const parsed = JSON.parse(data);
                 if (parsed.content) {
                   fullResponse += parsed.content;
+                  // Update streaming message immediately for real-time effect
                   setStreamingMessage(fullResponse);
                 }
               } catch (e) {

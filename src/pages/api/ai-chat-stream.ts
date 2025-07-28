@@ -32,29 +32,25 @@ User's current message: ${message}
 Respond naturally and helpfully. Be conversational, friendly, and provide detailed assistance when needed. If the user asks about coding, writing, analysis, or creative tasks, provide comprehensive help.`;
 
     try {
-      // Get the full response first (DeepSeek doesn't support real streaming)
+      // Get the full response first (since DeepSeek doesn't support real streaming)
       const result = await deepSeekService.generateCompletion(chatPrompt, {
         maxTokens: 800,
         temperature: 0.7,
         model: 'deepseek-chat'
       });
 
-      // Stream it character by character for true real-time effect like ChatGPT
+      // Stream character by character for REAL ChatGPT-like experience
       const response = result.content;
       
-      // Send words in small groups for more natural streaming
-      const words = response.split(' ');
+      // Send 2-3 characters at a time for natural typing effect
+      const chunkSize = 2;
       
-      for (let i = 0; i < words.length; i++) {
-        const word = words[i];
-        const isLast = i === words.length - 1;
-        
-        // Send word with space (except for last word)
-        const chunk = isLast ? word : word + ' ';
+      for (let i = 0; i < response.length; i += chunkSize) {
+        const chunk = response.slice(i, i + chunkSize);
         res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
         
-        // Very fast delay for real-time typing effect like ChatGPT
-        await new Promise(resolve => setTimeout(resolve, 30));
+        // Very minimal delay for super fast streaming
+        await new Promise(resolve => setTimeout(resolve, 20));
       }
 
       res.write('data: [DONE]\n\n');
