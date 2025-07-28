@@ -23,9 +23,9 @@ export class DeepSeekService {
       model = 'deepseek-chat'
     } = options;
 
-    // Add strict 8-second timeout (buffer for processing)
+    // Faster timeout for chat responses
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout for faster responses
 
     try {
       const response = await fetch(`${this.baseUrl}/chat/completions`, {

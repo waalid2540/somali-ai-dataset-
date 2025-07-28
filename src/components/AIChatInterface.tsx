@@ -200,10 +200,13 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
       const decoder = new TextDecoder();
       let fullResponse = '';
 
-      // Show that streaming has started
-      setIsLoading(false); // Stop loading dots, start streaming
+      // Start streaming immediately - no loading dots
+      setIsLoading(false);
+      setStreamingMessage(''); // Initialize streaming
 
       if (reader) {
+        let isFirstChunk = true;
+        
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
@@ -219,10 +222,16 @@ export default function AIChatInterface({ userSubscription, onBack }: AIChatInte
               }
               try {
                 const parsed = JSON.parse(data);
-                if (parsed.content) {
+                if (parsed.content !== undefined) {
                   fullResponse += parsed.content;
-                  // Update streaming message immediately for real-time effect
+                  // Update immediately - no delays
                   setStreamingMessage(fullResponse);
+                  
+                  // Force scroll on first chunk
+                  if (isFirstChunk) {
+                    isFirstChunk = false;
+                    scrollToBottom();
+                  }
                 }
               } catch (e) {
                 // Skip invalid JSON

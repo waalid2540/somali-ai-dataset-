@@ -32,25 +32,31 @@ User's current message: ${message}
 Respond naturally and helpfully. Be conversational, friendly, and provide detailed assistance when needed. If the user asks about coding, writing, analysis, or creative tasks, provide comprehensive help.`;
 
     try {
-      // Get the full response first (since DeepSeek doesn't support real streaming)
-      const result = await deepSeekService.generateCompletion(chatPrompt, {
-        maxTokens: 800,
-        temperature: 0.7,
+      // Start streaming immediately without waiting
+      res.write(`data: ${JSON.stringify({ content: '' })}\n\n`);
+      
+      // Create the API call with optimized settings for speed
+      const deepSeekPromise = deepSeekService.generateCompletion(chatPrompt, {
+        maxTokens: 400, // Shorter for faster generation
+        temperature: 0.01, // Very low for maximum speed
         model: 'deepseek-chat'
       });
 
-      // Stream character by character for REAL ChatGPT-like experience
+      // No delay - start immediately
+      // await new Promise(resolve => setTimeout(resolve, 50)); // Removed delay
+      
+      // Get the result
+      const result = await deepSeekPromise;
       const response = result.content;
       
-      // Send 2-3 characters at a time for natural typing effect
-      const chunkSize = 2;
-      
+      // Stream super fast - 3 characters at a time with minimal delay
+      const chunkSize = 3;
       for (let i = 0; i < response.length; i += chunkSize) {
         const chunk = response.slice(i, i + chunkSize);
         res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
         
-        // Very minimal delay for super fast streaming
-        await new Promise(resolve => setTimeout(resolve, 20));
+        // Super fast streaming - 5ms delay
+        await new Promise(resolve => setTimeout(resolve, 5));
       }
 
       res.write('data: [DONE]\n\n');
