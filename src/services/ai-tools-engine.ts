@@ -103,7 +103,7 @@ class AIToolsEngine {
   private async generateContent(prompt: string, config: AIToolConfig): Promise<string> {
     // Add strict 8-second timeout (buffer for processing)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout for faster responses
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout to ensure completion
 
     try {
       const response = await fetch(`${this.baseURL}/chat/completions`, {
@@ -124,7 +124,7 @@ class AIToolsEngine {
               content: prompt
             }
           ],
-          max_tokens: Math.min(config.maxTokens, 300), // Ultra-fast response optimization
+          max_tokens: Math.min(config.maxTokens, 800), // Ensure complete content generation
           temperature: Math.min(config.temperature, 0.01), // Ultra-low for maximum speed
           top_p: 0.9,
           stream: false,
@@ -144,7 +144,7 @@ class AIToolsEngine {
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        throw new Error('Request timed out after 5 seconds. Please try a shorter prompt or try again.');
+        throw new Error('Request timed out after 15 seconds. Please try again.');
       }
       throw error;
     }
@@ -379,9 +379,11 @@ Ready to make magic happen with your request! Let's dive in and create something
 - Content that satisfies search intent completely
 - Call-to-action that converts browsers to subscribers/customers
 
-Ready to create content that ranks #1 and converts like crazy? Let's build something amazing! 🌟`,
-      maxTokens: 500,
-      temperature: 0.3,
+Ready to create content that ranks #1 and converts like crazy? Let's build something amazing! 🌟
+
+IMPORTANT: Write a COMPLETE blog post from introduction to conclusion. Do not cut off mid-sentence. Ensure the full article is finished with a proper ending and call-to-action.`,
+      maxTokens: 1200,
+      temperature: 0.6,
       examples: [
         'How to Build a Million-Dollar Business in 2024',
         'The Ultimate Guide to Social Media Marketing',
