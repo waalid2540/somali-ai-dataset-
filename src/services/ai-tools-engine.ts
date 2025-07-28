@@ -117,7 +117,9 @@ class AIToolsEngine {
           messages: [
             {
               role: 'system',
-              content: `You are a ${config.name} specialist. Create engaging, professional content with the unique style and personality defined in the tool prompt. Use emojis, formatting, and creative elements as specified in each tool's requirements. Focus on delivering high-quality, valuable content that matches the tool's specific purpose and target audience.`
+              content: `You are a ${config.name} specialist. Create engaging, professional content with the unique style and personality defined in the tool prompt. Use emojis, formatting, and creative elements as specified in each tool's requirements. Focus on delivering high-quality, valuable content that matches the tool's specific purpose and target audience.
+
+IMPORTANT: Today's date is ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} (${new Date().getFullYear()}). Always use the current year ${new Date().getFullYear()} in titles, examples, and content - NEVER use outdated years like 2024.`
             },
             {
               role: 'user',
@@ -381,11 +383,14 @@ Ready to make magic happen with your request! Let's dive in and create something
 
 Ready to create content that ranks #1 and converts like crazy? Let's build something amazing! 🌟
 
-IMPORTANT: Write a COMPLETE blog post from introduction to conclusion. Do not cut off mid-sentence. Ensure the full article is finished with a proper ending and call-to-action.`,
+IMPORTANT: 
+1. Write a COMPLETE blog post from introduction to conclusion. Do not cut off mid-sentence. Ensure the full article is finished with a proper ending and call-to-action.
+2. Always use the current year 2025 in titles, examples, and content. Never use outdated years like 2024.
+3. Make content current and relevant to 2025 trends and developments.`,
       maxTokens: 1200,
       temperature: 0.6,
       examples: [
-        'How to Build a Million-Dollar Business in 2024',
+        'How to Build a Million-Dollar Business in 2025',
         'The Ultimate Guide to Social Media Marketing',
         '10 AI Tools Every Entrepreneur Needs'
       ]
@@ -789,7 +794,7 @@ Ready to create copy that makes {audience} say "TAKE MY MONEY!"? Let's build des
 - Company logo placement area
 - Business name & contact details
 - Professional tagline/slogan
-- Invoice # (INV-2024-XXX format)
+- Invoice # (INV-2025-XXX format)
 - Invoice date & due date
 
 📍 Client Information:
