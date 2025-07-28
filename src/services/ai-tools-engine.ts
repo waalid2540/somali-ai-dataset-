@@ -103,7 +103,7 @@ class AIToolsEngine {
   private async generateContent(prompt: string, config: AIToolConfig): Promise<string> {
     // Add strict 8-second timeout (buffer for processing)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout for faster responses
 
     try {
       const response = await fetch(`${this.baseURL}/chat/completions`, {
@@ -117,35 +117,15 @@ class AIToolsEngine {
           messages: [
             {
               role: 'system',
-              content: `You are a professional ${config.name} specialist. Create sophisticated business content in PLAIN TEXT ONLY.
-
-ABSOLUTE REQUIREMENTS:
-- NEVER use ANY markdown symbols: no **, ##, ###, ####, ---, ***, +++
-- NEVER use emojis of any kind - zero emojis allowed
-- NEVER use special formatting characters
-- Write in clean, professional paragraphs with line breaks between sections
-- Use ONLY plain text with proper sentence structure
-- NO visual formatting - just well-written content
-- Write like a Harvard Business Review article - sophisticated and professional
-- Focus on substance, expertise, and valuable insights
-- Complete all responses fully without cutting off mid-sentence
-
-Example of CORRECT format:
-Title Here
-
-This is the introduction paragraph with valuable information.
-
-This is the next section with more insights. Numbers can be written as: First, second, third or using simple 1. 2. 3. format only when absolutely necessary.
-
-Write ONLY in this clean, professional format.`
+              content: `You are a ${config.name} specialist. Create engaging, professional content with the unique style and personality defined in the tool prompt. Use emojis, formatting, and creative elements as specified in each tool's requirements. Focus on delivering high-quality, valuable content that matches the tool's specific purpose and target audience.`
             },
             {
               role: 'user',
               content: prompt
             }
           ],
-          max_tokens: Math.min(config.maxTokens, 400), // Optimized for speed
-          temperature: Math.min(config.temperature, 0.05), // Extremely low for maximum speed
+          max_tokens: Math.min(config.maxTokens, 300), // Ultra-fast response optimization
+          temperature: Math.min(config.temperature, 0.01), // Ultra-low for maximum speed
           top_p: 0.9,
           stream: false,
         }),
@@ -164,7 +144,7 @@ Write ONLY in this clean, professional format.`
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        throw new Error('Request timed out after 8 seconds. Please try a shorter prompt or try again.');
+        throw new Error('Request timed out after 5 seconds. Please try a shorter prompt or try again.');
       }
       throw error;
     }
@@ -278,13 +258,43 @@ Write ONLY in this clean, professional format.`
           maxLength: 1000
         }
       ],
-      prompt: `You are an AI assistant similar to ChatGPT. You are helpful, harmless, and honest. 
+      prompt: `🤖 AI ASSISTANT EXTRAORDINAIRE: I'm your intelligent companion ready to tackle ANY challenge with expertise and enthusiasm! 🚀
 
-User's message: {message}
+💬 USER MESSAGE:
+{message}
 
-Context: {context}
+📈 CONTEXT:
+{context}
 
-Provide a helpful, accurate, and well-structured response. Be conversational but professional. If the user asks about specific tasks like writing, coding, analysis, or creative work, provide detailed and actionable assistance.`,
+✨ MY SUPERPOWERS:
+📝 Writing Wizard: Essays, emails, creative content, technical docs
+💻 Code Master: Programming, debugging, architecture, optimization
+📈 Analysis Expert: Data insights, research, problem-solving strategies
+🎨 Creative Genius: Brainstorming, storytelling, innovative solutions
+📀 Learning Coach: Explanations, tutorials, skill development
+🚀 Business Advisor: Strategy, marketing, operations, growth hacking
+
+🎯 RESPONSE APPROACH:
+- ⚡ Lightning-fast problem identification
+- 💡 Creative solutions with multiple options
+- 📈 Step-by-step actionable guidance
+- 🎆 Real-world examples and applications
+- 🚀 Go-beyond-expectations value delivery
+
+👥 CONVERSATION STYLE:
+- Friendly and approachable (like chatting with a genius friend)
+- Professional when needed, casual when appropriate
+- Encouraging and motivational
+- Clear, structured, easy to follow
+- Interactive and engaging
+
+📝 RESPONSE STRUCTURE:
+1. 🎯 Direct answer to your question
+2. 💡 Additional insights and tips
+3. 🚀 Next steps or follow-up suggestions
+4. ❓ Questions to help you go deeper (if relevant)
+
+Ready to make magic happen with your request! Let's dive in and create something amazing together! 💪✨`,
       maxTokens: 800,
       temperature: 0.7,
       examples: [
@@ -338,22 +348,40 @@ Provide a helpful, accurate, and well-structured response. Be conversational but
           options: ['Short (500-800 words)', 'Medium (800-1500 words)', 'Long (1500-2500 words)']
         }
       ],
-      prompt: `Write a comprehensive, SEO-optimized blog post about "{topic}".
+      prompt: `📚 BLOG MASTERY MODE: Create an irresistible, SEO-powerhouse blog post about "{topic}" that dominates Google and captivates readers!
 
-Requirements:
-- Target keywords: {keywords}
-- Tone: {tone}
-- Length: {length}
-- Include compelling headline
-- Add subheadings (H2, H3)
-- Include introduction, body sections, and conclusion
-- Make it engaging and valuable for readers
-- Optimize for search engines
-- Include call-to-action at the end
+🎯 MISSION BRIEFING:
+- Target Keywords: {keywords}
+- Voice & Tone: {tone}
+- Word Count Goal: {length}
 
-Create a professional blog post that ranks well and converts readers.`,
-      maxTokens: 2000,
-      temperature: 0.7,
+🏆 CONTENT ARCHITECTURE:
+✅ Magnetic headline that promises value (include target keyword)
+✅ Hook-laden introduction that makes readers NEED to continue
+✅ Strategic H2/H3 subheadings with keyword optimization
+✅ Value-packed sections with actionable insights
+✅ Engaging storytelling mixed with hard facts
+✅ Internal linking opportunities (mention where relevant)
+✅ Powerful conclusion with clear next steps
+
+🎨 WRITING STYLE GUIDE:
+- {tone} voice throughout
+- Use bullet points, numbered lists, and formatting for scannability
+- Include relevant emojis for visual appeal (but keep it professional)
+- Write like you're talking to a friend who needs expert advice
+- Back claims with data and examples
+- Create "Aha!" moments that make readers share
+
+🚀 SEO MAGIC FORMULA:
+- Keywords: {keywords} woven naturally throughout
+- Meta-worthy title (under 60 characters)
+- Subheadings that answer search questions
+- Content that satisfies search intent completely
+- Call-to-action that converts browsers to subscribers/customers
+
+Ready to create content that ranks #1 and converts like crazy? Let's build something amazing! 🌟`,
+      maxTokens: 500,
+      temperature: 0.3,
       examples: [
         'How to Build a Million-Dollar Business in 2024',
         'The Ultimate Guide to Social Media Marketing',
@@ -403,23 +431,36 @@ Create a professional blog post that ranks well and converts readers.`,
           maxLength: 300
         }
       ],
-      prompt: `Create a high-engagement social media post for {platform}.
+      prompt: `🚀 SOCIAL MEDIA MAGIC TIME! Create a viral-worthy post for {platform} that stops the scroll! 
 
-Post Details:
+📱 Post Mission:
 - Topic: {topic}
-- Goal: {goal}
-- Target Audience: {audience}
+- Goal: {goal}  
+- Target: {audience}
 
-Requirements:
-- Platform-optimized format and length
-- Compelling hook in first line
-- Include relevant hashtags (5-10 for Instagram, 2-3 for LinkedIn)
-- Add call-to-action
-- Make it shareable and engaging
-- Include emojis where appropriate
-- Optimize for {goal}
+✨ VIRAL RECIPE:
+- Hook that grabs attention in 0.3 seconds ⚡
+- Use TONS of emojis for visual appeal 🎯
+- Platform-specific formatting & length
+- Trending hashtags that GET DISCOVERED 📈
+- Irresistible call-to-action that converts 💰
+- Share-worthy content that spreads like wildfire 🔥
 
-Create content that gets maximum engagement and achieves the specified goal.`,
+🎪 STYLE GUIDE:
+- Be energetic, authentic & conversational 
+- Use line breaks for easy reading 📖
+- Add emojis throughout (but not overwhelming)
+- Create FOMO and urgency ⏰
+- Make people WANT to engage 💬
+
+Platform-specific tips:
+📸 Instagram: Visual storytelling + 8-10 hashtags
+🔗 LinkedIn: Professional but engaging + 2-3 hashtags
+🐦 Twitter: Concise wit + trending topics
+🎵 TikTok: Trendy language + action words
+🎬 YouTube: Strong hook + clear value
+
+Ready to create content that goes VIRAL? Let's make {audience} stop, engage, and convert! 🎯`,
       maxTokens: 800,
       temperature: 0.8,
       examples: [
@@ -479,25 +520,38 @@ Create content that gets maximum engagement and achieves the specified goal.`,
           maxLength: 100
         }
       ],
-      prompt: `Create high-converting ad copy for {platform}.
+      prompt: `💰 AD CONVERSION MACHINE MODE: Create killer ad copy for {platform} that turns browsers into BUYERS! 🎯
 
-Product/Service: {product}
-Target Audience: {audience}
-Campaign Objective: {objective}
-Special Offer: {offer}
+🎪 AD MISSION BRIEFING:
+- Product/Service: {product}
+- Target Audience: {audience} 
+- Objective: {objective}
+- Special Offer: {offer}
 
-Requirements:
-- Attention-grabbing headline
-- Compelling ad copy that addresses pain points
-- Clear value proposition
-- Strong call-to-action
-- Platform-optimized format
-- Include emotional triggers
-- Focus on benefits over features
-- Create urgency if applicable
-- Optimize for {objective}
+⚡ CONVERSION FORMULA:
+✨ Scroll-stopping headline that creates instant desire
+🔥 Pain-point focused copy that hits emotional triggers
+💎 Crystal-clear value proposition that screams "I NEED THIS!"
+⏰ Urgency elements that create FOMO
+🎨 Platform-specific formatting for maximum impact
+📈 Benefit-driven messaging (not boring features)
+💥 Irresistible call-to-action that demands clicks
 
-Generate ad copy that drives maximum conversions and ROI.`,
+🚀 PLATFORM OPTIMIZATION:
+📱 Facebook/Instagram: Visual storytelling + social proof
+🔍 Google Ads: Search intent + immediate solutions  
+💼 LinkedIn: Professional value + career benefits
+🐦 Twitter: Snappy hooks + trending vibes
+🎵 TikTok: Gen Z language + action words
+
+🎯 PSYCHOLOGICAL TRIGGERS:
+- Fear of missing out (FOMO) ⏳
+- Social proof and testimonials 👥
+- Authority and expertise 🏆
+- Scarcity and limited time ⚡
+- Transformation promises 🌟
+
+Ready to create ads that make {audience} click, convert, and become customers? Let's build campaigns that DOMINATE {platform}! 💪`,
       maxTokens: 600,
       temperature: 0.8,
       examples: [
@@ -549,25 +603,38 @@ Generate ad copy that drives maximum conversions and ROI.`,
           options: ['Drive Sales', 'Build Relationship', 'Provide Value', 'Get Feedback', 'Increase Engagement']
         }
       ],
-      prompt: `Create a professional email for {type}.
+      prompt: `📧 EMAIL MASTERY MODE: Craft inbox-dominating emails that get OPENED, READ, and CLICKED! 🚀
 
-Details:
+🎩 EMAIL MISSION:
+- Type: {type}
 - Product/Service: {product}
-- Audience: {audience}
+- Target: {audience}
 - Goal: {goal}
 
-Requirements:
-- Compelling subject line
-- Personalized greeting
-- Clear value proposition
-- Engaging content that serves the goal
-- Strong call-to-action
-- Professional tone
-- Mobile-optimized format
-- Include urgency or scarcity if appropriate
-- Build trust and credibility
+✨ INBOX DOMINATION STRATEGY:
+📲 Subject line that triggers curiosity (avoid spam words!)
+👋 Warm, personalized greeting that feels human
+💎 Value-packed opening that hooks immediately
+📈 Benefit-focused content that solves real problems
+🔥 Emotional storytelling mixed with social proof
+📱 Mobile-first design (60% read on mobile!)
+💥 CTA button that screams "Click me NOW!"
 
-Generate an email that achieves maximum open rates, engagement, and conversions.`,
+🎯 EMAIL TYPE MASTERY:
+👋 Welcome: Make them feel special + set expectations
+💰 Sales: Problem-solution-urgency-action formula
+📰 Newsletter: Value first, promotion second
+🔄 Follow-up: Gentle persistence with fresh angles
+🛍️ Abandoned Cart: FOMO + social proof + easy checkout
+❤️ Re-engagement: "We miss you" + exclusive comeback offer
+
+🚀 CONVERSION PSYCHOLOGY:
+- Use power words: FREE, EXCLUSIVE, LIMITED, NOW
+- Create urgency: "24 hours left", "Limited spots"
+- Build trust: testimonials, guarantees, credentials
+- Make it scannable: bullets, short paragraphs, emojis
+
+Ready to create emails that turn {audience} into loyal customers? Let's build campaigns that CRUSH the competition! 💪🎆`,
       maxTokens: 800,
       temperature: 0.7,
       examples: [
@@ -619,26 +686,39 @@ Generate an email that achieves maximum open rates, engagement, and conversions.
           options: ['Professional', 'Casual/Fun', 'Luxury/Premium', 'Technical', 'Emotional/Storytelling']
         }
       ],
-      prompt: `Write a compelling product description for "{product}".
+      prompt: `🛍️ PRODUCT SALES WIZARD: Transform "{product}" into an irresistible must-have that customers can't resist! 💫
 
-Product Details:
-- Key Features: {features}
+🎯 PRODUCT INTEL:
+- Features: {features}
 - Target Customer: {audience}
-- Style: {style}
+- Brand Voice: {style}
 
-Requirements:
-- Attention-grabbing opening
-- Highlight key benefits (not just features)
-- Address customer pain points
-- Use persuasive language
-- Include social proof elements
-- Create desire and urgency
-- End with strong call-to-action
-- Optimize for conversions
-- Match the {style} tone
-- Focus on how the product improves customer's life
+✨ CONVERSION ALCHEMY:
+📍 Hook them with a problem they FEEL (pain point opener)
+🎆 Paint the dream transformation (life after purchase)
+🔥 Features → Benefits translation (what's in it for them?)
+📈 Social proof sprinkles ("Join 10,000+ happy customers")
+🚀 Sensory language that makes them WANT it
+⏰ Urgency elements that trigger action NOW
+💥 Guarantee/risk reversal (remove buying fears)
+🎯 Irresistible CTA that demands immediate action
 
-Generate a description that turns browsers into buyers.`,
+🎨 STYLE GUIDE ADAPTATION:
+💼 Professional: Sophisticated, data-driven, trustworthy 
+🎉 Casual/Fun: Playful, relatable, emoji-rich
+👑 Luxury/Premium: Exclusive, sophisticated, aspirational
+🔧 Technical: Precise, spec-focused, expert-level
+📚 Emotional/Storytelling: Personal, narrative-driven, heart-focused
+
+🗣️ BUYER PSYCHOLOGY TRIGGERS:
+- WIIFM (What's In It For Me?)
+- Fear of missing out (FOMO)
+- Social validation (everyone has one!)
+- Status elevation (be the envy of friends)
+- Problem elimination (no more struggles)
+- Time/money savings (get results faster)
+
+Ready to create copy that makes {audience} say "TAKE MY MONEY!"? Let's build descriptions that convert like CRAZY! 💰🚀`,
       maxTokens: 600,
       temperature: 0.7,
       examples: [
@@ -692,22 +772,61 @@ Generate a description that turns browsers into buyers.`,
           maxLength: 500
         }
       ],
-      prompt: `Create a professional invoice for {clientName}.
+      prompt: `📊 INVOICE GENERATOR PRO: Create a polished, professional invoice for {clientName} that gets paid FAST! 💳
 
-Business Information: {businessInfo}
-Services/Products: {services}
-Payment Terms: {paymentTerms}
+🏢 BUSINESS DETAILS:
+{businessInfo}
 
-Generate a complete invoice including:
-- Invoice number and date
-- Professional header with business info
-- Itemized list of services/products
-- Subtotal, taxes (if applicable), and total
-- Payment terms and methods
-- Professional footer with thank you message
-- Due date calculation
+📝 SERVICES PROVIDED:
+{services}
 
-Make it formal, clear, and ready to send to client.`,
+📅 PAYMENT TERMS: {paymentTerms}
+
+💼 PROFESSIONAL INVOICE STRUCTURE:
+🏷️ Header Section:
+- Company logo placement area
+- Business name & contact details
+- Professional tagline/slogan
+- Invoice # (INV-2024-XXX format)
+- Invoice date & due date
+
+📍 Client Information:
+- "Bill To:" section with client details
+- Clean, organized contact format
+
+📊 Itemized Services:
+- Clear service descriptions
+- Quantity/hours breakdown
+- Rate per unit/hour
+- Line totals for each item
+- Professional formatting
+
+💰 Financial Summary:
+- Subtotal calculation
+- Tax breakdown (if applicable)
+- **TOTAL AMOUNT** (bold/highlighted)
+- Currency clearly specified
+
+💳 Payment Information:
+- Accepted payment methods
+- Bank details/payment instructions
+- Online payment links (if available)
+- Late payment terms/fees
+
+🚀 Professional Footer:
+- Grateful closing message
+- Contact info for questions
+- "Thank you for your business!"
+- Terms & conditions reference
+
+✨ PROFESSIONAL TOUCHES:
+- Clean, modern layout design
+- Consistent typography
+- Professional color scheme suggestions
+- Easy-to-scan format
+- Print-friendly design
+
+Create an invoice that looks professional, builds trust, and encourages prompt payment! 🎆`,
       maxTokens: 800,
       temperature: 0.3,
       examples: [
@@ -759,25 +878,72 @@ Make it formal, clear, and ready to send to client.`,
           maxLength: 100
         }
       ],
-      prompt: `Create a professional {contractType} between the following parties:
+      prompt: `⚖️ CONTRACT CREATOR PRO: Draft a bulletproof {contractType} that protects your business and ensures smooth partnerships! 📁
 
-Parties: {parties}
-Duration: {duration}
-Key Terms: {terms}
+🎯 CONTRACT BRIEFING:
+- Parties: {parties}
+- Duration: {duration} 
+- Key Terms: {terms}
 
-Generate a comprehensive contract including:
-- Title and contract identification
-- Party definitions and details
-- Scope of work/services
-- Payment terms and schedule
-- Timeline and deliverables
-- Termination clauses
-- Liability and warranty provisions
-- Dispute resolution process
-- Signatures section
+📜 LEGAL DOCUMENT STRUCTURE:
+🏷️ Title & Identification:
+- Contract type clearly stated
+- Unique contract number/reference
+- Execution date and jurisdiction
 
-Make it legally sound and professionally formatted.`,
-      maxTokens: 1500,
+👥 Party Definitions:
+- Legal entity names and addresses
+- Contact information and representatives
+- Authority to enter agreement
+
+🎯 Scope of Work/Services:
+- Detailed description of obligations
+- Specific deliverables and milestones
+- Performance standards and metrics
+
+💰 Financial Terms:
+- Payment amounts and schedule
+- Late payment penalties
+- Expense reimbursement policies
+- Currency and tax considerations
+
+⏰ Timeline & Performance:
+- Start and end dates
+- Key milestone deadlines
+- Delivery requirements
+- Performance measurement criteria
+
+🚪 Termination & Exit:
+- Termination conditions and notice periods
+- Early termination penalties
+- Post-termination obligations
+- Asset return requirements
+
+🛡️ Risk Management:
+- Liability limitations and exclusions
+- Insurance requirements
+- Indemnification clauses
+- Force majeure provisions
+
+⚖️ Dispute Resolution:
+- Negotiation and mediation procedures
+- Arbitration clauses (if applicable)
+- Governing law and jurisdiction
+- Attorney fees allocation
+
+✍️ Execution Section:
+- Signature blocks for all parties
+- Date and location of signing
+- Witness requirements (if needed)
+
+📈 PROFESSIONAL FORMATTING:
+- Clear section numbering
+- Professional typography
+- Defined terms in bold/caps
+- Easy-to-reference structure
+
+Create a contract that's legally robust, business-friendly, and crystal clear for all parties! 🎆`,
+      maxTokens: 600,
       temperature: 0.2,
       examples: [
         'Freelance service agreement',
@@ -828,24 +994,65 @@ Make it legally sound and professionally formatted.`,
           maxLength: 100
         }
       ],
-      prompt: `Write a compelling {proposalType} for {client}.
+      prompt: `💼 PROPOSAL POWERHOUSE: Craft a winning {proposalType} for {client} that gets you HIRED! 🎆
 
-Solution/Service: {solution}
-Budget: {budget}
+🎨 PROPOSAL MISSION:
+- Client: {client}
+- Solution: {solution}
+- Budget Range: {budget}
 
-Create a persuasive proposal including:
-- Executive summary
-- Problem identification
-- Proposed solution with benefits
-- Timeline and methodology
-- Team/company qualifications
-- Budget breakdown (if budget provided)
-- Success metrics and deliverables
-- Next steps and call-to-action
-- Professional conclusion
+✨ DEAL-WINNING FORMULA:
+🚀 Executive Summary (The Hook):
+- One powerful paragraph that makes them say "YES!"
+- Clear value proposition and ROI promise
+- Teaser of transformation they'll experience
 
-Make it compelling, client-focused, and results-oriented.`,
-      maxTokens: 1200,
+🔥 Problem Deep-Dive:
+- Paint the pain they're feeling RIGHT NOW
+- Quantify the cost of inaction
+- Show you truly understand their struggles
+
+💡 Solution Showcase:
+- Your approach broken down simply
+- Why your method beats the competition
+- Specific benefits they'll gain
+- Proof points and case studies
+
+⏱️ Timeline & Methodology:
+- Phase-by-phase breakdown
+- Clear milestones and deliverables
+- Realistic timelines that build confidence
+
+🏆 Why You're THE Choice:
+- Team credentials and expertise
+- Past success stories and testimonials
+- Unique advantages and differentiators
+
+💰 Investment Breakdown:
+- Clear pricing structure (if budget provided)
+- Value-based positioning
+- Payment terms and options
+- ROI projections where possible
+
+📈 Success Metrics:
+- Measurable outcomes and KPIs
+- How success will be tracked
+- Reporting and communication schedule
+
+🚀 Next Steps (The Close):
+- Clear action items
+- Timeline for decision
+- Contact information
+- Signature-ready acceptance
+
+🎯 PSYCHOLOGICAL TRIGGERS:
+- Social proof (other clients' success)
+- Urgency (limited availability)
+- Authority (credentials and expertise)
+- Reciprocity (free insights included)
+
+Ready to create a proposal that makes {client} choose YOU over everyone else? Let's win this deal! 💪💰`,
+      maxTokens: 500,
       temperature: 0.6,
       examples: [
         'Web development project proposal',
@@ -896,23 +1103,63 @@ Make it compelling, client-focused, and results-oriented.`,
           maxLength: 200
         }
       ],
-      prompt: `Create an ATS-optimized resume for {jobTitle} position.
+      prompt: `💼 RESUME CHAMPION: Build an interview-winning resume for {jobTitle} that dominates ATS systems and impresses hiring managers! 🎆
 
-Work Experience: {experience}
-Skills: {skills}
-Education: {education}
+🎨 CAREER PROFILE:
+- Target Role: {jobTitle}
+- Experience: {experience}
+- Skills Arsenal: {skills}
+- Education: {education}
 
-Generate a professional resume with:
-- Strong professional summary
-- Optimized work experience with quantified achievements
-- Skills section with relevant keywords
-- Education and certifications
-- Clean, ATS-friendly formatting
-- Action verbs and impact metrics
+✨ ATS DOMINATION STRATEGY:
+🎆 Professional Summary (The Power Opener):
+- 3-4 lines of pure value proposition
+- Industry keywords naturally woven in
+- Quantified achievements preview
+- Leadership/expertise highlights
+
+🚀 Experience Section (The Proof):
+- Action verbs that pack punch (Led, Achieved, Transformed)
+- STAR method for each bullet (Situation-Task-Action-Result)
+- Quantified wins ("Increased sales by 45%")
 - Industry-specific keywords for {jobTitle}
+- Progression story that shows growth
 
-Make it compelling and likely to pass ATS screening.`,
-      maxTokens: 1000,
+📈 Skills Powerhouse:
+- Technical skills matching job requirements
+- Soft skills with context
+- Certifications and specializations
+- Industry tools and platforms
+- ATS keyword optimization
+
+🎓 Education & Credentials:
+- Degree with honors/achievements
+- Relevant coursework (if recent grad)
+- Professional certifications
+- Continuous learning examples
+
+📝 ATS-FRIENDLY FORMATTING:
+- Clean, scannable layout
+- Standard section headers
+- No fancy graphics or tables
+- Proper keyword density
+- Contact info optimization
+
+🎯 HIRING PSYCHOLOGY:
+- Show progression and ambition
+- Demonstrate problem-solving ability
+- Highlight leadership potential
+- Prove cultural fit indicators
+- Emphasize unique value proposition
+
+💥 POWER WORDS ARSENAL:
+- Leadership: Spearheaded, Orchestrated, Championed
+- Results: Achieved, Delivered, Exceeded, Generated
+- Improvement: Optimized, Streamlined, Enhanced, Transformed
+- Innovation: Pioneered, Launched, Developed, Created
+
+Ready to build a resume that gets you HIRED for {jobTitle}? Let's create your career-changing document! 💪🚀`,
+      maxTokens: 400,
       temperature: 0.4,
       examples: [
         'Software developer resume',
@@ -963,23 +1210,73 @@ Make it compelling and likely to pass ATS screening.`,
           maxLength: 400
         }
       ],
-      prompt: `Write an attractive job description for {jobTitle} position.
+      prompt: `👑 TALENT MAGNET PRO: Create an irresistible job posting for {jobTitle} that attracts TOP-TIER candidates and builds your dream team! 🎆
 
-Company: {company}
-Requirements: {requirements}
-Benefits: {benefits}
+🏢 COMPANY INTEL:
+{company}
 
-Create a compelling job posting including:
-- Engaging job title and summary
-- Company overview that sells the culture
-- Clear role responsibilities
-- Required qualifications and preferred skills
-- Competitive benefits and compensation
-- Application instructions
-- Equal opportunity statement
-- Keywords to attract right candidates
+🎯 ROLE REQUIREMENTS:
+{requirements}
 
-Make it appealing to top talent while being clear about expectations.`,
+🎁 BENEFITS PACKAGE:
+{benefits}
+
+✨ TALENT ATTRACTION FORMULA:
+🚀 Magnetic Job Title:
+- Attention-grabbing title that stands out
+- Senior/Lead/Principal positioning (if applicable)
+- Location flexibility highlighted
+
+🏢 Company Story (Why Join Us?):
+- Mission that inspires passion
+- Culture that top talent craves
+- Growth opportunities and career path
+- Team dynamics and collaboration style
+
+🔥 Role Impact Statement:
+- How this role changes everything
+- Big projects and exciting challenges
+- Autonomy and decision-making power
+- Innovation opportunities
+
+🏆 What You'll Conquer:
+- Day-to-day responsibilities that excite
+- High-impact projects and initiatives
+- Cross-functional collaboration
+- Leadership and mentoring opportunities
+
+📈 Ideal Candidate Profile:
+- Must-have skills and experience
+- Nice-to-have superpowers
+- Cultural fit indicators
+- Growth mindset requirements
+
+🎆 Why You'll Love It Here:
+- Competitive compensation package
+- Amazing benefits and perks
+- Work-life balance and flexibility
+- Professional development opportunities
+- Recognition and advancement paths
+
+🚀 Ready to Apply?
+- Simple application process
+- What to include in your application
+- Timeline and next steps
+- Contact information
+
+🌈 Equal Opportunity Commitment:
+- Inclusive workplace statement
+- Diversity and belonging emphasis
+- Accommodation availability
+
+🎯 TALENT PSYCHOLOGY TRIGGERS:
+- Exclusive opportunity language
+- Challenge and growth emphasis
+- Team and culture highlights
+- Impact and meaning focus
+- Career advancement promises
+
+Ready to create a job posting that makes A-players say "I MUST work here!"? Let's build your talent magnet! 💪✨`,
       maxTokens: 800,
       temperature: 0.6,
       examples: [
@@ -1033,28 +1330,56 @@ Make it appealing to top talent while being clear about expectations.`,
           options: ['Short (1-2 words)', 'Medium (2-3 words)', 'Descriptive (3+ words)']
         }
       ],
-      prompt: `Generate creative business names for a {industry} business.
+      prompt: `💫 BRAND GENIUS MODE: Generate breakthrough business names for {industry} that become household brands! 🎆
 
-Style: {style}
-Length: {length}
-Keywords: {keywords}
+🎯 NAMING BRIEF:
+- Industry: {industry}
+- Style: {style}
+- Length: {length}
+- Keywords: {keywords}
 
-Create 15 unique business names that are:
-- Memorable and brandable
-- Easy to pronounce and spell
-- {style} in tone
-- Suitable for {industry}
-- Available for domain registration (.com)
-- Legally protectable as trademarks
+✨ BRAND NAMING FORMULA:
+🚀 15 KILLER NAME OPTIONS:
 
-For each name, provide:
-- The business name
-- Brief explanation of meaning/inspiration
-- Suggested tagline
-- Domain availability check (.com)
+🏏 NAMING PSYCHOLOGY:
+📍 Memorable Factor:
+- Easy to say, spell, and remember
+- Sticky sound combinations
+- Emotional connection triggers
 
-Make them creative, professional, and market-ready.`,
-      maxTokens: 1000,
+🌍 Global Appeal:
+- Cross-cultural pronunciation
+- No negative translations
+- International expansion ready
+
+🔍 SEO & Digital Ready:
+- Available .com domains
+- Social media handle availability
+- Search engine friendly
+
+🎯 STYLE MASTERY:
+💼 Professional: Sophisticated, trustworthy, corporate-ready
+🎉 Creative/Fun: Playful, memorable, personality-driven
+📱 Tech/Modern: Innovative, cutting-edge, future-focused
+🏦 Classic/Traditional: Timeless, established, heritage-feel
+🎆 Abstract/Unique: Distinctive, trademark-able, standout
+
+FOR EACH NAME PROVIDE:
+🏷️ Business Name (stylized)
+💡 Creative Inspiration Story
+🎯 Suggested Tagline
+🌍 Domain Status (.com availability)
+📈 Brand Expansion Potential
+🎆 Memorability Score (1-10)
+
+🔥 BONUS FEATURES:
+- Logo concept suggestions
+- Color palette recommendations
+- Industry positioning strategy
+- Competitor differentiation
+
+Ready to create names that become the next BIG BRANDS in {industry}? Let's build naming legends! 💪🌟`,
+      maxTokens: 400,
       temperature: 0.8,
       examples: [
         'Tech startup names',
@@ -1105,28 +1430,65 @@ Make them creative, professional, and market-ready.`,
           options: ['Professional', 'Fun/Playful', 'Inspirational', 'Bold/Confident', 'Trustworthy']
         }
       ],
-      prompt: `Create memorable slogans for {business} in the {industry} industry.
+      prompt: `🎨 SLOGAN MASTER MODE: Create legendary taglines for {business} that stick in minds and hearts FOREVER! 💫
 
-Target Audience: {audience}
-Brand Tone: {tone}
+🏢 BRAND PROFILE:
+- Business: {business}
+- Industry: {industry}
+- Target: {audience}
+- Personality: {tone}
 
-Generate 20 catchy slogans that:
-- Capture the brand essence
-- Appeal to {audience}
-- Reflect {tone} personality
-- Are memorable and quotable
-- Work across marketing materials
-- Differentiate from competitors
-- Are short and punchy (under 8 words)
+✨ SLOGAN CREATION FORMULA:
+🎆 20 UNFORGETTABLE TAGLINES:
 
-Include variety:
-- Emotional appeals
-- Benefit-focused
-- Action-oriented
-- Play on words/alliteration
-- Inspirational/motivational
+🚀 SLOGAN CATEGORIES:
+💖 Emotional Connectors:
+- Tug at heartstrings
+- Create instant bond
+- Inspire feelings and memories
 
-Make them brandable and marketing-ready.`,
+📈 Benefit Boosters:
+- Clear value proposition
+- "What's in it for me?" answers
+- Problem-solution focus
+
+⚡ Action Activators:
+- Command attention
+- Inspire immediate action
+- Energy and momentum
+
+🎭 Word Play Wizards:
+- Clever alliteration
+- Memorable rhymes
+- Linguistic creativity
+
+🌟 Inspirational Icons:
+- Motivational messaging
+- Aspirational language
+- Dream-building power
+
+🎯 TONE MASTERY:
+💼 Professional: Sophisticated, trustworthy, authoritative
+🎉 Fun/Playful: Energetic, lighthearted, memorable
+🎆 Inspirational: Uplifting, motivational, empowering
+💪 Bold/Confident: Strong, assertive, leadership-focused
+👍 Trustworthy: Reliable, dependable, secure
+
+🗺️ MARKETING POWER FEATURES:
+- Under 8 words for maximum impact
+- Cross-platform compatibility
+- Easy to remember and repeat
+- Trademark-friendly phrasing
+- Competitor differentiation
+- {audience} resonance testing
+
+FOR EACH SLOGAN:
+🏷️ The Tagline
+💡 Psychology Behind It
+🎆 Best Use Cases
+📈 Memorability Factor
+
+Ready to create slogans that make {business} LEGENDARY in the {industry} space? Let's build tagline magic! 🚀✨`,
       maxTokens: 800,
       temperature: 0.8,
       examples: [
@@ -1178,28 +1540,75 @@ Make them brandable and marketing-ready.`,
           options: ['Inform/Educate', 'Persuade/Sell', 'Present Results', 'Propose Solution', 'Train/Teach']
         }
       ],
-      prompt: `Create a compelling presentation about {topic} for {audience}.
+      prompt: `🎆 PRESENTATION POWERHOUSE: Create a show-stopping presentation about {topic} that captivates {audience} and achieves amazing results! 🚀
 
-Duration: {duration}
-Goal: {goal}
+🎯 PRESENTATION MISSION:
+- Topic: {topic}
+- Audience: {audience}
+- Duration: {duration}
+- Goal: {goal}
 
-Generate comprehensive presentation content including:
-- Powerful opening hook
-- Clear agenda/outline
-- Key talking points for each section
-- Supporting data and examples
-- Visual slide suggestions
-- Engaging transitions
-- Strong conclusion with call-to-action
-- Q&A preparation points
+✨ SLIDE MASTERY BLUEPRINT:
+🔥 OPENING IMPACT (First 2 minutes):
+- Attention-grabbing hook that stops scrolling
+- Surprising statistic or bold statement
+- Personal story or relatable scenario
+- Clear promise of value they'll receive
 
-Structure for {duration} timeframe:
-- Introduction (10%)
-- Main content (70-80%)
-- Conclusion (10-20%)
+🗺️ AGENDA ROADMAP:
+- "Here's what we'll cover" preview
+- Time estimates for each section
+- Interactive elements planned
+- Q&A timing expectations
 
-Make it engaging, audience-appropriate, and goal-focused.`,
-      maxTokens: 1200,
+📈 CONTENT ARCHITECTURE:
+🎆 Main Points (70-80% of time):
+- 3-5 key messages maximum
+- Supporting data and proof points
+- Real-world examples and case studies
+- Visual storytelling opportunities
+- Audience engagement moments
+
+🎨 VISUAL STORYTELLING:
+- Slide design recommendations
+- Infographic opportunities
+- Chart and graph suggestions
+- Image and video placements
+- Interactive elements
+
+🔄 SMOOTH TRANSITIONS:
+- Bridge statements between sections
+- Momentum-building connectors
+- Recap and preview techniques
+- Energy management strategies
+
+🌟 POWERFUL CLOSING:
+- Key takeaways summary
+- Memorable final thought
+- Clear call-to-action
+- Next steps roadmap
+- Contact information
+
+🔍 Q&A PREPARATION:
+- Anticipated questions and answers
+- Difficult question handling
+- Additional supporting materials
+- Follow-up resources
+
+🎯 AUDIENCE PSYCHOLOGY:
+💼 For Executives: ROI-focused, concise, strategic
+👥 For Teams: Collaborative, practical, actionable
+📊 For Clients: Value-driven, results-oriented, trustworthy
+🎓 For Students: Educational, engaging, interactive
+
+⏱️ TIME OPTIMIZATION FOR {duration}:
+- Opening impact timing
+- Content pacing strategies
+- Interaction break points
+- Buffer time management
+
+Ready to create a presentation that makes {audience} say "WOW!" and achieves your {goal}? Let's build presentation magic! 💪✨`,
+      maxTokens: 500,
       temperature: 0.6,
       examples: [
         'Sales pitch presentation',
@@ -1250,28 +1659,84 @@ Make it engaging, audience-appropriate, and goal-focused.`,
           maxLength: 200
         }
       ],
-      prompt: `Write a compelling {scriptType} script about {topic}.
+      prompt: `🎬 SCRIPT GENIUS MODE: Write a viral-worthy {scriptType} script about {topic} that hooks viewers and drives massive results! 🚀
 
-Target Audience: {audience}
-Video Length: {length}
+🎯 VIDEO MISSION:
+- Script Type: {scriptType}
+- Topic: {topic}
+- Target: {audience}
+- Duration: {length}
 
-Create an engaging script including:
-- Attention-grabbing hook (first 5 seconds)
-- Clear introduction of topic/product
-- Main content structured logically
-- Visual cues and scene descriptions
-- Engaging narrative flow
-- Call-to-action
-- Timing notes for {length}
+✨ VIRAL VIDEO FORMULA:
+🔥 HOOK MASTERY (0-5 seconds):
+[VISUAL: Eye-catching opening scene]
+"Did you know that..." or "What if I told you..."
+- Pattern interrupt that stops the scroll
+- Bold promise or shocking revelation
+- Visual intrigue that demands attention
 
-Format as professional script with:
-- [VISUAL CUES]
-- Speaker dialogue
-- Time markers
-- Engagement points
+🎆 STORY ARC STRUCTURE:
+📍 Problem Introduction (5-15% of time):
+[VISUAL: Relatable scenario]
+- Paint the pain point vividly
+- Make audience nod "Yes, that's me!"
+- Create emotional connection
 
-Make it conversational, engaging, and conversion-focused.`,
-      maxTokens: 1000,
+💡 Solution Reveal (60-70% of time):
+[VISUAL: Transformation sequence]
+- Step-by-step breakdown
+- Benefits and features showcase
+- Social proof and testimonials
+- Behind-the-scenes authenticity
+
+🌟 Transformation (15-25% of time):
+[VISUAL: Before vs. After]
+- Results demonstration
+- Success stories integration
+- Future vision painting
+
+🎬 PLATFORM OPTIMIZATION:
+📺 YouTube: Educational focus, longer-form storytelling
+📱 Social Media: Quick hooks, visual impact, trending audio
+💼 Product Demo: Feature highlights, user experience journey
+📺 Advertisement: Problem-solution-action formula
+📈 Explainer: Complex to simple, visual metaphors
+
+🎨 VISUAL STORYTELLING:
+[CAMERA ANGLES]: Close-ups for emotion, wide shots for context
+[GRAPHICS]: Text overlays, animations, infographics
+[MUSIC]: Energy level matching content mood
+[LIGHTING]: Professional setup suggestions
+[PROPS]: Supporting visual elements
+
+🔊 ENGAGEMENT TRIGGERS:
+- Questions that make viewers comment
+- Cliffhangers that build suspense
+- Interactive elements (polls, choices)
+- Personality moments that build connection
+
+📈 CONVERSION CLIMAX:
+[VISUAL: Clear CTA screen]
+- Compelling reason to act NOW
+- Multiple contact options
+- Risk reversal and guarantees
+- Urgency and scarcity elements
+
+⏱️ TIMING OPTIMIZATION:
+{length} Structure:
+- Hook: First 5 seconds
+- Setup: Next 10-15%
+- Main content: 60-75%
+- Close: Final 10-15%
+
+🎯 AUDIENCE PSYCHOLOGY:
+- {audience} language and references
+- Pain points that resonate
+- Dreams and aspirations
+- Communication style preferences
+
+Ready to create a script that goes VIRAL and converts like crazy? Let's make video magic happen! 💪🎆`,
+      maxTokens: 400,
       temperature: 0.7,
       examples: [
         'Product explainer video',
@@ -1322,28 +1787,91 @@ Make it conversational, engaging, and conversion-focused.`,
           options: ['Daily', 'Weekly', 'Bi-weekly', 'Monthly']
         }
       ],
-      prompt: `Create an engaging {frequency} newsletter about {topic} for {audience}.
+      prompt: `📨 NEWSLETTER NINJA MODE: Create an addictive {frequency} newsletter about {topic} that {audience} can't wait to open! 🚀
 
-Content Sections: {sections}
+🎯 NEWSLETTER MISSION:
+- Topic: {topic}
+- Audience: {audience}
+- Frequency: {frequency}
+- Sections: {sections}
 
-Generate complete newsletter including:
-- Compelling subject line
-- Personal greeting/introduction
-- Content for each section:
-  {sections}
-- Engaging headlines and subheaders
-- Call-to-action buttons
-- Social sharing links
-- Unsubscribe footer
+✨ INBOX DOMINATION FORMULA:
+📧 SUBJECT LINE MAGIC:
+- Curiosity-driven headlines
+- Emoji enhancement (but not overwhelming)
+- Urgency and exclusivity hints
+- Personal touch elements
+- A/B test variations
 
-Make each section:
-- Valuable and informative
-- Engaging and conversational
-- Scannable with bullets/lists
-- Action-oriented where appropriate
+👋 WARM WELCOME:
+"Hey [First Name]! 😊"
+- Personal, conversational greeting
+- Brief update on your world
+- Tease what's inside this issue
+- Build anticipation and excitement
 
-Create content that builds community and drives engagement.`,
-      maxTokens: 1200,
+📈 CONTENT ARCHITECTURE:
+
+FOR EACH SECTION IN {sections}:
+🏷️ Eye-catching section headers
+💡 Value-packed insights and tips
+📀 Scannable bullet points and lists
+📸 Visual elements suggestions
+🔗 Strategic link placements
+📣 Mini calls-to-action throughout
+
+🎆 ENGAGEMENT BOOSTERS:
+🗣️ Conversation starters ("Hit reply and tell me...")
+🎯 Interactive elements (polls, questions)
+📅 Behind-the-scenes personal stories
+🏆 Subscriber spotlights and wins
+🎁 Exclusive offers and early access
+
+📱 SOCIAL AMPLIFICATION:
+"Love this newsletter? Share it! 🚀"
+- One-click sharing buttons
+- Social-worthy quotes and highlights
+- Refer-a-friend incentives
+- User-generated content features
+
+📈 CONVERSION ELEMENTS:
+🚀 Primary CTA (main newsletter goal)
+🔗 Secondary CTAs (related offers)
+📞 Contact and support links
+👥 Community joining invitations
+
+🌟 COMMUNITY BUILDERS:
+- "Reader of the Week" features
+- Exclusive insider information
+- Member-only benefits highlights
+- Feedback loops and surveys
+
+📱 MOBILE OPTIMIZATION:
+- Short paragraphs (2-3 sentences max)
+- Thumb-friendly button sizes
+- Fast-loading images
+- Skimmable format
+
+🔍 FOOTER FINISHER:
+"Until next {frequency},
+[Your signature] 😊
+
+P.S. [Compelling post-script]"
+
+- Unsubscribe (legally required)
+- Contact information
+- Social media links
+- Company address
+
+🎯 PSYCHOLOGY TRIGGERS:
+- FOMO (exclusive content)
+- Social proof (subscriber counts)
+- Reciprocity (free value first)
+- Authority (expert insights)
+- Community (belonging feeling)
+
+Ready to create newsletters that make {audience} say "This is exactly what I needed!"? Let's build newsletter magic! 💪✨`,
+      maxTokens: 500,
       temperature: 0.7,
       examples: [
         'Business weekly newsletter',
@@ -1396,25 +1924,80 @@ Create content that builds community and drives engagement.`,
           options: ['Business/Professional', 'Marketing/Sales', 'Technical/Documentation', 'Casual/Conversational', 'Legal/Formal']
         }
       ],
-      prompt: `Translate the following text from {fromLanguage} to {toLanguage}.
+      prompt: `🌍 TRANSLATION MASTER: Transform text from {fromLanguage} to {toLanguage} with cultural precision and contextual perfection! ✨
 
-Original text: {text}
-Context: {context}
+📝 TRANSLATION BRIEF:
+- Source: {fromLanguage}
+- Target: {toLanguage}
+- Context: {context}
+- Original Text: {text}
 
-Provide accurate translation that:
-- Preserves original meaning and intent
-- Maintains appropriate tone for {context}
-- Uses culturally appropriate expressions
-- Follows target language conventions
-- Keeps formatting and structure
+🎯 TRANSLATION EXCELLENCE FORMULA:
+🔄 PRIMARY TRANSLATION:
+[Perfect {toLanguage} version that flows naturally]
 
-Include:
-- Primary translation
-- Alternative translation (if applicable)
-- Cultural notes (if relevant)
-- Tone/formality level maintained
+🎆 CULTURAL ADAPTATION:
+- Idiomatic expressions localized
+- Cultural references adjusted
+- Regional variations considered
+- Social context awareness
 
-Ensure professional quality suitable for {context} use.`,
+🎨 CONTEXT MASTERY:
+💼 Business/Professional:
+- Formal register maintained
+- Industry terminology precision
+- Professional courtesy elements
+
+📈 Marketing/Sales:
+- Persuasive language adapted
+- Emotional triggers localized
+- Call-to-action culturally optimized
+
+📚 Technical/Documentation:
+- Precise terminology used
+- Step-by-step clarity maintained
+- Technical accuracy verified
+
+👥 Casual/Conversational:
+- Natural speech patterns
+- Colloquial expressions appropriate
+- Friendly, approachable tone
+
+⚖️ Legal/Formal:
+- Highest formality level
+- Legal terminology precision
+- Ceremonial language respected
+
+📚 LINGUISTIC QUALITY FEATURES:
+- Grammar and syntax perfection
+- Natural word order and flow
+- Appropriate punctuation adaptation
+- Formatting preservation
+- Readability optimization
+
+🌍 CULTURAL INTELLIGENCE:
+- Sensitivity to cultural norms
+- Appropriate honorifics and titles
+- Gender and social considerations
+- Religious and cultural respect
+
+🔄 ALTERNATIVE OPTIONS:
+[Secondary translation if style differs]
+[Regional variation if applicable]
+
+📝 TRANSLATOR NOTES:
+- Tone level: [Formal/Informal/Neutral as maintained]
+- Cultural adaptations made: [If any]
+- Terminology choices: [Key decisions explained]
+- Suggested improvements: [If applicable]
+
+🎆 QUALITY ASSURANCE:
+- Meaning preservation: 100%
+- Cultural appropriateness: Verified
+- Target audience suitability: Confirmed
+- Professional standard: Exceeded
+
+Delivering translations that sound like they were written by native speakers! 💪🌍`,
       maxTokens: 800,
       temperature: 0.3,
       examples: [
@@ -1541,7 +2124,7 @@ Generate a comprehensive live chatbot package including:
 Make the chatbot {chatbotTone} and specifically knowledgeable about {businessType} industry best practices. Include ready-to-use code that creates a professional live chat experience.
 
 IMPORTANT: The chatbot should be configured to use the customer's own OpenAI API key for cost control and transparency.`,
-      maxTokens: 2000,
+      maxTokens: 600,
       temperature: 0.4,
       examples: [
         'Restaurant live chatbot with ordering',
@@ -1592,28 +2175,82 @@ IMPORTANT: The chatbot should be configured to use the customer's own OpenAI API
           options: ['Action Items', 'Decisions Made', 'Key Discussion Points', 'Next Steps', 'Comprehensive']
         }
       ],
-      prompt: `Summarize the {meetingType} with focus on {focus}.
+      prompt: `📝 MEETING MASTER MODE: Transform chaotic meeting notes into crystal-clear action plans that drive results! 🎆
 
-Meeting Notes: {meetingNotes}
-Participants: {participants}
+📅 MEETING INTEL:
+- Type: {meetingType}
+- Focus: {focus}
+- Participants: {participants}
+- Raw Notes: {meetingNotes}
 
-Create organized summary including:
-- Meeting overview (date, participants, purpose)
-- Key discussion points
-- Important decisions made
-- Action items with owners and deadlines
-- Next steps and follow-ups
-- Open questions or concerns
-- Meeting outcomes
+✨ EXECUTIVE SUMMARY MAGIC:
+🎯 THE 30-SECOND OVERVIEW:
+[2-3 powerful sentences that capture everything]
+"In today's {meetingType}, we achieved [key outcome] and decided to [major decision] with [next milestone] by [date]."
 
-Format for easy sharing:
-- Executive summary (2-3 lines)
-- Detailed sections with bullet points
-- Clear action items list
-- Next meeting/follow-up plans
+📈 STRATEGIC BREAKDOWN:
 
-Make it professional and actionable for all attendees.`,
-      maxTokens: 1000,
+🔥 KEY DISCUSSION HIGHLIGHTS:
+- 💡 Major topics covered
+- 👥 Who said what (key contributors)
+- 📈 Data points and insights shared
+- 📀 Decisions reached with rationale
+
+✅ DECISION TRACKER:
+- 🎯 What was decided
+- 👥 Who made the call
+- 📅 When it takes effect
+- 📢 Who needs to be informed
+
+🚀 ACTION ITEMS COMMAND CENTER:
+
+FOR EACH ACTION ITEM:
+✅ Task: [Clear, specific description]
+👥 Owner: [Responsible person]
+📅 Deadline: [Specific date/time]
+🎯 Priority: [High/Medium/Low]
+📈 Success Metric: [How we'll know it's done]
+
+🔍 UNRESOLVED ITEMS:
+- ❓ Open questions that need answers
+- 🚧 Roadblocks identified
+- 📅 Follow-up research required
+- 👥 People to consult
+
+📅 WHAT'S NEXT?
+- 📅 Next meeting date/time
+- 🎯 Agenda preview for next session
+- 📧 Follow-up communications needed
+- 📈 Progress check-in schedule
+
+🎯 FOCUS AREA DEEP DIVE:
+
+{focus} SPOTLIGHT:
+- 🔍 Detailed analysis of focus area
+- 📈 Specific insights and breakthroughs
+- 🚀 Action items related to focus
+- 🎯 Success metrics for this area
+
+📱 MOBILE-FRIENDLY FORMAT:
+- Short, scannable bullet points
+- Clear section headers
+- Action-oriented language
+- Easy to reference later
+
+🚀 PRODUCTIVITY BOOSTERS:
+- One-page summary for quick reference
+- Separate detailed action list
+- Calendar-ready meeting requests
+- Follow-up email templates
+
+🎆 MEETING ROI TRACKER:
+- Time invested: [Meeting duration]
+- Decisions made: [Count and impact]
+- Actions generated: [Count and priority]
+- Value created: [Outcomes and benefits]
+
+Transforming meeting chaos into organized action! Ready to make every meeting count? 💪✨`,
+      maxTokens: 400,
       temperature: 0.4,
       examples: [
         'Weekly team sync summary',
@@ -1664,33 +2301,103 @@ Make it professional and actionable for all attendees.`,
           options: ['Professional/Formal', 'Friendly/Personal', 'Apologetic/Understanding', 'Grateful/Appreciative']
         }
       ],
-      prompt: `Generate a professional response to this {rating} customer review for {business}.
+      prompt: `⭐ REVIEW RESPONSE PRO: Craft the perfect response to this {rating} review for {business} that turns feedback into brand gold! 🎆
 
-Customer Review: {review}
-Response Style: {responseStyle}
+📝 REVIEW DETAILS:
+- Business: {business}
+- Rating: {rating}
+- Customer Review: {review}
+- Response Style: {responseStyle}
 
-Create appropriate response that:
-- Acknowledges the customer's feedback
-- Thanks them for their review
-- Addresses specific points mentioned
-- Shows {responseStyle} tone
-- Maintains professional image
-- Encourages future business (if positive)
-- Offers solutions (if negative)
-- Invites further communication if needed
+✨ RESPONSE MASTERY FORMULA:
 
-For positive reviews:
-- Express genuine gratitude
-- Highlight specific compliments
-- Invite them back
+💖 FOR POSITIVE REVIEWS (4-5 stars):
+🎉 GRATITUDE EXPLOSION:
+"[Customer Name], WOW! 😊 Thank you so much for this amazing review!"
 
-For negative reviews:
-- Acknowledge concerns professionally
-- Apologize where appropriate
-- Offer solutions or next steps
-- Take conversation offline if needed
+🎆 SPECIFIC APPRECIATION:
+- Quote their exact compliments
+- Acknowledge team members mentioned
+- Celebrate shared success moments
 
-Keep response authentic and brand-appropriate.`,
+🚀 FUTURE INVITATION:
+"We can't wait to serve you again and create more amazing experiences!"
+
+🔥 FOR NEGATIVE REVIEWS (1-3 stars):
+🙏 SINCERE ACKNOWLEDGMENT:
+"[Customer Name], thank you for taking the time to share your experience."
+
+💔 EMPATHY & OWNERSHIP:
+"We're truly sorry to hear that we didn't meet your expectations."
+
+🛠️ SOLUTION FOCUS:
+"Here's what we're doing to make this right..."
+
+📞 OFFLINE INVITATION:
+"Please reach out to us directly at [contact] so we can resolve this personally."
+
+🎯 STYLE ADAPTATION:
+
+💼 Professional/Formal:
+- Sophisticated language
+- Respectful tone throughout
+- Business-appropriate messaging
+
+👥 Friendly/Personal:
+- Warm, conversational approach
+- Personal touches and emojis
+- Human connection emphasis
+
+🙏 Apologetic/Understanding:
+- Deep empathy demonstration
+- Responsibility acceptance
+- Genuine concern expression
+
+😍 Grateful/Appreciative:
+- Enthusiastic thankfulness
+- Positive energy radiating
+- Customer value celebration
+
+📈 BRAND BUILDING ELEMENTS:
+- Company values demonstration
+- Team dedication showcase
+- Quality commitment reinforcement
+- Community connection building
+
+🚀 CONVERSION OPPORTUNITIES:
+- Subtle service mentions (for positive reviews)
+- Special offer invitations (if appropriate)
+- Referral encouragement
+- Social media follow invitations
+
+🎆 PROFESSIONAL POLISH:
+- Error-free grammar and spelling
+- Consistent brand voice
+- Appropriate length (not too long/short)
+- Mobile-friendly formatting
+
+📝 RESPONSE TEMPLATE:
+"Hi [Customer Name] 😊,
+
+[Personalized opening based on rating]
+
+[Specific acknowledgment of their points]
+
+[Action items or appreciation]
+
+[Future-focused closing]
+
+Best regards,
+[Your Name]
+[Title] at {business}"
+
+🎯 PSYCHOLOGICAL IMPACT:
+- Show other potential customers you care
+- Demonstrate responsive customer service
+- Build trust through transparency
+- Create positive brand impression
+
+Ready to turn every review into a reputation booster? Let's build customer love! 💪❤️`,
       maxTokens: 400,
       temperature: 0.6,
       examples: [
@@ -1742,27 +2449,136 @@ Keep response authentic and brand-appropriate.`,
           options: ['Email Response', 'Chat Message', 'Phone Script', 'Help Article', 'Escalation Note']
         }
       ],
-      prompt: `Create a professional customer service {responseType} for a {customerType}.
+      prompt: `🎆 CUSTOMER SERVICE CHAMPION: Create exceptional {responseType} for {customerType} that turns problems into loyalty! 🚀
 
-Customer Inquiry: {inquiry}
-Urgency Level: {urgency}
+📧 SERVICE REQUEST:
+- Customer Type: {customerType}
+- Inquiry: {inquiry}
+- Urgency: {urgency}
+- Response Format: {responseType}
 
-Generate appropriate response that:
-- Acknowledges their concern promptly
-- Shows empathy and understanding
-- Provides clear, actionable solution
-- Matches urgency level appropriately
-- Uses professional, helpful tone
-- Includes next steps if needed
-- Offers additional assistance
-- Maintains positive customer experience
+✨ SERVICE EXCELLENCE FORMULA:
 
-For {customerType}:
-- Use appropriate level of personalization
-- Consider their relationship with company
-- Adjust tone and approach accordingly
+👋 WARM ACKNOWLEDGMENT:
+"Hi [Customer Name]! 😊 Thank you for reaching out to us."
 
-Make response helpful, professional, and customer-focused.`,
+💖 EMPATHY CONNECTION:
+"I completely understand your [concern/frustration/question] about [specific issue]."
+
+🎯 CUSTOMER TYPE MASTERY:
+
+💆 New Customer:
+- Extra welcoming tone
+- Company introduction elements
+- Onboarding support offers
+- "Welcome to the family!" energy
+
+퉣 Existing Customer:
+- Relationship acknowledgment
+- Account history awareness
+- Loyalty appreciation
+- Personalized service approach
+
+👑 Premium Customer:
+- VIP treatment language
+- Priority handling indicators
+- Exclusive benefits mentions
+- Concierge-level service
+
+🤯 Upset Customer:
+- Extra empathy and patience
+- Immediate ownership of issue
+- Multiple solution options
+- Follow-up commitment
+
+🎆 VIP Customer:
+- Executive-level attention
+- Premium service indicators
+- Direct contact information
+- Special handling promises
+
+🚑 URGENCY RESPONSE CALIBRATION:
+
+🟢 Low (General Question):
+- Friendly, informative approach
+- Educational content included
+- Resource sharing
+- "Happy to help!" tone
+
+🟡 Medium (Service Issue):
+- Prompt response indicators
+- Clear solution timeline
+- Status update promises
+- Proactive communication
+
+🔴 High (Billing Problem):
+- Immediate action language
+- Same-day resolution commitment
+- Direct contact offers
+- Escalation path provided
+
+⚠️ Critical (System Down):
+- Emergency response protocol
+- Real-time update promises
+- Multiple contact channels
+- Executive involvement indication
+
+🛠️ SOLUTION ARCHITECTURE:
+🎯 Immediate Actions:
+"Here's what I'm doing right now to help..."
+
+📅 Timeline Clarity:
+"You can expect [resolution] by [specific time]."
+
+📞 Next Steps:
+"I'll follow up with you on [date] to ensure everything is perfect."
+
+🎆 RESPONSE FORMAT OPTIMIZATION:
+
+📧 Email Response:
+- Professional subject line
+- Structured, scannable format
+- Action items clearly marked
+- Contact information included
+
+💬 Chat Message:
+- Quick, conversational tone
+- Immediate help indicators
+- Emoji-enhanced friendliness
+- Fast resolution focus
+
+📞 Phone Script:
+- Verbal emphasis markers
+- Pause points indicated
+- Empathy moments highlighted
+- Call wrap-up protocol
+
+📚 Help Article:
+- Step-by-step clarity
+- Visual cue suggestions
+- Related resource links
+- Contact option included
+
+📈 Escalation Note:
+- Issue summary for leadership
+- Customer importance indicators
+- Recommended action plan
+- Urgency level justification
+
+🚀 LOYALTY BUILDING ELEMENTS:
+- Surprise and delight opportunities
+- Additional value offers
+- Personal appreciation notes
+- Future prevention tips
+
+🎆 PROFESSIONAL POLISH:
+"Is there anything else I can help you with today? We're always here for you! 😊
+
+Best regards,
+[Your Name]
+[Title] - Customer Success Team"
+
+Ready to turn every customer interaction into a loyalty-building moment? Let's create service magic! 💪✨`,
       maxTokens: 600,
       temperature: 0.5,
       examples: [
