@@ -148,6 +148,25 @@ const DashboardPage = () => {
           <p className="text-gray-300">
             Manage your Somali AI Dataset API access and monitor your usage
           </p>
+          
+          {/* TUTORIAL STUDIO - PROMINENT PLACEMENT */}
+          <div className="mt-6 p-4 bg-gradient-to-r from-red-600 to-red-700 rounded-xl border-2 border-red-400">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <Video className="w-8 h-8 text-white mr-4" />
+                <div>
+                  <h3 className="text-xl font-bold text-white">🎥 TUTORIAL STUDIO IS HERE!</h3>
+                  <p className="text-red-100">Record professional demos of your SaaS products</p>
+                </div>
+              </div>
+              <a
+                href="/tutorial-studio"
+                className="bg-white text-red-600 px-6 py-3 rounded-lg font-bold hover:bg-red-50 transition-colors"
+              >
+                Open Studio →
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Stats Cards */}
