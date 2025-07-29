@@ -11,7 +11,8 @@ import {
   TrendingUp,
   Zap,
   Shield,
-  Users
+  Users,
+  Video
 } from 'lucide-react';
 
 interface UserStats {
@@ -262,7 +263,18 @@ const DashboardPage = () => {
         {/* Quick Actions */}
         <div className="mt-8">
           <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <a
+              href="/tutorial-studio"
+              className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 group"
+            >
+              <Video className="w-8 h-8 text-purple-400 mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-white mb-2">Tutorial Studio</h3>
+              <p className="text-gray-300">
+                Record and manage tutorial videos for your SaaS products
+              </p>
+            </a>
+
             <a
               href="/docs"
               className="bg-gradient-to-br from-blue-900/30 to-emerald-900/30 rounded-xl p-6 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 group"
