@@ -66,27 +66,136 @@ const TutorialStudio = () => {
       let stream: MediaStream;
       
       if (recordingMode === 'screen') {
+        // Screen recording with audio
         stream = await navigator.mediaDevices.getDisplayMedia({ 
-          video: true, 
-          audio: true 
+          video: {
+            mediaSource: 'screen',
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+          }, 
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            sampleRate: 44100
+          }
         });
       } else if (recordingMode === 'webcam') {
         stream = await navigator.mediaDevices.getUserMedia({ 
-          video: true, 
-          audio: true 
+          video: {
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }, 
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            sampleRate: 44100
+          }
         });
       } else {
         // Mixed mode - combine screen and webcam
         const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
-          video: true, 
-          audio: true 
+          video: {
+            mediaSource: 'screen',
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+          }, 
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            sampleRate: 44100
+          }
         });
+        
         const webcamStream = await navigator.mediaDevices.getUserMedia({ 
-          video: true, 
-          audio: true 
+          video: {
+            width: { ideal: 320 },
+            height: { ideal: 240 }
+          }, 
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            sampleRate: 44100
+          }
         });
-        // For now, use screen stream (in production, you'd combine them)
-        stream = screenStream;
+
+        // Create a canvas to combine both streams
+        const canvas = document.createElement('canvas');
+        canvas.width = 1920;
+        canvas.height = 1080;
+        const ctx = canvas.getContext('2d')!;
+        
+        const screenVideo = document.createElement('video');
+        const webcamVideo = document.createElement('video');
+        
+        screenVideo.setAttribute('data-screen', 'true');
+        webcamVideo.setAttribute('data-webcam', 'true');
+        screenVideo.style.display = 'none';
+        webcamVideo.style.display = 'none';
+        
+        document.body.appendChild(screenVideo);
+        document.body.appendChild(webcamVideo);
+        
+        screenVideo.srcObject = screenStream;
+        webcamVideo.srcObject = webcamStream;
+        
+        screenVideo.play();
+        webcamVideo.play();
+        
+        // Combine audio tracks
+        const audioContext = new AudioContext();
+        const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
+        const webcamAudioSource = audioContext.createMediaStreamSource(webcamStream);
+        const destination = audioContext.createMediaStreamDestination();
+        
+        screenAudioSource.connect(destination);
+        webcamAudioSource.connect(destination);
+        
+        // Create combined video stream
+        const canvasStream = canvas.captureStream(30);
+        const combinedStream = new MediaStream([
+          ...canvasStream.getVideoTracks(),
+          ...destination.stream.getAudioTracks()
+        ]);
+        
+        // Draw frames
+        const drawFrame = () => {
+          if (isRecording) {
+            // Draw screen capture (full canvas)
+            ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+            
+            // Draw webcam in bottom-right corner (picture-in-picture)
+            const webcamWidth = 320;
+            const webcamHeight = 240;
+            const margin = 20;
+            
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.fillRect(
+              canvas.width - webcamWidth - margin - 5,
+              canvas.height - webcamHeight - margin - 5,
+              webcamWidth + 10,
+              webcamHeight + 10
+            );
+            
+            ctx.drawImage(
+              webcamVideo,
+              canvas.width - webcamWidth - margin,
+              canvas.height - webcamHeight - margin,
+              webcamWidth,
+              webcamHeight
+            );
+            
+            requestAnimationFrame(drawFrame);
+          }
+        };
+        
+        // Wait for videos to be ready
+        await Promise.all([
+          new Promise(resolve => screenVideo.addEventListener('loadedmetadata', resolve)),
+          new Promise(resolve => webcamVideo.addEventListener('loadedmetadata', resolve))
+        ]);
+        
+        drawFrame();
+        stream = combinedStream;
       }
 
       streamRef.current = stream;
@@ -95,7 +204,19 @@ const TutorialStudio = () => {
         videoRef.current.srcObject = stream;
       }
 
-      const mediaRecorder = new MediaRecorder(stream);
+      // Use better codec options for audio/video quality
+      const options = {
+        mimeType: 'video/webm;codecs=vp9,opus',
+        audioBitsPerSecond: 128000,
+        videoBitsPerSecond: 2500000
+      };
+      
+      // Fallback if vp9 not supported
+      const supportedOptions = MediaRecorder.isTypeSupported(options.mimeType) 
+        ? options 
+        : { mimeType: 'video/webm;codecs=vp8,opus' };
+      
+      const mediaRecorder = new MediaRecorder(stream, supportedOptions);
       mediaRecorderRef.current = mediaRecorder;
       
       const chunks: BlobPart[] = [];
@@ -153,9 +274,15 @@ const TutorialStudio = () => {
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && streamRef.current) {
+      setIsRecording(false); // Stop the drawing loop first
       mediaRecorderRef.current.stop();
       streamRef.current.getTracks().forEach(track => track.stop());
-      setIsRecording(false);
+      
+      // Clean up video elements for mixed mode
+      const screenVideo = document.querySelector('video[data-screen]') as HTMLVideoElement;
+      const webcamVideo = document.querySelector('video[data-webcam]') as HTMLVideoElement;
+      if (screenVideo) screenVideo.remove();
+      if (webcamVideo) webcamVideo.remove();
     }
   };
 
