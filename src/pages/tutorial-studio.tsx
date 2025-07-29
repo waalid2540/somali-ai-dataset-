@@ -32,31 +32,18 @@ interface Recording {
 const TutorialStudio = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
-  const [recordings, setRecordings] = useState<Recording[]>([
-    {
-      id: '1',
-      title: 'Somali AI Dataset API Demo',
-      duration: '5:23',
-      size: '45.2 MB',
-      created_at: '2024-01-15',
-      thumbnail: '/api-demo-thumb.jpg',
-      type: 'screen'
-    },
-    {
-      id: '2', 
-      title: 'AI Tools Bundle Overview',
-      duration: '8:15',
-      size: '67.8 MB',
-      created_at: '2024-01-14',
-      thumbnail: '/tools-thumb.jpg',
-      type: 'mixed'
-    }
-  ]);
+  const [recordings, setRecordings] = useState<Recording[]>([]);
   const [recordingMode, setRecordingMode] = useState<'screen' | 'webcam' | 'mixed'>('screen');
   const [selectedRecording, setSelectedRecording] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  // Load saved recordings on component mount
+  useEffect(() => {
+    const savedRecordings = JSON.parse(localStorage.getItem('tutorial-recordings') || '[]');
+    setRecordings(savedRecordings);
+  }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -123,7 +110,7 @@ const TutorialStudio = () => {
         // Create new recording entry
         const newRecording: Recording = {
           id: Date.now().toString(),
-          title: `Recording ${new Date().toLocaleDateString()}`,
+          title: `Recording ${new Date().toLocaleString()}`,
           duration: formatTime(recordingTime),
           size: `${(blob.size / (1024 * 1024)).toFixed(1)} MB`,
           created_at: new Date().toISOString().split('T')[0],
@@ -131,8 +118,29 @@ const TutorialStudio = () => {
           type: recordingMode
         };
         
+        // Save recording to localStorage for persistence
+        const savedRecordings = JSON.parse(localStorage.getItem('tutorial-recordings') || '[]');
+        savedRecordings.unshift(newRecording);
+        localStorage.setItem('tutorial-recordings', JSON.stringify(savedRecordings));
+        
+        // Save the actual video blob for download
+        const videoData = {
+          id: newRecording.id,
+          blob: blob,
+          url: url
+        };
+        const savedVideos = JSON.parse(localStorage.getItem('tutorial-videos') || '{}');
+        savedVideos[newRecording.id] = {
+          url: url,
+          blob: blob
+        };
+        localStorage.setItem('tutorial-videos', JSON.stringify(savedVideos));
+        
         setRecordings(prev => [newRecording, ...prev]);
         setRecordingTime(0);
+        
+        // Show success message
+        alert(`Recording saved! Duration: ${formatTime(recordingTime)}, Size: ${(blob.size / (1024 * 1024)).toFixed(1)} MB`);
       };
 
       mediaRecorder.start();
@@ -158,6 +166,43 @@ const TutorialStudio = () => {
 
   const deleteRecording = (id: string) => {
     setRecordings(prev => prev.filter(r => r.id !== id));
+    
+    // Update localStorage
+    const savedRecordings = JSON.parse(localStorage.getItem('tutorial-recordings') || '[]');
+    const updatedRecordings = savedRecordings.filter((r: Recording) => r.id !== id);
+    localStorage.setItem('tutorial-recordings', JSON.stringify(updatedRecordings));
+    
+    // Remove video data
+    const savedVideos = JSON.parse(localStorage.getItem('tutorial-videos') || '{}');
+    delete savedVideos[id];
+    localStorage.setItem('tutorial-videos', JSON.stringify(savedVideos));
+  };
+
+  const downloadRecording = (id: string, title: string) => {
+    const savedVideos = JSON.parse(localStorage.getItem('tutorial-videos') || '{}');
+    const videoData = savedVideos[id];
+    
+    if (videoData && videoData.url) {
+      const a = document.createElement('a');
+      a.href = videoData.url;
+      a.download = `${title}.webm`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      alert('Video data not found. This may happen after browser restart.');
+    }
+  };
+
+  const viewRecording = (id: string) => {
+    const savedVideos = JSON.parse(localStorage.getItem('tutorial-videos') || '{}');
+    const videoData = savedVideos[id];
+    
+    if (videoData && videoData.url) {
+      window.open(videoData.url, '_blank');
+    } else {
+      alert('Video data not found. This may happen after browser restart.');
+    }
   };
 
   return (
@@ -383,19 +428,24 @@ const TutorialStudio = () => {
                   </div>
                   
                   <div className="flex items-center space-x-2">
-                    <button className="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center">
+                    <button 
+                      onClick={() => viewRecording(recording.id)}
+                      className="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
+                    >
                       <Eye className="w-4 h-4 mr-1" />
                       View
                     </button>
-                    <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-3 rounded text-sm">
-                      <Edit3 className="w-4 h-4" />
-                    </button>
-                    <button className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm">
+                    <button 
+                      onClick={() => downloadRecording(recording.id, recording.title)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm"
+                      title="Download recording"
+                    >
                       <Download className="w-4 h-4" />
                     </button>
                     <button 
                       onClick={() => deleteRecording(recording.id)}
                       className="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-sm"
+                      title="Delete recording"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
