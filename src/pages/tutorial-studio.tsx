@@ -163,16 +163,21 @@ const TutorialStudio = () => {
           const checkLoaded = () => {
             loadedCount++;
             if (loadedCount === 2) {
-              // Small delay to ensure videos are ready
-              setTimeout(resolve, 100);
+              // Longer delay to ensure videos are ready
+              setTimeout(resolve, 500);
             }
           };
           
-          screenVideo.onloadeddata = checkLoaded;
-          webcamVideo.onloadeddata = checkLoaded;
+          screenVideo.onloadedmetadata = () => {
+            screenVideo.play().then(checkLoaded);
+          };
+          
+          webcamVideo.onloadedmetadata = () => {
+            webcamVideo.play().then(checkLoaded);
+          };
           
           // Fallback timeout
-          setTimeout(resolve, 2000);
+          setTimeout(resolve, 3000);
         });
         
         // Simple audio combining - just use all audio tracks
@@ -183,47 +188,62 @@ const TutorialStudio = () => {
         
         // Start the drawing animation
         let animationFrame: number | null = null;
+        let isDrawing = false;
+        
         const drawFrame = () => {
-          if (isRecording) {
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (isRecording && !isDrawing) {
+            isDrawing = true;
             
-            // Draw screen capture (full canvas)
-            if (screenVideo.videoWidth > 0 && screenVideo.videoHeight > 0) {
-              ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+            try {
+              // Clear canvas with black background
+              ctx.fillStyle = '#000000';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              
+              // Draw screen capture (full canvas) - Check if video is ready and playing
+              if (screenVideo.readyState >= 2 && screenVideo.videoWidth > 0 && screenVideo.videoHeight > 0) {
+                ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+              }
+              
+              // Draw webcam in bottom-right corner (picture-in-picture)
+              if (webcamVideo.readyState >= 2 && webcamVideo.videoWidth > 0 && webcamVideo.videoHeight > 0) {
+                const webcamWidth = 320;
+                const webcamHeight = 240;
+                const margin = 20;
+                
+                // White border for webcam (more visible)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.fillRect(
+                  canvas.width - webcamWidth - margin - 5,
+                  canvas.height - webcamHeight - margin - 5,
+                  webcamWidth + 10,
+                  webcamHeight + 10
+                );
+                
+                // Draw webcam video
+                ctx.drawImage(
+                  webcamVideo,
+                  canvas.width - webcamWidth - margin,
+                  canvas.height - webcamHeight - margin,
+                  webcamWidth,
+                  webcamHeight
+                );
+              }
+            } catch (error) {
+              console.log('Canvas drawing error:', error);
             }
             
-            // Draw webcam in bottom-right corner (picture-in-picture)
-            if (webcamVideo.videoWidth > 0 && webcamVideo.videoHeight > 0) {
-              const webcamWidth = 320;
-              const webcamHeight = 240;
-              const margin = 20;
-              
-              // Black border for webcam
-              ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
-              ctx.fillRect(
-                canvas.width - webcamWidth - margin - 5,
-                canvas.height - webcamHeight - margin - 5,
-                webcamWidth + 10,
-                webcamHeight + 10
-              );
-              
-              // Draw webcam video
-              ctx.drawImage(
-                webcamVideo,
-                canvas.width - webcamWidth - margin,
-                canvas.height - webcamHeight - margin,
-                webcamWidth,
-                webcamHeight
-              );
-            }
+            isDrawing = false;
             
-            animationFrame = requestAnimationFrame(drawFrame);
+            if (isRecording) {
+              animationFrame = requestAnimationFrame(drawFrame);
+            }
           }
         };
         
-        // Start drawing
-        animationFrame = requestAnimationFrame(drawFrame);
+        // Start drawing after a short delay
+        setTimeout(() => {
+          animationFrame = requestAnimationFrame(drawFrame);
+        }, 1000);
         
         // Create combined stream with canvas video + all audio
         const canvasStream = canvas.captureStream(30);
@@ -302,8 +322,23 @@ const TutorialStudio = () => {
         setRecordings(prev => [newRecording, ...prev]);
         setRecordingTime(0);
         
-        // Show success message
-        alert(`Recording saved! Duration: ${formatTime(recordingTime)}, Size: ${(blob.size / (1024 * 1024)).toFixed(1)} MB`);
+        // Automatically download the recording to user's device
+        const fileName = `tutorial_${recordingMode}_${Date.now()}.webm`;
+        const downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.download = fileName;
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        // Show success message with download info
+        alert(`✅ Recording saved! 
+📁 Downloaded to: ${fileName}
+⏱️ Duration: ${formatTime(recordingTime)}
+📊 Size: ${(blob.size / (1024 * 1024)).toFixed(1)} MB
+
+You can find it in your Downloads folder and edit with any video editor!`);
       };
 
       mediaRecorder.start();
@@ -392,10 +427,14 @@ const TutorialStudio = () => {
     if (videoData && videoData.url) {
       const a = document.createElement('a');
       a.href = videoData.url;
-      a.download = `${title}.webm`;
+      a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.mp4`;
+      a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      
+      // Show success message
+      alert(`✅ Video saved to your Downloads folder as: ${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.mp4`);
     } else {
       alert('Video data not found. This may happen after browser restart.');
     }
