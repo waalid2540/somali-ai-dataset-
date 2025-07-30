@@ -88,7 +88,7 @@ const SignupPage = () => {
         
         // Handle specific error cases
         if (response.status === 409 || errorData.detail?.includes('duplicate key') || errorData.detail?.includes('already exists')) {
-          alert('✅ Account already exists! Please check your email for confirmation or try logging in.');
+          alert('🎉 Welcome back! We\'ve sent a confirmation email to your inbox. Please check your email and click the confirmation link to activate your account.');
         } else if (errorData.detail?.includes('email')) {
           alert('❌ Please enter a valid email address.');
         } else if (errorData.detail?.includes('password')) {
