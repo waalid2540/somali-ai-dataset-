@@ -66,38 +66,139 @@ const TutorialStudio = () => {
       let stream: MediaStream;
       
       if (recordingMode === 'screen') {
-        // Screen recording with audio - simplified
-        stream = await navigator.mediaDevices.getDisplayMedia({ 
+        // Screen recording with microphone audio
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
           video: true,
-          audio: true
+          audio: true // This captures system audio
         });
+        
+        // Also get microphone audio
+        const micStream = await navigator.mediaDevices.getUserMedia({ 
+          video: false,
+          audio: true // This captures microphone
+        });
+        
+        // Combine both audio streams
+        const audioContext = new AudioContext();
+        const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
+        const micAudioSource = audioContext.createMediaStreamSource(micStream);
+        const destination = audioContext.createMediaStreamDestination();
+        
+        // Mix both audio sources
+        screenAudioSource.connect(destination);
+        micAudioSource.connect(destination);
+        
+        // Create combined stream with screen video + mixed audio
+        stream = new MediaStream([
+          ...screenStream.getVideoTracks(),
+          ...destination.stream.getAudioTracks()
+        ]);
+        
+        // Store references for cleanup
+        (stream as any)._originalStreams = [screenStream, micStream];
+        
       } else if (recordingMode === 'webcam') {
-        // Webcam recording - simplified
+        // Webcam recording - this works fine
         stream = await navigator.mediaDevices.getUserMedia({ 
           video: true,
           audio: true
         });
       } else {
-        // Mixed mode - simplified to just screen for now
-        // TODO: Implement proper mixed mode later
-        stream = await navigator.mediaDevices.getDisplayMedia({ 
+        // Mixed mode - screen + webcam with proper audio mixing
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
           video: true,
           audio: true
         });
         
-        // Try to get webcam as well but don't fail if it doesn't work
-        try {
-          const webcamStream = await navigator.mediaDevices.getUserMedia({ 
-            video: true,
-            audio: false // Don't duplicate audio
-          });
-          
-          // For now, just record screen. Mixed mode needs more work.
-          // Close webcam stream since we're not using it yet
-          webcamStream.getTracks().forEach(track => track.stop());
-        } catch (webcamError) {
-          console.log('Webcam not available for mixed mode, using screen only');
-        }
+        const webcamStream = await navigator.mediaDevices.getUserMedia({ 
+          video: true,
+          audio: true
+        });
+        
+        // Create canvas for video mixing
+        const canvas = document.createElement('canvas');
+        canvas.width = 1920;
+        canvas.height = 1080;
+        const ctx = canvas.getContext('2d')!;
+        
+        // Create video elements
+        const screenVideo = document.createElement('video');
+        const webcamVideo = document.createElement('video');
+        
+        screenVideo.srcObject = screenStream;
+        webcamVideo.srcObject = webcamStream;
+        screenVideo.muted = true;
+        webcamVideo.muted = true;
+        
+        await Promise.all([
+          new Promise(resolve => {
+            screenVideo.onloadedmetadata = () => {
+              screenVideo.play();
+              resolve(null);
+            };
+          }),
+          new Promise(resolve => {
+            webcamVideo.onloadedmetadata = () => {
+              webcamVideo.play();
+              resolve(null);
+            };
+          })
+        ]);
+        
+        // Combine audio from both streams
+        const audioContext = new AudioContext();
+        const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
+        const webcamAudioSource = audioContext.createMediaStreamSource(webcamStream);
+        const destination = audioContext.createMediaStreamDestination();
+        
+        screenAudioSource.connect(destination);
+        webcamAudioSource.connect(destination);
+        
+        // Draw combined video
+        const drawFrame = () => {
+          if (isRecording) {
+            // Draw screen (full size)
+            ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+            
+            // Draw webcam (picture-in-picture in bottom-right)
+            const webcamWidth = 320;
+            const webcamHeight = 240;
+            const margin = 20;
+            
+            // Black border for webcam
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.fillRect(
+              canvas.width - webcamWidth - margin - 5,
+              canvas.height - webcamHeight - margin - 5,
+              webcamWidth + 10,
+              webcamHeight + 10
+            );
+            
+            // Draw webcam video
+            ctx.drawImage(
+              webcamVideo,
+              canvas.width - webcamWidth - margin,
+              canvas.height - webcamHeight - margin,
+              webcamWidth,
+              webcamHeight
+            );
+            
+            requestAnimationFrame(drawFrame);
+          }
+        };
+        
+        drawFrame();
+        
+        // Create combined stream
+        const canvasStream = canvas.captureStream(30);
+        stream = new MediaStream([
+          ...canvasStream.getVideoTracks(),
+          ...destination.stream.getAudioTracks()
+        ]);
+        
+        // Store references for cleanup
+        (stream as any)._originalStreams = [screenStream, webcamStream];
+        (stream as any)._videoElements = [screenVideo, webcamVideo];
       }
 
       streamRef.current = stream;
@@ -197,7 +298,27 @@ const TutorialStudio = () => {
     if (mediaRecorderRef.current && streamRef.current) {
       setIsRecording(false);
       mediaRecorderRef.current.stop();
+      
+      // Stop main stream
       streamRef.current.getTracks().forEach(track => track.stop());
+      
+      // Stop original streams if they exist
+      const originalStreams = (streamRef.current as any)._originalStreams;
+      if (originalStreams) {
+        originalStreams.forEach((stream: MediaStream) => {
+          stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+        });
+      }
+      
+      // Clean up video elements
+      const videoElements = (streamRef.current as any)._videoElements;
+      if (videoElements) {
+        videoElements.forEach((video: HTMLVideoElement) => {
+          if (video.parentNode) {
+            video.parentNode.removeChild(video);
+          }
+        });
+      }
     }
   };
 
