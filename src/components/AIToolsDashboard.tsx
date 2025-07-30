@@ -93,6 +93,25 @@ function AIToolsDashboard({
         </div>
       </div>
 
+      {/* Voice Clone Studio Banner */}
+      <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center">
+            <span className="text-2xl mr-4">🎤</span>
+            <div>
+              <div className="text-xl font-bold">🚀 NEW: SOMALI VOICE CLONE STUDIO!</div>
+              <div className="text-purple-100">Clone your voice, create AI assistants, speak perfect Somali</div>
+            </div>
+          </div>
+          <a
+            href="/voice-clone-studio"
+            className="bg-white text-purple-600 px-6 py-3 rounded-lg font-bold hover:bg-purple-50 transition-colors"
+          >
+            Clone Voice →
+          </a>
+        </div>
+      </div>
+
       {/* Header Section */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">

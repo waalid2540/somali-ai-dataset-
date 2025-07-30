@@ -288,9 +288,20 @@ const DashboardPage = () => {
               className="bg-gradient-to-br from-red-900/50 to-red-800/50 rounded-xl p-6 border border-red-500/40 hover:border-red-500/60 transition-all duration-300 group"
             >
               <Video className="w-8 h-8 text-red-400 mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-semibold text-white mb-2">🎥 TUTORIAL STUDIO - FIXED</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">🎥 TUTORIAL STUDIO</h3>
               <p className="text-gray-300">
                 Record and manage tutorial videos for your SaaS products
+              </p>
+            </a>
+
+            <a
+              href="/voice-clone-studio"
+              className="bg-gradient-to-br from-purple-900/50 to-pink-800/50 rounded-xl p-6 border border-purple-500/40 hover:border-purple-500/60 transition-all duration-300 group"
+            >
+              <span className="text-2xl mb-4 block group-hover:scale-110 transition-transform">🎤</span>
+              <h3 className="text-lg font-semibold text-white mb-2">🚀 VOICE CLONE STUDIO</h3>
+              <p className="text-gray-300">
+                Clone your Somali voice, create AI assistants, generate speech
               </p>
             </a>
 
