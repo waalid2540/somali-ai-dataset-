@@ -190,8 +190,10 @@ const TutorialStudio = () => {
         let animationFrame: number | null = null;
         let isDrawing = false;
         
+        let shouldContinueDrawing = true;
+        
         const drawFrame = () => {
-          if (isRecording && !isDrawing) {
+          if (shouldContinueDrawing && !isDrawing) {
             isDrawing = true;
             
             try {
@@ -199,12 +201,20 @@ const TutorialStudio = () => {
               ctx.fillStyle = '#000000';
               ctx.fillRect(0, 0, canvas.width, canvas.height);
               
-              // Draw screen capture (full canvas) - Check if video is ready and playing
+              // Always draw screen capture (full canvas)
               if (screenVideo.readyState >= 2 && screenVideo.videoWidth > 0 && screenVideo.videoHeight > 0) {
                 ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+              } else {
+                // Show loading message if screen not ready
+                ctx.fillStyle = '#333333';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'white';
+                ctx.font = '48px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Loading screen...', canvas.width / 2, canvas.height / 2);
               }
               
-              // Draw webcam in bottom-right corner (picture-in-picture)
+              // Always draw webcam in bottom-right corner (picture-in-picture)
               if (webcamVideo.readyState >= 2 && webcamVideo.videoWidth > 0 && webcamVideo.videoHeight > 0) {
                 const webcamWidth = 320;
                 const webcamHeight = 240;
@@ -227,6 +237,27 @@ const TutorialStudio = () => {
                   webcamWidth,
                   webcamHeight
                 );
+              } else {
+                // Show webcam placeholder
+                const webcamWidth = 320;
+                const webcamHeight = 240;
+                const margin = 20;
+                
+                ctx.fillStyle = 'rgba(100, 100, 100, 0.8)';
+                ctx.fillRect(
+                  canvas.width - webcamWidth - margin,
+                  canvas.height - webcamHeight - margin,
+                  webcamWidth,
+                  webcamHeight
+                );
+                ctx.fillStyle = 'white';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(
+                  'Loading webcam...', 
+                  canvas.width - webcamWidth/2 - margin, 
+                  canvas.height - webcamHeight/2 - margin
+                );
               }
             } catch (error) {
               console.log('Canvas drawing error:', error);
@@ -234,14 +265,16 @@ const TutorialStudio = () => {
             
             isDrawing = false;
             
-            if (isRecording) {
+            if (shouldContinueDrawing) {
               animationFrame = requestAnimationFrame(drawFrame);
             }
           }
         };
         
-        // Start drawing after a short delay
+        // Start drawing immediately and also show preview
+        console.log('Starting mixed mode canvas drawing...');
         setTimeout(() => {
+          console.log('Canvas setup - Screen video ready:', screenVideo.readyState, 'Webcam video ready:', webcamVideo.readyState);
           animationFrame = requestAnimationFrame(drawFrame);
         }, 1000);
         
@@ -256,6 +289,7 @@ const TutorialStudio = () => {
         (stream as any)._originalStreams = [screenStream, webcamStream];
         (stream as any)._videoElements = [screenVideo, webcamVideo];
         (stream as any)._animationFrame = animationFrame;
+        (stream as any)._shouldContinueDrawing = () => { shouldContinueDrawing = false; };
       }
 
       streamRef.current = stream;
@@ -368,7 +402,13 @@ You can find it in your Downloads folder and edit with any video editor!`);
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && streamRef.current) {
-      setIsRecording(false); // This stops the animation loop
+      setIsRecording(false);
+      
+      // Stop drawing animation for mixed mode
+      const stopDrawing = (streamRef.current as any)._shouldContinueDrawing;
+      if (stopDrawing) {
+        stopDrawing();
+      }
       
       // Stop animation frame if it exists
       const animationFrame = (streamRef.current as any)._animationFrame;
