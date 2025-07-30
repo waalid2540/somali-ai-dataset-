@@ -27,6 +27,7 @@ interface VoiceRecording {
   created_at: string;
   type: 'voice-sample' | 'cloned-voice' | 'ai-response';
   language: 'somali' | 'english' | 'arabic';
+  backendFile?: string;
 }
 
 const VoiceCloneStudio = () => {
@@ -82,9 +83,19 @@ const VoiceCloneStudio = () => {
         audioRef.current.srcObject = stream;
       }
 
-      const mediaRecorder = new MediaRecorder(stream, { 
-        mimeType: 'audio/webm' 
-      });
+      // Try different audio formats for better compatibility
+      let mimeType = 'audio/webm';
+      if (!MediaRecorder.isTypeSupported('audio/webm')) {
+        if (MediaRecorder.isTypeSupported('audio/mp4')) {
+          mimeType = 'audio/mp4';
+        } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+          mimeType = 'audio/ogg';
+        } else {
+          mimeType = ''; // Use default
+        }
+      }
+      
+      const mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
       mediaRecorderRef.current = mediaRecorder;
       
       const chunks: BlobPart[] = [];
@@ -93,7 +104,7 @@ const VoiceCloneStudio = () => {
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'audio/webm' });
+        const blob = new Blob(chunks, { type: mimeType || 'audio/webm' });
         const url = URL.createObjectURL(blob);
         
         const newRecording: VoiceRecording = {
@@ -111,14 +122,19 @@ const VoiceCloneStudio = () => {
         savedRecordings.unshift(newRecording);
         localStorage.setItem('voice-recordings', JSON.stringify(savedRecordings));
         
-        // Save the actual audio blob
-        const audioData = { id: newRecording.id, blob: blob, url: url };
-        const savedAudio = JSON.parse(localStorage.getItem('voice-audio') || '{}');
-        savedAudio[newRecording.id] = audioData;
-        localStorage.setItem('voice-audio', JSON.stringify(savedAudio));
+        // Create download link for the audio
+        const downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.download = `somali_voice_${newRecording.id}.webm`;
+        
+        // Store the URL temporarily for playback
+        sessionStorage.setItem(`audio_${newRecording.id}`, url);
         
         setRecordings(prev => [newRecording, ...prev]);
         setRecordingTime(0);
+        
+        // Upload to backend
+        uploadVoiceRecording(blob, newRecording);
         
         alert(`✅ Voice sample recorded! 
 ⏱️ Duration: ${formatTime(recordingTime)}
@@ -144,45 +160,70 @@ Ready for voice cloning!`);
   };
 
   const cloneVoice = async (recordingId: string) => {
+    const recording = recordings.find(r => r.id === recordingId);
+    
+    if (!recording?.backendFile) {
+      alert('Backend file not found. Please record again.');
+      return;
+    }
+    
     setIsCloning(true);
     setCloneProgress(0);
     
-    // Simulate voice cloning process
-    const steps = [
-      'Analyzing voice characteristics...',
-      'Extracting speaker embeddings...',
-      'Training voice model...',
-      'Optimizing for Somali phonemes...',
-      'Finalizing cloned voice...'
-    ];
-    
-    for (let i = 0; i < steps.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setCloneProgress((i + 1) * 20);
-    }
-    
-    // Create cloned voice entry
-    const clonedVoice: VoiceRecording = {
-      id: `cloned_${Date.now()}`,
-      title: `Cloned Somali Voice - ${new Date().toLocaleString()}`,
-      duration: 'Voice Model',
-      size: 'Ready',
-      created_at: new Date().toISOString().split('T')[0],
-      type: 'cloned-voice',
-      language: 'somali'
-    };
-    
-    const savedRecordings = JSON.parse(localStorage.getItem('voice-recordings') || '[]');
-    savedRecordings.unshift(clonedVoice);
-    localStorage.setItem('voice-recordings', JSON.stringify(savedRecordings));
-    setRecordings(prev => [clonedVoice, ...prev]);
-    
-    setIsCloning(false);
-    setCloneProgress(100);
-    
-    alert(`🎉 Voice cloning complete! 
+    try {
+      // Call backend voice cloning API
+      const response = await fetch('http://localhost:8001/api/clone-voice', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          audioFile: recording.backendFile
+        })
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Voice cloning result:', result);
+        
+        // Simulate progress for UI
+        for (let i = 0; i <= 100; i += 20) {
+          setCloneProgress(i);
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        
+        // Create cloned voice entry
+        const clonedVoice: VoiceRecording = {
+          id: result.clonedVoiceId || `cloned_${Date.now()}`,
+          title: `Cloned Somali Voice - ${new Date().toLocaleString()}`,
+          duration: 'Voice Model',
+          size: 'Ready',
+          created_at: new Date().toISOString().split('T')[0],
+          type: 'cloned-voice',
+          language: 'somali',
+          backendFile: recording.backendFile
+        };
+        
+        const savedRecordings = JSON.parse(localStorage.getItem('voice-recordings') || '[]');
+        savedRecordings.unshift(clonedVoice);
+        localStorage.setItem('voice-recordings', JSON.stringify(savedRecordings));
+        setRecordings(prev => [clonedVoice, ...prev]);
+        
+        alert(`🎉 Voice cloning complete! 
 🧬 Your Somali voice has been successfully cloned
 🤖 Ready to use with AI assistant`);
+      } else {
+        const error = await response.json();
+        console.error('Voice cloning failed:', error);
+        alert(`Voice cloning failed: ${error.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Voice cloning error:', error);
+      alert('Voice cloning failed. Please check if the backend server is running.');
+    } finally {
+      setIsCloning(false);
+      setCloneProgress(100);
+    }
   };
 
   const sendAIMessage = async () => {
@@ -191,36 +232,49 @@ Ready for voice cloning!`);
     const userMessage = currentMessage;
     setCurrentMessage('');
     
-    // Simulate AI response
-    const aiResponses = [
-      'Wa alaykumu salaan! Waan ku faraxsanahay inaan kula hadlayo afka Soomaaliga.',
-      'Subhaan Allah! Maxaad doonaysaa inaan kaa caawiyo maanta?',
-      'Alhamdulillah! Waxaan halkan u joogaa si aan ku caawiyo su\'aaladaada.',
-      'Baraka Allahu feeki! Hadal bay tahay in aan wada tashano arrintan.',
-      'Masha Allah! Waa mid fiican tahay inaad Soomali ku hadlayso.'
-    ];
+    // Find a cloned voice to use for synthesis
+    const clonedVoice = recordings.find(r => r.type === 'cloned-voice');
     
-    const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-    
-    // Add to chat history
-    const newChat = { user: userMessage, ai: randomResponse };
-    setChatHistory(prev => [...prev, newChat]);
-    
-    // Create AI response recording
-    const aiRecording: VoiceRecording = {
-      id: `ai_${Date.now()}`,
-      title: `AI Response: "${randomResponse.substring(0, 30)}..."`,
-      duration: '3-5s',
-      size: 'Generated',
-      created_at: new Date().toISOString().split('T')[0],
-      type: 'ai-response',
-      language: 'somali'
-    };
-    
-    const savedRecordings = JSON.parse(localStorage.getItem('voice-recordings') || '[]');
-    savedRecordings.unshift(aiRecording);
-    localStorage.setItem('voice-recordings', JSON.stringify(savedRecordings));
-    setRecordings(prev => [aiRecording, ...prev]);
+    try {
+      // For now, use local responses while backend is being set up
+      const aiResponses = [
+        'Wa alaykumu salaan! Waan ku faraxsanahay inaan kula hadlayo afka Soomaaliga.',
+        'Subhaan Allah! Maxaad doonaysaa inaan kaa caawiyo maanta?',
+        'Alhamdulillah! Waxaan halkan u joogaa si aan ku caawiyo su\'aaladaada.',
+        'Baraka Allahu feeki! Hadal bay tahay in aan wada tashano arrintan.',
+        'Masha Allah! Waa mid fiican tahay inaad Soomali ku hadlayso.'
+      ];
+      
+      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+      
+      // Add to chat history
+      const newChat = { user: userMessage, ai: randomResponse };
+      setChatHistory(prev => [...prev, newChat]);
+      
+      // Create AI response recording
+      const aiRecording: VoiceRecording = {
+        id: `ai_${Date.now()}`,
+        title: `AI Response: "${randomResponse.substring(0, 30)}..."`,
+        duration: '3-5s',
+        size: 'Generated',
+        created_at: new Date().toISOString().split('T')[0],
+        type: 'ai-response',
+        language: 'somali'
+      };
+      
+      const savedRecordings = JSON.parse(localStorage.getItem('voice-recordings') || '[]');
+      savedRecordings.unshift(aiRecording);
+      localStorage.setItem('voice-recordings', JSON.stringify(savedRecordings));
+      setRecordings(prev => [aiRecording, ...prev]);
+      
+    } catch (error) {
+      console.error('AI message error:', error);
+      
+      // Fallback response
+      const fallbackResponse = 'Wa alaykumu salaan! Backend server ma shaqeynayo hadda.';
+      const newChat = { user: userMessage, ai: fallbackResponse };
+      setChatHistory(prev => [...prev, newChat]);
+    }
   };
 
   const handleLogout = () => {
@@ -233,6 +287,66 @@ Ready for voice cloning!`);
     const savedRecordings = JSON.parse(localStorage.getItem('voice-recordings') || '[]');
     const updatedRecordings = savedRecordings.filter((r: VoiceRecording) => r.id !== id);
     localStorage.setItem('voice-recordings', JSON.stringify(updatedRecordings));
+    
+    // Clean up stored audio URL
+    sessionStorage.removeItem(`audio_${id}`);
+  };
+
+  const playRecording = (id: string) => {
+    const audioUrl = sessionStorage.getItem(`audio_${id}`);
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        alert('Could not play audio. The recording may have expired.');
+      });
+    } else {
+      alert('Audio file not available. Please record again.');
+    }
+  };
+
+  const downloadRecording = (id: string, title: string) => {
+    const audioUrl = sessionStorage.getItem(`audio_${id}`);
+    if (audioUrl) {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = audioUrl;
+      downloadLink.download = `${title.replace(/[^a-z0-9]/gi, '_')}.webm`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } else {
+      alert('Audio file not available for download.');
+    }
+  };
+
+  const uploadVoiceRecording = async (blob: Blob, recording: VoiceRecording) => {
+    try {
+      const formData = new FormData();
+      formData.append('audio', blob, `somali_voice_${recording.id}.webm`);
+      
+      const response = await fetch('http://localhost:8001/api/upload-voice', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Upload successful:', result);
+        
+        // Update recording with backend filename
+        const updatedRecordings = recordings.map(r => 
+          r.id === recording.id ? { ...r, backendFile: result.file } : r
+        );
+        setRecordings(updatedRecordings);
+        
+        // Update localStorage
+        localStorage.setItem('voice-recordings', JSON.stringify(updatedRecordings));
+      } else {
+        console.error('Upload failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+    }
   };
 
   return (
@@ -591,11 +705,17 @@ Ready for voice cloning!`);
                       </div>
                       
                       <div className="flex space-x-2">
-                        <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded text-sm">
+                        <button 
+                          onClick={() => playRecording(recording.id)}
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded text-sm"
+                        >
                           <Play className="w-3 h-3 inline mr-1" />
                           Play
                         </button>
-                        <button className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm">
+                        <button 
+                          onClick={() => downloadRecording(recording.id, recording.title)}
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm"
+                        >
                           <Download className="w-3 h-3" />
                         </button>
                       </div>
@@ -670,7 +790,10 @@ Ready for voice cloning!`);
                   </div>
                   
                   <div className="grid grid-cols-2 gap-2 mb-2">
-                    <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center">
+                    <button 
+                      onClick={() => playRecording(recording.id)}
+                      className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
+                    >
                       <Play className="w-3 h-3 mr-1" />
                       Play
                     </button>
@@ -680,7 +803,10 @@ Ready for voice cloning!`);
                     </button>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <button className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center">
+                    <button 
+                      onClick={() => downloadRecording(recording.id, recording.title)}
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
+                    >
                       <Download className="w-3 h-3 mr-1" />
                       Download
                     </button>
