@@ -21,11 +21,29 @@ const SignupPage = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form before submitting
+    if (formData.password !== formData.confirmPassword) {
+      alert('❌ Passwords do not match. Please check and try again.');
+      return;
+    }
+    
+    if (formData.password.length < 6) {
+      alert('❌ Password must be at least 6 characters long.');
+      return;
+    }
+    
+    if (!formData.email.includes('@')) {
+      alert('❌ Please enter a valid email address.');
+      return;
+    }
+    
     setIsLoading(true);
 
     try {
       // Register user with backend
-      const response = await fetch('http://localhost:8000/register', {
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `${window.location.protocol}//${window.location.hostname}:8000`;
+      const response = await fetch(`${baseUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,12 +58,13 @@ const SignupPage = () => {
 
       if (response.ok) {
         const userData = await response.json();
+        console.log('Registration successful:', userData);
         
         if (selectedPlan === 'unlimited') {
           // Redirect to Stripe Checkout for payment
           const stripe = await (window as any).Stripe('pk_test_YOUR_STRIPE_PUBLISHABLE_KEY');
           
-          const checkoutResponse = await fetch('http://localhost:8000/create-checkout-session', {
+          const checkoutResponse = await fetch(`${baseUrl}/create-checkout-session`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -60,15 +79,27 @@ const SignupPage = () => {
           const session = await checkoutResponse.json();
           await stripe.redirectToCheckout({ sessionId: session.id });
         } else {
-          // Free plan - redirect to dashboard
+          // Free plan - redirect to dashboard with success message
+          localStorage.setItem('signup_success', 'true');
           window.location.href = '/dashboard';
         }
       } else {
-        alert('Registration failed. Please try again.');
+        const errorData = await response.json().catch(() => ({}));
+        
+        // Handle specific error cases
+        if (response.status === 409 || errorData.detail?.includes('duplicate key') || errorData.detail?.includes('already exists')) {
+          alert('✅ Account already exists! Please check your email for confirmation or try logging in.');
+        } else if (errorData.detail?.includes('email')) {
+          alert('❌ Please enter a valid email address.');
+        } else if (errorData.detail?.includes('password')) {
+          alert('❌ Password requirements not met. Please use a stronger password.');
+        } else {
+          alert('❌ Registration failed. Please check your information and try again.');
+        }
       }
     } catch (error) {
       console.error('Signup error:', error);
-      alert('An error occurred. Please try again.');
+      alert('🔄 Connection error. Please check your internet and try again.');
     } finally {
       setIsLoading(false);
     }
