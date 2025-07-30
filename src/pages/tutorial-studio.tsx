@@ -118,7 +118,7 @@ const TutorialStudio = () => {
           audio: true
         });
       } else {
-        // Mixed mode - screen + webcam with proper audio mixing
+        // Mixed mode - screen + webcam with simple approach
         const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
           video: true,
           audio: true
@@ -135,101 +135,107 @@ const TutorialStudio = () => {
         canvas.height = 1080;
         const ctx = canvas.getContext('2d')!;
         
-        // Create video elements
+        // Create video elements and add to DOM temporarily
         const screenVideo = document.createElement('video');
         const webcamVideo = document.createElement('video');
         
+        // Set up video elements
         screenVideo.srcObject = screenStream;
         webcamVideo.srcObject = webcamStream;
         screenVideo.muted = true;
         webcamVideo.muted = true;
+        screenVideo.autoplay = true;
+        webcamVideo.autoplay = true;
         
-        await Promise.all([
-          new Promise(resolve => {
-            screenVideo.onloadedmetadata = () => {
-              screenVideo.play();
-              resolve(null);
-            };
-          }),
-          new Promise(resolve => {
-            webcamVideo.onloadedmetadata = () => {
-              webcamVideo.play();
-              resolve(null);
-            };
-          })
-        ]);
+        // Hide video elements but add to DOM for proper loading
+        screenVideo.style.position = 'absolute';
+        screenVideo.style.top = '-9999px';
+        webcamVideo.style.position = 'absolute';
+        webcamVideo.style.top = '-9999px';
         
-        // Combine audio from both streams (with error handling)
-        const screenHasAudio = screenStream.getAudioTracks().length > 0;
-        const webcamHasAudio = webcamStream.getAudioTracks().length > 0;
+        document.body.appendChild(screenVideo);
+        document.body.appendChild(webcamVideo);
         
-        let audioTracks: MediaStreamTrack[] = [];
-        
-        if (screenHasAudio || webcamHasAudio) {
-          const audioContext = new AudioContext();
-          const destination = audioContext.createMediaStreamDestination();
+        // Wait for videos to load and start playing
+        await new Promise((resolve) => {
+          let loadedCount = 0;
           
-          if (screenHasAudio) {
-            const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
-            screenAudioSource.connect(destination);
-          }
+          const checkLoaded = () => {
+            loadedCount++;
+            if (loadedCount === 2) {
+              // Small delay to ensure videos are ready
+              setTimeout(resolve, 100);
+            }
+          };
           
-          if (webcamHasAudio) {
-            const webcamAudioSource = audioContext.createMediaStreamSource(webcamStream);
-            webcamAudioSource.connect(destination);
-          }
+          screenVideo.onloadeddata = checkLoaded;
+          webcamVideo.onloadeddata = checkLoaded;
           
-          audioTracks = destination.stream.getAudioTracks();
-        } else {
-          // No audio available from either source
-          console.warn('No audio tracks available from screen or webcam');
-        }
+          // Fallback timeout
+          setTimeout(resolve, 2000);
+        });
         
-        // Draw combined video
+        // Simple audio combining - just use all audio tracks
+        const allAudioTracks = [
+          ...screenStream.getAudioTracks(),
+          ...webcamStream.getAudioTracks()
+        ];
+        
+        // Start the drawing animation
+        let animationFrame: number;
         const drawFrame = () => {
           if (isRecording) {
-            // Draw screen (full size)
-            ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw webcam (picture-in-picture in bottom-right)
-            const webcamWidth = 320;
-            const webcamHeight = 240;
-            const margin = 20;
+            // Draw screen capture (full canvas)
+            if (screenVideo.videoWidth > 0 && screenVideo.videoHeight > 0) {
+              ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height);
+            }
             
-            // Black border for webcam
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-            ctx.fillRect(
-              canvas.width - webcamWidth - margin - 5,
-              canvas.height - webcamHeight - margin - 5,
-              webcamWidth + 10,
-              webcamHeight + 10
-            );
+            // Draw webcam in bottom-right corner (picture-in-picture)
+            if (webcamVideo.videoWidth > 0 && webcamVideo.videoHeight > 0) {
+              const webcamWidth = 320;
+              const webcamHeight = 240;
+              const margin = 20;
+              
+              // Black border for webcam
+              ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+              ctx.fillRect(
+                canvas.width - webcamWidth - margin - 5,
+                canvas.height - webcamHeight - margin - 5,
+                webcamWidth + 10,
+                webcamHeight + 10
+              );
+              
+              // Draw webcam video
+              ctx.drawImage(
+                webcamVideo,
+                canvas.width - webcamWidth - margin,
+                canvas.height - webcamHeight - margin,
+                webcamWidth,
+                webcamHeight
+              );
+            }
             
-            // Draw webcam video
-            ctx.drawImage(
-              webcamVideo,
-              canvas.width - webcamWidth - margin,
-              canvas.height - webcamHeight - margin,
-              webcamWidth,
-              webcamHeight
-            );
-            
-            requestAnimationFrame(drawFrame);
+            animationFrame = requestAnimationFrame(drawFrame);
           }
         };
         
+        // Start drawing
         drawFrame();
         
-        // Create combined stream
+        // Create combined stream with canvas video + all audio
         const canvasStream = canvas.captureStream(30);
         stream = new MediaStream([
           ...canvasStream.getVideoTracks(),
-          ...audioTracks
+          ...allAudioTracks
         ]);
         
         // Store references for cleanup
         (stream as any)._originalStreams = [screenStream, webcamStream];
         (stream as any)._videoElements = [screenVideo, webcamVideo];
+        (stream as any)._animationFrame = animationFrame;
       }
 
       streamRef.current = stream;
@@ -327,7 +333,14 @@ const TutorialStudio = () => {
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && streamRef.current) {
-      setIsRecording(false);
+      setIsRecording(false); // This stops the animation loop
+      
+      // Stop animation frame if it exists
+      const animationFrame = (streamRef.current as any)._animationFrame;
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+      
       mediaRecorderRef.current.stop();
       
       // Stop main stream
