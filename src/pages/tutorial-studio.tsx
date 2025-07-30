@@ -182,7 +182,7 @@ const TutorialStudio = () => {
         ];
         
         // Start the drawing animation
-        let animationFrame: number;
+        let animationFrame: number | null = null;
         const drawFrame = () => {
           if (isRecording) {
             // Clear canvas
@@ -223,7 +223,7 @@ const TutorialStudio = () => {
         };
         
         // Start drawing
-        drawFrame();
+        animationFrame = requestAnimationFrame(drawFrame);
         
         // Create combined stream with canvas video + all audio
         const canvasStream = canvas.captureStream(30);
