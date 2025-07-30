@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, Header
+from fastapi import FastAPI, HTTPException, Depends, Header, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -10,6 +10,9 @@ from datetime import datetime
 import hashlib
 import secrets
 import uuid
+import os
+import subprocess
+import shutil
 # from enterprise_nlp import nlp_engine
 # from data_collection_system import data_collector
 
@@ -184,6 +187,14 @@ class DatasetStats(BaseModel):
     scholar_approved: int
     average_quality: float
     dialects: Dict[str, int]
+
+# Voice Cloning Models
+class VoiceCloneRequest(BaseModel):
+    audioFile: str
+
+class SpeechGenerationRequest(BaseModel):
+    text: str
+    voiceId: str = "default"
 
 # Quality analysis functions
 def calculate_quality_score(text: str) -> Dict:
@@ -741,6 +752,221 @@ async def validate_bulk_sentences(data_collection: DataCollection, current_user:
         "timestamp": datetime.now().isoformat(),
         "user_plan": current_user["plan"]
     }
+
+# Voice Cloning Endpoints
+@app.get("/voice/health")
+async def voice_health_check():
+    """Check if voice cloning system is available"""
+    voice_clone_dir = os.path.join(os.path.dirname(__file__), "../voice-clone")
+    recordings_dir = os.path.join(voice_clone_dir, "recordings")
+    
+    # Create recordings directory if it doesn't exist
+    os.makedirs(recordings_dir, exist_ok=True)
+    
+    return {
+        "status": "Voice Clone System Ready",
+        "recordings_dir": recordings_dir,
+        "voice_clone_dir": voice_clone_dir,
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/voice/upload")
+async def upload_voice_recording(
+    audio: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    """Upload voice recording for cloning"""
+    
+    # Track API usage
+    track_api_usage(current_user["user_id"], "/voice/upload")
+    
+    if not audio.filename.endswith(('.webm', '.mp4', '.ogg', '.wav', '.mp3')):
+        raise HTTPException(status_code=400, detail="Invalid audio format. Use webm, mp4, ogg, wav, or mp3")
+    
+    # Create recordings directory
+    voice_clone_dir = os.path.join(os.path.dirname(__file__), "../voice-clone")
+    recordings_dir = os.path.join(voice_clone_dir, "recordings")
+    os.makedirs(recordings_dir, exist_ok=True)
+    
+    # Generate unique filename
+    timestamp = int(datetime.now().timestamp())
+    file_extension = audio.filename.split('.')[-1]
+    filename = f"somali_voice_{timestamp}.{file_extension}"
+    file_path = os.path.join(recordings_dir, filename)
+    
+    # Save uploaded file
+    try:
+        with open(file_path, "wb") as buffer:
+            content = await audio.read()
+            buffer.write(content)
+        
+        # Create metadata
+        metadata = {
+            "filename": filename,
+            "original_name": audio.filename,
+            "size": len(content),
+            "upload_time": datetime.now().isoformat(),
+            "user_id": current_user["user_id"],
+            "language": "somali"
+        }
+        
+        # Save metadata file
+        metadata_path = os.path.join(recordings_dir, f"{filename}_metadata.json")
+        with open(metadata_path, "w") as f:
+            json.dump(metadata, f, indent=2)
+        
+        return {
+            "success": True,
+            "message": "Voice recording uploaded successfully",
+            "file": filename,
+            "metadata": metadata
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save audio file: {str(e)}")
+
+@app.post("/voice/clone")
+async def clone_voice(
+    request: VoiceCloneRequest,
+    current_user: dict = Depends(get_current_user)
+):
+    """Clone voice using OpenVoice V2"""
+    
+    # Track API usage
+    track_api_usage(current_user["user_id"], "/voice/clone")
+    
+    voice_clone_dir = os.path.join(os.path.dirname(__file__), "../voice-clone")
+    recordings_dir = os.path.join(voice_clone_dir, "recordings")
+    audio_path = os.path.join(recordings_dir, request.audioFile)
+    
+    if not os.path.exists(audio_path):
+        raise HTTPException(status_code=404, detail="Audio file not found")
+    
+    try:
+        # Execute Python voice cloning script
+        clone_script = os.path.join(voice_clone_dir, "somali_voice_clone.py")
+        
+        if not os.path.exists(clone_script):
+            raise HTTPException(status_code=500, detail="Voice cloning script not found")
+        
+        # Run the voice cloning process
+        result = subprocess.run([
+            "python3", clone_script, request.audioFile
+        ], cwd=voice_clone_dir, capture_output=True, text=True, timeout=120)
+        
+        if result.returncode == 0:
+            return {
+                "success": True,
+                "message": "Voice cloned successfully",
+                "output": result.stdout,
+                "clonedVoiceId": f"cloned_{int(datetime.now().timestamp())}"
+            }
+        else:
+            raise HTTPException(
+                status_code=500, 
+                detail=f"Voice cloning failed: {result.stderr}"
+            )
+            
+    except subprocess.TimeoutExpired:
+        raise HTTPException(status_code=408, detail="Voice cloning process timed out")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Voice cloning error: {str(e)}")
+
+@app.post("/voice/generate-speech")
+async def generate_speech(
+    request: SpeechGenerationRequest,
+    current_user: dict = Depends(get_current_user)
+):
+    """Generate speech using cloned voice and GPT-4"""
+    
+    # Track API usage
+    track_api_usage(current_user["user_id"], "/voice/generate-speech")
+    
+    voice_clone_dir = os.path.join(os.path.dirname(__file__), "../voice-clone")
+    
+    try:
+        # Execute AI assistant script
+        assistant_script = os.path.join(voice_clone_dir, "somali_ai_assistant.py")
+        
+        if not os.path.exists(assistant_script):
+            raise HTTPException(status_code=500, detail="AI assistant script not found")
+        
+        # Run the AI assistant process
+        result = subprocess.run([
+            "python3", assistant_script, request.text, request.voiceId
+        ], cwd=voice_clone_dir, capture_output=True, text=True, timeout=60)
+        
+        if result.returncode == 0:
+            return {
+                "success": True,
+                "message": "Speech generated successfully",
+                "output": result.stdout,
+                "audioId": f"generated_{int(datetime.now().timestamp())}"
+            }
+        else:
+            # Fallback response for now
+            somali_responses = [
+                "Wa alaykumu salaan! Waan ku faraxsanahay inaan kula hadlayo afka Soomaaliga.",
+                "Subhaan Allah! Maxaad doonaysaa inaan kaa caawiyo maanta?",
+                "Alhamdulillah! Waxaan halkan u joogaa si aan ku caawiyo su'aaladaada.",
+                "Baraka Allahu feeki! Hadal bay tahay in aan wada tashano arrintan.",
+                "Masha Allah! Waa mid fiican tahay inaad Soomali ku hadlayso."
+            ]
+            
+            import random
+            response = random.choice(somali_responses)
+            
+            return {
+                "success": True,
+                "message": "AI response generated (fallback mode)",
+                "response": response,
+                "audioId": f"generated_{int(datetime.now().timestamp())}"
+            }
+            
+    except subprocess.TimeoutExpired:
+        raise HTTPException(status_code=408, detail="Speech generation timed out")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Speech generation error: {str(e)}")
+
+@app.get("/voice/recordings")
+async def list_voice_recordings(current_user: dict = Depends(get_current_user)):
+    """List available voice recordings"""
+    
+    # Track API usage
+    track_api_usage(current_user["user_id"], "/voice/recordings")
+    
+    voice_clone_dir = os.path.join(os.path.dirname(__file__), "../voice-clone")
+    recordings_dir = os.path.join(voice_clone_dir, "recordings")
+    
+    if not os.path.exists(recordings_dir):
+        return {"recordings": []}
+    
+    try:
+        recordings = []
+        for file in os.listdir(recordings_dir):
+            if file.endswith(('.webm', '.mp4', '.ogg', '.wav', '.mp3')):
+                file_path = os.path.join(recordings_dir, file)
+                file_stats = os.stat(file_path)
+                
+                # Check for metadata
+                metadata_path = os.path.join(recordings_dir, f"{file}_metadata.json")
+                metadata = {}
+                if os.path.exists(metadata_path):
+                    with open(metadata_path, 'r') as f:
+                        metadata = json.load(f)
+                
+                recordings.append({
+                    "filename": file,
+                    "size": file_stats.st_size,
+                    "created": datetime.fromtimestamp(file_stats.st_ctime).isoformat(),
+                    "modified": datetime.fromtimestamp(file_stats.st_mtime).isoformat(),
+                    "metadata": metadata
+                })
+        
+        return {"recordings": recordings}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to list recordings: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

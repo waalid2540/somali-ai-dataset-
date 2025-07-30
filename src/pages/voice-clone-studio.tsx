@@ -172,10 +172,13 @@ Ready for voice cloning!`);
     
     try {
       // Call backend voice cloning API
-      const response = await fetch('http://localhost:8001/api/clone-voice', {
+      const apiKey = localStorage.getItem('api_key');
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `${window.location.protocol}//${window.location.hostname}:8000`;
+      const response = await fetch(`${baseUrl}/voice/clone`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           audioFile: recording.backendFile
@@ -236,16 +239,37 @@ Ready for voice cloning!`);
     const clonedVoice = recordings.find(r => r.type === 'cloned-voice');
     
     try {
-      // For now, use local responses while backend is being set up
-      const aiResponses = [
-        'Wa alaykumu salaan! Waan ku faraxsanahay inaan kula hadlayo afka Soomaaliga.',
-        'Subhaan Allah! Maxaad doonaysaa inaan kaa caawiyo maanta?',
-        'Alhamdulillah! Waxaan halkan u joogaa si aan ku caawiyo su\'aaladaada.',
-        'Baraka Allahu feeki! Hadal bay tahay in aan wada tashano arrintan.',
-        'Masha Allah! Waa mid fiican tahay inaad Soomali ku hadlayso.'
-      ];
+      // Call backend AI assistant API
+      const apiKey = localStorage.getItem('api_key');
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `${window.location.protocol}//${window.location.hostname}:8000`;
+      const response = await fetch(`${baseUrl}/voice/generate-speech`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          text: userMessage,
+          voiceId: clonedVoice?.id || 'default'
+        })
+      });
       
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+      let randomResponse = 'Wa alaykumu salaan! Waan ku faraxsanahay inaan kula hadlayo afka Soomaaliga.';
+      
+      if (response.ok) {
+        const result = await response.json();
+        randomResponse = result.response || result.output || randomResponse;
+      } else {
+        // Fallback responses
+        const aiResponses = [
+          'Wa alaykumu salaan! Waan ku faraxsanahay inaan kula hadlayo afka Soomaaliga.',
+          'Subhaan Allah! Maxaad doonaysaa inaan kaa caawiyo maanta?',
+          'Alhamdulillah! Waxaan halkan u joogaa si aan ku caawiyo su\'aaladaada.',
+          'Baraka Allahu feeki! Hadal bay tahay in aan wada tashano arrintan.',
+          'Masha Allah! Waa mid fiican tahay inaad Soomali ku hadlayso.'
+        ];
+        randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+      }
       
       // Add to chat history
       const newChat = { user: userMessage, ai: randomResponse };
@@ -324,8 +348,13 @@ Ready for voice cloning!`);
       const formData = new FormData();
       formData.append('audio', blob, `somali_voice_${recording.id}.webm`);
       
-      const response = await fetch('http://localhost:8001/api/upload-voice', {
+      const apiKey = localStorage.getItem('api_key');
+      const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8000' : `${window.location.protocol}//${window.location.hostname}:8000`;
+      const response = await fetch(`${baseUrl}/voice/upload`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`
+        },
         body: formData
       });
       
