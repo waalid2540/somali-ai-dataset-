@@ -16,7 +16,8 @@ import {
   BarChart3,
   Trash2,
   Eye,
-  Edit3
+  Edit3,
+  Share2
 } from 'lucide-react';
 
 interface Recording {
@@ -146,6 +147,29 @@ const TutorialStudio = () => {
         webcamVideo.muted = true;
         screenVideo.autoplay = true;
         webcamVideo.autoplay = true;
+        
+        // Handle screen sharing track changes (when user switches screens)
+        screenStream.getVideoTracks()[0].addEventListener('ended', () => {
+          console.log('Screen sharing ended - user may have switched screens');
+          // Try to refresh the screen capture
+          if (shouldContinueDrawing) {
+            navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
+              .then(newScreenStream => {
+                screenVideo.srcObject = newScreenStream;
+                // Update the stream tracks
+                const videoTrack = newScreenStream.getVideoTracks()[0];
+                if (videoTrack) {
+                  // Replace the old track
+                  const sender = stream.getVideoTracks().find(track => track.kind === 'video');
+                  if (sender) {
+                    stream.removeTrack(sender);
+                    stream.addTrack(videoTrack);
+                  }
+                }
+              })
+              .catch(err => console.log('Failed to refresh screen capture:', err));
+          }
+        });
         
         // Hide video elements but add to DOM for proper loading
         screenVideo.style.position = 'absolute';
@@ -356,23 +380,12 @@ const TutorialStudio = () => {
         setRecordings(prev => [newRecording, ...prev]);
         setRecordingTime(0);
         
-        // Automatically download the recording to user's device
-        const fileName = `tutorial_${recordingMode}_${Date.now()}.webm`;
-        const downloadLink = document.createElement('a');
-        downloadLink.href = url;
-        downloadLink.download = fileName;
-        downloadLink.style.display = 'none';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        
-        // Show success message with download info
+        // Show success message without auto-download
         alert(`✅ Recording saved! 
-📁 Downloaded to: ${fileName}
 ⏱️ Duration: ${formatTime(recordingTime)}
 📊 Size: ${(blob.size / (1024 * 1024)).toFixed(1)} MB
 
-You can find it in your Downloads folder and edit with any video editor!`);
+Use the Download or Share buttons in your recordings library below.`);
       };
 
       mediaRecorder.start();
@@ -489,6 +502,74 @@ You can find it in your Downloads folder and edit with any video editor!`);
     } else {
       alert('Video data not found. This may happen after browser restart.');
     }
+  };
+
+  const shareRecording = async (id: string, title: string) => {
+    const savedVideos = JSON.parse(localStorage.getItem('tutorial-videos') || '{}');
+    const videoData = savedVideos[id];
+    
+    if (!videoData || !videoData.blob) {
+      alert('Video data not found. This may happen after browser restart.');
+      return;
+    }
+
+    // Create a File object for sharing
+    const fileName = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.webm`;
+    const file = new File([videoData.blob], fileName, { type: 'video/webm' });
+
+    // Check if Web Share API is supported (for mobile and some desktop browsers)
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          title: `Tutorial: ${title}`,
+          text: 'Check out this tutorial recording!',
+          files: [file]
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+        // Fallback to manual sharing options
+        showShareOptions(videoData.url, title);
+      }
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      showShareOptions(videoData.url, title);
+    }
+  };
+
+  const showShareOptions = (videoUrl: string, title: string) => {
+    const shareText = `Check out this tutorial: ${title}`;
+    const encodedText = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent(videoUrl);
+
+    const shareOptions = [
+      { name: 'Copy Link', action: () => copyVideoLink(videoUrl, title) },
+      { name: 'Download & Share', action: () => downloadRecording(title.split(' ')[0], title) },
+      { name: 'WhatsApp', action: () => window.open(`https://wa.me/?text=${encodedText}%20${encodedUrl}`) },
+      { name: 'Twitter', action: () => window.open(`https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`) },
+      { name: 'LinkedIn', action: () => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`) }
+    ];
+
+    const choice = prompt(`Choose sharing option:
+1. Copy Link
+2. Download & Share  
+3. WhatsApp
+4. Twitter
+5. LinkedIn
+
+Enter number (1-5):`);
+
+    const optionIndex = parseInt(choice || '0') - 1;
+    if (optionIndex >= 0 && optionIndex < shareOptions.length) {
+      shareOptions[optionIndex].action();
+    }
+  };
+
+  const copyVideoLink = (url: string, title: string) => {
+    navigator.clipboard.writeText(url).then(() => {
+      alert(`✅ Video link copied to clipboard!\n\nTitle: ${title}\nYou can now paste this link anywhere to share your tutorial.`);
+    }).catch(() => {
+      alert('Failed to copy link to clipboard. Please try downloading the video instead.');
+    });
   };
 
   return (
@@ -713,20 +794,31 @@ You can find it in your Downloads folder and edit with any video editor!`);
                     <span className="capitalize">{recording.type}</span>
                   </div>
                   
-                  <div className="flex items-center space-x-2">
+                  <div className="grid grid-cols-2 gap-2 mb-2">
                     <button 
                       onClick={() => viewRecording(recording.id)}
-                      className="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
+                      className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
                     >
                       <Eye className="w-4 h-4 mr-1" />
                       View
                     </button>
                     <button 
+                      onClick={() => shareRecording(recording.id, recording.title)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
+                      title="Share recording"
+                    >
+                      <Share2 className="w-4 h-4 mr-1" />
+                      Share
+                    </button>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button 
                       onClick={() => downloadRecording(recording.id, recording.title)}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm"
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded text-sm flex items-center justify-center"
                       title="Download recording"
                     >
-                      <Download className="w-4 h-4" />
+                      <Download className="w-4 h-4 mr-1" />
+                      Download
                     </button>
                     <button 
                       onClick={() => deleteRecording(recording.id)}
