@@ -1,0 +1,7 @@
+Somali Voice Recording Metadata
+Timestamp: 1753854611
+Duration: 8.0 seconds
+Sample Rate: 22050 Hz
+Text: Magacaygu waa [Your Name]. Waxaan ku hadlayaa afka Soomaaliga.
+Max Amplitude: 0.248
+RMS Level: 0.032
