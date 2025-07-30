@@ -66,36 +66,50 @@ const TutorialStudio = () => {
       let stream: MediaStream;
       
       if (recordingMode === 'screen') {
-        // Screen recording with microphone audio
-        const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
-          video: true,
-          audio: true // This captures system audio
-        });
-        
-        // Also get microphone audio
-        const micStream = await navigator.mediaDevices.getUserMedia({ 
-          video: false,
-          audio: true // This captures microphone
-        });
-        
-        // Combine both audio streams
-        const audioContext = new AudioContext();
-        const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
-        const micAudioSource = audioContext.createMediaStreamSource(micStream);
-        const destination = audioContext.createMediaStreamDestination();
-        
-        // Mix both audio sources
-        screenAudioSource.connect(destination);
-        micAudioSource.connect(destination);
-        
-        // Create combined stream with screen video + mixed audio
-        stream = new MediaStream([
-          ...screenStream.getVideoTracks(),
-          ...destination.stream.getAudioTracks()
-        ]);
-        
-        // Store references for cleanup
-        (stream as any)._originalStreams = [screenStream, micStream];
+        // Try simple approach first
+        try {
+          // Screen recording with microphone
+          const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
+            video: true,
+            audio: true
+          });
+          
+          const micStream = await navigator.mediaDevices.getUserMedia({ 
+            video: false,
+            audio: true
+          });
+          
+          // Simple approach: just combine tracks without Web Audio API
+          const allTracks = [
+            ...screenStream.getVideoTracks(),
+            ...screenStream.getAudioTracks(),
+            ...micStream.getAudioTracks()
+          ];
+          
+          stream = new MediaStream(allTracks);
+          (stream as any)._originalStreams = [screenStream, micStream];
+          
+        } catch (audioError) {
+          console.warn('Audio mixing failed, trying screen-only:', audioError);
+          
+          // Fallback: screen with mic only
+          const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
+            video: true,
+            audio: false
+          });
+          
+          const micStream = await navigator.mediaDevices.getUserMedia({ 
+            video: false,
+            audio: true
+          });
+          
+          stream = new MediaStream([
+            ...screenStream.getVideoTracks(),
+            ...micStream.getAudioTracks()
+          ]);
+          
+          (stream as any)._originalStreams = [screenStream, micStream];
+        }
         
       } else if (recordingMode === 'webcam') {
         // Webcam recording - this works fine
@@ -145,14 +159,31 @@ const TutorialStudio = () => {
           })
         ]);
         
-        // Combine audio from both streams
-        const audioContext = new AudioContext();
-        const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
-        const webcamAudioSource = audioContext.createMediaStreamSource(webcamStream);
-        const destination = audioContext.createMediaStreamDestination();
+        // Combine audio from both streams (with error handling)
+        const screenHasAudio = screenStream.getAudioTracks().length > 0;
+        const webcamHasAudio = webcamStream.getAudioTracks().length > 0;
         
-        screenAudioSource.connect(destination);
-        webcamAudioSource.connect(destination);
+        let audioTracks: MediaStreamTrack[] = [];
+        
+        if (screenHasAudio || webcamHasAudio) {
+          const audioContext = new AudioContext();
+          const destination = audioContext.createMediaStreamDestination();
+          
+          if (screenHasAudio) {
+            const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
+            screenAudioSource.connect(destination);
+          }
+          
+          if (webcamHasAudio) {
+            const webcamAudioSource = audioContext.createMediaStreamSource(webcamStream);
+            webcamAudioSource.connect(destination);
+          }
+          
+          audioTracks = destination.stream.getAudioTracks();
+        } else {
+          // No audio available from either source
+          console.warn('No audio tracks available from screen or webcam');
+        }
         
         // Draw combined video
         const drawFrame = () => {
@@ -193,7 +224,7 @@ const TutorialStudio = () => {
         const canvasStream = canvas.captureStream(30);
         stream = new MediaStream([
           ...canvasStream.getVideoTracks(),
-          ...destination.stream.getAudioTracks()
+          ...audioTracks
         ]);
         
         // Store references for cleanup
