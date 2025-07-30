@@ -95,8 +95,16 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
 
           if (profileError) {
             console.error('Profile creation error:', profileError);
-            // Show error to user instead of failing silently
-            setError(`Failed to create account: ${profileError.message}`);
+            
+            // Handle specific error cases with friendly messages
+            if (profileError.message?.includes('duplicate key') || profileError.message?.includes('already exists')) {
+              setError('🎉 Welcome back! We\'ve sent a confirmation email to your inbox. Please check your email and click the confirmation link to activate your account.');
+            } else if (profileError.message?.includes('email')) {
+              setError('❌ Please enter a valid email address.');
+            } else {
+              setError('❌ Something went wrong. Please check your information and try again.');
+            }
+            
             setLoading(false);
             return;
           } else {
