@@ -44,7 +44,32 @@ function AIToolInterface({
   const [result, setResult] = useState<AIToolResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showDownloadMenu, setShowDownloadMenu] = useState(false);
+  const [usageCount, setUsageCount] = useState(0);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const downloadMenuRef = useRef<HTMLDivElement>(null);
+
+  // Usage limits
+  const FREE_LIMIT = 5; // 5 free uses per day
+  const isFreePlan = userSubscription === 'free';
+  const hasReachedLimit = isFreePlan && usageCount >= FREE_LIMIT;
+
+  // Load usage count from localStorage
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const savedUsage = JSON.parse(localStorage.getItem('ai-tool-usage') || '{}');
+    const todayUsage = savedUsage[today] || 0;
+    setUsageCount(todayUsage);
+  }, []);
+
+  // Save usage count
+  const incrementUsage = () => {
+    const today = new Date().toDateString();
+    const savedUsage = JSON.parse(localStorage.getItem('ai-tool-usage') || '{}');
+    const newCount = (savedUsage[today] || 0) + 1;
+    savedUsage[today] = newCount;
+    localStorage.setItem('ai-tool-usage', JSON.stringify(savedUsage));
+    setUsageCount(newCount);
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -85,6 +110,12 @@ function AIToolInterface({
   };
 
   const handleGenerate = async () => {
+    // Check usage limit for free users
+    if (hasReachedLimit) {
+      setShowUpgradeModal(true);
+      return;
+    }
+
     const validationErrors = validateInputs();
     if (validationErrors.length > 0) {
       setError(validationErrors[0]);
@@ -120,6 +151,11 @@ function AIToolInterface({
           content: data.result.content,
           metadata: data.result.metadata,
         });
+        
+        // Increment usage count for free users
+        if (isFreePlan) {
+          incrementUsage();
+        }
       } else {
         throw new Error(data.error || 'Processing failed');
       }
@@ -829,6 +865,31 @@ function AIToolInterface({
           </div>
         </div>
 
+        {/* Usage Counter for Free Users */}
+        {isFreePlan && (
+          <div className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-semibold text-blue-900">Free Plan Usage</h4>
+                <p className="text-blue-700 text-sm">
+                  {usageCount} of {FREE_LIMIT} daily uses remaining
+                </p>
+              </div>
+              <div className="text-right">
+                <div className="text-lg font-bold text-blue-900">{FREE_LIMIT - usageCount}</div>
+                <div className="text-xs text-blue-600">uses left today</div>
+              </div>
+            </div>
+            {usageCount >= FREE_LIMIT - 1 && (
+              <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-yellow-800 text-sm font-medium">
+                  ⚠️ Almost at your daily limit! Upgrade to Pro for unlimited access.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Usage Tips */}
         <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">💡 Tips for Best Results</h3>
@@ -852,6 +913,52 @@ function AIToolInterface({
           </div>
         </div>
       </div>
+
+      {/* Upgrade Modal */}
+      {showUpgradeModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 transform transition-all">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <DollarSign className="w-8 h-8 text-white" />
+              </div>
+              
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                Upgrade to Pro
+              </h3>
+              
+              <p className="text-gray-600 mb-6">
+                You've reached your daily limit of {FREE_LIMIT} free uses. Upgrade to Pro for unlimited access to all AI tools!
+              </p>
+              
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 mb-6">
+                <div className="text-2xl font-bold text-blue-900 mb-1">$4.99/month</div>
+                <div className="text-blue-700 text-sm">
+                  ✅ Unlimited AI tool usage<br/>
+                  ✅ Tutorial Studio<br/>
+                  ✅ Voice Clone Studio<br/>
+                  ✅ Priority support
+                </div>
+              </div>
+              
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => setShowUpgradeModal(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Maybe Later
+                </button>
+                <button
+                  onClick={() => window.location.href = '/subscription'}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors font-medium"
+                >
+                  Upgrade Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
