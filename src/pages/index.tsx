@@ -25,7 +25,7 @@ export default function CleanLanding() {
   const [user, setUser] = useState<User | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup');
-  const [backendUser, setBackendUser] = useState(null);
+  const [backendUser, setBackendUser] = useState<{name?: string; email?: string; [key: string]: any} | null>(null);
 
   useEffect(() => {
     // Only check your backend authentication for dashboard access
@@ -75,7 +75,7 @@ export default function CleanLanding() {
               <div className="flex items-center space-x-4">
                 {backendUser ? (
                   <div className="flex items-center space-x-3">
-                    <span className="text-gray-300 text-sm">Welcome, {backendUser.name || backendUser.email}</span>
+                    <span className="text-gray-300 text-sm">Welcome, {backendUser?.name || backendUser?.email || 'User'}</span>
                     <Link
                       href="/dashboard"
                       className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
