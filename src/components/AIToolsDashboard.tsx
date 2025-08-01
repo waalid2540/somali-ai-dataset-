@@ -37,6 +37,16 @@ function AIToolsDashboard({
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
   const [showAgents, setShowAgents] = useState(false);
 
+  // Show Barakah AI Agents Dashboard if selected
+  if (showAgents) {
+    return (
+      <BarakahAgentsDashboard
+        userSubscription={userSubscription}
+        onBack={() => setShowAgents(false)}
+      />
+    );
+  }
+
   // Initialize AI Tools Engine
   const aiEngine = new AIToolsEngine();
   const allTools = aiEngine.getAllTools();
