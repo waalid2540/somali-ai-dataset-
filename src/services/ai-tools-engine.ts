@@ -38,13 +38,13 @@ interface AIToolResult {
 
 class AIToolsEngine {
   private apiKey: string;
-  private baseURL = 'https://api.deepseek.com/v1';
+  private baseURL = 'https://api.openai.com/v1';
   
   constructor() {
-    this.apiKey = process.env.DEEPSEEK_API_KEY || '';
+    this.apiKey = process.env.OPENAI_API_KEY || '';
     
     if (!this.apiKey) {
-      console.error('DeepSeek API key not found. Please set DEEPSEEK_API_KEY in environment variables.');
+      console.error('OpenAI API key not found. Please set OPENAI_API_KEY in environment variables.');
     }
   }
 
@@ -98,12 +98,12 @@ class AIToolsEngine {
   }
 
   /**
-   * Generate content using DeepSeek with 10-second timeout (95% cheaper than GPT-4!)
+   * Generate premium content using OpenAI GPT-3.5-turbo (Advanced AI Suite)
    */
   private async generateContent(prompt: string, config: AIToolConfig): Promise<string> {
-    // Add strict 8-second timeout (buffer for processing)
+    // Fast 8-second timeout for premium experience
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout to ensure completion
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     try {
       const response = await fetch(`${this.baseURL}/chat/completions`, {
@@ -113,22 +113,34 @@ class AIToolsEngine {
           'Authorization': `Bearer ${this.apiKey}`,
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: 'gpt-3.5-turbo',
           messages: [
             {
               role: 'system',
-              content: `You are a ${config.name} specialist. Create engaging, professional content with the unique style and personality defined in the tool prompt. Use emojis, formatting, and creative elements as specified in each tool's requirements. Focus on delivering high-quality, valuable content that matches the tool's specific purpose and target audience.
+              content: `You are an ADVANCED ${config.name} specialist in the Professional AI Suite ($7.99/month premium service). Create exceptional, high-quality content that justifies premium pricing. Use sophisticated language, professional formatting, and advanced techniques. 
 
-IMPORTANT: Today's date is ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} (${new Date().getFullYear()}). Always use the current year ${new Date().getFullYear()} in titles, examples, and content - NEVER use outdated years like 2024.`
+🎯 PREMIUM STANDARDS:
+- Deliver 2x more value than basic AI tools
+- Use advanced copywriting techniques  
+- Include premium insights and strategies
+- Professional tone with engaging personality
+- Rich formatting with emojis and structure
+- Actionable, results-driven content
+
+IMPORTANT: Today's date is ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} (${new Date().getFullYear()}). Always use current year ${new Date().getFullYear()} in examples and references.
+
+Remember: Users pay $7.99/month for PREMIUM quality - exceed their expectations!`
             },
             {
               role: 'user',
               content: prompt
             }
           ],
-          max_tokens: Math.min(config.maxTokens, 800), // Ensure complete content generation
-          temperature: Math.min(config.temperature, 0.01), // Ultra-low for maximum speed
-          top_p: 0.9,
+          max_tokens: Math.min(config.maxTokens * 1.5, 1200), // 50% longer responses for premium
+          temperature: config.temperature,
+          top_p: 0.95,
+          presence_penalty: 0.1,
+          frequency_penalty: 0.1,
           stream: false,
         }),
         signal: controller.signal
@@ -138,7 +150,7 @@ IMPORTANT: Today's date is ${new Date().toLocaleDateString('en-US', { year: 'num
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(`AI generation failed: ${error.error?.message || 'Unknown error'}`);
+        throw new Error(`Premium AI generation failed: ${error.error?.message || 'Unknown error'}`);
       }
 
       const result = await response.json();
@@ -146,7 +158,7 @@ IMPORTANT: Today's date is ${new Date().toLocaleDateString('en-US', { year: 'num
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        throw new Error('Request timed out after 15 seconds. Please try again.');
+        throw new Error('Premium AI processing timed out. Please try again.');
       }
       throw error;
     }

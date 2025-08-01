@@ -81,8 +81,8 @@ function AIToolsDashboard({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">AI Tools Bundle</h1>
-              <p className="text-gray-600 mt-1 text-sm sm:text-base">20 powerful AI tools for $4.99/month</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Advanced AI Suite</h1>
+              <p className="text-gray-600 mt-1 text-sm sm:text-base">21 premium AI tools powered by GPT-3.5-turbo for $7.99/month</p>
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
               <div className="flex items-center gap-3 sm:gap-4">

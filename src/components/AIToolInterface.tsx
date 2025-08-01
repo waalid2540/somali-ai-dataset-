@@ -938,11 +938,13 @@ function AIToolInterface({
               </p>
               
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 mb-6">
-                <div className="text-2xl font-bold text-blue-900 mb-1">$4.99/month</div>
+                <div className="text-2xl font-bold text-blue-900 mb-1">$7.99/month</div>
                 <div className="text-blue-700 text-sm">
-                  ✅ Unlimited AI tool usage<br/>
-                  ✅ All 21 AI tools<br/>
-                  ✅ Priority support
+                  ✅ Unlimited premium AI tool usage<br/>
+                  ✅ All 21 advanced AI tools<br/>
+                  ✅ GPT-3.5-turbo powered responses<br/>
+                  ✅ Priority support<br/>
+                  ✅ 50% longer, higher quality outputs
                 </div>
               </div>
               

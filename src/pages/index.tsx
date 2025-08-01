@@ -150,10 +150,10 @@ function HomePage() {
   return (
     <>
       <Head>
-        <title>AI Tools Bundle - 21 Professional AI Tools for $4.99/month</title>
+        <title>Advanced AI Suite - 21 Premium AI Tools for $7.99/month</title>
         <meta 
           name="description" 
-          content="Get 21 professional AI tools for $4.99/month. Content creation, business automation, chatbots, and more. Save $115+ monthly vs individual subscriptions." 
+          content="Get 21 premium AI tools for $7.99/month. Advanced content creation, business automation, premium chatbots, and more. Save $200+ monthly vs individual subscriptions." 
         />
         <meta name="keywords" content="AI tools, artificial intelligence, content creation, business automation, chatbot, social media AI, blog generator" />
         
@@ -391,21 +391,21 @@ function HomePage() {
                 {/* Attention-Grabbing Badge */}
                 <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-full text-red-300 font-bold text-sm mb-8 animate-bounce">
                   <Zap className="w-4 h-4 mr-2" />
-                  🔥 ChatGPT COSTS $20 • WE'RE $4.99 + MORE TOOLS
+                  🔥 ChatGPT COSTS $20 • ADVANCED AI SUITE $7.99 + MORE PREMIUM TOOLS
                 </div>
 
                 {/* Power Headline */}
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-black text-white mb-6 md:mb-8 leading-tight">
-                  <span className="text-yellow-400 block sm:inline">ChatGPT + 21 TOOLS</span>
+                  <span className="text-yellow-400 block sm:inline">ADVANCED AI SUITE</span>
                   <br className="hidden sm:block" />
                   <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-purple-400 bg-clip-text text-transparent block sm:inline">
-                    $4.99/MONTH
+                    $7.99/MONTH
                   </span>
                 </h1>
 
                 {/* Compelling Value Proposition */}
                 <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-4 font-semibold px-4">
-                  Why pay <span className="text-red-400 line-through">$20 for ChatGPT</span> when you get <span className="text-emerald-400 text-2xl sm:text-3xl lg:text-4xl font-bold">ChatGPT + 21 AI tools for $4.99?</span>
+                  Why pay <span className="text-red-400 line-through">$20 for ChatGPT</span> when you get <span className="text-emerald-400 text-2xl sm:text-3xl lg:text-4xl font-bold">Advanced AI Suite + 21 premium tools for $7.99?</span>
                 </p>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 md:mb-12 max-w-4xl mx-auto px-4">
                   <strong className="text-yellow-400">TRY FREE FIRST!</strong> Test all tools with limited uses, then upgrade for unlimited access.
@@ -489,10 +489,10 @@ function HomePage() {
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12 md:mb-16 px-4">
                   <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-4 md:mb-6">
-                    <span className="text-yellow-400">ChatGPT + 20</span> AI TOOLS
+                    <span className="text-yellow-400">ADVANCED AI SUITE</span> - 21 PREMIUM TOOLS
                   </h2>
                   <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-6 md:mb-8 max-w-4xl mx-auto">
-                    ChatGPT Plus costs $20/month. Our AI Chat + 20 professional tools cost just $4.99/month!
+                    ChatGPT Plus costs $20/month. Our Advanced AI Suite with 21 premium tools costs just $7.99/month!
                   </p>
                   
                   {/* Value Calculator */}
@@ -505,13 +505,13 @@ function HomePage() {
                         <div className="text-sm text-gray-400">Just AI chat</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-emerald-400 font-bold mb-2">✅ Som AI Data</div>
-                        <div className="text-3xl sm:text-4xl font-black text-emerald-400 mb-2">$4.99/month</div>
-                        <div className="text-sm text-yellow-400">AI Chat + 20 Tools</div>
+                        <div className="text-emerald-400 font-bold mb-2">✅ Advanced AI Suite</div>
+                        <div className="text-3xl sm:text-4xl font-black text-emerald-400 mb-2">$7.99/month</div>
+                        <div className="text-sm text-yellow-400">Premium AI Chat + 21 Advanced Tools</div>
                       </div>
                     </div>
                     <div className="text-yellow-400 text-lg sm:text-xl font-bold mt-4 pt-4 border-t border-gray-600">
-                      🔥 75% CHEAPER + 20 BONUS TOOLS
+                      🔥 60% CHEAPER + 21 PREMIUM TOOLS
                     </div>
                   </div>
                 </div>

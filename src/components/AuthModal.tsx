@@ -275,7 +275,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-xs font-bold">4</div>
-                  <p className="text-blue-800 text-sm">Return here to complete your <strong>$4.99/month subscription</strong></p>
+                  <p className="text-blue-800 text-sm">Return here to complete your <strong>$7.99/month Advanced AI Suite subscription</strong></p>
                 </div>
               </div>
             </div>
@@ -370,11 +370,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-gray-900">AI Tools Bundle</h3>
-                <p className="text-sm text-gray-600">20 professional AI tools</p>
+                <h3 className="font-semibold text-gray-900">Advanced AI Suite</h3>
+                <p className="text-sm text-gray-600">21 premium AI tools powered by GPT-3.5-turbo</p>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-blue-600">$4.99</div>
+                <div className="text-2xl font-bold text-blue-600">$7.99</div>
                 <div className="text-sm text-gray-500">per month</div>
               </div>
             </div>
