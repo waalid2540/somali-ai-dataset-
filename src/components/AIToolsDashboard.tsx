@@ -11,9 +11,12 @@ import {
   Zap,
   TrendingUp,
   Users,
-  Video
+  Video,
+  Bot,
+  Crown
 } from 'lucide-react';
 import AIToolsEngine, { AIToolConfig } from '../services/ai-tools-engine';
+import BarakahAgentsDashboard from './BarakahAgentsDashboard';
 
 interface AIToolsDashboardProps {
   userSubscription?: 'free' | 'pro' | 'enterprise';
@@ -32,6 +35,7 @@ function AIToolsDashboard({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedTool, setSelectedTool] = useState<AIToolConfig | null>(null);
+  const [showAgents, setShowAgents] = useState(false);
 
   // Initialize AI Tools Engine
   const aiEngine = new AIToolsEngine();
@@ -157,11 +161,48 @@ function AIToolsDashboard({
             </div>
           </div>
 
-          {/* Integration Showcase */}
-          <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 text-white">
+          {/* AI Agents Showcase */}
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 text-white">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
               <div className="flex-1">
-                <h3 className="text-lg sm:text-xl font-bold mb-2">🚀 New: Business Automation Integrations</h3>
+                <div className="flex items-center space-x-2 mb-2">
+                  <Crown className="w-5 h-5 text-yellow-300" />
+                  <h3 className="text-lg sm:text-xl font-bold">🤖 NEW: Enterprise AI Agents</h3>
+                </div>
+                <p className="text-purple-100 mb-3 sm:mb-4 text-sm sm:text-base">Beyond tools - AI agents that THINK, PLAN & EXECUTE complete workflows automatically!</p>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 bg-yellow-300 rounded-full"></span>
+                    <span>6 Enterprise Agents</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 bg-yellow-300 rounded-full"></span>
+                    <span>Full Workflow Automation</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 bg-yellow-300 rounded-full"></span>
+                    <span>Live Integrations</span>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full lg:w-auto">
+                <button 
+                  onClick={() => setShowAgents(true)}
+                  className="w-full lg:w-auto bg-white text-purple-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold hover:bg-purple-50 transition-colors text-sm sm:text-base flex items-center justify-center space-x-2"
+                >
+                  <Bot className="w-4 h-4" />
+                  <span className="hidden sm:inline">Launch AI Agents →</span>
+                  <span className="sm:hidden">AI Agents →</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Integration Showcase */}
+          <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-xl p-4 sm:p-6 mt-4 text-white">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+              <div className="flex-1">
+                <h3 className="text-lg sm:text-xl font-bold mb-2">🚀 Business Automation Integrations</h3>
                 <p className="text-emerald-100 mb-3 sm:mb-4 text-sm sm:text-base">Connect your AI tools to Gmail, Stripe, Facebook, LinkedIn, HubSpot, and more!</p>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm">
                   <div className="flex items-center space-x-2">
