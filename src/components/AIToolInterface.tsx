@@ -110,6 +110,12 @@ function AIToolInterface({
   };
 
   const handleGenerate = async () => {
+    // Special handling for Tutorial Studio - redirect to recording page
+    if (tool.id === 'tutorial-studio') {
+      window.location.href = '/tutorial-studio';
+      return;
+    }
+
     // Check usage limit for free users
     if (hasReachedLimit) {
       setShowUpgradeModal(true);

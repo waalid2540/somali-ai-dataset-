@@ -75,24 +75,6 @@ function AIToolsDashboard({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
 
-      {/* Tutorial Studio Banner */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center">
-            <Video className="w-8 h-8 mr-4" />
-            <div>
-              <div className="text-xl font-bold">🎥 TUTORIAL STUDIO - Record Your Demos!</div>
-              <div className="text-red-100">Screen recording + webcam for professional tutorials</div>
-            </div>
-          </div>
-          <a
-            href="/tutorial-studio"
-            className="bg-white text-red-600 px-6 py-3 rounded-lg font-bold hover:bg-red-50 transition-colors"
-          >
-            Start Recording →
-          </a>
-        </div>
-      </div>
 
       {/* Header Section */}
       <div className="bg-white border-b border-gray-200">
