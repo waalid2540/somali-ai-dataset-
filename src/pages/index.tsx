@@ -44,7 +44,7 @@ function HomePage() {
     { name: 'Ad Copy Creator', icon: '📢', category: 'Content Creation', description: 'High-converting advertisements', freeLimit: 2 },
     { name: 'Email Marketing AI', icon: '📧', category: 'Content Creation', description: 'Email campaigns & sequences', freeLimit: 2 },
     { name: 'Product Description AI', icon: '🛍️', category: 'Content Creation', description: 'Converting product copy', freeLimit: 3 },
-    { name: 'Tutorial Studio', icon: '🎥', category: 'Content Creation', description: 'Create professional demo videos and tutorials', freeLimit: 1 },
+    { name: 'Tutorial Script Generator', icon: '🎥', category: 'Content Creation', description: 'Generate scripts for professional demo videos', freeLimit: 1 },
     { name: 'Invoice Generator AI', icon: '📄', category: 'Business Operations', description: 'Professional invoicing', freeLimit: 1 },
     { name: 'Contract Creator AI', icon: '📋', category: 'Business Operations', description: 'Legal agreements', freeLimit: 1 },
     { name: 'Proposal Writer AI', icon: '💼', category: 'Business Operations', description: 'Winning proposals', freeLimit: 1 },

@@ -740,8 +740,8 @@ Ready to create copy that makes {audience} say "TAKE MY MONEY!"? Let's build des
   private getTutorialStudio(): AIToolConfig {
     return {
       id: 'tutorial-studio',
-      name: 'Tutorial Studio',
-      description: 'Create professional demo videos and tutorials for your SaaS products',
+      name: 'Tutorial Script Generator',
+      description: 'Generate scripts for professional demo videos and tutorials',
       category: 'content',
       icon: '🎥',
       inputs: [
