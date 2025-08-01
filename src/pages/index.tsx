@@ -53,8 +53,8 @@ export default function CleanLanding() {
   return (
     <>
       <Head>
-        <title>Somali AI Dataset - Professional AI Tools for $4.99/month</title>
-        <meta name="description" content="Professional Somali AI dataset with 20+ AI tools, Tutorial Studio, and Voice Clone Studio. Start free, upgrade for $4.99/month." />
+        <title>Somali AI Tools - 20+ AI Tools + Tutorial Studio + Voice Clone for $4.99/month</title>
+        <meta name="description" content="20+ AI tools, Tutorial Studio, and Voice Clone Studio. Everything you need to build your business. Start free, upgrade for $4.99/month." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -68,35 +68,51 @@ export default function CleanLanding() {
                   <Globe className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                  Somali AI Dataset
+                  Somali AI Tools
                 </span>
               </div>
               
+              {/* Top Navigation - Dataset Feature */}
+              <div className="hidden md:flex items-center space-x-6">
+                <Link 
+                  href="/dataset" 
+                  className="text-gray-300 hover:text-blue-400 px-3 py-2 rounded-lg font-medium transition-all"
+                >
+                  📊 Dataset
+                </Link>
+                <Link 
+                  href="/pricing" 
+                  className="text-gray-300 hover:text-blue-400 px-3 py-2 rounded-lg font-medium transition-all"
+                >
+                  💰 Pricing
+                </Link>
+              </div>
+              
               <div className="flex items-center space-x-4">
-                {backendUser ? (
+                {user ? (
                   <div className="flex items-center space-x-3">
-                    <span className="text-gray-300 text-sm">Welcome, {backendUser?.name || backendUser?.email || 'User'}</span>
-                    <Link
-                      href="/dashboard"
+                    <span className="text-gray-300 text-sm">Welcome!</span>
+                    <button
+                      onClick={() => router.push('/ai-tools')}
                       className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
                     >
-                      Dashboard
-                    </Link>
+                      My Tools
+                    </button>
                   </div>
                 ) : (
                   <div className="flex items-center space-x-3">
-                    <Link
-                      href="/login"
+                    <button
+                      onClick={() => { setAuthMode('signin'); setShowAuthModal(true); }}
                       className="text-white hover:text-gray-300 px-4 py-2 rounded-lg font-semibold transition-all"
                     >
                       Sign In
-                    </Link>
-                    <Link
-                      href="/signup"
+                    </button>
+                    <button
+                      onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
                       className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
                     >
                       Get Started Free
-                    </Link>
+                    </button>
                   </div>
                 )}
               </div>
@@ -126,54 +142,52 @@ export default function CleanLanding() {
                 Start free with 5 daily uses, then upgrade to unlimited for just $4.99/month.
               </p>
               
-              <div className="flex flex-col items-center space-y-6">
-                {/* Dataset Access (Your Backend) */}
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold text-white mb-3">🗄️ Access Somali AI Dataset</h3>
-                  <Link
-                    href="/signup"
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 inline-flex items-center"
-                  >
-                    Get Dataset Access
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Link>
-                  <p className="text-gray-400 text-sm mt-2">Professional Somali dataset & API access</p>
-                </div>
-
-                {/* AI Tools Access (Supabase) */}
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold text-white mb-3">⚡ Try AI Tools Bundle</h3>
-                  <button
-                    onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
-                    className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 inline-flex items-center"
-                  >
-                    Start Free (5 uses/day)
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </button>
-                  <p className="text-gray-400 text-sm mt-2">20+ AI tools • Tutorial Studio • Voice Clone</p>
-                </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button
+                  onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
+                  className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 flex items-center"
+                >
+                  Start Free (5 uses/day)
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </button>
                 
                 <div className="text-gray-400 text-sm">
-                  No credit card required for either option
+                  No credit card required
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Three Main Products */}
+        {/* Four Main Products */}
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-white mb-4">
-                Three Powerful Studios in One
+                Complete AI Business Suite
               </h2>
               <p className="text-gray-300 text-lg">
                 Everything you need to build, create, and grow your business
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Somali AI Dataset */}
+              <div className="bg-gradient-to-br from-indigo-900/50 to-purple-800/50 rounded-2xl p-8 border border-indigo-700 hover:border-indigo-600 transition-all">
+                <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+                  <Globe className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-4">Somali AI Dataset</h3>
+                <p className="text-gray-300 mb-6">
+                  Professional Somali language dataset for developers and researchers.
+                </p>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li className="flex items-center"><Check className="w-4 h-4 text-emerald-400 mr-2" /> API Access</li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-emerald-400 mr-2" /> Developer Tools</li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-emerald-400 mr-2" /> Documentation</li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-emerald-400 mr-2" /> Support</li>
+                </ul>
+              </div>
               {/* AI Tools */}
               <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl p-8 border border-gray-700 hover:border-gray-600 transition-all">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6">
@@ -376,9 +390,9 @@ export default function CleanLanding() {
           setShowAuthModal(false);
         }}
         onSuccess={() => {
-          console.log('Auth success, redirecting to dashboard');
+          console.log('Auth success, redirecting to AI tools');
           setShowAuthModal(false);
-          router.push('/dashboard');
+          router.push('/ai-tools');
         }}
         initialMode={authMode}
       />
