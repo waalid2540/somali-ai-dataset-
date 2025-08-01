@@ -41,6 +41,19 @@ class BarakahAgentService {
     this.baseUrl = process.env.NEXT_PUBLIC_BARAKAH_API_URL || 'https://barakah-agents-api.onrender.com';
   }
 
+  // Check if backend is available
+  private async isBackendAvailable(): Promise<boolean> {
+    try {
+      const response = await fetch(`${this.baseUrl}/health`, { 
+        method: 'GET',
+        signal: AbortSignal.timeout(5000) // 5 second timeout
+      });
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  }
+
   // Available AI Agents for the dashboard
   getAvailableAgents(): AgentConfig[] {
     return [
@@ -144,6 +157,16 @@ class BarakahAgentService {
     userApiKeys?: Record<string, string>
   ): Promise<string> {
     try {
+      // Test backend availability first
+      const healthCheck = await fetch(`${this.baseUrl}/health`, {
+        method: 'GET',
+        signal: AbortSignal.timeout(5000)
+      });
+
+      if (!healthCheck.ok) {
+        throw new Error('Backend unavailable');
+      }
+
       const response = await fetch(`${this.baseUrl}/api/agents/execute`, {
         method: 'POST',
         headers: {
@@ -154,7 +177,8 @@ class BarakahAgentService {
           agentId,
           input,
           customerApiKeys: userApiKeys
-        })
+        }),
+        signal: AbortSignal.timeout(30000) // 30 second timeout
       });
 
       if (!response.ok) {
@@ -166,12 +190,133 @@ class BarakahAgentService {
 
     } catch (error) {
       console.error('Barakah Agent Service Error:', error);
-      throw new Error('Failed to execute agent. Please try again.');
+      
+      // Fallback to enhanced demo if backend is unavailable
+      console.log('Backend unavailable, using enhanced demo mode');
+      const executionId = `demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      // Start realistic demo execution
+      setTimeout(() => {
+        this.simulateRealExecution(executionId, agentId, input);
+      }, 1000);
+      
+      return executionId;
     }
+  }
+
+  // Store demo executions in memory
+  private demoExecutions: Map<string, AgentExecution> = new Map();
+
+  // Simulate realistic agent execution for demo
+  private async simulateRealExecution(executionId: string, agentId: string, input: any) {
+    const agentConfig = this.getAvailableAgents().find(a => a.id === agentId);
+    if (!agentConfig) return;
+
+    // Create initial execution
+    const execution: AgentExecution = {
+      id: executionId,
+      agentId,
+      status: 'running',
+      steps: [],
+      startTime: new Date().toISOString()
+    };
+
+    this.demoExecutions.set(executionId, execution);
+
+    // Step 1: Think (2 seconds)
+    setTimeout(() => {
+      execution.steps.push({
+        id: `${executionId}_think`,
+        type: 'think',
+        description: 'Analyzing your request and gathering context...',
+        status: 'completed',
+        timestamp: new Date().toISOString(),
+        output: {
+          analysis: `🧠 Analyzing request for ${agentConfig.name}:\n\n• Understanding your requirements: "${input.request}"\n• Identifying target platforms and audience\n• Planning content strategy and execution approach\n• This is demo mode - upgrade for real analysis`,
+          mock: true
+        }
+      });
+    }, 2000);
+
+    // Step 2: Plan (4 seconds)
+    setTimeout(() => {
+      execution.steps.push({
+        id: `${executionId}_plan`,
+        type: 'plan',
+        description: 'Creating detailed execution strategy...',
+        status: 'completed',
+        timestamp: new Date().toISOString(),
+        output: {
+          plan: `📋 Execution Plan for ${agentConfig.name}:\n\n1. Content Creation Phase\n2. Platform Integration Phase\n3. Publishing & Distribution\n4. Performance Monitoring\n\n⚡ In full version: Real integrations with WordPress, social media, email platforms\n🔒 Demo mode - upgrade for live execution`,
+          mock: true
+        }
+      });
+    }, 4000);
+
+    // Step 3: Execute (6 seconds)
+    setTimeout(() => {
+      execution.steps.push({
+        id: `${executionId}_execute`,
+        type: 'execute',
+        description: 'Creating deliverable content...',
+        status: 'completed',
+        timestamp: new Date().toISOString(),
+        output: {
+          deliverable: `⚡ ${agentConfig.name} Demo Output:\n\n✨ High-quality content created for: "${input.request}"\n📝 SEO-optimized and platform-ready\n🎯 Tailored to your target audience\n\n🚀 In full version: This would be your actual deliverable ready for publishing!\n🔒 Upgrade to Agency Pro for real content generation`,
+          mock: true
+        }
+      });
+    }, 6000);
+
+    // Step 4: Integration (8 seconds)
+    setTimeout(() => {
+      execution.steps.push({
+        id: `${executionId}_integrate`,
+        type: 'integrate',
+        description: 'Connecting to platforms for publishing...',
+        status: 'completed',
+        timestamp: new Date().toISOString(),
+        output: {
+          integrations: ['WordPress', 'LinkedIn', 'Facebook', 'Gmail'],
+          status: 'Demo mode - no real publishing',
+          message: '🔗 In full version: Content would be automatically published to all connected platforms',
+          mock: true
+        }
+      });
+    }, 8000);
+
+    // Step 5: Complete (10 seconds)
+    setTimeout(() => {
+      execution.steps.push({
+        id: `${executionId}_verify`,
+        type: 'verify',
+        description: 'Workflow completed successfully!',
+        status: 'completed',
+        timestamp: new Date().toISOString(),
+        output: {
+          summary: '✅ Demo execution completed successfully!',
+          message: 'This was a demo. Upgrade to Agency Pro for real agent execution with live integrations.',
+          mock: true
+        }
+      });
+
+      execution.status = 'completed';
+      execution.endTime = new Date().toISOString();
+      execution.result = {
+        success: true,
+        message: `🎉 Demo completed! Your ${agentConfig.name} would have executed successfully with real integrations. Upgrade to Agency Pro for live functionality.`,
+        mock: true
+      };
+    }, 10000);
   }
 
   // Get execution status and progress
   async getExecution(executionId: string): Promise<AgentExecution | null> {
+    // Check if it's a demo execution first
+    if (executionId.startsWith('demo_')) {
+      return this.demoExecutions.get(executionId) || null;
+    }
+
     try {
       const response = await fetch(`${this.baseUrl}/api/executions/${executionId}`, {
         headers: {
