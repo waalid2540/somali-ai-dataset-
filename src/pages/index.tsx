@@ -25,17 +25,25 @@ export default function CleanLanding() {
   const [user, setUser] = useState<User | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup');
-
+  const [backendUser, setBackendUser] = useState(null);
 
   useEffect(() => {
-    // Check if user is logged in
+    // Only check your backend authentication for dashboard access
+    const apiKey = localStorage.getItem('api_key');
+    const userInfo = localStorage.getItem('user_info');
+    if (apiKey && userInfo) {
+      console.log('Backend user found:', userInfo);
+      setBackendUser(JSON.parse(userInfo));
+    }
+
+    // Keep Supabase for AI tools authentication only
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Session:', session);
+      console.log('Supabase Session (for tools):', session);
       setUser(session?.user ?? null);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event, session);
+      console.log('Auth state changed (tools):', event, session);
       setUser(session?.user ?? null);
     });
 
@@ -65,20 +73,31 @@ export default function CleanLanding() {
               </div>
               
               <div className="flex items-center space-x-4">
-                {user ? (
-                  <Link
-                    href="/dashboard"
-                    className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
-                  >
-                    Dashboard
-                  </Link>
+                {backendUser ? (
+                  <div className="flex items-center space-x-3">
+                    <span className="text-gray-300 text-sm">Welcome, {backendUser.name || backendUser.email}</span>
+                    <Link
+                      href="/dashboard"
+                      className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
+                    >
+                      Dashboard
+                    </Link>
+                  </div>
                 ) : (
-                  <button
-                    onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
-                    className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
-                  >
-                    Get Started Free
-                  </button>
+                  <div className="flex items-center space-x-3">
+                    <Link
+                      href="/login"
+                      className="text-white hover:text-gray-300 px-4 py-2 rounded-lg font-semibold transition-all"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
+                    >
+                      Get Started Free
+                    </Link>
+                  </div>
                 )}
               </div>
             </div>
@@ -107,17 +126,35 @@ export default function CleanLanding() {
                 Start free with 5 daily uses, then upgrade to unlimited for just $4.99/month.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button
-                  onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
-                  className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 flex items-center"
-                >
-                  Start Free (5 uses/day)
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </button>
+              <div className="flex flex-col items-center space-y-6">
+                {/* Dataset Access (Your Backend) */}
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-white mb-3">🗄️ Access Somali AI Dataset</h3>
+                  <Link
+                    href="/signup"
+                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 inline-flex items-center"
+                  >
+                    Get Dataset Access
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Link>
+                  <p className="text-gray-400 text-sm mt-2">Professional Somali dataset & API access</p>
+                </div>
+
+                {/* AI Tools Access (Supabase) */}
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-white mb-3">⚡ Try AI Tools Bundle</h3>
+                  <button
+                    onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
+                    className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:scale-105 inline-flex items-center"
+                  >
+                    Start Free (5 uses/day)
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </button>
+                  <p className="text-gray-400 text-sm mt-2">20+ AI tools • Tutorial Studio • Voice Clone</p>
+                </div>
                 
                 <div className="text-gray-400 text-sm">
-                  No credit card required
+                  No credit card required for either option
                 </div>
               </div>
             </div>
