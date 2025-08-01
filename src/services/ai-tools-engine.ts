@@ -45,6 +45,8 @@ class AIToolsEngine {
     
     if (!this.apiKey) {
       console.error('OpenAI API key not found. Please set OPENAI_API_KEY in environment variables.');
+    } else {
+      console.log('OpenAI API key loaded successfully:', this.apiKey.substring(0, 20) + '...');
     }
   }
 
@@ -106,6 +108,9 @@ class AIToolsEngine {
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     try {
+      console.log('Making OpenAI API request to:', `${this.baseURL}/chat/completions`);
+      console.log('Using API key:', this.apiKey ? 'Key present' : 'No key found');
+      
       const response = await fetch(`${this.baseURL}/chat/completions`, {
         method: 'POST',
         headers: {
@@ -150,6 +155,7 @@ Remember: Users pay $7.99/month for PREMIUM quality - exceed their expectations!
 
       if (!response.ok) {
         const error = await response.json();
+        console.error('OpenAI API Error:', error);
         throw new Error(`Premium AI generation failed: ${error.error?.message || 'Unknown error'}`);
       }
 

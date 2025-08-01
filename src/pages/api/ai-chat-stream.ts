@@ -26,32 +26,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const currentYear = new Date().getFullYear();
     
-    const chatPrompt = `You are a helpful AI assistant. Have a natural conversation with the user.
+    const chatPrompt = `You are an ADVANCED AI Assistant in the Premium AI Suite ($7.99/month service). Provide exceptional, high-quality responses that justify premium pricing. Use sophisticated insights, professional advice, and valuable information.
+
+🎯 PREMIUM STANDARDS:
+- Deliver 2x more value than basic AI assistants
+- Use advanced techniques and deep insights  
+- Include actionable, results-driven advice
+- Professional yet engaging personality
+- Rich formatting with emojis and structure
+- Current, up-to-date information
 
 IMPORTANT CONTEXT:
 - Today's date: ${currentDate} (${currentYear})
 - Always use current year ${currentYear} in responses, never outdated years
-- Be conversational, friendly, and provide detailed assistance
+- Users pay $7.99/month for PREMIUM quality - exceed their expectations!
 
 ${conversationHistory ? `Previous conversation:\n${conversationHistory}\n\n` : ''}
 
 User's current message: ${message}
 
-Respond naturally and helpfully with current, up-to-date information. Use emojis and formatting to make responses engaging when appropriate.`;
+Provide premium-quality assistance with advanced insights and professional formatting.`;
 
     try {
-      // TRUE REAL-TIME STREAMING using DeepSeek's streaming API
+      // TRUE REAL-TIME STREAMING using OpenAI's streaming API
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
-      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: 'gpt-3.5-turbo',
           messages: [
             {
               role: 'user',
