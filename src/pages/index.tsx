@@ -1,6 +1,8 @@
 // Clean, Simple Landing Page for somalidata.com
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { 
   ArrowRight, 
   Check, 
@@ -19,6 +21,7 @@ import { User } from '@supabase/supabase-js';
 import AuthModal from '../components/AuthModal';
 
 export default function CleanLanding() {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup');
@@ -27,10 +30,12 @@ export default function CleanLanding() {
   useEffect(() => {
     // Check if user is logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Session:', session);
       setUser(session?.user ?? null);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, session);
       setUser(session?.user ?? null);
     });
 
@@ -40,8 +45,8 @@ export default function CleanLanding() {
   return (
     <>
       <Head>
-        <title>Somali AI Tools - All-in-One AI Toolkit for $4.99/month</title>
-        <meta name="description" content="AI Tools + Tutorial Studio + Voice Clone Studio. Everything you need to build your business with AI. Start free, upgrade for $4.99/month." />
+        <title>Somali AI Dataset - Professional AI Tools for $4.99/month</title>
+        <meta name="description" content="Professional Somali AI dataset with 20+ AI tools, Tutorial Studio, and Voice Clone Studio. Start free, upgrade for $4.99/month." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -55,18 +60,18 @@ export default function CleanLanding() {
                   <Globe className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                  Somali AI Tools
+                  Somali AI Dataset
                 </span>
               </div>
               
               <div className="flex items-center space-x-4">
                 {user ? (
-                  <a
+                  <Link
                     href="/dashboard"
                     className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all"
                   >
                     Dashboard
-                  </a>
+                  </Link>
                 ) : (
                   <button
                     onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
@@ -308,7 +313,7 @@ export default function CleanLanding() {
                   <Globe className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                  Somali AI Tools
+                  Somali AI Dataset
                 </span>
               </div>
               
@@ -320,7 +325,7 @@ export default function CleanLanding() {
             </div>
             
             <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-              © 2024 Somali AI Tools. All rights reserved.
+              © 2024 Somali AI Dataset. All rights reserved.
             </div>
           </div>
         </footer>
@@ -329,10 +334,14 @@ export default function CleanLanding() {
       {/* Auth Modal */}
       <AuthModal 
         isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        onSuccess={() => {
+        onClose={() => {
+          console.log('Closing auth modal');
           setShowAuthModal(false);
-          window.location.href = '/dashboard';
+        }}
+        onSuccess={() => {
+          console.log('Auth success, redirecting to dashboard');
+          setShowAuthModal(false);
+          router.push('/dashboard');
         }}
         initialMode={authMode}
       />
