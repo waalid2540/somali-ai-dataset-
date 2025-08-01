@@ -157,14 +157,28 @@ class BarakahAgentService {
     userApiKeys?: Record<string, string>
   ): Promise<string> {
     try {
-      // Test backend availability first
-      const healthCheck = await fetch(`${this.baseUrl}/health`, {
+      // Test backend availability first - try health, then root
+      let healthCheck = await fetch(`${this.baseUrl}/health`, {
         method: 'GET',
         signal: AbortSignal.timeout(5000)
       });
 
       if (!healthCheck.ok) {
-        throw new Error('Backend unavailable');
+        // Fallback to root endpoint check
+        healthCheck = await fetch(`${this.baseUrl}/`, {
+          method: 'GET',
+          signal: AbortSignal.timeout(5000)
+        });
+        
+        if (!healthCheck.ok) {
+          throw new Error('Backend unavailable');
+        }
+
+        // Check if it's actually our backend
+        const rootData = await healthCheck.json();
+        if (rootData.service !== "Barakah AI Agents API" || rootData.status !== "online") {
+          throw new Error('Backend unavailable');
+        }
       }
 
       const response = await fetch(`${this.baseUrl}/api/agents/execute`, {
@@ -361,9 +375,23 @@ class BarakahAgentService {
   // Check system status
   async getSystemStatus(): Promise<{ openai: boolean; integrations: boolean; message: string }> {
     try {
-      const response = await fetch(`${this.baseUrl}/health`);
+      // Try health endpoint first, then fallback to root endpoint
+      let response = await fetch(`${this.baseUrl}/health`);
       
       if (!response.ok) {
+        // Fallback to root endpoint
+        response = await fetch(`${this.baseUrl}/`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.service === "Barakah AI Agents API" && data.status === "online") {
+            return {
+              openai: true,
+              integrations: true,
+              message: 'Barakah AI Agents API is online'
+            };
+          }
+        }
+        
         return {
           openai: false,
           integrations: false,
@@ -372,7 +400,7 @@ class BarakahAgentService {
       }
 
       const data = await response.json();
-      return data.systemStatus || {
+      return data.systems || {
         openai: true,
         integrations: true,
         message: 'All systems operational'
