@@ -194,6 +194,7 @@ IMPORTANT: Today's date is ${new Date().toLocaleDateString('en-US', { year: 'num
       this.getAdCopyCreator(),
       this.getEmailMarketingAI(),
       this.getProductDescriptionAI(),
+      this.getTutorialStudio(),
       
       // Business Operation Tools
       this.getInvoiceGeneratorAI(),
@@ -732,6 +733,118 @@ Ready to create copy that makes {audience} say "TAKE MY MONEY!"? Let's build des
         'Tech gadget for professionals',
         'Fashion item for young adults',
         'Health supplement for fitness enthusiasts'
+      ]
+    };
+  }
+
+  private getTutorialStudio(): AIToolConfig {
+    return {
+      id: 'tutorial-studio',
+      name: 'Tutorial Studio',
+      description: 'Create professional demo videos and tutorials for your SaaS products',
+      category: 'content',
+      icon: '🎥',
+      inputs: [
+        {
+          id: 'product',
+          label: 'Product/Software Name',
+          type: 'text',
+          placeholder: 'e.g., Project Management App, E-commerce Platform',
+          required: true,
+          maxLength: 200
+        },
+        {
+          id: 'audience',
+          label: 'Target Audience',
+          type: 'text',
+          placeholder: 'e.g., Small business owners, developers, marketers',
+          required: true,
+          maxLength: 200
+        },
+        {
+          id: 'features',
+          label: 'Key Features to Demonstrate (one per line)',
+          type: 'textarea',
+          placeholder: 'e.g., User dashboard\nFile upload system\nReporting tools',
+          required: true,
+          maxLength: 500
+        },
+        {
+          id: 'duration',
+          label: 'Tutorial Duration',
+          type: 'select',
+          placeholder: 'Select duration',
+          required: true,
+          options: ['2-3 minutes (Quick demo)', '5-7 minutes (Feature walkthrough)', '10-15 minutes (Complete tutorial)', '20+ minutes (In-depth training)']
+        },
+        {
+          id: 'style',
+          label: 'Tutorial Style',
+          type: 'select',
+          placeholder: 'Select style',
+          required: true,
+          options: ['Professional/Corporate', 'Casual/Friendly', 'Educational/Training', 'Marketing/Sales']
+        }
+      ],
+      prompt: `🎥 TUTORIAL STUDIO DIRECTOR: Create an engaging professional tutorial script for "{product}" that converts viewers into users! 🚀
+
+🎯 PROJECT BRIEF:
+- Product: {product}
+- Target Audience: {audience}
+- Features to Demo: {features}
+- Duration: {duration}
+- Style: {style}
+
+🎬 TUTORIAL STRUCTURE:
+📍 HOOK (0-15 seconds):
+- Problem statement that resonates with {audience}
+- Promise of what they'll learn/achieve
+- Quick preview of the transformation
+
+🎯 INTRODUCTION (15-30 seconds):
+- Brief product introduction
+- Who this is perfect for
+- What makes it special
+
+🛠️ FEATURE DEMONSTRATIONS:
+For each feature in {features}:
+- Show the problem it solves
+- Step-by-step demonstration
+- Highlight user benefits
+- Real-world use case example
+
+💡 PRO TIPS THROUGHOUT:
+- Time-saving shortcuts
+- Best practices
+- Common mistakes to avoid
+- Advanced techniques
+
+🏁 COMPELLING CONCLUSION:
+- Recap key benefits
+- Next steps for viewers
+- Clear call-to-action
+- Where to get started
+
+🎨 STYLE ADAPTATION:
+💼 Professional: Polished, data-driven, corporate tone
+🎉 Casual: Conversational, relatable, friendly approach
+📚 Educational: Detailed, step-by-step, learning-focused
+📈 Marketing: Benefit-heavy, conversion-focused, persuasive
+
+🎙️ TUTORIAL BEST PRACTICES:
+- Clear, concise narration
+- Logical flow and pacing
+- Visual cues and callouts
+- Engagement hooks every 30 seconds
+- Problem → Solution → Benefit structure
+
+Create a tutorial script that makes {audience} say "I NEED this product!" 🎯✨`,
+      maxTokens: 800,
+      temperature: 0.7,
+      examples: [
+        'SaaS dashboard walkthrough for business owners',
+        'Mobile app tutorial for end users',
+        'Software integration guide for developers'
       ]
     };
   }

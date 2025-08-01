@@ -935,8 +935,7 @@ function AIToolInterface({
                 <div className="text-2xl font-bold text-blue-900 mb-1">$4.99/month</div>
                 <div className="text-blue-700 text-sm">
                   ✅ Unlimited AI tool usage<br/>
-                  ✅ Tutorial Studio<br/>
-                  ✅ Voice Clone Studio<br/>
+                  ✅ All 21 AI tools<br/>
                   ✅ Priority support
                 </div>
               </div>
