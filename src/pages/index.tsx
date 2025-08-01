@@ -44,6 +44,7 @@ function HomePage() {
     { name: 'Ad Copy Creator', icon: '📢', category: 'Content Creation', description: 'High-converting advertisements', freeLimit: 2 },
     { name: 'Email Marketing AI', icon: '📧', category: 'Content Creation', description: 'Email campaigns & sequences', freeLimit: 2 },
     { name: 'Product Description AI', icon: '🛍️', category: 'Content Creation', description: 'Converting product copy', freeLimit: 3 },
+    { name: 'Tutorial Studio', icon: '🎥', category: 'Content Creation', description: 'Create professional demo videos and tutorials', freeLimit: 1 },
     { name: 'Invoice Generator AI', icon: '📄', category: 'Business Operations', description: 'Professional invoicing', freeLimit: 1 },
     { name: 'Contract Creator AI', icon: '📋', category: 'Business Operations', description: 'Legal agreements', freeLimit: 1 },
     { name: 'Proposal Writer AI', icon: '💼', category: 'Business Operations', description: 'Winning proposals', freeLimit: 1 },
@@ -149,10 +150,10 @@ function HomePage() {
   return (
     <>
       <Head>
-        <title>AI Tools Bundle - 20 Professional AI Tools for $4.99/month</title>
+        <title>AI Tools Bundle - 21 Professional AI Tools for $4.99/month</title>
         <meta 
           name="description" 
-          content="Get 20 professional AI tools for $4.99/month. Content creation, business automation, chatbots, and more. Save $115+ monthly vs individual subscriptions." 
+          content="Get 21 professional AI tools for $4.99/month. Content creation, business automation, chatbots, and more. Save $115+ monthly vs individual subscriptions." 
         />
         <meta name="keywords" content="AI tools, artificial intelligence, content creation, business automation, chatbot, social media AI, blog generator" />
         
@@ -395,7 +396,7 @@ function HomePage() {
 
                 {/* Power Headline */}
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-black text-white mb-6 md:mb-8 leading-tight">
-                  <span className="text-yellow-400 block sm:inline">ChatGPT + 20 TOOLS</span>
+                  <span className="text-yellow-400 block sm:inline">ChatGPT + 21 TOOLS</span>
                   <br className="hidden sm:block" />
                   <span className="bg-gradient-to-r from-blue-400 via-emerald-400 to-purple-400 bg-clip-text text-transparent block sm:inline">
                     $4.99/MONTH
@@ -404,7 +405,7 @@ function HomePage() {
 
                 {/* Compelling Value Proposition */}
                 <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-4 font-semibold px-4">
-                  Why pay <span className="text-red-400 line-through">$20 for ChatGPT</span> when you get <span className="text-emerald-400 text-2xl sm:text-3xl lg:text-4xl font-bold">ChatGPT + 20 AI tools for $4.99?</span>
+                  Why pay <span className="text-red-400 line-through">$20 for ChatGPT</span> when you get <span className="text-emerald-400 text-2xl sm:text-3xl lg:text-4xl font-bold">ChatGPT + 21 AI tools for $4.99?</span>
                 </p>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 md:mb-12 max-w-4xl mx-auto px-4">
                   <strong className="text-yellow-400">TRY FREE FIRST!</strong> Test all tools with limited uses, then upgrade for unlimited access.
