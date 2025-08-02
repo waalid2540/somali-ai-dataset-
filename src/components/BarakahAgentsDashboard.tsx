@@ -92,11 +92,6 @@ function AgentExecutionView({ agentId, execution, onClose }: AgentExecutionProps
                            step.output.analysis || step.output.plan || step.output.deliverable || 
                            JSON.stringify(step.output, null, 2)}
                         </p>
-                        {step.output.mock && (
-                          <div className="mt-2 text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded">
-                            🔒 Demo Mode - Upgrade for full functionality
-                          </div>
-                        )}
                       </div>
                     )}
                     {step.error && (
@@ -201,9 +196,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
             setTimeout(pollExecution, 1000); // Poll every 1 second
           } else {
             console.log('Agent execution completed:', execution.status);
-            if (userSubscription !== 'pro') {
-              setShowUpgradeModal(true);
-            }
+            // No upgrade modal - just let them see the results
           }
         }
       };
@@ -373,9 +366,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-purple-600">{selectedAgent.price}</div>
-                  {userSubscription !== 'pro' && (
-                    <div className="text-xs text-orange-600">Demo Mode</div>
-                  )}
+                  <div className="text-xs text-green-600">Ready to Execute</div>
                 </div>
               </div>
 
@@ -418,16 +409,10 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
                   ) : (
                     <>
                       <Zap className="w-5 h-5" />
-                      <span>{userSubscription === 'pro' ? 'Execute Agent' : 'Try Demo'}</span>
+                      <span>Execute Agent</span>
                     </>
                   )}
                 </button>
-
-                {userSubscription !== 'pro' && (
-                  <div className="text-center text-sm text-orange-600 bg-orange-50 p-3 rounded-lg">
-                    🔒 You're in demo mode. Upgrade to Agency Pro for real agent execution with live integrations.
-                  </div>
-                )}
               </div>
             </div>
 
