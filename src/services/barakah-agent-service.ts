@@ -175,8 +175,12 @@ class BarakahAgentService {
 
   // Simulate realistic agent execution for demo
   private async simulateRealExecution(executionId: string, agentId: string, input: any) {
+    console.log('Starting simulation for:', executionId, agentId);
     const agentConfig = this.getAvailableAgents().find(a => a.id === agentId);
-    if (!agentConfig) return;
+    if (!agentConfig) {
+      console.error('Agent config not found for:', agentId);
+      return;
+    }
 
     // Create initial execution
     const execution: AgentExecution = {
@@ -188,9 +192,11 @@ class BarakahAgentService {
     };
 
     this.demoExecutions.set(executionId, execution);
+    console.log('Initial execution created:', execution);
 
     // Step 1: Think (2 seconds)
     setTimeout(() => {
+      console.log('Adding think step to execution:', executionId);
       execution.steps.push({
         id: `${executionId}_think`,
         type: 'think',
@@ -202,6 +208,7 @@ class BarakahAgentService {
           mock: true
         }
       });
+      console.log('Think step added, execution now has', execution.steps.length, 'steps');
     }, 2000);
 
     // Step 2: Plan (4 seconds)

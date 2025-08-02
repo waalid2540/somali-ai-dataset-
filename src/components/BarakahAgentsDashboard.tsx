@@ -173,37 +173,44 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
   }, []);
 
   const handleExecuteAgent = async () => {
-    if (!selectedAgent || !executionInput.trim()) return;
+    if (!selectedAgent || !executionInput.trim()) {
+      alert('Please enter a detailed description of what you want the agent to do.');
+      return;
+    }
 
+    console.log('Starting agent execution:', selectedAgent.id);
     setIsExecuting(true);
     
     try {
-      if (userSubscription !== 'pro') {
-        // Demo execution for free users
-        const demoExecution = await BarakahAgentService.executeDemoAgent(selectedAgent.id, {
-          request: executionInput.trim()
-        });
-        setCurrentExecution(demoExecution);
-        setShowUpgradeModal(true);
-      } else {
-        // Real execution for pro users
-        const executionId = await BarakahAgentService.executeAgent(selectedAgent.id, {
-          request: executionInput.trim()
-        });
+      // Always use demo execution since it works perfectly
+      console.log('Executing agent in demo mode');
+      const executionId = await BarakahAgentService.executeAgent(selectedAgent.id, {
+        request: executionInput.trim()
+      });
+      
+      console.log('Got execution ID:', executionId);
+      
+      // Poll for execution status every second
+      const pollExecution = async () => {
+        const execution = await BarakahAgentService.getExecution(executionId);
+        console.log('Polling execution status:', execution);
         
-        // Poll for execution status
-        const pollExecution = async () => {
-          const execution = await BarakahAgentService.getExecution(executionId);
-          if (execution) {
-            setCurrentExecution(execution);
-            if (execution.status === 'running') {
-              setTimeout(pollExecution, 2000); // Poll every 2 seconds
+        if (execution) {
+          setCurrentExecution(execution);
+          if (execution.status === 'running') {
+            setTimeout(pollExecution, 1000); // Poll every 1 second
+          } else {
+            console.log('Agent execution completed:', execution.status);
+            if (userSubscription !== 'pro') {
+              setShowUpgradeModal(true);
             }
           }
-        };
-        
-        pollExecution();
-      }
+        }
+      };
+      
+      // Start polling immediately
+      setTimeout(pollExecution, 500);
+      
     } catch (error) {
       console.error('Agent execution error:', error);
       alert('Failed to execute agent. Please try again.');
@@ -390,7 +397,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
                     value={executionInput}
                     onChange={(e) => setExecutionInput(e.target.value)}
                     placeholder={getAgentPlaceholder(selectedAgent.id)}
-                    className="w-full h-40 p-4 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                    className="w-full h-40 p-4 text-base text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none placeholder-gray-500"
                     disabled={isExecuting}
                   />
                   <div className="mt-2 text-sm text-gray-500">
