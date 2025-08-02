@@ -39,6 +39,7 @@ function AIToolsDashboard({
 
   // Show Barakah AI Agents Dashboard if selected
   if (showAgents) {
+    console.log('Rendering BarakahAgentsDashboard');
     return (
       <BarakahAgentsDashboard
         userSubscription={userSubscription}
@@ -197,7 +198,10 @@ function AIToolsDashboard({
               </div>
               <div className="w-full lg:w-auto">
                 <button 
-                  onClick={() => setShowAgents(true)}
+                  onClick={() => {
+                    console.log('AI Agents button clicked');
+                    setShowAgents(true);
+                  }}
                   className="w-full lg:w-auto bg-white text-purple-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold hover:bg-purple-50 transition-colors text-sm sm:text-base flex items-center justify-center space-x-2"
                 >
                   <Bot className="w-4 h-4" />
