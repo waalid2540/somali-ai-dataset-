@@ -134,6 +134,25 @@ function AgentExecutionView({ agentId, execution, onClose }: AgentExecutionProps
 export default function BarakahAgentsDashboard({ userSubscription, onBack }: BarakahAgentsDashboardProps) {
   const [agents] = useState<AgentConfig[]>(BarakahAgentService.getAvailableAgents());
   const [selectedAgent, setSelectedAgent] = useState<AgentConfig | null>(null);
+
+  // Get agent-specific placeholder text
+  const getAgentPlaceholder = (agentId: string): string => {
+    const placeholders = {
+      'blog-publisher': 'Write a comprehensive blog post about "The Future of AI in Business" (1500 words). Target audience: business professionals and entrepreneurs. Include actionable insights, real-world examples, and statistics. Publish to my WordPress blog, share on LinkedIn with professional caption, post to Facebook business page, and send to my email newsletter subscribers. Include call-to-action to download our free AI strategy guide.',
+      
+      'email-campaign': 'Create a 5-email welcome sequence for new subscribers to my digital marketing course. Target audience: small business owners wanting to learn online marketing. Email 1: Welcome + course overview, Email 2: Marketing fundamentals, Email 3: Social media strategy, Email 4: Email marketing tips, Email 5: Special course discount. Send one email per day starting immediately. Include my brand colors and professional tone.',
+      
+      'product-launch': 'Launch my new "AI Productivity Masterclass" online course. Create product landing page with compelling copy, set up Stripe payment processing ($297 price), create social media campaign for Facebook and LinkedIn, set up email marketing sequence for launch, and create affiliate marketing materials. Target audience: professionals wanting to use AI tools for productivity. Include testimonials section and money-back guarantee.',
+      
+      'social-media': 'Create 30 days of social media content for my AI consulting business. Platforms: LinkedIn (professional posts), Twitter (quick tips), Instagram (visual quotes). Content mix: 40% educational tips, 30% industry insights, 20% behind-the-scenes, 10% promotional. Post schedule: LinkedIn (weekdays), Twitter (daily), Instagram (3x/week). Include relevant hashtags and call-to-actions for my free consultation.',
+      
+      'lead-generation': 'Find and reach out to 50 SaaS startup founders on LinkedIn who might need AI integration services. Target: Series A-B companies, 10-100 employees, tech industry. Research their recent posts and company news for personalized outreach. Send connection requests with personalized messages, follow up with value-first content, and nurture relationships through helpful AI insights. Goal: 10 qualified discovery calls.',
+      
+      'content-empire': 'Build complete content strategy for my AI automation agency. Create content calendar for blog (2x/week), LinkedIn (daily), YouTube (weekly), email newsletter (weekly), and podcast (bi-weekly). Topics: AI automation, business efficiency, case studies, industry trends. Repurpose blog posts into social media content, video scripts, email newsletters, and podcast outlines. Target audience: business owners wanting to automate operations.'
+    };
+    
+    return placeholders[agentId as keyof typeof placeholders] || 'Describe your specific requirements and goals for this agent...';
+  };
   const [executionInput, setExecutionInput] = useState('');
   const [isExecuting, setIsExecuting] = useState(false);
   const [currentExecution, setCurrentExecution] = useState<AgentExecution | null>(null);
@@ -355,16 +374,28 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Describe what you want the agent to do:
+                  <label className="block text-lg font-semibold text-gray-900 mb-3">
+                    🎯 Tell the agent exactly what you want accomplished:
                   </label>
+                  <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800 font-medium mb-2">💡 Be specific about:</p>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• <strong>What content</strong> to create (topic, style, length)</li>
+                      <li>• <strong>Where to publish</strong> (WordPress, social media, email)</li>
+                      <li>• <strong>Target audience</strong> (professionals, beginners, etc.)</li>
+                      <li>• <strong>Call-to-action</strong> (subscribe, buy, contact)</li>
+                    </ul>
+                  </div>
                   <textarea
                     value={executionInput}
                     onChange={(e) => setExecutionInput(e.target.value)}
-                    placeholder="Example: Write a blog post about AI trends and publish it to my WordPress site, then share on LinkedIn and send to my email list"
-                    className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                    placeholder={getAgentPlaceholder(selectedAgent.id)}
+                    className="w-full h-40 p-4 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
                     disabled={isExecuting}
                   />
+                  <div className="mt-2 text-sm text-gray-500">
+                    💬 The more details you provide, the better results you'll get from the agent.
+                  </div>
                 </div>
 
                 <button
