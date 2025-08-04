@@ -49,7 +49,7 @@ class BarakahAgentService {
         signal: AbortSignal.timeout(3000) // 3 second timeout
       });
       return response.ok;
-    } catch (error) {
+    } catch (error: any) {
       console.log('Backend not available, using demo mode:', error.message);
       return false;
     }
