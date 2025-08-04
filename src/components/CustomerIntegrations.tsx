@@ -83,7 +83,8 @@ export default function CustomerIntegrations({ userId, onBack }: CustomerIntegra
     
     try {
       // Test the connection
-      const response = await fetch(`/api/integrations/${selectedIntegration.id}/test`, {
+      const backendUrl = process.env.NEXT_PUBLIC_BARAKAH_API_URL || 'https://barakah-agents-backend.onrender.com';
+      const response = await fetch(`${backendUrl}/api/integrations/${selectedIntegration.id}/test`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -93,6 +94,10 @@ export default function CustomerIntegrations({ userId, onBack }: CustomerIntegra
           testData: 'Connection test'
         })
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
 
       const result = await response.json();
       
