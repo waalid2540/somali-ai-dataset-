@@ -352,7 +352,11 @@ class BarakahAgentService {
         throw new Error(`Failed to get execution: ${response.statusText}`);
       }
 
-      return await response.json();
+      const result = await response.json();
+      console.log('📊 Backend execution response:', result);
+      
+      // Backend returns { success: true, data: execution }
+      return result.success ? result.data : null;
 
     } catch (error) {
       console.error('Get execution error:', error);
@@ -402,10 +406,16 @@ class BarakahAgentService {
       const userId = 'demo-user'; // In production, get from auth context
       const credentials: Record<string, string> = {};
       
+      console.log('🔍 Looking for credentials with userId:', userId);
+      
       // Check for Gmail credentials
-      const gmailData = localStorage.getItem(`integration_gmail_${userId}`);
+      const gmailKey = `integration_gmail_${userId}`;
+      const gmailData = localStorage.getItem(gmailKey);
+      console.log('📧 Gmail key:', gmailKey, 'Data found:', !!gmailData);
+      
       if (gmailData) {
         const gmail = JSON.parse(gmailData);
+        console.log('📧 Gmail credentials loaded:', Object.keys(gmail));
         credentials.gmail_email = gmail.gmail_email;
         credentials.gmail_app_password = gmail.gmail_app_password;
       }
@@ -423,6 +433,7 @@ class BarakahAgentService {
         Object.assign(credentials, wordpress);
       }
       
+      console.log('🔑 Final credentials loaded:', Object.keys(credentials));
       return credentials;
     } catch (error) {
       console.error('Error loading stored credentials:', error);

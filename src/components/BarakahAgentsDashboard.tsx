@@ -191,7 +191,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
       // Poll for execution status every second
       const pollExecution = async () => {
         const execution = await BarakahAgentService.getExecution(executionId);
-        console.log('🔄 Polling execution status:', execution?.status, execution ? `${execution.steps.length} steps` : 'no execution');
+        console.log('🔄 Polling execution status:', execution?.status, execution ? `${execution.steps?.length || 0} steps` : 'no execution');
         
         if (execution) {
           setCurrentExecution(execution);
