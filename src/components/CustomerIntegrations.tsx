@@ -304,7 +304,7 @@ export default function CustomerIntegrations({ userId, onBack }: CustomerIntegra
                           [field.key]: e.target.value
                         }))}
                         placeholder={field.placeholder}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-4 py-3 text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
                       />
                       {field.type === 'password' && (
                         <button
