@@ -110,11 +110,13 @@ export default function CustomerIntegrations({ userId, onBack }: CustomerIntegra
         alert('✅ Integration connected successfully!');
         setSelectedIntegration(null);
       } else {
-        alert(`❌ Connection failed: ${result.error || 'Unknown error'}`);
+        // Show detailed error message from backend
+        const errorMessage = result.data?.error || result.error || 'Unknown error';
+        alert(`❌ Connection failed:\n\n${errorMessage}`);
       }
     } catch (error) {
       console.error('Connection error:', error);
-      alert('❌ Connection failed. Please check your credentials.');
+      alert('❌ Connection failed. Please check:\n• Gmail App Password (16 characters, no spaces)\n• 2-Step Verification enabled\n• Correct Gmail address');
     } finally {
       setIsConnecting(false);
     }
