@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Play, Clock, CheckCircle, XCircle, Eye, Zap, Crown } from 'lucide-react';
+import { ArrowLeft, Play, Clock, CheckCircle, XCircle, Eye, Zap, Crown, Settings } from 'lucide-react';
 import BarakahAgentService, { AgentConfig, AgentExecution } from '../services/barakah-agent-service';
+import CustomerIntegrations from './CustomerIntegrations';
 
 interface BarakahAgentsDashboardProps {
   userSubscription: string;
@@ -157,6 +158,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
     message: 'All systems operational - Enterprise agents ready'
   });
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showIntegrations, setShowIntegrations] = useState(false);
 
   useEffect(() => {
     // Set system status immediately for demo mode
@@ -274,6 +276,16 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
     </div>
   );
 
+  // Show integrations page if requested
+  if (showIntegrations) {
+    return (
+      <CustomerIntegrations 
+        userId="demo-user" 
+        onBack={() => setShowIntegrations(false)} 
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -293,15 +305,24 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
               <p className="text-gray-600">Enterprise AI that thinks, plans, and executes complete workflows</p>
             </div>
           </div>
-          {systemStatus && (
-            <div className={`px-3 py-1 rounded-full text-sm ${
-              systemStatus.openai && systemStatus.integrations 
-                ? 'bg-green-100 text-green-800' 
-                : 'bg-yellow-100 text-yellow-800'
-            }`}>
-              {systemStatus.message}
-            </div>
-          )}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setShowIntegrations(true)}
+              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              <Settings className="w-4 h-4" />
+              <span>Integrations</span>
+            </button>
+            {systemStatus && (
+              <div className={`px-3 py-1 rounded-full text-sm ${
+                systemStatus.openai && systemStatus.integrations 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-yellow-100 text-yellow-800'
+              }`}>
+                {systemStatus.message}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

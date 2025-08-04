@@ -38,7 +38,7 @@ class BarakahAgentService {
 
   constructor() {
     // Use production Barakah API URL or localhost for development
-    this.baseUrl = process.env.NEXT_PUBLIC_BARAKAH_API_URL || 'https://barakah-agents-api.onrender.com';
+    this.baseUrl = process.env.NEXT_PUBLIC_BARAKAH_API_URL || 'https://barakah-agents-backend.onrender.com';
   }
 
   // Check if backend is available
