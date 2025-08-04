@@ -157,10 +157,50 @@ class BarakahAgentService {
     input: any, 
     userApiKeys?: Record<string, string>
   ): Promise<string> {
-    console.log(`Executing agent: ${agentId}`);
+    console.log(`🚀 Executing agent: ${agentId}`);
+    console.log(`📝 Input:`, input);
     
-    // Always use enhanced demo mode for now since backend API routes aren't working
-    console.log('Using enhanced demo mode - backend API routes not accessible');
+    // Check if backend is available
+    const isAvailable = await this.isBackendAvailable();
+    console.log(`🔗 Backend availability:`, isAvailable);
+    
+    if (isAvailable) {
+      try {
+        console.log('✨ Using REAL backend execution');
+        
+        // Get stored credentials from localStorage
+        const storedCredentials = this.getStoredCredentials();
+        const allApiKeys = { ...userApiKeys, ...storedCredentials };
+        
+        console.log('🔑 Available API keys:', Object.keys(allApiKeys));
+        
+        // Execute real agent via backend
+        const response = await fetch(`${this.baseUrl}/api/agents/${agentId}/execute`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(this.apiKey && { 'Authorization': `Bearer ${this.apiKey}` })
+          },
+          body: JSON.stringify({
+            input,
+            apiKeys: allApiKeys
+          })
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('✅ Real execution started:', result.data.executionId);
+          return result.data.executionId;
+        } else {
+          console.log('⚠️ Backend execution failed, falling back to demo');
+        }
+      } catch (error) {
+        console.log('⚠️ Backend error, falling back to demo:', error);
+      }
+    }
+    
+    // Fallback to demo mode
+    console.log('🎬 Using demo mode execution');
     const executionId = `demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
     // Start realistic demo execution immediately
@@ -301,7 +341,7 @@ class BarakahAgentService {
     }
 
     try {
-      const response = await fetch(`${this.baseUrl}/api/executions/${executionId}`, {
+      const response = await fetch(`${this.baseUrl}/api/agents/execution/${executionId}`, {
         headers: {
           ...(this.apiKey && { 'Authorization': `Bearer ${this.apiKey}` })
         }
@@ -354,6 +394,40 @@ class BarakahAgentService {
   // Set user API key for authenticated requests
   setApiKey(apiKey: string) {
     this.apiKey = apiKey;
+  }
+
+  // Get stored credentials from localStorage
+  private getStoredCredentials(): Record<string, string> {
+    try {
+      const userId = 'demo-user'; // In production, get from auth context
+      const credentials: Record<string, string> = {};
+      
+      // Check for Gmail credentials
+      const gmailData = localStorage.getItem(`integration_gmail_${userId}`);
+      if (gmailData) {
+        const gmail = JSON.parse(gmailData);
+        credentials.gmail_email = gmail.gmail_email;
+        credentials.gmail_app_password = gmail.gmail_app_password;
+      }
+      
+      // Check for other integrations
+      const linkedinData = localStorage.getItem(`integration_linkedin_${userId}`);
+      if (linkedinData) {
+        const linkedin = JSON.parse(linkedinData);
+        Object.assign(credentials, linkedin);
+      }
+      
+      const wordpressData = localStorage.getItem(`integration_wordpress_${userId}`);
+      if (wordpressData) {
+        const wordpress = JSON.parse(wordpressData);
+        Object.assign(credentials, wordpress);
+      }
+      
+      return credentials;
+    } catch (error) {
+      console.error('Error loading stored credentials:', error);
+      return {};
+    }
   }
 
   // Get pricing for upgrade modal
