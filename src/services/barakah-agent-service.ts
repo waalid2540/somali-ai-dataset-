@@ -46,10 +46,11 @@ class BarakahAgentService {
     try {
       const response = await fetch(`${this.baseUrl}/health`, { 
         method: 'GET',
-        signal: AbortSignal.timeout(5000) // 5 second timeout
+        signal: AbortSignal.timeout(3000) // 3 second timeout
       });
       return response.ok;
     } catch (error) {
+      console.log('Backend not available, using demo mode:', error.message);
       return false;
     }
   }
@@ -175,12 +176,14 @@ class BarakahAgentService {
 
   // Simulate realistic agent execution for demo
   private async simulateRealExecution(executionId: string, agentId: string, input: any) {
-    console.log('Starting simulation for:', executionId, agentId);
+    console.log('🎬 Starting simulation for:', executionId, agentId);
+    console.log('📋 Input data:', input);
     const agentConfig = this.getAvailableAgents().find(a => a.id === agentId);
     if (!agentConfig) {
-      console.error('Agent config not found for:', agentId);
+      console.error('❌ Agent config not found for:', agentId);
       return;
     }
+    console.log('✅ Agent config found:', agentConfig.name);
 
     // Create initial execution
     const execution: AgentExecution = {
@@ -192,11 +195,12 @@ class BarakahAgentService {
     };
 
     this.demoExecutions.set(executionId, execution);
-    console.log('Initial execution created:', execution);
+    console.log('📝 Initial execution created and stored:', execution);
+    console.log('📝 Demo executions map now has:', this.demoExecutions.size, 'executions');
 
     // Step 1: Think (2 seconds)
     setTimeout(() => {
-      console.log('Adding think step to execution:', executionId);
+      console.log('🧠 Adding think step to execution:', executionId);
       execution.steps.push({
         id: `${executionId}_think`,
         type: 'think',
@@ -213,6 +217,7 @@ class BarakahAgentService {
 
     // Step 2: Plan (4 seconds)
     setTimeout(() => {
+      console.log('📋 Adding plan step to execution:', executionId);
       execution.steps.push({
         id: `${executionId}_plan`,
         type: 'plan',
@@ -228,6 +233,7 @@ class BarakahAgentService {
 
     // Step 3: Execute (6 seconds)
     setTimeout(() => {
+      console.log('⚡ Adding execute step to execution:', executionId);
       execution.steps.push({
         id: `${executionId}_execute`,
         type: 'execute',
@@ -243,6 +249,7 @@ class BarakahAgentService {
 
     // Step 4: Integration (8 seconds)
     setTimeout(() => {
+      console.log('🔗 Adding integration step to execution:', executionId);
       execution.steps.push({
         id: `${executionId}_integrate`,
         type: 'integrate',
@@ -260,6 +267,7 @@ class BarakahAgentService {
 
     // Step 5: Complete (10 seconds)
     setTimeout(() => {
+      console.log('✅ Adding completion step to execution:', executionId);
       execution.steps.push({
         id: `${executionId}_verify`,
         type: 'verify',
@@ -287,7 +295,9 @@ class BarakahAgentService {
   async getExecution(executionId: string): Promise<AgentExecution | null> {
     // Check if it's a demo execution first
     if (executionId.startsWith('demo_')) {
-      return this.demoExecutions.get(executionId) || null;
+      const execution = this.demoExecutions.get(executionId);
+      console.log('📊 Getting demo execution:', executionId, execution ? `${execution.steps.length} steps` : 'not found');
+      return execution || null;
     }
 
     try {

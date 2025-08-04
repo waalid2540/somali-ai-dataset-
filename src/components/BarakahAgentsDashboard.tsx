@@ -173,31 +173,36 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
       return;
     }
 
-    console.log('Starting agent execution:', selectedAgent.id);
+    console.log('🚀 Starting agent execution:', selectedAgent.id);
+    console.log('📝 Input:', executionInput.trim());
     setIsExecuting(true);
     
     try {
       // Always use demo execution since it works perfectly
-      console.log('Executing agent in demo mode');
+      console.log('✨ Executing agent in demo mode');
       const executionId = await BarakahAgentService.executeAgent(selectedAgent.id, {
         request: executionInput.trim()
       });
       
-      console.log('Got execution ID:', executionId);
+      console.log('🎯 Got execution ID:', executionId);
       
       // Poll for execution status every second
       const pollExecution = async () => {
         const execution = await BarakahAgentService.getExecution(executionId);
-        console.log('Polling execution status:', execution);
+        console.log('🔄 Polling execution status:', execution?.status, execution ? `${execution.steps.length} steps` : 'no execution');
         
         if (execution) {
           setCurrentExecution(execution);
           if (execution.status === 'running') {
+            console.log('📊 Still running, scheduling next poll...');
             setTimeout(pollExecution, 1000); // Poll every 1 second
           } else {
-            console.log('Agent execution completed:', execution.status);
+            console.log('🎉 Agent execution completed:', execution.status);
             // No upgrade modal - just let them see the results
           }
+        } else {
+          console.log('❌ No execution found, trying again...');
+          setTimeout(pollExecution, 1000);
         }
       };
       
@@ -367,6 +372,21 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
                 <div className="text-right">
                   <div className="text-lg font-bold text-purple-600">{selectedAgent.price}</div>
                   <div className="text-xs text-green-600">Ready to Execute</div>
+                  {/* Debug Test Button */}
+                  <button 
+                    onClick={async () => {
+                      console.log('🧪 Testing agent service directly...');
+                      const testId = await BarakahAgentService.executeAgent('blog-publisher', { request: 'test' });
+                      console.log('🧪 Test execution ID:', testId);
+                      setTimeout(async () => {
+                        const result = await BarakahAgentService.getExecution(testId);
+                        console.log('🧪 Test result:', result);
+                      }, 1000);
+                    }}
+                    className="text-xs bg-red-500 text-white px-2 py-1 rounded mt-1"
+                  >
+                    DEBUG TEST
+                  </button>
                 </div>
               </div>
 

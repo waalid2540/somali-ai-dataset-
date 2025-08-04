@@ -211,14 +211,36 @@ function HomePage() {
                   </div>
 
                   {/* Mobile Actions */}
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2">
+                    {/* Tutorial Studio - Always Free */}
+                    <button
+                      onClick={() => {
+                        if (!user) {
+                          setAuthMode('signup');
+                          setShowAuthModal(true);
+                        } else {
+                          // Access Tutorial Studio directly
+                          const aiEngine = new AIToolsEngine();
+                          const toolConfig = aiEngine.getToolConfig('tutorial-studio');
+                          if (toolConfig) {
+                            setSelectedTool(toolConfig);
+                            setShowLandingPage(false);
+                          }
+                        }
+                      }}
+                      className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-2 rounded-xl font-bold text-xs flex items-center space-x-1"
+                    >
+                      <span>🎥</span>
+                      <span>Studio</span>
+                    </button>
+                    
                     {user ? (
                       <button
                         onClick={() => setShowLandingPage(false)}
-                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-1"
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-xl font-bold text-xs flex items-center space-x-1"
                       >
                         <Zap className="w-4 h-4" />
-                        <span>Dashboard</span>
+                        <span>Tools</span>
                       </button>
                     ) : (
                       <button
@@ -226,7 +248,7 @@ function HomePage() {
                           setAuthMode('signup');
                           setShowAuthModal(true);
                         }}
-                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-1"
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-xl font-bold text-xs flex items-center space-x-1"
                       >
                         <Zap className="w-4 h-4" />
                         <span>Try Free</span>
@@ -252,6 +274,27 @@ function HomePage() {
               {showMobileMenu && (
                 <div className="absolute top-full left-0 right-0 w-full bg-white border-t border-gray-200 shadow-lg z-40">
                   <div className="p-4 space-y-3">
+                    {/* Tutorial Studio - Featured First */}
+                    <button
+                      onClick={() => {
+                        if (!user) {
+                          setAuthMode('signup');
+                          setShowAuthModal(true);
+                        } else {
+                          const aiEngine = new AIToolsEngine();
+                          const toolConfig = aiEngine.getToolConfig('tutorial-studio');
+                          if (toolConfig) {
+                            setSelectedTool(toolConfig);
+                            setShowLandingPage(false);
+                          }
+                        }
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-lg text-center font-medium hover:from-green-600 hover:to-emerald-700"
+                    >
+                      🎥 Tutorial Studio - FREE
+                    </button>
+                    
                     <Link 
                       href="/subscription"
                       onClick={() => setShowMobileMenu(false)}
@@ -344,6 +387,28 @@ function HomePage() {
                   </div>
 
                   <div className="flex items-center space-x-1">
+                    {/* Tutorial Studio - Featured First */}
+                    <button
+                      onClick={() => {
+                        if (!user) {
+                          setAuthMode('signup');
+                          setShowAuthModal(true);
+                        } else {
+                          const aiEngine = new AIToolsEngine();
+                          const toolConfig = aiEngine.getToolConfig('tutorial-studio');
+                          if (toolConfig) {
+                            setSelectedTool(toolConfig);
+                            setShowLandingPage(false);
+                          }
+                        }
+                      }}
+                      className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 rounded-xl transition-all duration-200 font-medium flex items-center space-x-2"
+                    >
+                      <span>🎥</span>
+                      <span>Tutorial Studio</span>
+                      <span className="text-xs bg-yellow-400 text-black px-2 py-1 rounded-full">FREE</span>
+                    </button>
+                    
                     <Link href="/#about" className="px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium">About</Link>
                     <Link href="/dataset" className="px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium">Dataset</Link>
                     <Link href="/subscription" className="px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 font-medium">Pricing</Link>

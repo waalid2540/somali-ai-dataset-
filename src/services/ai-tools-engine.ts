@@ -240,7 +240,7 @@ Remember: Users pay $7.99/month for PREMIUM quality - exceed their expectations!
   /**
    * Get specific tool configuration
    */
-  private getToolConfig(toolId: string): AIToolConfig | null {
+  getToolConfig(toolId: string): AIToolConfig | null {
     const tools = this.getAllTools();
     return tools.find(tool => tool.id === toolId) || null;
   }
