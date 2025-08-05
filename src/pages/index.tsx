@@ -168,7 +168,8 @@ function HomePage() {
           />
         ) : showBarakahAgents ? (
           <BarakahAgentsDashboard 
-            onBackToLanding={() => {
+            userSubscription={subscription.hasActiveSubscription ? "pro" : "free"}
+            onBack={() => {
               setShowLandingPage(true);
               setShowBarakahAgents(false);
             }}
