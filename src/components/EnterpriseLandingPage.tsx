@@ -47,51 +47,51 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
         {/* Navigation */}
         <nav className="fixed top-0 w-full z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
+            <div className="flex justify-between items-center h-16 lg:h-20">
               {/* Logo */}
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-white" />
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Bot className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
                 </div>
-                <span className="text-xl font-bold text-white">Somai Data</span>
+                <span className="text-xl lg:text-2xl font-bold text-white">Somai Data</span>
               </div>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-8">
+              <div className="hidden lg:flex items-center space-x-8">
                 <button 
                   onClick={() => onNavigate('ai-agents')}
-                  className="text-white hover:text-blue-300 transition-colors font-medium"
+                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   AI Agents
                 </button>
                 <button 
                   onClick={() => onNavigate('ai-tools')}
-                  className="text-white hover:text-blue-300 transition-colors font-medium"
+                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   AI Tools
                 </button>
                 <button 
                   onClick={() => onNavigate('business-creation')}
-                  className="text-white hover:text-blue-300 transition-colors font-medium"
+                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   Business Creation
                 </button>
                 <button 
                   onClick={() => onNavigate('dataset')}
-                  className="text-white hover:text-blue-300 transition-colors font-medium"
+                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
-                  Somali Dataset
+                  Dataset
                 </button>
                 <button 
                   onClick={() => onNavigate('tutorial-studio')}
-                  className="text-white hover:text-blue-300 transition-colors font-medium"
+                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10 flex items-center"
                 >
                   Tutorial Studio
-                  <span className="ml-1 px-2 py-0.5 bg-green-500 text-white text-xs rounded-full">FREE</span>
+                  <span className="ml-2 px-2 py-0.5 bg-green-500 text-white text-xs rounded-full font-bold">FREE</span>
                 </button>
                 <button 
                   onClick={() => onNavigate('pricing')}
-                  className="text-white hover:text-blue-300 transition-colors font-medium"
+                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   Pricing
                 </button>
@@ -99,14 +99,14 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                 {user ? (
                   <button 
                     onClick={() => onNavigate('dashboard')}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold transform hover:scale-105"
                   >
                     Dashboard
                   </button>
                 ) : (
                   <button 
                     onClick={onShowAuth}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold transform hover:scale-105"
                   >
                     Get Started
                   </button>
@@ -116,7 +116,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="md:hidden text-white"
+                className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-all duration-300"
               >
                 {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -124,44 +124,63 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
 
             {/* Mobile Menu */}
             {showMobileMenu && (
-              <div className="md:hidden bg-white/10 backdrop-blur-md border-t border-white/20">
-                <div className="px-2 pt-2 pb-3 space-y-1">
+              <div className="lg:hidden bg-white/10 backdrop-blur-md border-t border-white/20 animate-in slide-in-from-top duration-300">
+                <div className="px-4 py-6 space-y-3">
                   <button 
                     onClick={() => { onNavigate('ai-agents'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md"
+                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
                   >
-                    AI Agents
+                    🤖 AI Agents
                   </button>
                   <button 
                     onClick={() => { onNavigate('ai-tools'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md"
+                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
                   >
-                    AI Tools
+                    ⚡ AI Tools
                   </button>
                   <button 
                     onClick={() => { onNavigate('business-creation'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md"
+                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
                   >
-                    Business Creation
+                    💼 Business Creation
                   </button>
                   <button 
                     onClick={() => { onNavigate('dataset'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md"
+                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
                   >
-                    Somali Dataset
+                    📊 Dataset
                   </button>
                   <button 
                     onClick={() => { onNavigate('tutorial-studio'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md"
+                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
                   >
-                    Tutorial Studio <span className="text-green-400 text-sm">FREE</span>
+                    <span>🎥 Tutorial Studio</span>
+                    <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">FREE</span>
                   </button>
                   <button 
                     onClick={() => { onNavigate('pricing'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md"
+                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
                   >
-                    Pricing
+                    💰 Pricing
                   </button>
+                  
+                  <div className="pt-4 border-t border-white/20">
+                    {user ? (
+                      <button 
+                        onClick={() => { onNavigate('dashboard'); setShowMobileMenu(false); }}
+                        className="block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-3 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-300"
+                      >
+                        Dashboard
+                      </button>
+                    ) : (
+                      <button 
+                        onClick={() => { onShowAuth(); setShowMobileMenu(false); }}
+                        className="block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-3 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-300"
+                      >
+                        Get Started
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
@@ -169,74 +188,74 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
         </nav>
 
         {/* Hero Section */}
-        <section className="pt-24 pb-12 px-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <div className="mb-8">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+        <section className="pt-24 lg:pt-32 pb-16 lg:pb-20 px-4 min-h-screen flex items-center">
+          <div className="max-w-7xl mx-auto text-center w-full">
+            <div className="mb-12 lg:mb-16">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 lg:mb-8 leading-tight">
                 Transform Your Business with
-                <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"> AI Intelligence</span>
+                <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent block sm:inline"> AI Intelligence</span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                Complete AI ecosystem: Intelligent Agents, Powerful Tools, Business Creation Suite, and Exclusive Somali Dataset
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 lg:mb-12 max-w-4xl mx-auto leading-relaxed">
+                Complete AI ecosystem: Intelligent Agents, Powerful Tools, Business Creation Suite, and Exclusive Dataset
               </p>
             </div>
 
             {/* Free Tutorial Studio CTA */}
-            <div className="mb-12 p-6 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl max-w-2xl mx-auto">
-              <div className="flex items-center justify-center mb-4">
-                <GraduationCap className="w-8 h-8 text-green-400 mr-3" />
-                <span className="text-2xl font-bold text-green-400">FREE FOREVER</span>
+            <div className="mb-12 lg:mb-16 p-6 lg:p-8 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl max-w-3xl mx-auto backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-6">
+                <GraduationCap className="w-10 h-10 text-green-400 mr-3" />
+                <span className="text-2xl lg:text-3xl font-bold text-green-400">FREE FOREVER</span>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Tutorial Studio</h3>
-              <p className="text-gray-300 mb-4">Professional screen recording and video tutorials - No signup required!</p>
+              <h3 className="text-xl lg:text-2xl font-semibold text-white mb-3">Tutorial Studio</h3>
+              <p className="text-gray-300 mb-6 text-lg leading-relaxed">Professional screen recording and video tutorials - No signup required!</p>
               <button 
                 onClick={() => onNavigate('tutorial-studio')}
-                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-medium"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold text-lg transform hover:scale-105"
               >
                 Start Recording Free
               </button>
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-blue-400">6</div>
-                <div className="text-gray-300 text-sm">AI Agents</div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-12 lg:mb-16">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-3xl lg:text-4xl font-bold text-blue-400 mb-2 group-hover:scale-110 transition-transform duration-300">6</div>
+                <div className="text-gray-300 text-sm lg:text-base font-medium">AI Agents</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-purple-400">20+</div>
-                <div className="text-gray-300 text-sm">AI Tools</div>
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-3xl lg:text-4xl font-bold text-purple-400 mb-2 group-hover:scale-110 transition-transform duration-300">20+</div>
+                <div className="text-gray-300 text-sm lg:text-base font-medium">AI Tools</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-green-400">95%</div>
-                <div className="text-gray-300 text-sm">Automation</div>
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-3xl lg:text-4xl font-bold text-green-400 mb-2 group-hover:scale-110 transition-transform duration-300">95%</div>
+                <div className="text-gray-300 text-sm lg:text-base font-medium">Automation</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-yellow-400">24/7</div>
-                <div className="text-gray-300 text-sm">Available</div>
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-3xl lg:text-4xl font-bold text-yellow-400 mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
+                <div className="text-gray-300 text-sm lg:text-base font-medium">Available</div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Product Categories */}
-        <section className="py-16 px-4">
+        <section className="py-16 lg:py-24 px-4">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-16 lg:mb-20">
               Choose Your AI Solution
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {/* AI Agents */}
               <div 
                 onClick={() => onNavigate('ai-agents')}
-                className="group bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:border-blue-500/50 transition-all cursor-pointer hover:scale-105"
+                className="group bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 border border-white/20 hover:border-blue-500/50 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Bot className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Bot className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">AI Agents</h3>
-                <p className="text-gray-300 mb-6">Bundle of 6 intelligent agents that think, plan, and execute complete business workflows automatically.</p>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors duration-300">AI Agents</h3>
+                <p className="text-gray-300 mb-6 text-sm lg:text-Base leading-relaxed">Bundle of 6 intelligent agents that think, plan, and execute complete business workflows automatically.</p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-300">
                     <Check className="w-4 h-4 text-green-400 mr-2" />
@@ -251,20 +270,20 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Social Media Agent
                   </div>
                 </div>
-                <div className="text-blue-400 font-semibold text-lg">$150/month</div>
-                <div className="text-gray-400 text-sm">6 AI agents bundle</div>
+                <div className="text-blue-400 font-bold text-xl lg:text-2xl mb-1">$150/month</div>
+                <div className="text-gray-400 text-sm font-medium">6 AI agents bundle</div>
               </div>
 
               {/* AI Tools */}
               <div 
                 onClick={() => onNavigate('ai-tools')}
-                className="group bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:border-purple-500/50 transition-all cursor-pointer hover:scale-105"
+                className="group bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 border border-white/20 hover:border-purple-500/50 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Zap className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Zap className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">AI Tools</h3>
-                <p className="text-gray-300 mb-6">Bundle of 20+ powerful AI tools for content creation, business operations, and creative design.</p>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">AI Tools</h3>
+                <p className="text-gray-300 mb-6 text-sm lg:text-base leading-relaxed">Bundle of 20+ powerful AI tools for content creation, business operations, and creative design.</p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-300">
                     <Check className="w-4 h-4 text-green-400 mr-2" />
@@ -279,20 +298,20 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Creative & Design
                   </div>
                 </div>
-                <div className="text-purple-400 font-semibold text-lg">$7.99/month</div>
-                <div className="text-gray-400 text-sm">20+ AI tools bundle</div>
+                <div className="text-purple-400 font-bold text-xl lg:text-2xl mb-1">$7.99/month</div>
+                <div className="text-gray-400 text-sm font-medium">20+ AI tools bundle</div>
               </div>
 
               {/* Business Creation */}
               <div 
                 onClick={() => onNavigate('business-creation')}
-                className="group bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:border-green-500/50 transition-all cursor-pointer hover:scale-105"
+                className="group bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 border border-white/20 hover:border-green-500/50 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Briefcase className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Briefcase className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Business Creation</h3>
-                <p className="text-gray-300 mb-6">Complete business creation suite with AI-powered planning, strategy, and execution.</p>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-green-300 transition-colors duration-300">Business Creation</h3>
+                <p className="text-gray-300 mb-6 text-sm lg:text-base leading-relaxed">Complete business creation suite with AI-powered planning, strategy, and execution.</p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-300">
                     <Check className="w-4 h-4 text-green-400 mr-2" />
@@ -307,20 +326,20 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Strategy Planning
                   </div>
                 </div>
-                <div className="text-green-400 font-semibold text-lg">$7.99/month</div>
-                <div className="text-gray-400 text-sm">Complete suite</div>
+                <div className="text-green-400 font-bold text-xl lg:text-2xl mb-1">$7.99/month</div>
+                <div className="text-gray-400 text-sm font-medium">Complete suite</div>
               </div>
 
-              {/* Somali Dataset */}
+              {/* Dataset */}
               <div 
                 onClick={() => onNavigate('dataset')}
-                className="group bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:border-yellow-500/50 transition-all cursor-pointer hover:scale-105"
+                className="group bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 border border-white/20 hover:border-yellow-500/50 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Database className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Database className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Somali Dataset</h3>
-                <p className="text-gray-300 mb-6">Exclusive Somali language AI dataset for training models and cultural preservation.</p>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-yellow-300 transition-colors duration-300">Dataset</h3>
+                <p className="text-gray-300 mb-6 text-sm lg:text-base leading-relaxed">Exclusive language AI dataset for training models and cultural preservation.</p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-300">
                     <Check className="w-4 h-4 text-green-400 mr-2" />
@@ -335,52 +354,52 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Regular Updates
                   </div>
                 </div>
-                <div className="text-yellow-400 font-semibold text-lg">Custom Pricing</div>
-                <div className="text-gray-400 text-sm">Enterprise access</div>
+                <div className="text-yellow-400 font-bold text-xl lg:text-2xl mb-1">Custom Pricing</div>
+                <div className="text-gray-400 text-sm font-medium">Enterprise access</div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Tutorial Studio Highlight */}
-        <section className="py-16 px-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
+        <section className="py-16 lg:py-24 px-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
           <div className="max-w-6xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 bg-green-500/20 rounded-full text-green-400 font-medium mb-6">
-              <GraduationCap className="w-5 h-5 mr-2" />
+            <div className="inline-flex items-center px-6 py-3 bg-green-500/20 rounded-full text-green-400 font-bold mb-8 text-lg">
+              <GraduationCap className="w-6 h-6 mr-3" />
               FREE FOREVER - NO SIGNUP REQUIRED
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8">
               Tutorial Studio
             </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl lg:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
               Professional screen recording with webcam overlay. Create stunning tutorials, demos, and presentations instantly.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
-                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Smartphone className="w-6 h-6 text-green-400" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Smartphone className="w-8 h-8 text-green-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Screen + Webcam</h3>
-                <p className="text-gray-300 text-sm">Record your screen with webcam overlay for professional tutorials</p>
+                <h3 className="text-xl font-semibold text-white mb-3">Screen + Webcam</h3>
+                <p className="text-gray-300 leading-relaxed">Record your screen with webcam overlay for professional tutorials</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
-                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-6 h-6 text-green-400" />
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Zap className="w-8 h-8 text-green-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Instant Download</h3>
-                <p className="text-gray-300 text-sm">Download your recordings immediately in high quality</p>
+                <h3 className="text-xl font-semibold text-white mb-3">Instant Download</h3>
+                <p className="text-gray-300 leading-relaxed">Download your recordings immediately in high quality</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
-                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-6 h-6 text-green-400" />
+              <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                <div className="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Shield className="w-8 h-8 text-green-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">No Limits</h3>
-                <p className="text-gray-300 text-sm">Unlimited recordings, unlimited length, completely free</p>
+                <h3 className="text-xl font-semibold text-white mb-3">No Limits</h3>
+                <p className="text-gray-300 leading-relaxed">Unlimited recordings, unlimited length, completely free</p>
               </div>
             </div>
             <button 
               onClick={() => onNavigate('tutorial-studio')}
-              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-lg hover:shadow-lg transition-all font-semibold text-lg"
+              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-10 py-5 rounded-xl hover:shadow-2xl transition-all duration-300 font-bold text-xl transform hover:scale-105"
             >
               Start Recording Now - FREE
             </button>
