@@ -39,7 +39,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
   return (
     <>
       <Head>
-        <title>Somali AI | Enterprise AI Solutions for Business Growth</title>
+        <title>Somai Data | Enterprise AI Solutions for Business Growth</title>
         <meta name="description" content="Transform your business with AI Agents, AI Tools, Business Creation Suite, and Somali Dataset. Start with Tutorial Studio - FREE forever." />
       </Head>
 
@@ -53,7 +53,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <Bot className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold text-white">Somali AI</span>
+                <span className="text-xl font-bold text-white">Somai Data</span>
               </div>
 
               {/* Desktop Navigation */}
@@ -251,7 +251,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Social Media Agent
                   </div>
                 </div>
-                <div className="text-blue-400 font-semibold text-lg">$150/month</div>
+                <div className="text-blue-400 font-semibold text-lg">$7.99/month</div>
                 <div className="text-gray-400 text-sm">Unlimited usage</div>
               </div>
 
@@ -307,7 +307,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Strategy Planning
                   </div>
                 </div>
-                <div className="text-green-400 font-semibold text-lg">$29.99/month</div>
+                <div className="text-green-400 font-semibold text-lg">$7.99/month</div>
                 <div className="text-gray-400 text-sm">Complete suite</div>
               </div>
 
@@ -427,7 +427,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   Most Popular
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">AI Agents</h3>
-                <div className="text-4xl font-bold text-blue-400 mb-2">$150</div>
+                <div className="text-4xl font-bold text-blue-400 mb-2">$7.99</div>
                 <div className="text-gray-300 mb-6">per month</div>
                 <ul className="space-y-3 text-left mb-8">
                   <li className="flex items-center text-gray-300">
@@ -454,7 +454,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
               {/* Complete Suite */}
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
                 <h3 className="text-2xl font-bold text-white mb-4">Complete Suite</h3>
-                <div className="text-4xl font-bold text-green-400 mb-2">$199</div>
+                <div className="text-4xl font-bold text-green-400 mb-2">$14.99</div>
                 <div className="text-gray-300 mb-6">per month</div>
                 <ul className="space-y-3 text-left mb-8">
                   <li className="flex items-center text-gray-300">
@@ -490,7 +490,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                     <Bot className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-xl font-bold text-white">Somali AI</span>
+                  <span className="text-xl font-bold text-white">Somai Data</span>
                 </div>
                 <p className="text-gray-400">
                   Transform your business with intelligent AI solutions designed for the modern enterprise.
@@ -524,7 +524,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-white/20 text-center text-gray-400">
-              <p>&copy; 2024 Somali AI. All rights reserved. Built with cutting-edge AI technology.</p>
+              <p>&copy; 2024 Somai Data. All rights reserved. Built with cutting-edge AI technology.</p>
             </div>
           </div>
         </footer>

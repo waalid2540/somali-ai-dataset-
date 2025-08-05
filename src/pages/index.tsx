@@ -129,7 +129,7 @@ function HomePage() {
   return (
     <>
       <Head>
-        <title>Somali AI | Enterprise AI Solutions for Business Growth</title>
+        <title>Somai Data | Enterprise AI Solutions for Business Growth</title>
         <meta name="description" content="Transform your business with AI Agents, AI Tools, Business Creation Suite, and Somali Dataset. Start with Tutorial Studio - FREE forever." />
         <meta name="keywords" content="AI tools, artificial intelligence, content creation, business automation, chatbot, social media AI, blog generator" />
         
@@ -138,7 +138,7 @@ function HomePage() {
         <meta name="theme-color" content="#2563eb" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Somali AI Tools" />
+        <meta name="apple-mobile-web-app-title" content="Somai Data Tools" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="manifest" href="/manifest.json" />
         
@@ -148,15 +148,15 @@ function HomePage() {
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Somali AI - Enterprise AI Solutions for Business Growth" />
+        <meta property="og:title" content="Somai Data - Enterprise AI Solutions for Business Growth" />
         <meta property="og:description" content="Transform your business with AI Agents, AI Tools, Business Creation Suite, and Somali Dataset." />
         <meta property="og:image" content="/images/og-image.jpg" />
         <meta property="og:url" content="https://www.somaidata.com" />
-        <meta property="og:site_name" content="Somali AI" />
+        <meta property="og:site_name" content="Somai Data" />
         
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Somali AI - Enterprise AI Solutions for Business Growth" />
+        <meta name="twitter:title" content="Somai Data - Enterprise AI Solutions for Business Growth" />
         <meta name="twitter:description" content="Transform your business with AI Agents, AI Tools, Business Creation Suite, and Somali Dataset." />
         <meta name="twitter:image" content="/images/twitter-card.jpg" />
       </Head>
