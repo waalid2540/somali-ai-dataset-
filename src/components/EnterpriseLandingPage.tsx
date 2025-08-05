@@ -236,7 +236,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   <Bot className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">AI Agents</h3>
-                <p className="text-gray-300 mb-6">Intelligent agents that think, plan, and execute complete business workflows automatically.</p>
+                <p className="text-gray-300 mb-6">Bundle of 6 intelligent agents that think, plan, and execute complete business workflows automatically.</p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-300">
                     <Check className="w-4 h-4 text-green-400 mr-2" />
@@ -251,8 +251,8 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                     Social Media Agent
                   </div>
                 </div>
-                <div className="text-blue-400 font-semibold text-lg">$7.99/month</div>
-                <div className="text-gray-400 text-sm">Unlimited usage</div>
+                <div className="text-blue-400 font-semibold text-lg">$150/month</div>
+                <div className="text-gray-400 text-sm">6 AI agents bundle</div>
               </div>
 
               {/* AI Tools */}
@@ -264,7 +264,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   <Zap className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">AI Tools</h3>
-                <p className="text-gray-300 mb-6">20+ powerful AI tools for content creation, business operations, and creative design.</p>
+                <p className="text-gray-300 mb-6">Bundle of 20+ powerful AI tools for content creation, business operations, and creative design.</p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-300">
                     <Check className="w-4 h-4 text-green-400 mr-2" />
@@ -280,7 +280,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   </div>
                 </div>
                 <div className="text-purple-400 font-semibold text-lg">$7.99/month</div>
-                <div className="text-gray-400 text-sm">All tools included</div>
+                <div className="text-gray-400 text-sm">20+ AI tools bundle</div>
               </div>
 
               {/* Business Creation */}
@@ -427,7 +427,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   Most Popular
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">AI Agents</h3>
-                <div className="text-4xl font-bold text-blue-400 mb-2">$7.99</div>
+                <div className="text-4xl font-bold text-blue-400 mb-2">$150</div>
                 <div className="text-gray-300 mb-6">per month</div>
                 <ul className="space-y-3 text-left mb-8">
                   <li className="flex items-center text-gray-300">
