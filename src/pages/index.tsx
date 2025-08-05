@@ -83,6 +83,12 @@ function HomePage() {
       setShowLandingPage(false);
     } else if (section === 'ai-tools') {
       setShowLandingPage(false);
+    } else if (section === 'business-creation') {
+      // Navigate to existing Business Creation page
+      window.location.href = '/ai-business-creation';
+    } else if (section === 'dataset') {
+      // Navigate to existing Dataset page
+      window.location.href = '/dataset';
     } else if (section === 'tutorial-studio') {
       if (!user) {
         setAuthMode('signup');
@@ -95,6 +101,9 @@ function HomePage() {
         setSelectedTool(toolConfig);
         setShowLandingPage(false);
       }
+    } else if (section === 'pricing') {
+      // Navigate to existing Subscription page
+      window.location.href = '/subscription';
     } else if (section === 'dashboard') {
       setShowLandingPage(false);
       setShowBarakahAgents(false);
@@ -186,7 +195,10 @@ function HomePage() {
             <AIToolsDashboard 
               onToolSelect={handleToolSelect}
               userSubscription={subscription.hasActiveSubscription ? "pro" : "free"}
-              onBackToLanding={() => setShowLandingPage(true)}
+              onBackToLanding={() => {
+                setShowLandingPage(true);
+                setShowBarakahAgents(false);
+              }}
             />
           )
         ) : (
