@@ -79,7 +79,7 @@ class BarakahAgentService {
         description: 'Creates email campaigns AND sends them to targeted lists',
         category: 'Email Marketing',
         icon: '📧',
-        price: '$397/month',
+        price: '$150/month',
         features: [
           'Audience segmentation',
           'Personalized email creation',
@@ -94,7 +94,7 @@ class BarakahAgentService {
         description: 'Creates product pages AND launches complete marketing campaigns',
         category: 'Product Marketing',
         icon: '🛒',
-        price: '$597/month',
+        price: '$150/month',
         features: [
           'Market research & analysis',
           'Product page creation',
@@ -109,7 +109,7 @@ class BarakahAgentService {
         description: 'Plans content AND posts across all social platforms',
         category: 'Social Media',
         icon: '📱',
-        price: '$497/month',
+        price: '$150/month',
         features: [
           'Content calendar creation',
           'Platform-specific posting',
@@ -124,7 +124,7 @@ class BarakahAgentService {
         description: 'Finds prospects AND nurtures them into customers',
         category: 'Sales',
         icon: '👥',
-        price: '$797/month',
+        price: '$150/month',
         features: [
           'Prospect research',
           'LinkedIn outreach',
