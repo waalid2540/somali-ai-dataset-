@@ -52,7 +52,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 - 5-8 second response times
 - Premium features and prompts
 
-### ✅ Enterprise AI Agents ($297-$1997/month)
+### ✅ Enterprise AI Agents ($150/month)
 - 6 intelligent agents
 - Complete workflow automation
 - Real-time execution tracking
@@ -61,7 +61,6 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 ## Business Model Upgrade:
 - **Entry Level**: AI Tools Bundle - $7.99/month
-- **Agency Pro**: Blog Publisher Agent - $297/month  
-- **Full Agency**: All 6 Agents - $1997/month
+- **Professional**: All 6 AI Agents - $150/month  
 
-**Total value delivered: $7.99 tools + $297-$1997 agents = Complete agency automation platform!**
+**Total value delivered: $7.99 tools + $150 agents = Complete AI automation platform!**

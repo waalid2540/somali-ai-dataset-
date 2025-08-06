@@ -138,7 +138,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
       
       'email-campaign': 'Create a 5-email welcome sequence for new subscribers to my digital marketing course. Target audience: small business owners wanting to learn online marketing. Email 1: Welcome + course overview, Email 2: Marketing fundamentals, Email 3: Social media strategy, Email 4: Email marketing tips, Email 5: Special course discount. Send one email per day starting immediately. Include my brand colors and professional tone.',
       
-      'product-launch': 'Launch my new "AI Productivity Masterclass" online course. Create product landing page with compelling copy, set up Stripe payment processing ($297 price), create social media campaign for Facebook and LinkedIn, set up email marketing sequence for launch, and create affiliate marketing materials. Target audience: professionals wanting to use AI tools for productivity. Include testimonials section and money-back guarantee.',
+      'product-launch': 'Launch my new "AI Productivity Masterclass" online course. Create product landing page with compelling copy, set up Stripe payment processing ($150 price), create social media campaign for Facebook and LinkedIn, set up email marketing sequence for launch, and create affiliate marketing materials. Target audience: professionals wanting to use AI tools for productivity. Include testimonials section and money-back guarantee.',
       
       'social-media': 'Create 30 days of social media content for my AI consulting business. Platforms: LinkedIn (professional posts), Twitter (quick tips), Instagram (visual quotes). Content mix: 40% educational tips, 30% industry insights, 20% behind-the-scenes, 10% promotional. Post schedule: LinkedIn (weekdays), Twitter (daily), Instagram (3x/week). Include relevant hashtags and call-to-actions for my free consultation.',
       
@@ -232,7 +232,7 @@ export default function BarakahAgentsDashboard({ userSubscription, onBack }: Bar
           </p>
           
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
-            <div className="text-xl sm:text-2xl font-bold text-purple-600">$297/month</div>
+            <div className="text-xl sm:text-2xl font-bold text-purple-600">$150/month</div>
             <div className="text-xs sm:text-sm text-gray-600">Full agency automation</div>
           </div>
 

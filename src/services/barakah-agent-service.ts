@@ -64,7 +64,7 @@ class BarakahAgentService {
         description: 'Writes blog posts AND publishes them across all platforms automatically',
         category: 'Content Marketing',
         icon: '📝',
-        price: '$297/month',
+        price: '$150/month',
         features: [
           'SEO-optimized blog writing',
           'WordPress auto-publishing',
@@ -139,7 +139,7 @@ class BarakahAgentService {
         description: 'Builds complete content strategies AND executes them',
         category: 'Content Strategy',
         icon: '🎯',
-        price: '$1997/month',
+        price: '$150/month',
         features: [
           'Brand voice analysis',
           'Multi-format content creation',
@@ -444,7 +444,7 @@ class BarakahAgentService {
   // Get pricing for upgrade modal
   getAgentPricing(): { monthly: number; annual: number; savings: string } {
     return {
-      monthly: 297, // Starting at $297/month for basic agent
+      monthly: 150, // All 6 agents for $150/month
       annual: 2970, // 10x monthly (2 months free)
       savings: 'Save $564/year'
     };
