@@ -267,7 +267,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
-                  <p className="text-blue-800 text-sm">Look for an email from <strong>"Som AI Data"</strong></p>
+                  <p className="text-blue-800 text-sm">Look for an email from <strong>"Somai Data"</strong></p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
