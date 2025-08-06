@@ -50,8 +50,8 @@ export default function SubscriptionPage() {
     {
       name: 'AI Tools Pro',
       description: 'Complete AI toolkit for businesses and entrepreneurs',
-      monthlyPrice: 4.99,
-      annualPrice: 49.99,
+      monthlyPrice: 7.99,
+      annualPrice: 79.99,
       popular: true,
       features: [
         'Access to all 20 powerful AI tools',
@@ -186,11 +186,11 @@ export default function SubscriptionPage() {
             
             <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-6">
               20 Powerful AI Tools
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent"> for Just $4.99</span>
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent"> for Just $7.99</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              Transform your business with our complete AI toolkit. Blog posts, social media, emails, marketing copy, translations and more - all for less than a coffee!
+              Transform your business with our complete AI toolkit. Blog posts, social media, emails, marketing copy, translations and more - all for the price of a premium coffee!
             </p>
 
             {/* Billing Toggle */}
@@ -254,7 +254,7 @@ export default function SubscriptionPage() {
                         </div>
                         {billingCycle === 'annual' && (
                           <p className="text-sm text-emerald-600 font-semibold mt-2">
-                            Save $10 per year (2 months free!)
+                            Save $16 per year (2 months free!)
                           </p>
                         )}
                       </div>
