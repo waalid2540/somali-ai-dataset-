@@ -58,8 +58,36 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
     setLoading(true);
     setError('');
 
+    // Basic validation
+    if (!email || !password) {
+      setError('❌ Please fill in all required fields.');
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('❌ Password must be at least 6 characters long.');
+      setLoading(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('❌ Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
+
+    if (mode === 'signup' && !fullName.trim()) {
+      setError('❌ Please enter your full name.');
+      setLoading(false);
+      return;
+    }
+
     try {
       if (mode === 'signup') {
+        console.log('Starting signup process for:', email);
+        
         // Sign up new user with immediate user table creation
         const { data: authData, error: authError } = await supabase.auth.signUp({
           email,
@@ -72,24 +100,41 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
           }
         });
 
+        console.log('Signup response:', { authData, authError });
+
         if (authError) throw authError;
 
         // Create profile immediately (don't wait for email confirmation)
         if (authData.user) {
           console.log('Creating user profile for:', authData.user.id, email);
           
+          // Test database connection first
+          const { data: testData, error: testError } = await supabase
+            .from('users')
+            .select('count(*)')
+            .limit(1);
+          
+          console.log('Database connection test:', { testData, testError });
+          
+          if (testError) {
+            console.error('Database connection failed:', testError);
+            setError('❌ Database connection issue. Please try again or contact support.');
+            setLoading(false);
+            return;
+          }
+
           const { data: insertData, error: profileError } = await supabase
             .from('users')
             .insert([
               {
                 id: authData.user.id,
-                email: email,
-                full_name: fullName || '',
-                company_name: companyName || '',
+                email: email.toLowerCase().trim(),
+                full_name: fullName?.trim() || '',
+                company_name: companyName?.trim() || '',
                 subscription_status: 'pending'
               }
             ])
-            .select(); // Add select to see what was inserted
+            .select();
 
           console.log('Insert result:', insertData, profileError);
 
@@ -126,7 +171,25 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
         onClose();
       }
     } catch (error: any) {
-      setError(error.message);
+      console.error('Auth error details:', error);
+      console.error('Error message:', error.message);
+      console.error('Error code:', error.code);
+      console.error('Error status:', error.status);
+      
+      // More detailed error handling
+      if (error.message?.includes('Invalid login credentials')) {
+        setError('❌ Invalid email or password. Please check your credentials.');
+      } else if (error.message?.includes('Email not confirmed')) {
+        setError('📧 Please check your email and click the confirmation link to activate your account.');
+      } else if (error.message?.includes('User already registered')) {
+        setError('🎉 This email is already registered. Try signing in instead.');
+      } else if (error.message?.includes('Password')) {
+        setError('❌ Password must be at least 6 characters long.');
+      } else if (error.message?.includes('Email')) {
+        setError('❌ Please enter a valid email address.');
+      } else {
+        setError(`❌ Error: ${error.message}`);
+      }
     } finally {
       setLoading(false);
     }
