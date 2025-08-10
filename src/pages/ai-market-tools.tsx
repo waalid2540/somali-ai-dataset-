@@ -90,29 +90,6 @@ function AIMarketToolsPage() {
       </Head>
 
       <div className="min-h-screen bg-white">
-        {/* Professional Navigation */}
-        <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg flex items-center justify-center">
-                  <Globe className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gray-900">Somali AI Dataset</span>
-                <span className="text-sm text-gray-500 border-l border-gray-300 pl-3 ml-3">Professional AI Market Tools</span>
-              </div>
-              <div className="flex items-center space-x-6">
-                <Link href="/#about" className="text-gray-600 hover:text-gray-900 transition-colors">About</Link>
-                <Link href="/#dataset" className="text-gray-600 hover:text-gray-900 transition-colors">Dataset</Link>
-                <Link href="/#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
-                <Link href="/investor" className="text-gray-600 hover:text-gray-900 transition-colors">Investors</Link>
-                <Link href="//" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  Try Tools
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
 
         {/* Powerful Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-black overflow-hidden">

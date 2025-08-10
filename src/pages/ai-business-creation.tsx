@@ -208,7 +208,7 @@ function AIBusinessCreationPage() {
                 <span className="text-sm text-gray-500 border-l border-gray-300 pl-3 ml-3">AI Business Creation</span>
               </div>
               <div className="flex items-center space-x-6">
-                <Link href="/ai-market-tools" className="text-gray-600 hover:text-gray-900 transition-colors">AI Tools</Link>
+                <Link href="/subscription" className="text-gray-600 hover:text-gray-900 transition-colors">AI Tools</Link>
                 <Link href="/#dataset" className="text-gray-600 hover:text-gray-900 transition-colors">Dataset</Link>
                 <Link href="/investor" className="text-gray-600 hover:text-gray-900 transition-colors">Investors</Link>
                 <Link href="/#about" className="text-gray-600 hover:text-gray-900 transition-colors">About</Link>
@@ -660,7 +660,7 @@ function AIBusinessCreationPage() {
                 <h4 className="font-semibold mb-4">Services</h4>
                 <div className="space-y-2 text-gray-400">
                   <Link href="/ai-business-creation" className="block hover:text-white transition-colors">AI Business Creation</Link>
-                  <Link href="/ai-market-tools" className="block hover:text-white transition-colors">AI Tools Bundle</Link>
+                  <Link href="/subscription" className="block hover:text-white transition-colors">AI Tools Bundle</Link>
                   <Link href="/#dataset" className="block hover:text-white transition-colors">Somali Dataset</Link>
                   <Link href="/investor" className="block hover:text-white transition-colors">Investment</Link>
                 </div>
