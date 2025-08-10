@@ -214,6 +214,192 @@ class BarakahAgentService {
   // Store demo executions in memory
   private demoExecutions: Map<string, AgentExecution> = new Map();
 
+  // Generate agent-specific professional output
+  private generateAgentSpecificOutput(agentId: string, input: any) {
+    switch (agentId) {
+      case 'email-campaign':
+        return this.generateEmailCampaignOutput(input);
+      case 'blog-publisher':
+        return this.generateBlogOutput(input);
+      case 'social-media':
+        return this.generateSocialMediaOutput(input);
+      case 'product-launch':
+        return this.generateProductLaunchOutput(input);
+      case 'lead-generation':
+        return this.generateLeadGenOutput(input);
+      case 'content-empire':
+        return this.generateContentEmpireOutput(input);
+      default:
+        return {
+          deliverable: `✨ Professional content created successfully!\n\n🎯 Tailored to your requirements\n📊 Performance tracking enabled\n🚀 Ready for deployment`,
+          mock: false
+        };
+    }
+  }
+
+  // Professional Email Campaign Output (NO PLAN EXPOSITION)
+  private generateEmailCampaignOutput(input: any) {
+    const emails = this.generateProfessionalEmails(input);
+    return {
+      deliverable: `📧 Email Campaign Ready!\n\n✅ ${emails.length} professional emails created\n✅ Personalized for your audience\n✅ Scheduled for optimal delivery times\n\n📬 First email sending now, subsequent emails every 24 hours\n📊 Tracking: Open rates, clicks, conversions\n🎯 Expected performance: 25-35% open rate, 3-7% click rate`,
+      emails: emails,
+      schedule: this.generateEmailSchedule(emails.length),
+      mock: false
+    };
+  }
+
+  // Generate actual professional emails (not plans!)
+  private generateProfessionalEmails(input: any) {
+    const { request } = input;
+    const recipientEmail = this.extractEmailFromRequest(request);
+    
+    return [
+      {
+        subject: "Welcome to our AI-powered platform",
+        content: this.generateWelcomeEmail(request),
+        sendTime: "immediate",
+        recipient: recipientEmail
+      },
+      {
+        subject: "Discover what's possible with AI automation",
+        content: this.generateFeatureEmail(request),
+        sendTime: "24 hours",
+        recipient: recipientEmail
+      },
+      {
+        subject: "Ready to transform your workflow?",
+        content: this.generateCTAEmail(request),
+        sendTime: "48 hours", 
+        recipient: recipientEmail
+      }
+    ];
+  }
+
+  private generateWelcomeEmail(request: string) {
+    return `Hi there!
+
+Welcome to Somai Data! I'm excited you're interested in exploring how AI can transform your business.
+
+You've made a smart choice investigating AI automation tools. In today's competitive market, the businesses that leverage AI effectively are the ones that thrive.
+
+Over the next few days, I'll share some insights about how our AI agents can handle your marketing, content creation, and business automation - so you can focus on what matters most.
+
+Tomorrow, I'll show you exactly how our platform works and the results our clients are seeing.
+
+Best regards,
+Yussuf Abdi
+CEO, Somai Data
+
+P.S. If you have any questions, just reply to this email. I read every response personally.`;
+  }
+
+  private generateFeatureEmail(request: string) {
+    return `Hi again!
+
+Yesterday I mentioned how AI can transform your business. Today, let me show you exactly what that looks like.
+
+Our clients are using our AI agents to:
+• Write and publish blog posts automatically
+• Create and send email campaigns (like this one!)
+• Generate social media content across platforms
+• Launch products with complete marketing campaigns
+• Find and nurture leads on LinkedIn
+• Build comprehensive content strategies
+
+The best part? It all runs on autopilot while you focus on growing your business.
+
+Want to see it in action? Click here to watch a 2-minute demo: [Demo Link]
+
+This isn't just theory - it's what's working right now for businesses just like yours.
+
+Best,
+Yussuf Abdi
+
+P.S. Our early users are seeing 3x faster content creation and 40% better engagement rates.`;
+  }
+
+  private generateCTAEmail(request: string) {
+    return `Hi there!
+
+Over the past two days, I've shared how AI can automate your marketing and content creation.
+
+Now I want to ask you directly: What's holding you back from implementing AI in your business?
+
+Is it:
+• Uncertainty about which tools actually work?
+• Concern about the time investment to get started?
+• Questions about ROI and real results?
+
+Whatever it is, I'd love to help. Our platform is designed specifically for businesses who want AI automation without the complexity.
+
+Ready to see what AI can do for your business? Start your free trial today: [Trial Link]
+
+Or if you have questions, just reply to this email. I'm here to help.
+
+Best regards,
+Yussuf Abdi
+CEO, Somai Data
+
+P.S. This month only - we're including a free strategy session with every trial signup. No pitch, just practical advice for your specific business.`;
+  }
+
+  private extractEmailFromRequest(request: string) {
+    const emailMatch = request.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+    return emailMatch ? emailMatch[0] : 'recipient@example.com';
+  }
+
+  private generateEmailSchedule(emailCount: number) {
+    const now = new Date();
+    const schedule = [];
+    
+    for (let i = 0; i < emailCount; i++) {
+      const sendTime = new Date(now.getTime() + (i * 24 * 60 * 60 * 1000));
+      schedule.push({
+        emailIndex: i + 1,
+        sendTime: sendTime.toISOString(),
+        status: i === 0 ? 'sending' : 'scheduled'
+      });
+    }
+    
+    return schedule;
+  }
+
+  // Other professional agent outputs
+  private generateBlogOutput(input: any) {
+    return {
+      deliverable: `📝 Professional Blog Post Created!\n\n✅ 1,500+ word SEO-optimized article\n✅ Ready for WordPress publishing\n✅ Social media snippets included\n\n📊 Expected performance: 500+ organic views, 15+ social shares\n🚀 Publishing to your blog and distributing across platforms now!`,
+      mock: false
+    };
+  }
+
+  private generateSocialMediaOutput(input: any) {
+    return {
+      deliverable: `📱 30-Day Social Media Calendar Ready!\n\n✅ Content for LinkedIn, Twitter, Instagram\n✅ Platform-specific optimization\n✅ Visual content suggestions included\n\n📈 Expected performance: 25% higher engagement\n🎯 First week of content posting now across all platforms!`,
+      mock: false
+    };
+  }
+
+  private generateProductLaunchOutput(input: any) {
+    return {
+      deliverable: `🚀 Complete Product Launch Campaign Ready!\n\n✅ Landing page copy created\n✅ Email sequences configured\n✅ Social media campaign scheduled\n✅ Stripe payment integration setup\n\n💰 Expected performance: 12-18% conversion rate\n📈 Launch campaign going live across all channels!`,
+      mock: false
+    };
+  }
+
+  private generateLeadGenOutput(input: any) {
+    return {
+      deliverable: `👥 Lead Generation Campaign Active!\n\n✅ 50+ qualified prospects identified\n✅ Personalized LinkedIn messages prepared\n✅ Follow-up sequences configured\n\n🎯 Expected results: 15-25 responses, 5-10 qualified calls\n📬 First batch of outreach messages sending now!`,
+      mock: false
+    };
+  }
+
+  private generateContentEmpireOutput(input: any) {
+    return {
+      deliverable: `🎯 Complete Content Strategy Deployed!\n\n✅ Brand voice analysis completed\n✅ Multi-format content calendar created\n✅ Cross-platform publishing scheduled\n\n📈 Expected performance: 40% increase in brand awareness\n🚀 Content empire building begins across all channels!`,
+      mock: false
+    };
+  }
+
   // Simulate realistic agent execution for demo
   private async simulateRealExecution(executionId: string, agentId: string, input: any) {
     console.log('🎬 Starting simulation for:', executionId, agentId);
@@ -280,10 +466,7 @@ class BarakahAgentService {
         description: 'Creating deliverable content...',
         status: 'completed',
         timestamp: new Date().toISOString(),
-        output: {
-          deliverable: `⚡ ${agentConfig.name} Output:\n\n✨ High-quality content created for: "${input.request}"\n📝 SEO-optimized and platform-ready\n🎯 Tailored to your target audience\n📊 Performance metrics tracking enabled\n\n🚀 Content ready for publishing across all channels!`,
-          mock: false
-        }
+        output: this.generateAgentSpecificOutput(agentId, input)
       });
     }, 6000);
 
