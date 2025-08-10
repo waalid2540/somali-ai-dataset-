@@ -460,14 +460,18 @@ P.S. This month only - we're including a free strategy session with every trial 
     // Step 3: Execute (6 seconds)
     setTimeout(() => {
       console.log('⚡ Adding execute step to execution:', executionId);
+      const professionalOutput = this.generateAgentSpecificOutput(agentId, input);
+      console.log('🎯 PROFESSIONAL OUTPUT GENERATED:', professionalOutput);
+      
       execution.steps.push({
         id: `${executionId}_execute`,
         type: 'execute',
         description: 'Creating deliverable content...',
         status: 'completed',
         timestamp: new Date().toISOString(),
-        output: this.generateAgentSpecificOutput(agentId, input)
+        output: professionalOutput
       });
+      console.log('✅ Professional output added to step');
     }, 6000);
 
     // Step 4: Integration (8 seconds)

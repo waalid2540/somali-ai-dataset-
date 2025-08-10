@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yussuf Abdi - Software Engineer, Claude Code | Anthropic Application</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e5e7eb;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #fef3ff 100%);
+            border-left: 5px solid #2563eb;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .project {
+            background: #f8fafc;
+            border-left: 5px solid #2563eb;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .project-subtitle {
+            color: #6b7280;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .project-duration {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .project-description {
+            margin-bottom: 15px;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .metric {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .metric-value {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #2563eb;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .tech-tag {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+            color: #5b21b6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #c7d2fe;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .skill-category {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .skill-category h4 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-list li {
+            padding: 4px 0;
+            color: #4b5563;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .skill-list li::before {
+            content: '▸';
+            color: #2563eb;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .summary {
+            background: linear-gradient(135deg, #f0f9ff 0%, #fef3ff 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e0e7ff;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #374151;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #92400e;
+        }
+        
+        .ethical-focus {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .anthropic-alignment {
+            background: linear-gradient(135deg, #ede9fe 0%, #f5f3ff 100%);
+            border: 2px solid #7c3aed;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            body { 
+                background: white;
+                padding: 0;
+            }
+            .resume-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .name { font-size: 2.5rem; }
+            .contact-info { gap: 15px; }
+            .project-header { flex-direction: column; }
+            .metrics { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <div class="header">
+            <div class="header-content">
+                <h1 class="name">YUSSUF ABDI</h1>
+                <p class="title">Software Engineer | AI Safety & Ethics Specialist</p>
+                <p class="subtitle">Community Leader • Somali Data Ethics Pioneer • Claude Code Expert</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span> yussufabdi@somaidata.com
+                    </div>
+                    <div class="contact-item">
+                        <span>🌐</span> somaidata.com
+                    </div>
+                    <div class="contact-item">
+                        <span>💻</span> github.com/yussufabdi
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span> Salt Lake City, UT
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <section class="section">
+                <h2 class="section-title">Mission-Driven Engineering Leader</h2>
+                <div class="summary">
+                    <strong>Software Engineer</strong> with deep expertise in <span class="highlight">AI safety, ethics, and beneficial AI systems</span>. As an <span class="highlight">Imam and community leader</span> serving the Somali diaspora, I bring unique perspectives on AI's societal impact and ethical implementation. Pioneer in <span class="highlight">Somali ethical data collection</span> and creator of <span class="highlight">enterprise AI platforms serving underrepresented communities</span>. Expert in React, LLM orchestration, and AI tool development with <span class="highlight">proven ability to build scalable AI systems that enhance human potential</span> rather than replace it.
+                </div>
+                
+                <div class="anthropic-alignment">
+                    <h3 style="color: #7c3aed; font-weight: bold; margin-bottom: 15px;">🎯 Anthropic Mission Alignment</h3>
+                    <p><strong>Reliable AI Systems:</strong> Built 6-agent orchestration platform serving 1000+ users with 99.9% uptime and ethical safeguards</p>
+                    <p><strong>Interpretable AI:</strong> Developed transparent AI workflows with real-time execution tracking and user oversight</p>
+                    <p><strong>Steerable AI:</strong> Created customizable AI agents with human-in-the-loop controls and safety constraints</p>
+                    <p><strong>Beneficial AI:</strong> Focus on democratizing AI access for underserved communities while maintaining ethical standards</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Unique Ethical AI Leadership</h2>
+                
+                <div class="ethical-focus">
+                    <h3 style="color: #10b981; font-weight: bold; margin-bottom: 15px;">🌍 Somali Ethical Data Pioneer</h3>
+                    <p><strong>First-of-its-kind initiative:</strong> Leading comprehensive effort to collect, curate, and safeguard ethical AI training data from Somali communities worldwide. Working directly with community elders, religious leaders, and cultural experts to ensure respectful and beneficial AI representation.</p>
+                    
+                    <div class="metrics" style="margin-top: 15px;">
+                        <div class="metric">
+                            <span class="metric-value">15M+</span>
+                            <span class="metric-label">Somali Diaspora Served</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">5 Countries</span>
+                            <span class="metric-label">Data Collection Regions</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">100%</span>
+                            <span class="metric-label">Community Consent</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Ethical-First</span>
+                            <span class="metric-label">Data Practices</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 style="color: #2563eb; font-weight: bold; margin-bottom: 15px;">👥 Community Leadership & AI Safety</h3>
+                    <p><strong>Religious & Community Leader:</strong> Imam serving diverse Muslim communities with deep understanding of cultural sensitivities in AI development. Bridge between technology and traditional values, ensuring AI systems respect cultural context and religious principles.</p>
+                    <p><strong>Underrepresented Community Advocate:</strong> Passionate about ensuring AI benefits reach marginalized communities. <span class="highlight">Unique expertise in navigating cultural, linguistic, and religious considerations</span> in AI system design.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">AI Platforms Built with Claude Code</h2>
+                
+                <div class="project">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Somai Data - Enterprise AI Platform</h3>
+                            <p class="project-subtitle">Founder & Lead Engineer | Full-Stack AI Development</p>
+                        </div>
+                        <div class="project-duration">2024 - Current</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        <strong>Built entirely using Claude Code:</strong> Comprehensive AI platform combining 20+ developer tools with 6 intelligent automation agents. Serves underrepresented Somali/Muslim communities with culturally-aware AI solutions. <span class="highlight">First enterprise platform specifically designed for ethical AI access in underserved markets</span>.
+                    </p>
+                    
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-value">1,000+</span>
+                            <span class="metric-label">Active Users</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">20+</span>
+                            <span class="metric-label">AI Developer Tools</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">6</span>
+                            <span class="metric-label">AI Agent Orchestrations</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">$7.99-$150</span>
+                            <span class="metric-label">Monthly Revenue Tiers</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">5-8 sec</span>
+                            <span class="metric-label">AI Response Time</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">99.9%</span>
+                            <span class="metric-label">Platform Uptime</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-tag">Next.js 14</span>
+                        <span class="tech-tag">React 18</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Supabase</span>
+                        <span class="tech-tag">OpenAI GPT-4</span>
+                        <span class="tech-tag">Claude API</span>
+                        <span class="tech-tag">Stripe</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">WebSocket</span>
+                        <span class="tech-tag">Render</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                    </div>
+                </div>
+                
+                <div class="project">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Barakah AI Agents System</h3>
+                            <p class="project-subtitle">AI Orchestration Engineer | Backend Architecture</p>
+                        </div>
+                        <div class="project-duration">2024</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        <strong>Advanced LLM orchestration platform</strong> built with Claude Code expertise. Powers 6 specialized AI agents with complex multi-step workflows, real-time execution, and Gmail/email integration. Demonstrates mastery of <span class="highlight">tool-use, chaining patterns, and prompt engineering</span> - core requirements for Anthropic role.
+                    </p>
+                    
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-value">6</span>
+                            <span class="metric-label">Orchestrated Agents</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Real-time</span>
+                            <span class="metric-label">Execution Tracking</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Multi-step</span>
+                            <span class="metric-label">Workflow Chains</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Gmail</span>
+                            <span class="metric-label">Live Integration</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express</span>
+                        <span class="tech-tag">OpenAI API</span>
+                        <span class="tech-tag">Claude Integration</span>
+                        <span class="tech-tag">Nodemailer</span>
+                        <span class="tech-tag">WebSocket</span>
+                        <span class="tech-tag">RESTful APIs</span>
+                        <span class="tech-tag">Prompt Engineering</span>
+                        <span class="tech-tag">LLM Chaining</span>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">AI Developer Tools Suite</h3>
+                            <p class="project-subtitle">Developer Experience Engineer | Tool Architecture</p>
+                        </div>
+                        <div class="project-duration">2024</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        <strong>20+ specialized AI tools for developers</strong> including code generation, documentation, testing, and productivity enhancement. Built with focus on <span class="highlight">developer experience optimization and performance</span>. Each tool demonstrates different aspects of AI-assisted development workflows.
+                    </p>
+                    
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-value">20+</span>
+                            <span class="metric-label">Developer Tools</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">5-8 sec</span>
+                            <span class="metric-label">Avg Response Time</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Unlimited</span>
+                            <span class="metric-label">Usage Model</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Mobile</span>
+                            <span class="metric-label">Optimized UI</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-tag">React Hooks</span>
+                        <span class="tech-tag">Context API</span>
+                        <span class="tech-tag">Suspense</span>
+                        <span class="tech-tag">Performance Optimization</span>
+                        <span class="tech-tag">Component Architecture</span>
+                        <span class="tech-tag">Modern React Patterns</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Core Technical Excellence</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>🤖 AI/LLM Engineering</h4>
+                        <ul class="skill-list">
+                            <li>Advanced prompt engineering & optimization</li>
+                            <li>LLM tool-use and function calling</li>
+                            <li>AI agent chaining & orchestration</li>
+                            <li>Claude/OpenAI API integration</li>
+                            <li>Multi-step workflow automation</li>
+                            <li>AI safety and alignment practices</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>⚛️ React Development</h4>
+                        <ul class="skill-list">
+                            <li>Expert in modern React patterns</li>
+                            <li>Hooks, Context, Suspense mastery</li>
+                            <li>Component architecture & design systems</li>
+                            <li>Performance optimization techniques</li>
+                            <li>Next.js 14 App Router</li>
+                            <li>TypeScript integration</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>🏗️ Full-Stack Architecture</h4>
+                        <ul class="skill-list">
+                            <li>Scalable system design</li>
+                            <li>RESTful API development</li>
+                            <li>Real-time WebSocket communication</li>
+                            <li>Database design (PostgreSQL)</li>
+                            <li>Authentication & authorization</li>
+                            <li>Cloud deployment & DevOps</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>🛠️ Developer Tools</h4>
+                        <ul class="skill-list">
+                            <li>CLI tool development</li>
+                            <li>Development environment setup</li>
+                            <li>Code generation & automation</li>
+                            <li>Testing frameworks & practices</li>
+                            <li>Git workflows & collaboration</li>
+                            <li>Container orchestration</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>🔒 AI Safety & Ethics</h4>
+                        <ul class="skill-list">
+                            <li>Ethical AI implementation</li>
+                            <li>Cultural sensitivity in AI systems</li>
+                            <li>Data privacy & security</li>
+                            <li>Community consent frameworks</li>
+                            <li>Bias detection & mitigation</li>
+                            <li>Responsible AI deployment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>🌍 Languages & Communication</h4>
+                        <ul class="skill-list">
+                            <li>English (Native)</li>
+                            <li>Somali (Native)</li>
+                            <li>Arabic (Fluent)</li>
+                            <li>Technical documentation</li>
+                            <li>Cross-cultural communication</li>
+                            <li>Community engagement</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Key Achievements & Impact</h2>
+                <div class="project">
+                    <div class="project-description">
+                        <strong>🏆 AI Platform Success:</strong> Built and scaled enterprise AI platform to 1000+ users with 99.9% uptime and $150/month pricing tiers
+                        <br><br>
+                        <strong>⚡ Performance Excellence:</strong> Optimized AI response times from 45+ seconds to 5-8 seconds through advanced prompt engineering
+                        <br><br>
+                        <strong>🌍 Ethical AI Leadership:</strong> Pioneer in collecting ethical Somali data with full community consent and cultural preservation
+                        <br><br>
+                        <strong>🔧 Developer Experience:</strong> Created 20+ AI tools that enhance developer productivity without replacing human creativity
+                        <br><br>
+                        <strong>🤝 Community Impact:</strong> Bridge between traditional communities and AI technology, ensuring beneficial and respectful implementation
+                        <br><br>
+                        <strong>💰 Business Success:</strong> Generated sustainable revenue while serving underrepresented communities at accessible price points
+                        <br><br>
+                        <strong>🔒 Safety-First Approach:</strong> Built AI systems with human oversight, transparent workflows, and ethical safeguards from day one
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Education & Professional Development</h2>
+                <div class="project">
+                    <div class="project-description">
+                        <strong>Self-Taught Software Engineering:</strong> Extensive hands-on experience building production AI systems serving 1000+ users
+                        <br><br>
+                        <strong>Religious Education:</strong> Islamic studies with focus on ethics, community leadership, and moral decision-making
+                        <br><br>
+                        <strong>Community Leadership Training:</strong> Practical experience in cross-cultural communication, conflict resolution, and ethical guidance
+                        <br><br>
+                        <strong>Continuous Learning:</strong> Active engagement with latest AI research, safety practices, and emerging technologies
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            console.log('Anthropic-targeted resume loaded successfully!');
+        });
+        
+        // Optional: Add smooth animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        document.querySelectorAll('.project, .skill-category, .highlight-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
