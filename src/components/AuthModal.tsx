@@ -96,7 +96,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
             data: {
               full_name: fullName,
               company_name: companyName,
-            }
+            },
+            emailRedirectTo: `${window.location.origin}/auth/callback`
           }
         });
 
@@ -187,6 +188,10 @@ export default function AuthModal({ isOpen, onClose, onSuccess, initialMode = 's
         setError('❌ Password must be at least 6 characters long.');
       } else if (error.message?.includes('Email')) {
         setError('❌ Please enter a valid email address.');
+      } else if (error.message?.includes('confirmation email') || error.message?.includes('email delivery')) {
+        setError('⚠️ Account created but email confirmation failed. You can still sign in once we fix email settings.');
+        // Still show success for now
+        setShowConfirmation(true);
       } else {
         setError(`❌ Error: ${error.message}`);
       }
