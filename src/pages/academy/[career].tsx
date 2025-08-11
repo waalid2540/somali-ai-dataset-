@@ -245,6 +245,102 @@ const careerPathsData = {
       'Optimize AI systems for scale and performance',
       'Land senior roles at top AI companies'
     ]
+  },
+  'ai-healthcare': {
+    id: 'ai-healthcare',
+    title: 'AI in Healthcare',
+    icon: <Stethoscope className="w-8 h-8" />,
+    description: 'Use AI to assist patients, providers, and public health systems with compassion + efficiency.',
+    longDescription: 'AI in Healthcare professionals bridge the gap between technology and medical care. They develop AI systems that assist healthcare providers, improve patient outcomes, and make medical services more accessible. This course focuses on ethical AI development with practical applications using public datasets.',
+    duration: '5-6 months',
+    difficulty: 'Intermediate',
+    salary: '$70K - $130K',
+    jobCount: '20K+ jobs',
+    color: 'from-teal-600 to-cyan-600',
+    skills: ['Healthcare AI', 'Medical NLP', 'Computer Vision', 'HIPAA Compliance'],
+    workplaces: ['Hospitals', 'Medical AI Startups', 'Remote Clinics', 'Health Nonprofits', 'Telemedicine Platforms'],
+    builds: ['Medical Chatbots', 'Image Analysis Tools', 'Appointment Systems', 'Health Education Bots', 'Patient Documentation'],
+    modules: [
+      {
+        id: 1,
+        title: 'Introduction to AI in Healthcare',
+        duration: '1 week',
+        lessons: [
+          'What is AI in Healthcare? - Real-world applications',
+          'What AI Can and Cannot Do in Medicine',
+          'AI Ethics and Patient Safety',
+          'Healthcare Technology Research'
+        ],
+        project: 'Research and present 3 real-world AI healthcare products'
+      },
+      {
+        id: 2,
+        title: 'Tools & Medical Datasets',
+        duration: '1 week',
+        lessons: [
+          'Python, Jupyter Notebook, Teachable Machine setup',
+          'Introduction to Open Medical Datasets (NIH, WHO)',
+          'Medical Data Privacy and HIPAA Basics',
+          'Dataset Exploration and Analysis'
+        ],
+        project: 'Download and explore a public medical dataset safely'
+      },
+      {
+        id: 3,
+        title: 'AI for Medical Language (NLP)',
+        duration: '1 week',
+        lessons: [
+          'Building Patient FAQ Chatbots (OpenAI API)',
+          'Safe Symptom-Checker Bot Development',
+          'Medical Communication Best Practices',
+          'Non-Diagnostic Wellness Information'
+        ],
+        project: 'Build a chatbot for general wellness questions'
+      },
+      {
+        id: 4,
+        title: 'AI for Medical Images (Computer Vision)',
+        duration: '1 week',
+        lessons: [
+          'Introduction to Medical Image Classification',
+          'Training Safe X-ray Classification Models',
+          'Using Teachable Machine for Medical Images',
+          'Safe Labeling: "Normal" vs. "Needs Review"'
+        ],
+        project: 'Create a Teachable Machine model for X-ray classification'
+      },
+      {
+        id: 5,
+        title: 'Healthcare Predictions & Analytics',
+        duration: '1 week',
+        lessons: [
+          'Predicting Hospital Wait Times from Public Data',
+          'Healthcare Data Visualization Techniques',
+          'Public Health Statistics Analysis',
+          'Building Healthcare Dashboards'
+        ],
+        project: 'Build a hospital wait time prediction model'
+      },
+      {
+        id: 6,
+        title: 'Ethics, Privacy & Professional Practice',
+        duration: '1 week',
+        lessons: [
+          'HIPAA & GDPR Basics for Healthcare AI',
+          'Healthcare AI Ethics and Responsibility',
+          'Guest Healthcare Professional Session',
+          'Final Project Planning and Ethics Review'
+        ],
+        project: 'Complete Healthcare AI Capstone: Choose from AI chatbot for appointments, medical image classifier, or AI wellness assistant'
+      }
+    ],
+    outcomes: [
+      'Build AI tools that assist healthcare professionals',
+      'Understand medical AI ethics and privacy requirements',
+      'Create patient-facing AI applications safely',
+      'Develop medical image classification systems',
+      'Land roles in healthcare technology companies'
+    ]
   }
   // Add more career paths here as needed
 };
