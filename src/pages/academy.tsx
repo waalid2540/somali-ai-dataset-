@@ -20,7 +20,7 @@ import {
   Bot,
   GraduationCap,
   Stethoscope,
-  Mosque,
+  Heart,
   Palette,
   Building2,
   DollarSign,
@@ -105,7 +105,7 @@ export default function SomaiAcademy() {
     {
       id: 'ai-values',
       title: 'AI for Values-Based Innovation',
-      icon: <Mosque className="w-8 h-8" />,
+      icon: <Heart className="w-8 h-8" />,
       description: 'Use AI to protect, elevate, and serve communities. The conscience of AI development.',
       duration: '4-5 months',
       difficulty: 'Beginner to Intermediate',

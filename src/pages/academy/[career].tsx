@@ -21,7 +21,7 @@ import {
   Bot,
   GraduationCap,
   Stethoscope,
-  Mosque,
+  Heart,
   Palette,
   Building2,
   DollarSign,
@@ -254,7 +254,7 @@ export default function CareerPath() {
   const { career } = router.query;
   const [activeModule, setActiveModule] = useState(1);
   
-  const careerData = careerPathsData[career as string];
+  const careerData = careerPathsData[career as keyof typeof careerPathsData];
 
   if (!careerData) {
     return (
