@@ -18,7 +18,7 @@ import {
   BookOpen,
   Code,
   Brain,
-  Robot,
+  Bot,
   GraduationCap,
   Stethoscope,
   Mosque,

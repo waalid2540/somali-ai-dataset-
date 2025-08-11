@@ -17,7 +17,7 @@ import {
   TrendingUp,
   Code,
   Brain,
-  Robot,
+  Bot,
   GraduationCap,
   Stethoscope,
   Mosque,
@@ -63,7 +63,7 @@ export default function SomaiAcademy() {
     {
       id: 'ai-automation',
       title: 'AI Automation Specialist',
-      icon: <Robot className="w-8 h-8" />,
+      icon: <Bot className="w-8 h-8" />,
       description: 'Replace repetitive work with intelligent systems. Make businesses efficient with no-code AI.',
       duration: '3-4 months',
       difficulty: 'Beginner to Intermediate',
