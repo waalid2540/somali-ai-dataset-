@@ -296,7 +296,7 @@ export default function SomaiAcademy() {
                 <div
                   key={path.id}
                   className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                  onClick={() => setSelectedPath(path.id)}
+                  onClick={() => window.location.href = `/academy/${path.id}`}
                 >
                   <div className={`h-2 bg-gradient-to-r ${path.color}`}></div>
                   
@@ -336,10 +336,10 @@ export default function SomaiAcademy() {
                       </div>
                     </div>
 
-                    <button className={`w-full mt-4 bg-gradient-to-r ${path.color} text-white py-2 rounded-lg hover:shadow-md transition-all flex items-center justify-center`}>
+                    <Link href={`/academy/${path.id}`} className={`w-full mt-4 bg-gradient-to-r ${path.color} text-white py-2 rounded-lg hover:shadow-md transition-all flex items-center justify-center`}>
                       Explore Path
                       <ArrowRight className="w-4 h-4 ml-2" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}
