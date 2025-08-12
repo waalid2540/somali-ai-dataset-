@@ -75,48 +75,6 @@ export default function SomaiAcademy() {
       builds: ['Email automation', 'Review systems', 'Report generators', 'Scheduling bots', 'Customer support']
     },
     {
-      id: 'ai-education',
-      title: 'AI in Education',
-      icon: <GraduationCap className="w-8 h-8" />,
-      description: 'Reinvent learning from schools to self-study. Make education faster, cheaper, personalized.',
-      duration: '4-5 months',
-      difficulty: 'Beginner to Intermediate',
-      salary: '$50K - $100K',
-      jobCount: '30K+ jobs',
-      color: 'from-orange-600 to-red-600',
-      skills: ['Educational Technology', 'Learning Systems', 'Content Creation', 'Assessment Tools'],
-      workplaces: ['EdTech startups', 'Online course platforms', 'Schools', 'Tutoring centers', 'Language apps'],
-      builds: ['AI tutors', 'Grading bots', 'Homework helpers', 'Progress dashboards', 'Multilingual education']
-    },
-    {
-      id: 'ai-healthcare',
-      title: 'AI in Healthcare',
-      icon: <Stethoscope className="w-8 h-8" />,
-      description: 'Use AI to assist patients, providers, and public health systems with compassion + efficiency.',
-      duration: '5-6 months',
-      difficulty: 'Intermediate',
-      salary: '$70K - $130K',
-      jobCount: '20K+ jobs',
-      color: 'from-teal-600 to-cyan-600',
-      skills: ['Healthcare Systems', 'Medical AI', 'Privacy/HIPAA', 'Clinical Workflows'],
-      workplaces: ['Hospitals', 'Medical startups', 'Remote clinics', 'Health nonprofits', 'Interpreter services'],
-      builds: ['Documentation tools', 'Triage assistants', 'Appointment systems', 'Health education bots', 'Translation tools']
-    },
-    {
-      id: 'ai-values',
-      title: 'AI for Values-Based Innovation',
-      icon: <Heart className="w-8 h-8" />,
-      description: 'Use AI to protect, elevate, and serve communities. The conscience of AI development.',
-      duration: '4-5 months',
-      difficulty: 'Beginner to Intermediate',
-      salary: '$60K - $110K',
-      jobCount: '15K+ jobs',
-      color: 'from-amber-600 to-yellow-600',
-      skills: ['Ethical AI', 'Cultural Sensitivity', 'Community Engagement', 'Bias Detection'],
-      workplaces: ['Faith organizations', 'Cultural institutions', 'Community builders', 'NGOs', 'Educational leaders'],
-      builds: ['Ethical AI systems', 'Cultural language models', 'Spiritual guidance platforms', 'Community storytelling tools']
-    },
-    {
       id: 'ai-creator',
       title: 'AI Creator / Content Generator',
       icon: <Palette className="w-8 h-8" />,
@@ -189,7 +147,7 @@ export default function SomaiAcademy() {
   ];
 
   const academyStats = [
-    { number: '11', label: 'Career Paths', icon: <Target className="w-5 h-5" /> },
+    { number: '8', label: 'Career Paths', icon: <Target className="w-5 h-5" /> },
     { number: '50+', label: 'Practical Projects', icon: <Briefcase className="w-5 h-5" /> },
     { number: '100%', label: 'Job-Ready Skills', icon: <Award className="w-5 h-5" /> },
     { number: '24/7', label: 'Community Support', icon: <Users className="w-5 h-5" /> }
@@ -248,7 +206,7 @@ export default function SomaiAcademy() {
             </h1>
             
             <p className="text-xl text-gray-600 mb-12 max-w-4xl mx-auto">
-              11 career paths designed for real-world success. Learn by building actual projects, get job-ready skills, and join a global community of AI professionals. No theory. Just results.
+              8 career paths designed for real-world success. Learn by building actual projects, get job-ready skills, and join a global community of AI professionals. No theory. Just results.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
