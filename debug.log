@@ -1,0 +1,990 @@
+
+> som-ai-data-pro@1.0.0 dev
+> next dev
+
+   ▲ Next.js 14.0.0
+   - Local:        http://localhost:3000
+   - Environments: .env.local
+
+ ✓ Ready in 980ms
+ ✓ Compiled /api/waalid-legacy-chat in 148ms (61 modules)
+🤲 Waalid Legacy AI - Processing parenting request: {
+  message: 'Test message...',
+  language: 'english',
+  parentName: 'Parent'
+}
+🚀 Executing agent: waalid-legacy-parenting
+📝 Input: {
+  request: 'Test message',
+  language: 'english',
+  familyContext: {
+    parentName: 'Parent',
+    childAge: 'unknown',
+    location: 'Western country',
+    challenges: [],
+    subscriptionTier: 'free'
+  },
+  userApiKeys: {}
+}
+🔗 Backend availability: true
+✨ Using REAL backend execution
+🔍 Looking for credentials with userId: demo-user
+Error loading stored credentials: ReferenceError: localStorage is not defined
+    at BarakahAgentService.getStoredCredentials (webpack-internal:///(api)/./src/services/barakah-agent-service.ts:695:31)
+    at BarakahAgentService.executeAgent (webpack-internal:///(api)/./src/services/barakah-agent-service.ts:152:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async handler (webpack-internal:///(api)/./src/pages/api/waalid-legacy-chat.ts:40:29)
+🔑 Available API keys: []
+✅ Real execution started: exec_1755062175122_te5hdlq8n
+✅ Parenting guidance generated: exec_1755062175122_te5hdlq8n
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062175122_te5hdlq8n',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'completed',
+    steps: [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object]
+    ],
+    startTime: '2025-08-13T05:16:15.122Z',
+    endTime: '2025-08-13T05:16:46.899Z',
+    result: {
+      status: 'completed',
+      integrations_successful: 0,
+      total_integrations: 3,
+      summary: 'Workflow executed successfully',
+      timestamp: '2025-08-13T05:16:46.899Z'
+    },
+    progress: 140,
+    currentStep: 'Preparing...',
+    estimatedTimeRemaining: null
+  }
+}
+ ✓ Compiled in 27ms (61 modules)
+🤲 Waalid Legacy AI - Processing parenting request: {
+  message: 'My daughter refuses to wear hijab at school...',
+  language: 'english',
+  parentName: 'Parent'
+}
+🚀 Executing agent: waalid-legacy-parenting
+📝 Input: {
+  request: 'My daughter refuses to wear hijab at school',
+  language: 'english',
+  familyContext: {
+    parentName: 'Parent',
+    childAge: 'unknown',
+    location: 'Western country',
+    challenges: [],
+    subscriptionTier: 'free'
+  },
+  userApiKeys: {}
+}
+🔗 Backend availability: true
+✨ Using REAL backend execution
+🔍 Looking for credentials with userId: demo-user
+Error loading stored credentials: ReferenceError: localStorage is not defined
+    at BarakahAgentService.getStoredCredentials (webpack-internal:///(api)/./src/services/barakah-agent-service.ts:695:31)
+    at BarakahAgentService.executeAgent (webpack-internal:///(api)/./src/services/barakah-agent-service.ts:152:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async handler (webpack-internal:///(api)/./src/pages/api/waalid-legacy-chat.ts:40:29)
+🔑 Available API keys: []
+✅ Real execution started: exec_1755062241314_9lsl8f38k
+✅ Parenting guidance generated: exec_1755062241314_9lsl8f38k
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 0,
+    currentStep: 'Analyzing task and gathering context',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 20,
+    currentStep: 'Creating detailed execution plan',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'running',
+    steps: [ [Object], [Object], [Object] ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    progress: 40,
+    currentStep: 'Executing main workflow',
+    estimatedTimeRemaining: '2-3 minutes'
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'completed',
+    steps: [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object]
+    ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    endTime: '2025-08-13T05:17:56.609Z',
+    result: {
+      status: 'completed',
+      integrations_successful: 0,
+      total_integrations: 3,
+      summary: 'Workflow executed successfully',
+      timestamp: '2025-08-13T05:17:56.609Z'
+    },
+    progress: 140,
+    currentStep: 'Preparing...',
+    estimatedTimeRemaining: null
+  }
+}
+📊 Backend execution response: {
+  success: true,
+  data: {
+    id: 'exec_1755062241314_9lsl8f38k',
+    agentId: 'waalid-legacy-parenting',
+    userId: 'anonymous',
+    status: 'completed',
+    steps: [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object]
+    ],
+    startTime: '2025-08-13T05:17:21.314Z',
+    endTime: '2025-08-13T05:17:56.609Z',
+    result: {
+      status: 'completed',
+      integrations_successful: 0,
+      total_integrations: 3,
+      summary: 'Workflow executed successfully',
+      timestamp: '2025-08-13T05:17:56.609Z'
+    },
+    progress: 140,
+    currentStep: 'Preparing...',
+    estimatedTimeRemaining: null
+  }
+}

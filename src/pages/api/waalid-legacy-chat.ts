@@ -72,14 +72,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // Extract the smart guidance from the result
-    const guidance = result.deliverable || result.guidance || result;
+    // Extract the smart guidance from the execution steps
+    const executionStatus = await barakahService.getExecution(executionId);
+    let guidance = null;
+    let followUp = [];
+    let resources = [];
+    
+    if (executionStatus && executionStatus.steps) {
+      // Find the execute step which contains the AI-generated guidance
+      const executeStep = executionStatus.steps.find(step => step.type === 'execute');
+      if (executeStep && executeStep.output) {
+        guidance = executeStep.output.deliverable || executeStep.output;
+        followUp = executeStep.output.guidance?.followUp || [];
+        resources = executeStep.output.guidance?.resources || [];
+      }
+    }
+    
+    // Fallback if no guidance found
+    if (!guidance) {
+      guidance = result.deliverable || result.guidance || result;
+    }
     
     return res.status(200).json({
       response: guidance,
       language: language || 'english',
-      followUp: result.followUp || [],
-      resources: result.resources || [],
+      followUp: followUp,
+      resources: resources,
       source: 'waalid-legacy-ai'
     });
 
