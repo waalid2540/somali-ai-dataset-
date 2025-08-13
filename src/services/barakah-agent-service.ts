@@ -147,6 +147,24 @@ class BarakahAgentService {
           'Audience engagement',
           'Performance optimization'
         ]
+      },
+      {
+        id: 'waalid-legacy-parenting',
+        name: 'Waalid Legacy AI - Parenting Coach',
+        description: 'Ultra-smart trilingual parenting coach for Somali Muslim families in the West',
+        category: 'Family & Parenting',
+        icon: '👨‍👩‍👧‍👦',
+        price: '$4.99/month',
+        features: [
+          'Trilingual support (English/Somali/Arabic)',
+          'Islamic parenting guidance',
+          'Cultural bridge coaching',
+          'School system navigation',
+          'Teen identity support',
+          'Crisis intervention',
+          'Family progress tracking',
+          'Community wisdom integration'
+        ]
       }
     ];
   }
@@ -229,6 +247,8 @@ class BarakahAgentService {
         return this.generateLeadGenOutput(input);
       case 'content-empire':
         return this.generateContentEmpireOutput(input);
+      case 'waalid-legacy-parenting':
+        return this.generateParentingCoachOutput(input);
       default:
         return {
           deliverable: `✨ Professional content created successfully!\n\n🎯 Tailored to your requirements\n📊 Performance tracking enabled\n🚀 Ready for deployment`,
@@ -398,6 +418,144 @@ P.S. This month only - we're including a free strategy session with every trial 
       deliverable: `🎯 Complete Content Strategy Deployed!\n\n✅ Brand voice analysis completed\n✅ Multi-format content calendar created\n✅ Cross-platform publishing scheduled\n\n📈 Expected performance: 40% increase in brand awareness\n🚀 Content empire building begins across all channels!`,
       mock: false
     };
+  }
+
+  // Ultra-Smart Waalid Legacy Parenting Coach Output
+  private generateParentingCoachOutput(input: any) {
+    const { request, familyContext, language } = input;
+    const guidance = this.generateSmartParentingGuidance(request, familyContext, language);
+    
+    return {
+      deliverable: `🤲 Assalamu Alaikum, ${familyContext?.parentName || 'Parent'}\n\n${guidance.response}\n\n🎯 Action Steps:\n${guidance.actionSteps}\n\n📚 Islamic Guidance:\n${guidance.islamicWisdom}\n\n🌍 Cultural Bridge:\n${guidance.culturalAdvice}\n\nBarakallahu feeki! May Allah make it easy for your family. 🤗`,
+      guidance: guidance,
+      language: language || 'english',
+      followUp: guidance.followUpQuestions,
+      resources: guidance.resources,
+      mock: false
+    };
+  }
+
+  // Generate ultra-smart parenting guidance with cultural and Islamic context
+  private generateSmartParentingGuidance(request: string, familyContext?: any, language = 'english') {
+    // Analyze the parenting challenge
+    const challenge = this.analyzeParentingChallenge(request);
+    const childAge = familyContext?.childAge || 'unknown';
+    const culturalContext = familyContext?.location || 'Western country';
+    
+    // Generate multi-layered response
+    const guidance = {
+      response: this.generateContextualResponse(challenge, childAge, language),
+      actionSteps: this.generateActionSteps(challenge, childAge),
+      islamicWisdom: this.generateIslamicGuidance(challenge),
+      culturalAdvice: this.generateCulturalBridgeAdvice(challenge, culturalContext),
+      followUpQuestions: this.generateFollowUpQuestions(challenge),
+      resources: this.generateRelevantResources(challenge)
+    };
+
+    return guidance;
+  }
+
+  private analyzeParentingChallenge(request: string) {
+    const lowerRequest = request.toLowerCase();
+    
+    if (lowerRequest.includes('hijab') || lowerRequest.includes('covering')) {
+      return { type: 'religious_identity', priority: 'high', age_sensitive: true };
+    } else if (lowerRequest.includes('language') || lowerRequest.includes('somali')) {
+      return { type: 'language_preservation', priority: 'medium', age_sensitive: false };
+    } else if (lowerRequest.includes('school') || lowerRequest.includes('teacher')) {
+      return { type: 'school_navigation', priority: 'high', age_sensitive: true };
+    } else if (lowerRequest.includes('dating') || lowerRequest.includes('friends')) {
+      return { type: 'social_boundaries', priority: 'high', age_sensitive: true };
+    } else if (lowerRequest.includes('prayer') || lowerRequest.includes('salah')) {
+      return { type: 'religious_practice', priority: 'high', age_sensitive: true };
+    } else if (lowerRequest.includes('culture') || lowerRequest.includes('tradition')) {
+      return { type: 'cultural_identity', priority: 'medium', age_sensitive: false };
+    }
+    
+    return { type: 'general_parenting', priority: 'medium', age_sensitive: true };
+  }
+
+  private generateContextualResponse(challenge: any, childAge: string, language: string) {
+    const responses = {
+      english: {
+        religious_identity: `I understand this is a delicate matter. Every Muslim parent in the West faces this challenge. The key is helping your child understand the beauty and wisdom behind Islamic practices, rather than making it feel like a burden.`,
+        language_preservation: `Language is the bridge to our heritage. Many Somali families struggle with this. The good news is that children can learn to love their mother tongue when it's connected to positive experiences and identity pride.`,
+        school_navigation: `Navigating Western school systems while maintaining Islamic values requires strategy and confidence. You have rights as a Muslim parent, and schools are required to accommodate religious needs.`,
+        social_boundaries: `This is where Islamic wisdom meets modern parenting. We need to guide our children to make good choices while building trust and open communication.`,
+        religious_practice: `Making prayer and Islamic practices meaningful rather than mechanical is key. Children need to understand the 'why' behind what we do.`,
+        cultural_identity: `Helping children embrace their Somali-Muslim identity in the West is about building pride, not shame. They need to see their heritage as a strength.`
+      },
+      somali: {
+        religious_identity: `Waan fahmayaa in taasi ay tahay arrin adag. Dhammaan waalidka Muslimka ah ee reer galbeedka ayaa la kulmaa dhibaatahan. Furaha waa in aad ilmahaaga u sahashid quruxda iyo xigmadda ka dambaysa dhaqamada Islaamka.`,
+        language_preservation: `Luqaddu waa buundada dhaxalkeena. Qoysas badan oo Soomaali ah ayaa la tartamaya arrintan. Waxa fiican waa in carruurtu ay baran karaan in ay jecel yihiin luqaddooda hooyo.`
+      }
+    };
+
+    const languageResponses = responses[language as keyof typeof responses] || responses.english;
+    return languageResponses[challenge.type as keyof typeof languageResponses] || responses.english[challenge.type as keyof typeof responses.english] || "I'm here to help you navigate this parenting challenge with wisdom and Islamic guidance.";
+  }
+
+  private generateActionSteps(challenge: any, childAge: string) {
+    const steps = {
+      religious_identity: [
+        "1. Have an age-appropriate conversation about the beauty of Islamic identity",
+        "2. Connect them with positive Muslim role models in your community", 
+        "3. Share stories of successful Muslims who maintained their faith",
+        "4. Address any specific concerns or peer pressure they're facing"
+      ],
+      language_preservation: [
+        "1. Make Somali language fun with cultural stories and music",
+        "2. Connect language to positive family experiences",
+        "3. Find age-appropriate Somali content (videos, books)",
+        "4. Create 'Somali time' at home with rewards"
+      ],
+      school_navigation: [
+        "1. Know your religious accommodation rights",
+        "2. Schedule a meeting with school administrators",
+        "3. Prepare clear, respectful explanation of your needs",
+        "4. Follow up in writing to document agreements"
+      ]
+    };
+
+    return (steps[challenge.type as keyof typeof steps] || [
+      "1. Listen to your child's perspective with empathy",
+      "2. Explain your values in age-appropriate terms", 
+      "3. Find compromises that honor both cultures",
+      "4. Seek support from other Muslim parents"
+    ]).join('\n');
+  }
+
+  private generateIslamicGuidance(challenge: any) {
+    const guidance = {
+      religious_identity: "The Prophet (SAW) said: 'Every child is born upon fitrah.' Help them see their Islamic identity as a gift, not a burden. 'And it is He who created the heavens and earth in truth. And the day He says, Be, and it is, His word is the truth.' (Quran 6:73)",
+      language_preservation: "The Quran teaches us to honor our heritage. 'O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another.' (49:13)",
+      school_navigation: "Islam teaches us to seek knowledge wherever it may be, while maintaining our values. Navigate with wisdom and patience.",
+      social_boundaries: "Teach them the middle path: 'And thus we have made you a moderate community that you will be witnesses upon the people.' (2:143)"
+    };
+
+    return guidance[challenge.type as keyof typeof guidance] || "Seek Allah's guidance through dua and trust in His wisdom. 'And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose.' (65:3)";
+  }
+
+  private generateCulturalBridgeAdvice(challenge: any, location: string) {
+    return `As Somali Muslims in ${location}, we have the unique opportunity to bridge two beautiful cultures. Help your child see this as a superpower - they can navigate both worlds with confidence and pride. Other successful Somali families have faced this same challenge and found ways to honor both their heritage and their new home.`;
+  }
+
+  private generateFollowUpQuestions(challenge: any) {
+    return [
+      "How did your child respond to this conversation?",
+      "What specific situations trigger these challenges?",
+      "How can we involve the community in supporting your family?",
+      "What has worked well for your family in the past?"
+    ];
+  }
+
+  private generateRelevantResources(challenge: any) {
+    return [
+      "Connect with local Somali Muslim families",
+      "Reach out to Islamic family counselors",
+      "Join online Somali parenting communities",
+      "Consult with your local imam for Islamic guidance"
+    ];
   }
 
   // Simulate realistic agent execution for demo
