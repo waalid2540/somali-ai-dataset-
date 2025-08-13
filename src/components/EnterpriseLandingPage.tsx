@@ -57,31 +57,48 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
               </div>
 
               {/* Desktop Navigation */}
-              <div className="hidden lg:flex items-center space-x-8">
-                <button 
-                  onClick={() => onNavigate('ai-agents')}
-                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
-                >
-                  AI Agents
-                </button>
-                <button 
-                  onClick={() => onNavigate('ai-tools')}
-                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
-                >
-                  AI Tools
-                </button>
-                <button 
-                  onClick={() => onNavigate('business-creation')}
-                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
-                >
-                  Business Creation
-                </button>
-                <button 
-                  onClick={() => onNavigate('dataset')}
-                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
-                >
-                  Dataset
-                </button>
+              <div className="hidden lg:flex items-center space-x-6">
+                {/* Products Dropdown */}
+                <div className="relative group">
+                  <button className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10 flex items-center">
+                    Products
+                    <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-300" />
+                  </button>
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                    <div className="p-4 space-y-3">
+                      <button 
+                        onClick={() => onNavigate('ai-agents')}
+                        className="w-full text-left p-3 rounded-lg hover:bg-blue-50 transition-all group/item"
+                      >
+                        <div className="font-semibold text-gray-900 group-hover/item:text-blue-600">🤖 AI Agents</div>
+                        <div className="text-sm text-gray-600">Intelligent workflow automation</div>
+                      </button>
+                      <button 
+                        onClick={() => onNavigate('ai-tools')}
+                        className="w-full text-left p-3 rounded-lg hover:bg-blue-50 transition-all group/item"
+                      >
+                        <div className="font-semibold text-gray-900 group-hover/item:text-blue-600">⚡ AI Tools</div>
+                        <div className="text-sm text-gray-600">20+ powerful AI utilities</div>
+                      </button>
+                      <button 
+                        onClick={() => onNavigate('business-creation')}
+                        className="w-full text-left p-3 rounded-lg hover:bg-blue-50 transition-all group/item"
+                      >
+                        <div className="font-semibold text-gray-900 group-hover/item:text-blue-600">💼 Business Suite</div>
+                        <div className="text-sm text-gray-600">Complete business creation</div>
+                      </button>
+                      <button 
+                        onClick={() => onNavigate('dataset')}
+                        className="w-full text-left p-3 rounded-lg hover:bg-blue-50 transition-all group/item"
+                      >
+                        <div className="font-semibold text-gray-900 group-hover/item:text-blue-600">📊 Dataset</div>
+                        <div className="text-sm text-gray-600">Exclusive language data</div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Free Tools */}
                 <button 
                   onClick={() => onNavigate('tutorial-studio')}
                   className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10 flex items-center"
@@ -89,6 +106,8 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   Tutorial Studio
                   <span className="ml-2 px-2 py-0.5 bg-green-500 text-white text-xs rounded-full font-bold">FREE</span>
                 </button>
+
+                {/* Academy */}
                 <a 
                   href="/academy"
                   className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10 flex items-center"
@@ -96,6 +115,8 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   Academy
                   <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs rounded-full font-bold">NEW</span>
                 </a>
+
+                {/* Pricing */}
                 <button 
                   onClick={() => onNavigate('pricing')}
                   className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
@@ -103,6 +124,7 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   Pricing
                 </button>
 
+                {/* CTA Button */}
                 {user ? (
                   <button 
                     onClick={() => onNavigate('dashboard')}
@@ -132,46 +154,61 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
             {/* Mobile Menu */}
             {showMobileMenu && (
               <div className="lg:hidden bg-white/10 backdrop-blur-md border-t border-white/20 animate-in slide-in-from-top duration-300">
-                <div className="px-4 py-6 space-y-3">
-                  <button 
-                    onClick={() => { onNavigate('ai-agents'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
-                  >
-                    🤖 AI Agents
-                  </button>
-                  <button 
-                    onClick={() => { onNavigate('ai-tools'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
-                  >
-                    ⚡ AI Tools
-                  </button>
-                  <button 
-                    onClick={() => { onNavigate('business-creation'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
-                  >
-                    💼 Business Creation
-                  </button>
-                  <button 
-                    onClick={() => { onNavigate('dataset'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
-                  >
-                    📊 Dataset
-                  </button>
-                  <button 
-                    onClick={() => { onNavigate('tutorial-studio'); setShowMobileMenu(false); }}
-                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
-                  >
-                    <span>🎥 Tutorial Studio</span>
-                    <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">FREE</span>
-                  </button>
-                  <a 
-                    href="/academy"
-                    onClick={() => setShowMobileMenu(false)}
-                    className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
-                  >
-                    <span>🎓 Academy</span>
-                    <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">NEW</span>
-                  </a>
+                <div className="px-4 py-6 space-y-2">
+                  {/* Products Section */}
+                  <div className="mb-4">
+                    <div className="text-blue-200 text-sm font-semibold px-4 py-2 uppercase tracking-wide">Products</div>
+                    <div className="space-y-1">
+                      <button 
+                        onClick={() => { onNavigate('ai-agents'); setShowMobileMenu(false); }}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
+                      >
+                        🤖 AI Agents
+                      </button>
+                      <button 
+                        onClick={() => { onNavigate('ai-tools'); setShowMobileMenu(false); }}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
+                      >
+                        ⚡ AI Tools
+                      </button>
+                      <button 
+                        onClick={() => { onNavigate('business-creation'); setShowMobileMenu(false); }}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
+                      >
+                        💼 Business Suite
+                      </button>
+                      <button 
+                        onClick={() => { onNavigate('dataset'); setShowMobileMenu(false); }}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"
+                      >
+                        📊 Dataset
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Free Tools & Learning */}
+                  <div className="mb-4">
+                    <div className="text-green-200 text-sm font-semibold px-4 py-2 uppercase tracking-wide">Free & Learning</div>
+                    <div className="space-y-1">
+                      <button 
+                        onClick={() => { onNavigate('tutorial-studio'); setShowMobileMenu(false); }}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
+                      >
+                        <span>🎥 Tutorial Studio</span>
+                        <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">FREE</span>
+                      </button>
+                      <a 
+                        href="/academy"
+                        onClick={() => setShowMobileMenu(false)}
+                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
+                      >
+                        <span>🎓 Academy</span>
+                        <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">NEW</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Business */}
                   <button 
                     onClick={() => { onNavigate('pricing'); setShowMobileMenu(false); }}
                     className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium"

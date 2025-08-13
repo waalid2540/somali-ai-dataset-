@@ -25,7 +25,8 @@ import {
   Building2,
   DollarSign,
   Database,
-  Rocket
+  Rocket,
+  Menu
 } from 'lucide-react';
 
 export default function SomaiAcademy() {
@@ -178,14 +179,19 @@ export default function SomaiAcademy() {
                 </div>
               </Link>
               
-              <div className="flex items-center space-x-4">
-                <Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link>
-                <Link href="/subscription" className="text-gray-600 hover:text-gray-900">AI Tools</Link>
-                <Link href="#careers" className="text-gray-600 hover:text-gray-900">Careers</Link>
-                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all">
+              <div className="hidden md:flex items-center space-x-6">
+                <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">Home</Link>
+                <Link href="/subscription" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">Products</Link>
+                <Link href="#careers" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">Career Paths</Link>
+                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all font-semibold">
                   Start Learning
                 </button>
               </div>
+              
+              {/* Mobile Menu Button */}
+              <button className="md:hidden text-gray-600 p-2">
+                <Menu className="w-6 h-6" />
+              </button>
             </div>
           </div>
         </nav>
