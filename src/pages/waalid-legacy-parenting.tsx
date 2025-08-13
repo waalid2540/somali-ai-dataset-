@@ -534,7 +534,7 @@ export default function WaalidLegacyParenting() {
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder={`Type your parenting question... (${selectedLanguage})`}
-                  className="w-full resize-none border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full resize-none border border-gray-300 rounded-lg px-3 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:bg-gray-100 disabled:text-gray-400"
                   rows={3}
                   disabled={!canSendMessage() && familyProfile?.subscriptionTier === 'free'}
                 />
