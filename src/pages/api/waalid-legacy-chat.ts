@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Wait for completion and get the smart guidance
     let result = null;
     let attempts = 0;
-    const maxAttempts = 30; // 30 seconds timeout
+    const maxAttempts = 120; // 2 minutes timeout for full AI processing
 
     while (attempts < maxAttempts && !result) {
       await new Promise(resolve => setTimeout(resolve, 1000));
