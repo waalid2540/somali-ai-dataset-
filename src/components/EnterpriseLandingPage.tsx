@@ -116,15 +116,6 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                   <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs rounded-full font-bold">NEW</span>
                 </a>
 
-                {/* Waalid Legacy Parenting */}
-                <a 
-                  href="/waalid-legacy-parenting"
-                  className="text-white hover:text-blue-300 transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-white/10 flex items-center"
-                >
-                  Parenting Coach
-                  <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs rounded-full font-bold">$4.99</span>
-                </a>
-
                 {/* Pricing */}
                 <button 
                   onClick={() => onNavigate('pricing')}
@@ -206,21 +197,13 @@ export default function EnterpriseLandingPage({ user, onShowAuth, onNavigate }: 
                         <span>🎥 Tutorial Studio</span>
                         <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">FREE</span>
                       </button>
-                      <a 
+                      <a
                         href="/academy"
                         onClick={() => setShowMobileMenu(false)}
                         className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
                       >
                         <span>🎓 Academy</span>
                         <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">NEW</span>
-                      </a>
-                      <a 
-                        href="/waalid-legacy-parenting"
-                        onClick={() => setShowMobileMenu(false)}
-                        className="block w-full text-left px-4 py-3 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium flex items-center justify-between"
-                      >
-                        <span>🤲 Parenting Coach</span>
-                        <span className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs px-2 py-1 rounded-full font-bold">$4.99</span>
                       </a>
                     </div>
                   </div>
