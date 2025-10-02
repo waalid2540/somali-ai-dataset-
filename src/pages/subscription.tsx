@@ -48,11 +48,36 @@ export default function SubscriptionPage() {
 
   const plans = [
     {
+      name: 'Video Meetings Unlimited',
+      description: 'Professional video conferencing - Better than Zoom at 33% less',
+      monthlyPrice: 9.99,
+      annualPrice: 99.90,
+      popular: true,
+      features: [
+        'Unlimited meeting hours - No time limits!',
+        'HD video & crystal clear audio',
+        'Screen sharing & presentations',
+        'Up to 100 participants per call',
+        'No 40-minute restrictions',
+        'Record meetings unlimited',
+        'Virtual backgrounds',
+        'End-to-end encryption',
+        'Works on all devices - no downloads',
+        'Mobile apps (iOS & Android)',
+        '24/7 availability',
+        'Priority support',
+        'Custom meeting links'
+      ],
+      limitations: [],
+      cta: 'Start Unlimited Meetings',
+      gradient: 'from-blue-600 to-purple-600'
+    },
+    {
       name: 'AI Tools Pro',
       description: 'Complete AI toolkit for businesses and entrepreneurs',
       monthlyPrice: 7.99,
       annualPrice: 79.99,
-      popular: true,
+      popular: false,
       features: [
         'Access to all 20 powerful AI tools',
         'Unlimited usage - no limits',
@@ -70,7 +95,7 @@ export default function SubscriptionPage() {
       ],
       limitations: [],
       cta: 'Start Your AI Business',
-      gradient: 'from-blue-600 to-purple-600'
+      gradient: 'from-purple-600 to-pink-600'
     }
   ];
 
