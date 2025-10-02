@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { supabase } from '../lib/supabase';
-import { User } from '@supabase/supabase-js';
+import axios from 'axios';
 import {
   Video,
   VideoOff,
@@ -25,6 +24,12 @@ import {
   ArrowRight
 } from 'lucide-react';
 
+interface User {
+  id: string;
+  email: string;
+  name?: string;
+}
+
 interface Meeting {
   id: string;
   room_name: string;
@@ -33,6 +38,9 @@ interface Meeting {
   created_at: string;
   is_active: boolean;
 }
+
+// Replace this with your actual backend API URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export default function VideoMeetings() {
   const router = useRouter();
@@ -49,12 +57,22 @@ export default function VideoMeetings() {
   }, []);
 
   const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    setUser(user);
+    try {
+      // Call your backend API to get current user
+      const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+        withCredentials: true // Send cookies for authentication
+      });
 
-    if (user) {
-      await checkSubscription(user.id);
-      await loadMeetings(user.id);
+      const userData = response.data;
+      setUser(userData);
+
+      if (userData) {
+        await checkSubscription(userData.id);
+        await loadMeetings(userData.id);
+      }
+    } catch (error) {
+      console.error('Error getting user:', error);
+      setUser(null);
     }
 
     setLoading(false);
@@ -62,14 +80,12 @@ export default function VideoMeetings() {
 
   const checkSubscription = async (userId: string) => {
     try {
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .select('status')
-        .eq('user_id', userId)
-        .eq('status', 'active')
-        .single();
+      // Call your backend API to check subscription
+      const response = await axios.get(`${API_BASE_URL}/subscriptions/check/${userId}`, {
+        withCredentials: true
+      });
 
-      setIsSubscribed(!!data && !error);
+      setIsSubscribed(response.data.isSubscribed);
     } catch (error) {
       console.error('Error checking subscription:', error);
       setIsSubscribed(false);
@@ -78,15 +94,12 @@ export default function VideoMeetings() {
 
   const loadMeetings = async (userId: string) => {
     try {
-      const { data, error } = await supabase
-        .from('meetings')
-        .select('*')
-        .eq('created_by', userId)
-        .order('created_at', { ascending: false });
+      // Call your backend API to get meetings
+      const response = await axios.get(`${API_BASE_URL}/meetings?userId=${userId}`, {
+        withCredentials: true
+      });
 
-      if (data && !error) {
-        setMeetings(data);
-      }
+      setMeetings(response.data);
     } catch (error) {
       console.error('Error loading meetings:', error);
     }
@@ -99,25 +112,23 @@ export default function VideoMeetings() {
     const meetingUrl = `${window.location.origin}/room/${roomId}`;
 
     try {
-      const { data, error } = await supabase
-        .from('meetings')
-        .insert([{
-          room_name: newMeetingName,
-          meeting_url: meetingUrl,
-          created_by: user.id,
-          is_active: true
-        }])
-        .select()
-        .single();
+      // Call your backend API to create meeting
+      const response = await axios.post(`${API_BASE_URL}/meetings`, {
+        room_name: newMeetingName,
+        meeting_url: meetingUrl,
+        created_by: user.id,
+        is_active: true
+      }, {
+        withCredentials: true
+      });
 
-      if (data && !error) {
-        setMeetings([data, ...meetings]);
-        setShowCreateModal(false);
-        setNewMeetingName('');
+      const newMeeting = response.data;
+      setMeetings([newMeeting, ...meetings]);
+      setShowCreateModal(false);
+      setNewMeetingName('');
 
-        // Join the meeting immediately
-        router.push(`/room/${roomId}?name=${encodeURIComponent(newMeetingName)}`);
-      }
+      // Join the meeting immediately
+      router.push(`/room/${roomId}?name=${encodeURIComponent(newMeetingName)}`);
     } catch (error) {
       console.error('Error creating meeting:', error);
     }

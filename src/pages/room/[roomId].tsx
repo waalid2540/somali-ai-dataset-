@@ -2,8 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { supabase } from '../../lib/supabase';
-import { User } from '@supabase/supabase-js';
+import axios from 'axios';
 import {
   Video,
   VideoOff,
@@ -25,6 +24,15 @@ declare global {
     JitsiMeetExternalAPI: any;
   }
 }
+
+interface User {
+  id: string;
+  email: string;
+  name?: string;
+}
+
+// Replace this with your actual backend API URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export default function MeetingRoom() {
   const router = useRouter();
@@ -56,19 +64,29 @@ export default function MeetingRoom() {
   }, [roomId, user, isSubscribed]);
 
   const checkUserAndSubscription = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    setUser(user);
+    try {
+      // Call your backend API to get current user
+      const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+        withCredentials: true
+      });
 
-    if (user) {
-      const subscribed = await checkSubscription(user.id);
-      setIsSubscribed(subscribed);
+      const userData = response.data;
+      setUser(userData);
 
-      if (!subscribed) {
-        // Redirect to subscription page if not subscribed
-        router.push('/video-meetings');
+      if (userData) {
+        const subscribed = await checkSubscription(userData.id);
+        setIsSubscribed(subscribed);
+
+        if (!subscribed) {
+          // Redirect to subscription page if not subscribed
+          router.push('/video-meetings');
+        }
+      } else {
+        // Redirect to login if not authenticated
+        router.push('/login?redirect=/video-meetings');
       }
-    } else {
-      // Redirect to login if not authenticated
+    } catch (error) {
+      console.error('Error getting user:', error);
       router.push('/login?redirect=/video-meetings');
     }
 
@@ -77,14 +95,12 @@ export default function MeetingRoom() {
 
   const checkSubscription = async (userId: string): Promise<boolean> => {
     try {
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .select('status')
-        .eq('user_id', userId)
-        .eq('status', 'active')
-        .single();
+      // Call your backend API to check subscription
+      const response = await axios.get(`${API_BASE_URL}/subscriptions/check/${userId}`, {
+        withCredentials: true
+      });
 
-      return !!data && !error;
+      return response.data.isSubscribed;
     } catch (error) {
       console.error('Error checking subscription:', error);
       return false;
