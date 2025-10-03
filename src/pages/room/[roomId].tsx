@@ -39,18 +39,11 @@ export default function MeetingRoom() {
   const { roomId, name } = router.query;
   const jitsiContainerRef = useRef<HTMLDivElement>(null);
   const jitsiApiRef = useRef<any>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [meetingLoaded, setMeetingLoaded] = useState(false);
   const [participantCount, setParticipantCount] = useState(1);
 
   useEffect(() => {
-    checkUserAndSubscription();
-  }, []);
-
-  useEffect(() => {
-    if (roomId && user && isSubscribed && !jitsiApiRef.current) {
+    if (roomId && !jitsiApiRef.current) {
       loadJitsiMeet();
     }
 
@@ -61,51 +54,7 @@ export default function MeetingRoom() {
         jitsiApiRef.current = null;
       }
     };
-  }, [roomId, user, isSubscribed]);
-
-  const checkUserAndSubscription = async () => {
-    try {
-      // Call your backend API to get current user
-      const response = await axios.get(`${API_BASE_URL}/auth/me`, {
-        withCredentials: true
-      });
-
-      const userData = response.data;
-      setUser(userData);
-
-      if (userData) {
-        const subscribed = await checkSubscription(userData.id);
-        setIsSubscribed(subscribed);
-
-        if (!subscribed) {
-          // Redirect to subscription page if not subscribed
-          router.push('/video-meetings');
-        }
-      } else {
-        // Redirect to login if not authenticated
-        router.push('/login?redirect=/video-meetings');
-      }
-    } catch (error) {
-      console.error('Error getting user:', error);
-      router.push('/login?redirect=/video-meetings');
-    }
-
-    setLoading(false);
-  };
-
-  const checkSubscription = async (userId: string): Promise<boolean> => {
-    try {
-      // Call your backend API to check subscription
-      const response = await axios.get(`${API_BASE_URL}/subscriptions/check/${userId}`, {
-        withCredentials: true
-      });
-
-      return response.data.isSubscribed;
-    } catch (error) {
-      console.error('Error checking subscription:', error);
-      return false;
-    }
-  };
+  }, [roomId]);
 
   const loadJitsiMeet = () => {
     if (!jitsiContainerRef.current || !roomId) return;
@@ -119,7 +68,7 @@ export default function MeetingRoom() {
   };
 
   const initializeJitsi = () => {
-    if (!jitsiContainerRef.current || !roomId || !user) return;
+    if (!jitsiContainerRef.current || !roomId) return;
 
     const domain = 'meet.jit.si'; // Using Jitsi's free server, you can self-host later
     const options = {
@@ -180,8 +129,7 @@ export default function MeetingRoom() {
         TOOLBAR_ALWAYS_VISIBLE: true,
       },
       userInfo: {
-        displayName: name || user.email?.split('@')[0] || 'Guest',
-        email: user.email || undefined,
+        displayName: (name as string) || 'Guest',
       }
     };
 
@@ -225,37 +173,6 @@ export default function MeetingRoom() {
     }
     router.push('/video-meetings');
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-xl">Loading meeting room...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isSubscribed) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-center max-w-md">
-          <Video className="w-20 h-20 text-gray-500 mx-auto mb-6" />
-          <h2 className="text-2xl font-bold text-white mb-4">Subscription Required</h2>
-          <p className="text-gray-400 mb-6">
-            Subscribe to Somai Data Video Meetings at $9.99/month for unlimited access.
-          </p>
-          <button
-            onClick={() => router.push('/video-meetings')}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:scale-105 transition-all"
-          >
-            View Plans
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
